@@ -207,6 +207,11 @@ nnoremap <Leader>f :Ack!<space>
 let g:ackprg = "ag --vimgrep -i --group --follow --match"
 let g:ack_wildignore=0
 
+"----- Find/ Search within visual block------"
+vnoremap / <Esc>/\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
+vnoremap ? <Esc>?\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
+
+
 "Greplace.vim
 nnoremap <Leader>h :Gsearch<cr>
 set grepprg=ack
