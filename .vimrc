@@ -141,7 +141,7 @@ nnoremap <Leader>gr :Gread<cr>
 nnoremap <Leader>gw :Gwrite<cr>
 nnoremap <Leader>gd :Gdiff<cr>
 nnoremap <Leader>ge :Gedit<space>
-nnoremap <Leader>gb :Merginal<cr>
+nnoremap <Leader>gb :MerginalToggle<cr>
 nnoremap <Leader>gB :Gblame<cr>
 nnoremap <Leader>gl :GV --decorate --all<cr>
 nnoremap <Leader>gL :silent! Glog<cr>:bot copen<cr>
