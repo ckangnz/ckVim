@@ -53,12 +53,6 @@ set background=dark
 colorscheme hybrid_reverse
 let g:airline_theme='bubblegum'
 let g:airline_powerline_fonts = 1
-"Copy this to get the font installed
-"git clone https://github.com/powerline/fonts.git --depth=1
-"cd fonts
-"./install.sh
-"cd ..
-"rm -rf fonts
 
 set t_CO=256
 set guifont=Fira_Code:h12
@@ -136,6 +130,9 @@ let g:mta_filetypes = {
     \ 'php' : 1,
     \}
 "
+"--------Vim Instant Markdown--------------------
+let g:instant_markdown_autostart = 0
+
 "---------Vim Fugitive (Vim Git)-------
 nnoremap <Leader>gst :Gstatus<cr><c-w>T
 nnoremap <Leader>gr :Gread<cr>
@@ -235,8 +232,7 @@ nmap <Leader><space> :nohlsearch<cr>
 
 "------CtrlP Plugin-----"
 nmap <C-p> :CtrlP<cr>
-"BufTag using Ctrl+R to look for functions
-nmap <C-r> :CtrlPBufTag<cr>
+nmap <C-t> :CtrlPBufTag<cr>
 nmap <C-e> :CtrlPMRUFiles<cr>
 "Ctrl P view setting
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
