@@ -234,10 +234,10 @@ nmap <Leader><Leader>. :bn<cr>
 nmap <Leader><space> :nohlsearch<cr>
 
 "------CtrlP Plugin-----"
-nmap <D-p> :CtrlP<cr>
+nmap <C-p> :CtrlP<cr>
 "BufTag using Ctrl+R to look for functions
-nmap <D-r> :CtrlPBufTag<cr>
-nmap <D-e> :CtrlPMRUFiles<cr>
+nmap <C-r> :CtrlPBufTag<cr>
+nmap <C-e> :CtrlPMRUFiles<cr>
 "Ctrl P view setting
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git$\|prod\'
