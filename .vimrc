@@ -48,6 +48,7 @@ set noswapfile
 
 "----------Visuals---------"
 let g:enable_bold_font = 1
+let g:enable_italic_font = 1
 set background=dark
 colorscheme hybrid_reverse
 let g:airline_theme='bubblegum'
