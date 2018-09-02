@@ -1,8 +1,8 @@
-syntax on					"Syntax ON
-set nocompatible		              " Latest Vim Setting used 
+syntax on                               "Syntax ON
+set nocompatible                        " Latest Vim Setting used 
 set encoding=utf-8
 
-so ~/.vim/plugins.vim				"Source the plugins 
+so ~/.vim/plugins.vim                   "Source the plugins 
 
 filetype plugin indent on
 
@@ -36,13 +36,13 @@ set smartindent
 set ignorecase
 set smartcase
 
-set backspace=indent,eol,start			        "Make backspace as normal
-let mapleader = ','				                "The default leader i '\'
+set backspace=indent,eol,start                  "Make backspace as normal
+let mapleader = ','                             "The default leader i '\'
 highlight clear SignColumn
-set noerrorbells visualbell t_vb=		        "No error bells
+set noerrorbells visualbell t_vb=               "No error bells
 set autowriteall                                "Automatically writes file
-set complete=.,w,b,u 	            			"Set autocomplete
-set shortmess=a                                  "Get rid of Please press enter when opening a file"
+set complete=.,w,b,u                            "Set autocomplete
+set shortmess=a                                 "Get rid of Please press enter when opening a file"
 set backupcopy=yes
 set noswapfile
 
@@ -58,11 +58,11 @@ set t_CO=256
 set guifont=Fira_Code:h12
 set guioptions-=e
 set linespace=10
-set wrapmargin=0			                	"line number margins
+set wrapmargin=0                                "line number margins
 set textwidth=0
-"set nonumber					                "No line numbers
-"set number                                      "Set line numbers"
-"set relativenumber                              "Set relative numbers"
+"set nonumber                                   "No line numbers
+"set number                                     Set line numbers"
+"set relativenumber                             Set relative numbers"
 set ttyfast                                     "Set typing fast/ scroll fast option"
 
 set guioptions-=l
@@ -73,6 +73,8 @@ set tabstop=4                                   "Default tabs
 set expandtab                                   "Use space as a tab
 set softtabstop=4                               "Width applied by tab
 set shiftwidth=4                                "Width of tab in normal mode
+
+set list lcs=trail:·,tab:»»,nbsp:~
 
 "GUI Adjust"
 hi LineNr ctermbg=0 guibg=bg
@@ -102,7 +104,25 @@ nmap <C-K> <C-W><C-K>
 nmap <C-H> <C-W><C-H>
 nmap <C-L> <C-W><C-L>
 
-"Panes
+"----------VIM Mapping ---------"
+nmap ,ev :vsp $MYVIMRC<cr>
+nmap ,eh :vsp ~/.vim/vimhelp.MD<cr>
+nmap ,en :vsp ~/.vim/notes<cr>
+nmap ,ep :vsp ~/.vim/plugins.vim<cr>
+nmap ,pi :PluginInstall<cr>
+
+"Previous Page
+nmap <Leader><Leader>m :bp<cr>
+nmap <Leader><Leader>. :bn<cr>
+
+"Simple highlight remove Press , <space> to highlight search
+nmap <Leader><space> :nohlsearch<cr>
+
+"Mapping ; to :. ;; mapped to ;
+map ; :
+noremap ;; ;
+
+"---------------Panes---------------
 "vsp / sp for splitting
 ",wf maximise ,wm minimise pane
 ",ww -> ,ww to change pane
@@ -113,7 +133,7 @@ nnoremap <Leader>wt <C-W>T
 nnoremap <Leader>bp :bp<cr>
 nnoremap <Leader>bn :bn<cr>
 
-"Indentation Visible by ,ig
+"----------------Indentation Visible by ,ig-----------
 let g:indent_guides_auto_colors = 1
 let g:indent_guides_start_level = 1
 let g:indent_guides_guide_size = 1
@@ -132,6 +152,7 @@ let g:mta_filetypes = {
 "
 "--------Vim Instant Markdown--------------------
 let g:instant_markdown_autostart = 0
+nnoremap <Leader>md :InstantMarkdownPreview<cr>
 
 "---------Vim Fugitive (Vim Git)-------
 nnoremap <Leader>gst :Gstatus<cr><c-w>T
@@ -209,26 +230,10 @@ let g:ack_wildignore=0
 vnoremap / <Esc>/\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 vnoremap ? <Esc>?\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 
-
 "Greplace.vim
 nnoremap <Leader>h :Gsearch<cr>
 set grepprg=ack
 let g:grep_cmd_opts = '--noheading'
-
-
-"----------VIM Mapping ---------"
-nmap ,ev :vsp $MYVIMRC<cr>
-nmap ,eh :vsp ~/.vim/vimhelp.MD<cr>
-nmap ,en :vsp ~/.vim/notes<cr>
-nmap ,ep :vsp ~/.vim/plugins.vim<cr>
-nmap ,pi :PluginInstall<cr>
-
-"Previous Page
-nmap <Leader><Leader>m :bp<cr>
-nmap <Leader><Leader>. :bn<cr>
-
-"Simple highlight remove Press , <space> to highlight search
-nmap <Leader><space> :nohlsearch<cr>
 
 "------CtrlP Plugin-----"
 nmap <C-p> :CtrlP<cr>

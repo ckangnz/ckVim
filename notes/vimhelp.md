@@ -1,9 +1,7 @@
 # General
     tabs are changed = gt / closed = command + w
-    nerdtree enabled by ,1
-    shift + s = Surround with...
-    c + s + ' + " = change surrounding ' to "
-    ctrl + y + k = remove tag
+    Visual Mode: shift + s = Surround with...
+    Normal Moade: c + s + ' + " = change surrounding ' to "
     U / u change upper/lowercase (in visual mode only)
     ctrl + a / x increments number
     ctrl x + ctrl + f to insert path
@@ -43,10 +41,10 @@
     ze reset folds
 
 # Search and change: 
-        ,f (Ag) Search all project
-        ,h (Gsearch) Replace all project
-            - cgn on the word => change the word => .(change next word) or n(skip)
-        OR (in Visual Mode):s/from-this-word/to-this-word
+    ,f (Ag) Search all project
+    ,h (Gsearch) Replace all project
+        - cgn on the word => change the word => .(change next word) or n(skip)
+    OR (in Visual Mode):s/from-this-word/to-this-word
 
 # Vinegar File Management Tips
     I = info box at the top
@@ -68,18 +66,6 @@
     tab to autocomplete
     c-j / c-k to jump trigger
 
-### Emmet Control
-    c-y, for tags
-    c-yd for inward
-    c-yD for Outward
-    c-yn for Edit Next Point
-    c-yN for Edit Previous Point
-    c-yi for Image Edit
-    c-ym for Merge line
-    c-yk for Remove Tag
-    c-y/ toggle comment
-    c-ya Make anchor tag
-
 # Vim Fugitive + Merginal + GV
     ,gst    Gstatus
     ,gr     Gread
@@ -91,40 +77,17 @@
     ,gl     :GV (Show logs)
     ,gL     :Glog (Show log of current file)
 
-### PERSONAL
-# EXPRESS NODE VIEWS
-pp - package.json
-na - app.js
-nc - config.js
-nv - views
-nc - styles
-nj - js
+# Tabular
+    ,ta     :Tabularize e.g. (,ta=  will prettify =)
 
-# Starting Express Project
-npm init
-npm install nodemon - package.json > script : devstart "nodemon ./bin/www"
-npm install 
-    express
-    ejs
-    ejs-locals
-    body-parser 
-    cookie-parser
-    node-sass-middleware
-    mongoose
-    morgan
-    async
-    passport, connect-flash, bcrypt-nodejs, express-session
-
-### Optional-npm install mysql
-    -Using MySql
-    var my sql = require('mysql');
-    var con = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "",
-        database: "TemplateDatabase"
-    })
-    con.query("SELECT * from Page", function(err, rows){
-        if(err)throw err;
-        console.log(rows);
-    });
+### Emmet Control
+    c-y, for tags
+    c-yd for inward
+    c-yD for Outward
+    c-yn for Edit Next Point
+    c-yN for Edit Previous Point
+    c-yi for Image Edit
+    c-ym for Merge line
+    c-yk for Remove Tag
+    c-y/ toggle comment
+    c-ya Make anchor tag
