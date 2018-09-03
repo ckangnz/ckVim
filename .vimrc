@@ -45,6 +45,7 @@ set complete=.,w,b,u                            "Set autocomplete
 set shortmess=a                                 "Get rid of Please press enter when opening a file"
 set backupcopy=yes
 set noswapfile
+set confirm
 
 "----------Visuals---------"
 let g:enable_bold_font = 1
@@ -244,13 +245,6 @@ let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git$\|prod\'
 let g:ctrlp_mruf_relative = 1
 nmap <F5> :CtrlPClearCache<cr>
-
-"----------Multiple Cursor-----"
-let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_next_key= '<C-n>'
-let g:multi_cursor_prev_key= '<C-m>'
-let g:multi_cursor_skip_key= '<C-x>'
-let g:multi_cursor_quit_key= '<Esc>'
 
 "-----General Navigation --------
 nmap <Leader>pp :e package.json<cr>

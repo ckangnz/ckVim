@@ -22,7 +22,7 @@ if [ -e ~/.vimrc ]; then
     rm ~/.vimrc
 fi
 echo 'Linking vimrc--------'
-ln -s ~/.vim/.vimrc .vimrc
+ln -s ~/.vim/.vimrc ~/.vimrc
 
 #Install Instant Markdown
 if npm ls --versions instant-markdown-d > /dev/null; then
