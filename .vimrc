@@ -6,19 +6,22 @@ so ~/.vim/plugins.vim                   "Source the plugins
 
 filetype plugin indent on
 
-"Custom ext highlighting
-au BufEnter,BufWrite * :syntax sync fromstart
-au BufNewFile,BufRead *.ejs set filetype=html
-au BufNewFile,BufRead *.vue set filetype=html
-au BufNewFile,BufRead *.hbs set filetype=html
-au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
-
 "Python Syntax
 let g:python_highlight_all = 1
 augroup EnableSyntaxHighlighting
     autocmd! BufWinEnter,WinEnter * nested if exists('syntax_on') && ! exists('b:current_syntax') && ! empty(&l:filetype) && index(split(&eventignore, ','), 'Syntax') == -1 | syntax enable | endif
     autocmd! BufRead * if exists('syntax_on') && exists('b:current_syntax') && ! empty(&l:filetype) && index(split(&eventignore, ','), 'Syntax') != -1 | unlet! b:current_syntax | endif
 augroup END
+
+"Custom ext highlighting
+"au BufEnter,BufWrite * :syntax sync fromstart
+"au BufNewFile,BufRead *.ejs set filetype=html
+"au BufNewFile,BufRead *.vue set filetype=html
+"au BufNewFile,BufRead *.hbs set filetype=html
+"au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+"Javascript Syntax Concealing
+set conceallevel=1
 
 runtime macros
 :filetype indent on
