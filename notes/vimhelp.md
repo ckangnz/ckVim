@@ -1,5 +1,5 @@
 # General
-    tabs are changed = gt / closed = command + w
+    tabs are changed = gt / closed = :q
     Visual Mode: shift + s = Surround with...
     Normal Moade: c + s + ' + " = change surrounding ' to "
     U / u change upper/lowercase (in visual mode only)
@@ -13,9 +13,12 @@
     '' or `` prev cursor point
     gg / G = top / bottom of page
     zz focus cursor in the center
-    Ctrl+] takes to wherever the original function is (must have ctags)
-    CMD or Ctrl + P for opening files
+    Ctrl + p for opening files
+    Ctrl + e for opening from buffer/memories
+    Ctrl + t for looking for function
     // search visually selected word
+    Ctrl+] takes to wherever the original function is (must have ctags)
+    Normal Mode: Ctrl+O / Ctrl+ I jump to previous cursor position
 
 # Panes / Buffers
     Navigate panes with ctrl+hjkl / closed = :q OR cmd+w

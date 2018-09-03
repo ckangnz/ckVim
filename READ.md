@@ -1,16 +1,10 @@
 # CK Vim Config
 
-### Install Vundle
-        git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+## You must have brew installed
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-### Install Packages
-        ,pi
-    
-### Symlink .vimrc
+## Copy / Paste this into your terminal and DONE :)
+    git clone https://github.com/chris542/ckVim ~/.vim
+    ~/.vim/install.sh
 
-    ln -s ~/.vim/.vimrc .vimrc
-
-### Install Vim Instant Markdown
-    npm -g install instant-markdown-d
-
-
+* This will override your vimrc file
