@@ -20,17 +20,17 @@
             npm install
 
 ## Create an application
-    1. In docker container :
-        python manage.py startapp `app-name`
+  1. In docker container :
+      python manage.py startapp `app-name`
 
-    2. Create Model
-    3. (Optional) Create CMS Toolbars
-    4. Create Admin model
+  2. Create Model
+  3. (Optional) Create CMS Toolbars
+  4. Create Admin model
 
-    5. Make migrations
-        python manage.py makemigrations `app-name`
+  5. Make migrations
+      python manage.py makemigrations `app-name`
 
-    6. Migrate the app to database
+  6. Migrate the app to database
         python manage.py migrate `app-name`
 
 ## Migrate
@@ -72,17 +72,19 @@
 
 
 # Printing all variables
-    * In models.py
-        ```python
-        def get_fields(self):
-            return [(field.name, field.value_to_string(self)) for field in MODELNAME._meta.fields]
-        
-        ```
-    * In Template
-        ```python
-        {% for name, value in instance.field_name %}
-            {% if value %}
-                {{ name }} => {{ value }}
-            {% endif %}
-        {% endfor %}
-        ```
+> In models.py
+
+```python
+def get_fields(self):
+  return [(field.name, field.value_to_string(self)) for field in MODELNAME._meta.fields]
+```
+
+> In Template
+
+```python
+{% for name, value in instance.field_name %}
+  {% if value %}
+      {{ name }} => {{ value }}
+  {% endif %}
+{% endfor %}
+```

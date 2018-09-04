@@ -10,7 +10,7 @@
     hjkl = left down up right
     ctrl + e / y scrolling
     ctrl + d / u skipping 
-    '' or `` prev cursor point
+    ''  prev cursor point
     gg / G = top / bottom of page
     zz focus cursor in the center
     Ctrl + p for opening files
