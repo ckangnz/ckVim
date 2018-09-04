@@ -180,6 +180,7 @@ nnoremap <Leader>gb :MerginalToggle<cr>
 nnoremap <Leader>gB :Gblame<cr>
 nnoremap <Leader>gl :GV --decorate --all<cr>
 nnoremap <Leader>gL :silent! Glog<cr>:bot copen<cr>
+nnoremap <Leader>gp :Gpush<cr>
 set diffopt+=vertical
 if has("autocmd")
     autocmd BufReadPost fugitive://* set bufhidden=delete
