@@ -20,8 +20,6 @@ augroup END
 "au BufNewFile,BufRead *.hbs set filetype=html
 "au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
-"Javascript Syntax Concealing
-set conceallevel=1
 
 runtime macros
 :filetype indent on
@@ -89,8 +87,22 @@ hi vertsplit ctermbg=0 guibg=bg
 "Fold
 nmap <Leader>zf V$%zf
 
-"Enable cli
-nmap <Leader>cli :!<space>
+"Javascript Syntax Concealing
+highlight Conceal guifg=fg guibg=bg
+let g:javascript_conceal_function             = "ƒ"
+let g:javascript_conceal_null                 = "ø"
+let g:javascript_conceal_this                 = "@"
+let g:javascript_conceal_return               = "⇚"
+let g:javascript_conceal_undefined            = "¿"
+let g:javascript_conceal_NaN                  = "ℕ"
+let g:javascript_conceal_prototype            = "¶"
+let g:javascript_conceal_static               = "•"
+let g:javascript_conceal_super                = "Ω"
+let g:javascript_conceal_arrow_function       = "⇒"
+let g:javascript_conceal_noarg_arrow_function = "○"
+let g:javascript_conceal_underscore_arrow_function = "○"
+
+map <leader>l :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
 
 "------Split Management------"
 set splitbelow
