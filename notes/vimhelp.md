@@ -50,6 +50,7 @@
     OR (in Visual Mode):s/from-this-word/to-this-word
 
 # Vinegar File Management Tips
+    F1 = Help
     I = info box at the top
     v = Open on right pane"
     o = Open on below pane"
@@ -61,6 +62,12 @@
     d create a folder
     Shift + R = Rename
     D delete file
+
+    mt Mark a directory
+    mf Mark a file
+    mU Unmark all marked files  
+    (c)mc / mm Copy/Move file
+
     gh to toggle hidden files
     . or ! to put in the cli
     ~ to go home
