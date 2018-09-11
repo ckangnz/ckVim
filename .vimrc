@@ -20,7 +20,6 @@ augroup END
 "au BufNewFile,BufRead *.hbs set filetype=html
 "au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
-
 runtime macros
 :filetype indent on
 :set filetype=html
@@ -49,8 +48,6 @@ set noswapfile
 set confirm
 
 "----------Visuals---------"
-let g:enable_bold_font = 1
-let g:enable_italic_font = 1
 set background=dark
 colorscheme hybrid_reverse
 let g:airline_theme='bubblegum'

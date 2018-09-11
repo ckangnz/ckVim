@@ -89,6 +89,8 @@
     ,gr                             Gread
     ,gw                             Gwrite
     ,gd                             Gdiff   (Diff local / index)
+      do                                diff obtain(bring)
+      dp                                diff put(revert)
     ,ge                             Gedit   (Toggle local / index)
     ,gB                             :Gblame (Show blame for current file)
     ,gl                             :GV (Show logs)
