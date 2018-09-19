@@ -22,7 +22,6 @@ augroup END
 
 runtime macros
 :filetype indent on
-:set filetype=html
 if has('linebreak')
   set breakindent
   let &showbreak = '↳ '
