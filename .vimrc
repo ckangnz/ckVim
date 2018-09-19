@@ -136,6 +136,10 @@ nmap <Leader><space> :nohlsearch<cr>
 map ; :
 noremap ;; ;
 
+"--------------Terminal-------------
+tnoremap <Esc> <C-\><C-n>
+
+
 "---------------Panes---------------
 "vsp / sp for splitting
 ",wf maximise ,wm minimise pane
