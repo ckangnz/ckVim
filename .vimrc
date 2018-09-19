@@ -51,6 +51,8 @@ set background=dark
 colorscheme hybrid_reverse
 let g:airline_theme='bubblegum'
 let g:airline_powerline_fonts = 1
+let g:asyncrun_status = ''
+let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
 
 set t_CO=256
 set guifont=Fira_Code:h12
@@ -177,10 +179,14 @@ nnoremap <Leader>gB :Gblame<cr>
 nnoremap <Leader>gl :GV --decorate --all<cr>
 nnoremap <Leader>gL :silent! Glog<cr>:bot copen<cr>
 nnoremap <Leader>gp :Gpush<cr>
+nnoremap <Leader>gP :Gpull<cr>
 set diffopt+=vertical
 if has("autocmd")
     autocmd BufReadPost fugitive://* set bufhidden=delete
 endif
+
+"Async Push and Fetch
+command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
 "-----------Tabular ------------------
 if exists(":Tabularize")
