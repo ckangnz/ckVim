@@ -125,10 +125,6 @@ nmap ,en :vsp ~/.vim/notes<cr>
 nmap ,ep :vsp ~/.vim/plugins.vim<cr>
 nmap ,pi :PluginInstall<cr>
 
-"Previous Page
-nmap <Leader><Leader>m :bp<cr>
-nmap <Leader><Leader>. :bn<cr>
-
 "Simple highlight remove Press , <space> to highlight search
 nmap <Leader><space> :nohlsearch<cr>
 
