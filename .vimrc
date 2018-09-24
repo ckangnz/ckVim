@@ -51,6 +51,10 @@ set background=dark
 colorscheme hybrid_reverse
 let g:airline_theme='bubblegum'
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:asyncrun_status = ''
 let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
 let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c4fe', '#ff3f80', '#64fcda', '#fefefe', '#b0bec4', '#ff8980', '#b9f6c9', '#ffe47e', '#80d7fe', '#ff80ab', '#a7fdeb', '#fefefe',]
@@ -133,6 +137,10 @@ nmap <Leader><space> :nohlsearch<cr>
 "Mapping ; to :. ;; mapped to ;
 map ; :
 noremap ;; ;
+
+"Mapping quit to close buffer
+:cnoreabbrev wq w<bar>bd
+:cnoreabbrev q bd
 
 "--------------Terminal-------------
 tnoremap <Esc> <C-\><C-n>
