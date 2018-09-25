@@ -43,6 +43,7 @@ Plugin 'ervandew/supertab'
 Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'honza/vim-snippets'
+Plugin 'arithran/vim-delete-hidden-buffers'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required

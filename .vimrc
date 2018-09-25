@@ -141,6 +141,7 @@ noremap ;; ;
 "Mapping quit to close buffer
 :cnoreabbrev wq w<bar>bd
 :cnoreabbrev q bd
+nnoremap <Leader>q :DeleteHiddenBuffers<CR>
 
 "--------------Terminal-------------
 tnoremap <Esc> <C-\><C-n>
