@@ -1,25 +1,26 @@
 # Vinegar File Management Tips
-    F1 = Help
-    I = info box at the top
-    v = Open on right pane"
-    o = Open on below pane"
-    i = toggle different folder structure view"
-    r = reorder
-    s = change structure
-    x = open in finder
-    % create a file
-    d create a folder
-    Shift + R = Rename
-    D delete file
+    F1                              Help
+    I                               info box at the top
+    v                               Open on right pane"
+    o                               Open on below pane"
+    i                               toggle different folder structure view"
+    r                               reorder
+    s                               change structure
+    x                               open in finder
 
-    mt Mark a directory
-    mf Mark a file
-    mU Unmark all marked files  
-    (c)mc / mm Copy/Move file
+    %                               create a file
+    d                               create a folder
+    <Shift> + R                       Rename
+    D                               delete file
 
-    gh to toggle hidden files
-    . or ! to put in the cli
-    ~ to go home
+    mt                              Mark a directory
+    mf                              Mark a file
+    mU                              Unmark all marked files  
+    cmc / cmm                      Copy/Move file
+
+    gh                              Toggle hidden files
+    . / !                           Action in CLI
+    ~                               Go to Root
 
 ### Navigation on vim (Normal Mode)
     hjkl                            left down up right
@@ -84,6 +85,7 @@
     ,gst                            Gstatus
         cc                              commit
         ca                              commit --amend
+        ce                              commit --amend-noedit
     ,gb                             :Merginal (Show branches)
         ?                               Help
     ,gr                             Gread
