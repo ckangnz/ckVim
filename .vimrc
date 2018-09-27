@@ -14,11 +14,10 @@ augroup EnableSyntaxHighlighting
 augroup END
 
 "Custom ext highlighting
-"au BufEnter,BufWrite * :syntax sync fromstart
-"au BufNewFile,BufRead *.ejs set filetype=html
-"au BufNewFile,BufRead *.vue set filetype=html
-"au BufNewFile,BufRead *.hbs set filetype=html
-"au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
+au BufNewFile,BufRead *.ejs set filetype=html
+au BufNewFile,BufRead *.vue set filetype=html
+au BufNewFile,BufRead *.hbs set filetype=html
+au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 runtime macros
 :filetype indent on
