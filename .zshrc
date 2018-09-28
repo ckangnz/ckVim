@@ -1,9 +1,3 @@
-#Follow these to set up zsh and powerline
-#https://gist.github.com/kevin-smets/8568070
-#
-#Check out this if font icons are broken
-#https://github.com/gabrielelana/awesome-terminal-fonts/wiki/OS-X 
-#
 export ZSH=/Users/chrisk/.oh-my-zsh
 export TERM="xterm-256color"
 

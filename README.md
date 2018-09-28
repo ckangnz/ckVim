@@ -1,13 +1,35 @@
 # CK Vim Config
 
 ## You must have brew installed
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```bash
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
 
 ## Copy / Paste this into your terminal and DONE :)
-    git clone https://github.com/chris542/ckVim ~/.vim
-    ~/.vim/install.sh
+```bash
+git clone https://github.com/chris542/ckVim ~/.vim
+~/.vim/install.sh
+```
 
  WARNING: This will override your .vimrc file
+
+## For .zshrc
+Install powerline
+```bash
+#Copy Paste below
+git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+
+#Copy Paste below
+git clone https://github.com/powerline/fonts.git --depth=1
+cd fonts
+./install.sh
+cd ..
+rm -rf fonts
+```
+
+### If you have trouble seeing some fonts follow this guide
+https://github.com/gabrielelana/awesome-terminal-fonts/wiki/OS-X 
+
 
 ---
 
