@@ -16,7 +16,7 @@
     mt                              Mark a directory
     mf                              Mark a file
     mU                              Unmark all marked files  
-    cmc / cmm                      Copy/Move file
+    cmc / cmm                       Copy/Move file
 
     gh                              Toggle hidden files
     . / !                           Action in CLI
@@ -42,18 +42,17 @@
     ,ww                             swap buffer
     ,wf                             maximize pane
     ,wm                             minimize pane
-    ,,p ,,n                         previous/next buffer
 
 ### Vim-surround
     shift + s                       Surround with...(visual mode)
     c + s + ' + "                   change surrounding ' to "
 
-### Ctrl P Plugin
-    Ctrl + p                        open files
-    Ctrl + e                        open from buffer/memories
-    Ctrl + t                        look for function
+### Ctrl-P Plugin
+    <ctrl> + p                        open files
+    <ctrl> + e                        open from buffer/memories
+    <ctrl> + t                        look for function
 
-### Javascript
+### Javascript Syntax Concealing
     ,l                              toggle conceal
 
 ### Commenting (NerdCommenter)
@@ -64,9 +63,9 @@
     ,cs                             sexy commenting
 
 ### Folding
+    zf                              create folds
     za                              toggle folds
     zd                              delete folds
-    zf                              setting folds
     zr                              open all folds
     zM                              close all folds
     ze                              reset folds

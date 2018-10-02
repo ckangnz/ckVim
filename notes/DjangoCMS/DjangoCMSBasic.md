@@ -1,45 +1,51 @@
 # Divio-cli
-    divio doctor                    "Check Status"
-    divio project 
-        up                          "Start virtual env"
-        stop                        "Stop virtual env"
-        push/pull /db/media (live)  "Push or pull data/media from test or live"
-        update                      "Update local project files from live"
-        deploy                      "Deploy local project files TO test"
-        open/test/live              "Open browser for local/test/live server"
-        dashboard                   "Open browser for dashboard"
-        list                        "Show lists of projects"
+```bash
+divio doctor                    "Check Status"
+divio project 
+    up                          "Start virtual env"
+    stop                        "Stop virtual env"
+    push/pull /db/media (live)  "Push or pull data/media from test or live"
+    update                      "Update local project files from live"
+    deploy                      "Deploy local project files TO test"
+    open/test/live              "Open browser for local/test/live server"
+    dashboard                   "Open browser for dashboard"
+    list                        "Show lists of projects"
+```
 
 # Docker
-    docker-compose
-        up                          "start web and db --> Starts logs"
-        build                       "Rebuild the project to install new package after adding in requirements.in"
-        run --rm web bash           "start web --> Starts docker virtualenv in bash"
-        exec web bash               "bash in existing web"
-            gulp                    
-            npm install
+```bash
+docker-compose
+    up                          "start web and db --> Starts logs"
+    build                       "Rebuild the project to install new package after adding in requirements.in"
+    run --rm web bash           "start web --> Starts docker virtualenv in bash"
+    exec web bash               "bash in existing web"
+        gulp                    
+        npm install
+```
 
 ## Create an application
-  1. In docker container :
-      python manage.py startapp `app-name`
+1. In docker container :
+    python manage.py startapp `app-name`
 
-  2. Create Model
-  3. (Optional) Create CMS Toolbars
-  4. Create Admin model
+2. Create Model
+3. (Optional) Create CMS Toolbars
+4. Create Admin model
 
-  5. Make migrations
-      python manage.py makemigrations `app-name`
+5. Make migrations
+    python manage.py makemigrations `app-name`
 
-  6. Migrate the app to database
-        python manage.py migrate `app-name`
+6. Migrate the app to database
+      python manage.py migrate `app-name`
 
 ## Migrate
-    docker-compose run web bash python manage.py
-        makemigrations      "Making migration files"
-            --merge         "Merge onto existing migration file"
-        migrate             "migrate the new model"
-           `appname` zero   "Unapply migrations" 
-            --fake-initial  "Faking migration to be initial"
+```bash
+docker-compose run web bash python manage.py
+  makemigrations      "Making migration files"
+      --merge         "Merge onto existing migration file"
+  migrate             "migrate the new model"
+     `appname` zero   "Unapply migrations" 
+      --fake-initial  "Faking migration to be initial"
+```
 
 ## Resetting Migration
     python manage.py migrate --fake `APPNAME` zero
