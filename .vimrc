@@ -33,6 +33,7 @@ set autoread
 set smartindent
 set ignorecase
 set smartcase
+set so=10                                       "Keep cursor to not touch the bottom or top"
 
 set backspace=indent,eol,start                  "Make backspace as normal
 let mapleader = ','                             "The default leader i '\'
