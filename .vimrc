@@ -45,6 +45,7 @@ set shortmess=a                                 "Get rid of Please press enter w
 set backupcopy=yes
 set noswapfile
 set confirm
+set mouse=a                                     "Click to position cursor always"
 
 "----------Visuals---------"
 set background=dark
