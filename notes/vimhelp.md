@@ -74,7 +74,7 @@
     ,f (Ack)                        Search all project
     ,h (Gsearch)                    Replace all project
     cgn =>  . / n                   Change word => Repeat / Skip
-    :s/old/new                      Change word old to new
+    :s/old/new/g                    Change word old to new
 
 ### UltiSnippets  + YCM
     tab                             autocomplete
