@@ -75,6 +75,8 @@
     ,h (Gsearch)                    Replace all project
     cgn =>  . / n                   Change word => Repeat / Skip
     :s/old/new/g                    Change word old to new
+    :s/from.*end/new/               Change word old to new
+    :s/id=".\{-}"                   Change {id="*****"}
 
 ### UltiSnippets  + YCM
     tab                             autocomplete

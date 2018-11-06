@@ -37,6 +37,14 @@ docker-compose
 6. Migrate the app to database
       python manage.py migrate `app-name`
 
+## Locale
+
+```bash
+docker-compose run web bash python manage.py
+  makemessages -a       "Creates all locale language translations automatically"
+```
+
+
 ## Migrate
 ```bash
 docker-compose run web bash python manage.py
