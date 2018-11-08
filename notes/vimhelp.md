@@ -1,4 +1,4 @@
-# Vinegar File Management Tips
+# Vinegar(Netrw) File Management Tips
     F1                              Help
     I                               info box at the top
     v                               Open on right pane"
@@ -21,6 +21,7 @@
     gh                              Toggle hidden files
     . / !                           Action in CLI
     ~                               Go to Root
+    :Explore/Sexplore/Vexplore      To Explore in Netrw without Vinegar
 
 ### Navigation on vim (Normal Mode)
     hjkl                            left down up right
