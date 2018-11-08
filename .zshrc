@@ -35,6 +35,10 @@ unset MANPATH
 MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 export PATH="$PATH:$HOME/.rvm/bin"
 
+export WORKON_HOME=$HOME/.virtualenvs
+#export PROJECT_HOME=$HOME/VirEnvs
+source /usr/local/bin/virtualenvwrapper.sh
+
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias dcup="docker-compose up"
