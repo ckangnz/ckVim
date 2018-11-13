@@ -1,4 +1,4 @@
-export ZSH=/Users/chrisk/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 export TERM="xterm-256color"
 
 ZSH_THEME="powerlevel9k/powerlevel9k"
@@ -25,7 +25,7 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/chrisk/Library/Python/2.7/bin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${HOME}/Library/Python/2.7/bin"
 
 NPM_PACKAGES="${HOME}/.npm-packages"
 NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
@@ -35,8 +35,8 @@ unset MANPATH
 MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 export PATH="$PATH:$HOME/.rvm/bin"
 
+#VirtualEnvWrapper
 export WORKON_HOME=$HOME/.virtualenvs
-#export PROJECT_HOME=$HOME/VirEnvs
 source /usr/local/bin/virtualenvwrapper.sh
 
 alias zshconfig="vim ~/.zshrc"
