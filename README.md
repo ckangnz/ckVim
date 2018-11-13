@@ -1,11 +1,13 @@
 # CK Vim Config
 
 ## You must have brew installed
+
 ```bash
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
 ## Copy / Paste this into your terminal and DONE :)
+
 ```bash
 git clone https://github.com/chris542/ckVim ~/.vim
 ~/.vim/install.sh
@@ -13,7 +15,14 @@ git clone https://github.com/chris542/ckVim ~/.vim
 
  WARNING: This will override your .vimrc file
 
-## For .zshrc
+## YCM Install
+* If you see YCM error on vim startup, follow this :
+```bash
+cd ~/.vim/bundle/YouCompleteMe
+./install.py
+```
+
+## Zsh Terminal Theme .zshrc
 Install powerline
 ```bash
 #Copy Paste below
