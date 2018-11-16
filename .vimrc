@@ -287,16 +287,6 @@ nmap <Leader>pp :e package.json<cr>
 "-----Python ----------
 nmap <Leader>im :ImportName
 
-"-----Node Express Commands-------
-nmap <Leader>na :e keystone.js<cr>
-nmap <Leader>nv :e templates/views/<cr>
-nmap <Leader>nc :e routes/views/<cr>
-nmap <Leader>nm :e models/<cr>
-nmap <Leader>nr :e routes/<cr>
-nmap <Leader>ns :e public/styles/<cr>
-nmap <Leader>nj :e public/js/<cr>
-nmap <Leader>nf :e config/<cr>
-
 "-----Auto-Commands------"
 "Auto sourcing self
 augroup autosourcing
@@ -304,3 +294,20 @@ augroup autosourcing
 	autocmd BufWritePost .vimrc source %
 augroup END
 
+"----To do----------
+function! Todo()
+    let fname= "~/.vim/notes/todo.md"
+    let winnum=bufwinnr(fname)
+    if winnum != -1
+        exe winnum . "wincmd w"
+    else
+        exe "60vsp" .  fname
+    endif
+    call inputsave()
+    let t = input('Enter todo: ')
+    call inputrestore()
+    if t !=""
+        call append(2, '  - [ ] ' . t)
+    endif
+endfunction
+nnoremap <Leader>n :call Todo()<CR>
