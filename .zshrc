@@ -35,10 +35,7 @@ unset MANPATH
 MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 export PATH="$PATH:$HOME/.rvm/bin"
 
-#VirtualEnvWrapper
-export WORKON_HOME=$HOME/.virtualenvs
-source /usr/local/bin/virtualenvwrapper.sh
-
+#alias
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias dcup="docker-compose up"
@@ -52,3 +49,16 @@ export NVM_DIR="$HOME/.nvm"
 
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+
+#VirtualEnvWrapper and Pyenv
+# pip install virtualenvwrapper
+# brew install pyenv pyenv-virtualenvwrapper
+# git clone https://github.com/yyuu/pyenv-pip-rehash.git ~/.pyenv/plugins/pyenv-pip-rehash
+
+#VirtualEnvWrapper
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper_lazy.sh
+
+#Pyenv
+eval "$(pyenv init -)"
+export PYENV_VIRTUALENVWRAPPER_PREFER_PYENV="true"
