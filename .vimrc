@@ -134,6 +134,7 @@ nmap <C-L> <C-W><C-L>
 
 "----------VIM Mapping ---------"
 nmap ,ev :vsp $MYVIMRC<cr>
+nmap ,ez :vsp ~/.zshrc<cr>
 nmap ,eh :vsp ~/.vim/vimhelp.MD<cr>
 nmap ,en :vsp ~/.vim/notes<cr>
 nmap ,ep :vsp ~/.vim/plugins.vim<cr>
