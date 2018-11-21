@@ -35,7 +35,8 @@
 ```python
 from django.conf.urls import url
 from . import views
-namespace='Application'         #{% url 'Application:index' %}
+
+app_name='Application'         #{% url 'Application:index' %}
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
@@ -109,7 +110,7 @@ class ModelName(models.Model):
         verbose_name = "Name you see in admin"
         ordering = ["field_name"]
     def get_absolute_url(self):
-        return reverse('app_name:urlnamespace', kwargs={'slug':self.slug})
+        return reverse('app_name:url', kwargs={'slug':self.slug})
     def was_published_recently(self):
         now = timezone.now()
         return now- datetime.timedelta(days=1) <= self.pub_date <= now
@@ -124,7 +125,7 @@ from cms.admin.placeholderadmin import FrontendEditableAdminMixin
 from django.contrib import admin
 from .models import ModelName
 
-//Add to admin as it is
+#Add to admin as it is
 admin.site.register(ModelName)
 ```
 
@@ -136,7 +137,7 @@ class ModelNameAdmin(FrontendEditableAdminMixin, admin.ModelAdmin):
   list_filter=['field_name']
   fields=['fieldname','fieldname']
   actions = ['make_published']
-  //OR
+  #OR
   fields[
       ( None ,{'fields':['field_name']}),
       ('Subheader',{'fields':['field_name']}),
@@ -159,7 +160,7 @@ class ModelNameAdmin(FrontendEditableAdminMixin, admin.ModelAdmin):
 
 ```python
 admin.site.register(ModelName, ModelNameAdmin)
-//Or two models in one admin option
+#Or two models in one admin option
 
 class ModelName2Inline(admin.TabularInline): OR
 class ModelName2Inline(admin.StackedInline):
@@ -182,7 +183,7 @@ url(r'^customURL/', include("app_name.urls")),
 > Templates
 
 ```html
-<a href="{% url "Namespace:nameFromUrl" `id` %}">Link</a>
+<a href="{% url "app_name:namespace" `id` %}">Link</a>
 ```
         
 ## Creating Plugin
@@ -243,12 +244,12 @@ from . import views
 
 @apphook_pool.register
 class ModelAppHook(CMSApp):
-    app_name = "AppName"        //{% url 'AppName:index' %}
-    name = _("Polls Application")  //Name you see on apphook dropdown
+    app_name = "AppName"        #{% url 'AppName:index' %}
+    name = _("Polls Application")  #Name you see on apphook dropdown
     supported_apps=('app_name')
 
     def get_urls(self, page=None, language=None, **kwargs):
-        #return ["polls.urls"] //!!REQUIRES URLS.PY if using this!!
+        #return ["polls.urls"] #!!REQUIRES URLS.PY if using this!!
         return [
             url('^$', views.index, name='index'),
             url(r'^(?P<slug>[\w-]+)/?$', views.detail, name='detail'),
@@ -374,7 +375,7 @@ def create_model(value, value2):
 class TestFunctionName(TestCase):
     def test_testname_whatever(self):
         create_model('blah', 'blah')
-        response = self.client.get(reverse('namespace:index'))
+        response = self.client.get(reverse('app_name'))
         self.assertIs(something, true/false);
         self.assertEqual(something, somethingelse);
         self.assertContains(response, somethingelse);
