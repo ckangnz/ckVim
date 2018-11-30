@@ -108,6 +108,7 @@ class ModelName(models.Model):
     bodytext = models.CharField(max_length=500)
     class Meta:
         verbose_name = "Name you see in admin"
+        verbose_name_plural = "custom plural name of this model"
         ordering = ["field_name"]
     def get_absolute_url(self):
         return reverse('app_name:url', kwargs={'slug':self.slug})
