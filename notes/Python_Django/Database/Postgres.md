@@ -23,6 +23,8 @@ psql postgres -U `username`
 CREATE ROLE username WITH LOGIN PASSWORD 'xxxxxx';
 ALTER ROLE username CREATEDB;
 
+#Show a database list
+\list
 # Create database
 CREATE DATABASE databasename;
 GRAND ALL PRIVILEGES ON DATABASE databasename TO username
@@ -30,6 +32,9 @@ ALTER DATABASE databasename TO otherdatabasename;
 
 # Connect to database
 \connect databasename
+
+# Show a table list within the database
+\dt
 ```
 
 >BASH
