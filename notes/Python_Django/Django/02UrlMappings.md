@@ -23,8 +23,8 @@ urlpatterns = [
     url(r'^someurl/(?P<pk>\d+)$', views.detailpage, name="detail"),
 
     # new
-    url(r'^$', views.index, name="index"),
-    url(r'^someurl/(?P<pk>\d+)$', views.detailpage, name="detail"),
+    path('', views.index, name="index"),
+    path('someurl/<pk>', views.detailpage, name="detail"),
 
     #class based view
     path('', views.index.as_view(), name="index"),
