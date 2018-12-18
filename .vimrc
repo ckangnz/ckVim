@@ -212,10 +212,8 @@ endif
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
 "-----------Tabular ------------------
-if exists(":Tabularize")
-  nmap <Leader>ta :Tabularize /
-  vmap <Leader>ta :Tabularize /
-endif
+nmap <Leader>ta :Tabularize/
+vmap <Leader>ta :Tabularize/
 
 inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
