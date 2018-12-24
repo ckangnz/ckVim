@@ -3,7 +3,9 @@
 ## Install create-react-app globally using npm
 
 ```bash
-npm install -g create-react-app
+npm create-react-app .
+npm init react-app .
+yarn create react-app . 
 ```
 
 ### Basic of ReactJS
