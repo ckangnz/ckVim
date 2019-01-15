@@ -44,6 +44,12 @@ alias dcbash="docker-compose run --rm web bash"
 alias dcbuild="docker-compose build"
 alias divioshell="PATH=/virtualenv/bin:/pipsi/bin:$HOME/.local/bin:/usr/local/bin:$PATH;unset DOCKER_HOST;docker run -it --rm  -v '/var/run/docker.sock:/var/run/docker.sock:rw' -v '/Users/chrisk/.netrc:/home/divio/.netrc:rw' -v '/Users/chrisk/.aldryn:/home/divio/.aldryn:rw' -v '/Users/chrisk/code/divio:/Users/chrisk/code/divio:rw' divio/divio-app-toolbox:chrisk-0.12.0-webadmin_movio.co 'cd /Users/chrisk/code/divio/movio;divio doctor;bash'"
 
+#Postgresql
+#brew install postgresql
+#ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+alias pgstart="launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
+alias pgstop="launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
+
 alias jserv="json-server --watch db.json --port 3004"
 
 export NVM_DIR="$HOME/.nvm"
