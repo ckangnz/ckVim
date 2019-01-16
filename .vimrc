@@ -277,7 +277,7 @@ let g:grep_cmd_opts = '--noheading'
 
 "------CtrlP Plugin-----"
 nmap <C-p> :CtrlP<cr>
-nmap <C-t> :CtrlPBufTag<cr>
+nmap <C-t> :CtrlPTag<cr>
 nmap <C-e> :CtrlPMRUFiles<cr>
 "Ctrl P view setting
 let g:ctrlp_working_path_mode = 'ra'
