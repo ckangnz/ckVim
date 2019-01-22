@@ -102,10 +102,11 @@ nmap <Leader>zf V$%zf
 
 "highlight word under cursor
 "color options by :so $VIMRUNTIME/syntax/hitest.vim
-:autocmd CursorMoved * exe printf('match SpellLocal /\V\%%%dl\@!\<%s\>/', line('.'), escape(expand('<cword>'), '/\'))
+:autocmd CursorMoved * exe printf('match SpellRare /\V\%%%dl\@!\<%s\>/', line('.'), escape(expand('<cword>'), '/\'))
 
 "Javascript Syntax Concealing
 highlight Conceal guifg=fg guibg=bg
+let g:javascript_plugin_flow = 1
 let g:javascript_conceal_function             = "ƒ"
 let g:javascript_conceal_null                 = "ø"
 let g:javascript_conceal_this                 = "@"
