@@ -187,6 +187,7 @@ let g:mta_filetypes = {
     \ 'xml' : 1,
     \ 'php' : 1,
     \}
+nnoremap <leader>% :MtaJumpToOtherTag<cr>
 "
 "--------Vim Instant Markdown--------------------
 let g:instant_markdown_autostart = 0
