@@ -35,3 +35,14 @@
 # Rebase
     git rebase branchName           Rebase the branch to the branchName
 
+# SSH Key Gen
+```bash
+# List all files in .ssh
+ls -al ~/.ssh
+
+# Generate ssh-key
+ssh-keygen -t rsa -b 4096 -C "email@example.com"
+
+# Copy the id-rsa.pub file in clipboard
+pbcopy < ~/.ssh/id_rsa.pub
+```
