@@ -165,10 +165,14 @@ tnoremap <Esc> <C-\><C-n>
 "---------------Panes---------------
 "vsp / sp for splitting
 ",wf maximise ,wm minimise pane
+",wt open on a new tab
+",wh to horizontal, wv to vertical
 ",ww -> ,ww to change pane
 ",bp ,bn change panes
 nnoremap <Leader>wf <C-W>\|
 nnoremap <Leader>wm <C-W>=
+nnoremap <Leader>wh <C-W>t<C-W>K
+nnoremap <Leader>wv <C-W>t<C-W>H
 nnoremap <Leader>wt <C-W>T
 nnoremap <Leader>bp :bp<cr>
 nnoremap <Leader>bn :bn<cr>
