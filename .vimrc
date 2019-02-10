@@ -77,7 +77,7 @@ set guioptions-=e
 set linespace=10
 set wrapmargin=0                                "line number margins
 set textwidth=0
-"set nonumber                                   "No line numbers
+set nonumber                                   "No line numbers
 "set number                                     Set line numbers"
 "set relativenumber                             Set relative numbers"
 set ttyfast                                     "Set typing fast/ scroll fast option"
@@ -95,12 +95,32 @@ set list lcs=trail:·,tab:»»,nbsp:~
 
 "GUI Adjust"
 hi LineNr ctermbg=0 guibg=bg
-:setlocal foldcolumn=2
-hi foldcolumn ctermbg=bg guibg=bg
 hi vertsplit ctermbg=0 guibg=bg
+hi foldcolumn ctermbg=0 guibg=bg guifg=white
 
 "Fold
+set foldmethod=syntax
+:setlocal foldcolumn=0
+let javascript_fold=1
+set foldlevelstart=99
+set fillchars=fold:\ 
+
 nmap <Leader>zf V$%zf
+"Toggle folds
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+"Neat Folding
+function! NeatFoldText()
+    let line = '' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+    let lines_count = v:foldend - v:foldstart + 1
+    let lines_count_text = '|' . printf("%10s", lines_count . ' lines') . '|'
+    let foldchar = matchstr(&fillchars, 'fold:\zs.')
+    let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2). line, 0, (winwidth(0)*2)/3)
+    let foldtextend = lines_count_text . repeat(foldchar, 8)
+    let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+    return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
+endfunction
+set foldtext=NeatFoldText()
+
 
 "highlight word under cursor
 "color options by :so $VIMRUNTIME/syntax/hitest.vim
@@ -212,6 +232,8 @@ nnoremap <Leader>gL :silent! Glog<cr>:bot copen<cr>
 nnoremap <Leader>gp :Gpush<cr>
 nnoremap <Leader>gP :Gpull<cr>
 set diffopt+=vertical
+vmap <silent> <leader>dp V:diffput<cr>
+vmap <silent> <leader>dg V:diffget<cr>
 if has("autocmd")
     autocmd BufReadPost fugitive://* set bufhidden=delete
 endif
