@@ -144,6 +144,14 @@ let g:javascript_conceal_underscore_arrow_function = "○"
 
 map <leader>l :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
 
+" Emmet Config
+
+let g:user_emmet_settings = {
+\  'javascript' : {
+\      'extends' : 'jsx',
+\  },
+\}
+
 "------Split Management------"
 set splitbelow
 set splitright
