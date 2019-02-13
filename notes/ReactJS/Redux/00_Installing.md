@@ -28,6 +28,9 @@ yarn add redux react-redux
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 
+//const store = createStore(reducer);
+//store.getState();
+
 const createStoreWithMiddleware = applyMiddleware()(createStore)
 
 ...

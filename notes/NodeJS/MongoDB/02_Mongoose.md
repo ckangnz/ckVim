@@ -1,4 +1,8 @@
 # Install Mongoose
+
+* Mongoose : MongoDB ODM (Object Data Modeling) library
+* Mongodb : Native driver in Node.js to interact with MongoDB.
+
 ```bash
 npm install mongoose
 yarn add mongoose

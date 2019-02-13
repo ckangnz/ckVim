@@ -4,6 +4,7 @@
  - Reducer updates the Redux State matching the type name
 
 ## 1. Create a reducer (e.g. `/src/reducers/movies_reducer.js`)
+- Reducer is a function that takes in two arguments : state / action
 ```js
 export default ( state = {} , action )=>{
   switch(action.type){
@@ -50,8 +51,8 @@ import reducer from './reducers'
 ```
 
 ## 4. Create an Action Creator `/src/actions/index.js`
-   - This will have list of functions
-   - Each function should always return an object with type and payload
+ - This will have list of functions
+ - Actions always return an object : {type:'',payload:{}}
 ```js
 export const movieslist = () =>{
   //fetch query
@@ -72,9 +73,9 @@ export const otherlist2=()=>{...type:'OTHER_LIST2'}
 ```
 
 # Connecting Reducers and Action Creators
- - connect(arg1, arg2)
-   - arg1 = mapStateToProps
-   - arg2 = actions
+ - `connect(arg1, arg2)(ComponentName)`
+   - `arg1` = mapStateToProps
+   - `arg2` = actions
 ```js
 import { connect } from 'react';
 import * as actions from './actions'
