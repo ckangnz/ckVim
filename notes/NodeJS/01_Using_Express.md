@@ -13,24 +13,28 @@ yarn add express
 const express = require('express');
 const app = express(); //Creating a server
 
-let HTML= fs.readfileSync('./index.html')
-let json = {
-  name:'Chris',
-  lastname:'Kang'
-}
-
+//Render HTML
 app.get('/',(req,res)=>{
+  let HTML= fs.readfileSync('./index.html')
   res.send(HTML)
 })
+
+//Render JSON
 app.get('/json',(req,res)=>{
+  let json = {
+    name:'Chris',
+    lastname:'Kang'
+  }
   res.send(json)
 })
+
 //Parameter
 app.get('/api/user/:id/:whatever',(req,res)=>{
   let id = req.params.id
   let whatever = req.params.whatever
   res.send(json)
 })
+
 //Query
 //require('querystring')
 app.get('/api/car',(req,res)=>{
@@ -42,4 +46,56 @@ app.get('/api/car',(req,res)=>{
 })
 
 app.listen(8181);
+```
+
+### Template Engine
+
+#### EJS
+```js
+let express = require('express');
+let app = express();
+
+app.set('view engine', 'ejs');
+app.get('/', (req,res) => {
+  // views/index.ejs
+  res.render('index', {name : "Chris"});
+})
+
+app.listen(8080, () => console.log('Server running at 8080'));
+```
+
+* Create `index.ejs` in `/views/`
+```ejs
+<%= name %>
+<% for(var i = 0; i < array.length; i ++ ){ %>
+  <%= array[i] %>
+<% } %>
+```
+
+#### Handlebars
+
+```js
+let express = require('express');
+let app = express();
+
+const exphbs = require('express-handlebars');
+app.engine('.hbs', exphbs({
+  defaultLayout: 'main',
+  extname:'.hbs'
+}))
+app.set('view engine', '.hbs');
+app.get('/', (req,res) => {
+    // views/index.hbs && views/layouts/main.hbs
+    res.render('index', {name : "Chris"});
+})
+
+app.listen(8080, () => console.log('Server running at 8080'));
+```
+
+* Create `index.hbs` in `/views/`
+```hbs
+{{ name }}
+{{#each array}}
+  {{ this }}
+{{/each}}
 ```
