@@ -56,7 +56,9 @@ const User = mongoose.model('User', userSchema);
 module.exports = { User }
 ```
 
-## Import from server
+# Register
+### Import User Schema to server (REGISTER)
+* Create a register API to `/api/user`
 
 ```js
 //...
@@ -77,6 +79,7 @@ app.post('/api/user', (req,res)=>{
 ```
 
 ## Hashing Password (basics)
+* Before saving the user, we want to encrypt the password
 
 ```bash
 node install bcrypt
@@ -85,17 +88,24 @@ yarn add bcrypt
 
 ```js
 const bcrypt = require('bcrypt');
-bcrypt.getnSalt(10,(err,salt)=>{
-    if(err) return next(err);
 
-    bcrypt.hash('my_password_123', salt , (err.hash)=>{
+// Generate salt then concat hashed password
+bcrypt.genSalt(10,(err, salt)=>{
+    if(err) return next(err);
+    bcrypt.hash('user_password', salt , (err, hash)=>{
         if(err) return next(err);
-        console.log(hash);
+        console.log(hash); //hash is generated
     })
+})
+
+// Compare two passwords
+bcrypt.compare('user_password', '#!@YE@!$HWBF@BWB', (err,isMatch)=>{
+    if(err) throw err;
+    res.status(200).send(isMatch);
 })
 ```
 
-### Bcrypt in User Schema
+#### Example in User Schema
 
 ```js
 //users.js
@@ -124,24 +134,8 @@ userSchema.pre('save',function(next){
 })
 ```
 
-### Authentication
+# Login (Password Authentication)
 ```js
-//server.js
-
-app.post('/api/user/login',(req,res)=>{
-    User.findOne({'email':req.body.email}, (err,user)=>{
-        if(!user) return res.json({message: 'Auth failed, user not found'});
-        bcrypt.compare(req.body.password, user.password, (err,isMatch)=>{
-            if(err) throw err;
-            res.status(200).send(isMatch);
-        })
-        //res.status(200).send(user)
-    })
-})
-
-//-----------------------------------------------
-
-// Or store the method in the model
 // users.js
 userSchema.methods.comparePassword = function(candidatePassword,cb){
     bcrypt.compare(candidatePassword, this.password, function(err,isMatch){
@@ -160,8 +154,8 @@ app.post('/api/user/login',(req,res)=>{
                 message:"Wrong Password"
             });
             res.status(200).send(user);
+            // NOW WE NEED TO ADD JSON WEB TOKEN HERE
         })
     })
 })
-
 ```

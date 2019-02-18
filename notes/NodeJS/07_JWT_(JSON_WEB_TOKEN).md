@@ -4,17 +4,14 @@
 npm install jsonwebtoken
 yarn ad jsonwebtoken
 ```
-
-### Basics
-
 ```js
 const jwt = require('jsonwebtoken');
 
-const id = '1000'; //user id
+const userID = '1000'; //user id
 const secret = 'supersecret'
 
-const token = jwt.sign(id, secret);
-const decodeToken = jwt.verify(token,secret);
+const token = jwt.sign(userID, secret);
+const decodeToken = jwt.verify(token,secret); //decodedToken is the user's id
 
 console.log(decodeToken)
 ```
@@ -40,7 +37,9 @@ const userSchema = mongoose.Schema({
 })
 ```
 
-### Create generateToken method
+# Login (Token Generation)
+#### Create a token when authenticated (LOGIN SUCCESS)
+* Generates token and returns user with token
 ```js
 userSchema.methods.generateToken = function(cb){
     var user =this;
@@ -53,9 +52,7 @@ userSchema.methods.generateToken = function(cb){
     })
 }
 ```
-
-### Generate Token when user succeeds to login
-
+* Save user's token to cookie
 ```js
 app.post('/api/user/login',(req,res)=>{
     User.findOne({'email':req.body.email}, (err,user)=>{
@@ -75,8 +72,20 @@ app.post('/api/user/login',(req,res)=>{
 })
 ```
 
-### Create a static method on schema 
+# Authenticated Routes (Token check)
+### Install cookie-parser
+* We need Cookie Parser to handle our cookies
+```bash
+npm install cookie-parser
+yarn add cookie-parser
+```
+```js
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+```
 
+### Create a static method on schema 
+* Find user with matching token from the cookie
 ```js
 userSchema.statics.findByToken = function(token, cb){
     const user = this;
@@ -89,37 +98,10 @@ userSchema.statics.findByToken = function(token, cb){
 }
 ```
 
-### Make another route and Install cookie-parser
-```bash
-npm install cookie-parser
-yarn add cookie-parser
-```
+## Creating a middleware
+  * Find user by token from cookie. If exists, pass user and token
 ```js
-const cookieParser = require('cookie-parser');
-//...
-app.use(cookieParser());
-//...
-app.get('/api/user/profile',(req,res)=>{
-    let token = req.cookies.auth;
-
-    User.findByToken(token,(err,user)=>{
-        if(err) throw err;
-        if(!user) res.status(401).send('no access');
-
-        res.status(200).send('you have access');
-    })
-})
-```
-
----
-
-# Creating a middleware
-
-### Instead of checking cookie from the routes, create a auth.js
-
-```
 // server/middleware/auth.js
-
 const { User  } = require('../models/users');
 
 let auth = (req,res,next) =>{
@@ -130,6 +112,7 @@ let auth = (req,res,next) =>{
         if(!user) res.status(401).send('no access');
 
         req.token = token;
+        req.user = user;
         next();
     })
 }
@@ -137,13 +120,34 @@ let auth = (req,res,next) =>{
 module.exports = {auth}
 ```
 
-### Simplify the routes 
+### Add authentication middleware 
 ```js
 //server.js
 ...
 const auth = require('./middleware/auth.js');
 ...
-app.get('/api/user/profile',auth, (req,res)=>{
+app.get('/api/user/profile', auth, (req,res)=>{
     res.status(200).send(req.token);
 })
 ```
+
+# Logout
+  * Delete token method
+```js
+userSchema.methods.deleteToken = function(token,cb){
+    var user = this;
+    user.update({$unset:{token:1}},(err,user)=>{
+        if(err) return cb(err);
+        cb(null,user);
+    })
+}
+```
+ ```js
+// Auth middleware will pass user
+app.get('/api/logout',auth , (req,res)=>{
+    req.user.deleteToken(req.token, (err,user)=>{
+        if(err) return res.status(400).send(err);
+        res.cookie('auth','').sendStatus(200)
+    })
+})
+ ```
