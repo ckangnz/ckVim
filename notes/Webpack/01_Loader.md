@@ -77,7 +77,7 @@ module.exports = {
             //use : ['style-loader','css-loader','sass-loader'],
             use : [
               //'style-loader',
-              { loader: MiniCSSExtractPlugin.loader },
+              { loader: MiniCssExtractPlugin.loader },
               { loader: 'css-loader', options:{ sourceMap: true, } },
               { loader: 'postcss-loader' },
               { loader: 'sass-loader', },
@@ -87,7 +87,7 @@ module.exports = {
     ],
   },
   plugins:[
-    new MiniCSSExtractPlugin({
+    new MiniCssExtractPlugin({
       filename:"css/[name].css",
       chunkFilename:"css/[id].css"
     })
