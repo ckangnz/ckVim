@@ -47,19 +47,26 @@ docker-compose run web bash python manage.py
 
 ## Migrate
 ```bash
-docker-compose run web bash python manage.py
-  makemigrations      "Making migration files"
-      --merge         "Merge onto existing migration file"
-  migrate             "migrate the new model"
-     `appname` zero   "Unapply migrations" 
-      --fake-initial  "Faking migration to be initial"
+docker-compose run -rm web bash # Start a container
+
+python manage.py
+  makemigrations      #Making migration files
+      --merge         #Merge onto existing migration file
+  migrate             #Migrate the new model
+     --fake `appname` zero   #Unapply migrations 
+      --fake-initial  #Faking migration to be initial
 ```
 
 ## Resetting Migration
-    python manage.py migrate --fake `APPNAME` zero
-    - Delete all in migrations folder except __init__
-    python manage.py makemigrations `APPNAME`
-    python manage.py migrate `APPNAME` --fake-initial
+  1. Unapply migration of the app
+  - `python manage.py migrate --fake "APPNAME" zero`
+  2. Delete all in migrations folder except __init__
+  - `find . -path "APPNAME/migrations/*.py" -not -name "__init__.py" -delete`
+  - `find . -path "APPNAME/migrations/*.pyc" -delete`
+  3. Create the initial migrations
+  - `python manage.py makemigrations "APPNAME"`
+  4. Fake the initial migration
+  - `python manage.py migrate "APPNAME" --fake-initial`
 
 # Installing Plugin
     * In docker-compose
