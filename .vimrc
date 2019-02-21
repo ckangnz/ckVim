@@ -71,8 +71,7 @@ let &t_EI.="\e[1 q"
 
 set t_CO=256
 set macligatures
-"set guifont=Fira_Code:h12
-set guifont=Fira\ Code:h12
+set guifont=FuraCode\ Nerd\ Font:h12
 set guioptions-=e
 set linespace=10
 set wrapmargin=0                                "line number margins
