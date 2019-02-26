@@ -12,7 +12,7 @@ yarn add webpack-dev-server -D
   ...
   "scripts" : {
     "build" : "webpack",
-    //"dev":"webpack-dev-server --port 3000"
+    //"dev":"webpack-dev-server --port 3000 --content-base bundle/"
     "dev":"webpack-dev-server"
   }
   ...
