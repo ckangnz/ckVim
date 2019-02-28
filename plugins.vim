@@ -27,25 +27,30 @@ Plugin 'tpope/vim-fugitive'                                 "Git on Vim
 Plugin 'idanarye/vim-merginal'                              "Git branch organiser
 Plugin 'junegunn/gv.vim'                                    "Git commit history browser
 
-Plugin 'Townk/vim-autoclose'                                "Automatic closing ({['']})
+"General IDE Tools
+Plugin 'jiangmiao/auto-pairs'                                "Automatic closing ({['']})
 Plugin 'Valloric/MatchTagAlways'                            "Highlights HTML tag pair
 Plugin 'arithran/vim-delete-hidden-buffers'                 "Delete Hidden Buffer
 Plugin 'ctrlpvim/ctrlp.vim'                                 "Project Tree browser
-Plugin 'gabrielelana/vim-markdown'                          "Easy MD tools
 Plugin 'godlygeek/tabular'                                  "Text Aligning Tool
 Plugin 'mattn/emmet-vim'                                    "Emmet
 Plugin 'nathanaelkane/vim-indent-guides'                    "Indentation Guide (,ig)
 Plugin 'scrooloose/nerdcommenter'                           "Easy Commenting tool
-Plugin 'skywind3000/asyncrun.vim'                           "Asyncrun tasks
 Plugin 'tmhedberg/matchit'                                  "More functionality to %
 Plugin 'tpope/vim-surround'                                 "Easy text wrap tool
-Plugin 'wesQ3/vim-windowswap'                               "Split Panel switch
 
-" These plugins need the_silver_searcher. Install with homebrew
+"General Vim Tool
+Plugin 'gabrielelana/vim-markdown'                          "Easy MD tools
+Plugin 'wesQ3/vim-windowswap'                               "Split Panel switch
+Plugin 'skywind3000/asyncrun.vim'                           "Asyncrun tasks
+
+"Search Tool
 Plugin 'mileszs/ack.vim'                                    "Project search
 Plugin 'skwp/greplace.vim'                                  "Project search and replace
+Plugin 'majutsushi/tagbar'                                  "Browse Tags
 
 "Autofill (YCM needs brew install)
+Plugin 'MarcWeber/vim-addon-mw-utils'                       "Util needed for snipmate
 Plugin 'Valloric/YouCompleteMe'                             "Autofill Tool
 Plugin 'garbas/vim-snipmate'                                "Previews automatic fill
 Plugin 'ervandew/supertab'                                  "Automatic Fill detection

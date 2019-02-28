@@ -309,6 +309,7 @@ vnoremap // y/<C-R>"<CR>
 "-----ctags--------"
 nmap <Leader>F :tag<space>
 nmap <Leader>ct :!ctags -R .<cr>
+nmap <Leader>tl :TagbarToggle<cr>
 "MAKE SURE :ctags -R to make things work"
 
 "-----Ack Find from all files // Greplace to Change from all files--------"
