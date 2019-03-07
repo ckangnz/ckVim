@@ -306,9 +306,16 @@ nmap <C-t> :CtrlPTag<cr>
 nmap <C-e> :CtrlPMRUFiles<cr>
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git$\|prod\|static_collected'
+let g:ctrlp_custom_ignore = {
+    \'dir': '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$',
+    \'file': '\v\.(dll|min.js|min.css|jpg|png|mp4)$'
+\}
 let g:ctrlp_mruf_relative = 1
 nmap <F5> :CtrlPClearCache<cr>
+
+"gabrielelana/vim-markdown
+let g:markdown_enable_spell_checking = 0
+let g:markdown_enable_conceal = 1
 
 "--------VIM INSTANT MARKDOWN-------------
 let g:instant_markdown_autostart = 0
