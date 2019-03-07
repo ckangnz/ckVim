@@ -315,6 +315,7 @@ let g:instant_markdown_autostart = 0
 nnoremap <Leader>md :InstantMarkdownPreview<cr>
 
 "-----CTAGS--------"
+"brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 nmap <Leader>F :tag<space>
 nmap <Leader>ct :!ctags -R .<cr>
 nmap <Leader>tl :TagbarToggle<cr>
