@@ -11,12 +11,14 @@ yarn add express
 
 ```js
 const express = require('express');
+const fs = require('fs');
+
 const app = express(); //Creating a server
 
 //Render HTML
 app.get('/',(req,res)=>{
   let HTML= fs.readfileSync('./index.html')
-  res.send(HTML)
+  res.send(`${HTML}`)
 })
 
 //Render JSON
@@ -51,6 +53,10 @@ app.listen(8181);
 ### Template Engine
 
 #### EJS
+```bash
+npm install ejs
+yarn add ejs
+```
 ```js
 let express = require('express');
 let app = express();
@@ -73,7 +79,10 @@ app.listen(8080, () => console.log('Server running at 8080'));
 ```
 
 #### Handlebars
-
+```bash
+npm install express-handlebars
+yarn add express-handlebars
+```
 ```js
 let express = require('express');
 let app = express();
@@ -92,6 +101,13 @@ app.get('/', (req,res) => {
 app.listen(8080, () => console.log('Server running at 8080'));
 ```
 
+* Create main.hbs in /views/layouts
+```html
+<body>
+  {{{body}}}
+</body>
+</html>
+```
 * Create `index.hbs` in `/views/`
 ```hbs
 {{ name }}
