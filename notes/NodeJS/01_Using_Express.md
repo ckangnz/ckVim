@@ -70,8 +70,9 @@ app.get('/', (req,res) => {
 app.listen(8080, () => console.log('Server running at 8080'));
 ```
 
-* Create `index.ejs` in `/views/`
+* Variable / Loop
 ```ejs
+<!--/views/index.ejs-->
 <%= name %>
 <% for(var i = 0; i < array.length; i ++ ){ %>
   <%= array[i] %>
@@ -101,17 +102,72 @@ app.get('/', (req,res) => {
 app.listen(8080, () => console.log('Server running at 8080'));
 ```
 
-* Create main.hbs in /views/layouts
+* Variable / Loops
 ```html
+<!--/views/layouts/index.hbs-->
 <body>
   {{{body}}}
 </body>
 </html>
 ```
-* Create `index.hbs` in `/views/`
+* Variable / Loops
 ```hbs
+<!--/views/index.hbs-->
 {{ name }}
 {{#each array}}
   {{ this }}
 {{/each}}
+```
+
+#### Nunjucks
+```bash
+npm install nunjucks
+yarn add nunjucks
+```
+```js
+const express = require('express');
+const nunjucks = require('nunjucks');
+
+const app = express();
+app.set('view engine', 'html');
+
+//nunjucks.configure('views', {
+nunjucks.configure(path.join(__dirname, 'templates'), {
+  autoescape:true,
+  noCache: (process.env.ENV == 'production')?false:true,
+  express:app,
+})
+
+app.get('/', (req,res)=>{
+  res.render('index.html', {name : "Chris"})
+})
+app.listen(3000, ()=> console.log('Server is runing at port 3000'))
+```
+
+```jinja
+<!-- templates/base.html -->
+<body>
+{% block header %}
+  This is default header
+{% endblock %}
+{% block contents %}
+  This is default contents
+{% endblock %}
+</body>
+
+<!-- templates/index.html -->
+{% extends "base.html" %}
+{% block header %}
+  This is header from index
+{% endblock %}
+{% block contents %}
+  This is contents from index
+{% endblock %}
+```
+* Variable / Loops
+```jinja
+{{ name }}
+{% for item in items %}
+  {{item}}
+{% endfor %}
 ```
