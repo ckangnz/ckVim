@@ -309,7 +309,7 @@ let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
 let g:ctrlp_custom_ignore = {
     \'dir': '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$',
-    \'file': '\v\.(dll|min.js|min.css|jpg|png|mp4)$'
+    \'file': '\v\.(dll|tags|min.js|min.css|jpg|png|mp4)$'
 \}
 let g:ctrlp_mruf_relative = 1
 nmap <F5> :CtrlPClearCache<cr>
