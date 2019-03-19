@@ -225,7 +225,8 @@ nnoremap <Leader>gB :Gblame<cr>
 nnoremap <Leader>gl :GV --decorate --all<cr>
 nnoremap <Leader>gL :silent! Glog<cr>:bot copen<cr>
 nnoremap <Leader>gp :Gpush<cr>
-nnoremap <Leader>gP :Gpull<cr>
+nnoremap <Leader>gP :Gpush -f<cr>
+nnoremap <Leader>gu :Gpull<cr>
 set diffopt+=vertical
 vmap <silent> <leader>dp V:diffput<cr>
 vmap <silent> <leader>dg V:diffget<cr>
