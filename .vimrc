@@ -326,7 +326,6 @@ nnoremap <Leader>md :InstantMarkdownPreview<cr>
 nmap <Leader>F :tag<space>
 nmap <Leader>ct :!ctags -R .<cr>
 nmap <Leader>tl :TagbarToggle<cr>
-"MAKE SURE :ctags -R to make things work"
 
 "-----AUTO-COMMANDS------"
 "Auto sourcing self
