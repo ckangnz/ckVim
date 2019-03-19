@@ -332,7 +332,8 @@ nmap <Leader>tl :TagbarToggle<cr>
 "Auto sourcing self
 augroup autosourcing
 	autocmd!
-	autocmd BufWritePost .vimrc source %
+	autocmd BufWritePost $MYVIMRC source $MYVIMRC
+	autocmd BufWritePost $MYVIMRC AirlineRefresh
 augroup END
 
 "--------CUSTOM VIM SCRIPT------------
