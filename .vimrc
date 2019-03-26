@@ -81,12 +81,12 @@ vnoremap ∆ :m '>+1<CR>gv=gv
 vnoremap ˚ :m '<-2<CR>gv=gv
 
 "Hotkeys to edit
-nmap ,ev :vsp $MYVIMRC<cr>
-nmap ,ez :vsp ~/.zshrc<cr>
-nmap ,eh :vsp ~/.vim/vimhelp.MD<cr>
-nmap ,en :vsp ~/.vim/notes<cr>
-nmap ,ep :vsp ~/.vim/plugins.vim<cr>
-nmap ,pi :PluginInstall<cr>
+nmap <leader>ev :vsp $MYVIMRC<cr>
+nmap <leader>ez :vsp ~/.zshrc<cr>
+nmap <leader>eh :vsp ~/.vim/vimhelp.MD<cr>
+nmap <leader>en :vsp ~/.vim/notes<cr>
+nmap <leader>ep :vsp ~/.vim/plugins.vim<cr>
+nmap <leader>pi :PluginInstall<cr>
 
 "Panel Navigation
 nmap <C-J> <C-W><C-J>

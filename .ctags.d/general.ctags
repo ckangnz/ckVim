@@ -7,6 +7,8 @@
 --exclude=gulp
 
 --exclude=*.html
+--exclude=*.css
+--exclude=*.min.css
 --exclude=*.min.js
 --exclude=*.pack.js
 --exclude=*.position.js

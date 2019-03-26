@@ -81,8 +81,8 @@ const products = [
   {name:'Super vision', category:'TV'},
 ]
 
-const result = products.filter((product){
-  return product.category === 'TV' //returns one item
+const result = products.find((product){
+  return product.category === 'TV' //returns two items
 })
 ```
 
