@@ -28,11 +28,12 @@ Plugin 'idanarye/vim-merginal'                              "Git branch organise
 Plugin 'junegunn/gv.vim'                                    "Git commit history browser
 
 "General IDE Tools
-Plugin 'jiangmiao/auto-pairs'                                "Automatic closing ({['']})
 Plugin 'Valloric/MatchTagAlways'                            "Highlights HTML tag pair
 Plugin 'arithran/vim-delete-hidden-buffers'                 "Delete Hidden Buffer
 Plugin 'ctrlpvim/ctrlp.vim'                                 "Project Tree browser
 Plugin 'godlygeek/tabular'                                  "Text Aligning Tool
+Plugin 'jiangmiao/auto-pairs'                               "Automatic closing ({['']})
+Plugin 'kristijanhusak/vim-carbon-now-sh'                   "Export to Carbon Now
 Plugin 'mattn/emmet-vim'                                    "Emmet
 Plugin 'nathanaelkane/vim-indent-guides'                    "Indentation Guide (,ig)
 Plugin 'scrooloose/nerdcommenter'                           "Easy Commenting tool

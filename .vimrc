@@ -318,6 +318,13 @@ nmap <F5> :CtrlPClearCache<cr>
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_conceal = 1
 
+"kristijanhusak/vim-carbon-now-sh
+let g:carbon_now_sh_options = {
+            \'t':'material',
+            \'ln':'false',
+            \'fm':'Fira' }
+vnoremap <leader>cn :CarbonNowSh<CR>
+
 "--------VIM INSTANT MARKDOWN-------------
 let g:instant_markdown_autostart = 0
 nnoremap <Leader>md :InstantMarkdownPreview<cr>
