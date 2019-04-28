@@ -27,11 +27,11 @@
     hjkl                            left down up right
     gg / G                          top / bottom of page
     ctrl + u / d                    jump half page up / down
-    Ctrl+ o / i                     jump to previous cursor position in files
+    ctrl+ o / i                     jump to previous cursor position in files
     ''                              last position of cursor
     zz                              focus cursor in the center
     //                              search visually selected word
-    Ctrl+] / Ctrl + e               jump to ctag / out of ctag 
+    ctrl+] / :pop               jump to ctag / out of ctag 
     gt / gT                         change tabs
     :vsp / :sp                      split view vertical/horizontal
     ctrl + a / x                    increments number
@@ -43,15 +43,18 @@
     ,ww                             swap buffer
     ,wf                             maximize pane
     ,wm                             minimize pane
+    ,wh                             change to horizontal split
+    ,wv                             change to vertical split
+    ,wt                             open to a new tab
 
 ### Vim-surround
     shift + s                       Surround with...(visual mode)
     c + s + ' + "                   change surrounding ' to "
 
 ### Ctrl-P Plugin
-    <ctrl> + p                        open files
-    <ctrl> + e                        open from buffer/memories
-    <ctrl> + t                        look for function
+    ctrl + p                        open files
+    ctrl + e                        open from buffer/memories
+    ctrl + t                        look for tags
 
 ### Javascript Syntax Concealing
     ,l                              toggle conceal
@@ -77,28 +80,31 @@
     cgn =>  . / n                   Change word => Repeat / Skip
     :s/old/new/g                    Change word old to new
     :s/from.*end/new/               Change word old to new
-    :s/id=".\{-}"                   Change {id="*****"}
+    :s/id=".\{-}"                   Change `id="*****"`
 
 ### UltiSnippets  + YCM
     tab                             autocomplete
-    c-j / c-k                       next/previous options
+    c-n / c-p                       next/previous options
 
 ### Vim Fugitive + Merginal + GV
-    ,gst                            Gstatus
+    ,1                              Gstatus
         cc                              commit
         ca                              commit --amend
         ce                              commit --amend-noedit
-    ,gb                             :Merginal (Show branches)
-        ?                               Help
+    ,2                              GV (Show logs)
+    ,3                              Merginal (Show branches)
+        ?                               Help to see more...
+    ,gp                             Push
+    ,gP                             Push Force
+    ,gl                             Pull
     ,gr                             Gread
     ,gw                             Gwrite
     ,gd                             Gdiff   (Diff local / index)
       do                                diff obtain(bring)
       dp                                diff put(revert)
     ,ge                             Gedit   (Toggle local / index)
-    ,gB                             :Gblame (Show blame for current file)
-    ,gl                             :GV (Show logs)
-    ,gL                             :Glog (Show log of current file)
+    ,gb                             Gblame (Show blame for current file)
+    ,gL                             Glog (Show log of current file)
 
 ### Tabular
     ,ta                             :Tabularize e.g. (,ta=  will prettify =)

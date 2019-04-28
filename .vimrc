@@ -196,7 +196,7 @@ let g:user_emmet_settings = {
 "arithran/vim-delete-hidden-buffers
 nnoremap <Leader>q :DeleteHiddenBuffers<CR>
 
-"nathanaelkane/vim-indent-guides
+"nathanaelkane/vim-indent-guides (,ig)
 let g:indent_guides_auto_colors = 1
 let g:indent_guides_start_level = 1
 let g:indent_guides_guide_size = 1
@@ -215,21 +215,21 @@ let g:mta_filetypes = {
 nnoremap <leader>% :MtaJumpToOtherTag<cr>
 
 "tpope/vim-fugitive / idanarye/vim-merginal / junegunn/gv.vim
-nnoremap <Leader>gst :Gstatus<cr><c-w>T
+nnoremap <Leader>1 :Gstatus<cr><c-w>T
+nnoremap <Leader>2 :GV --decorate --all<cr>
+nnoremap <Leader>3 :MerginalToggle<cr>
 nnoremap <Leader>gr :Gread<cr>
 nnoremap <Leader>gw :Gwrite<cr>
 nnoremap <Leader>gd :Gdiff<cr>
 nnoremap <Leader>ge :Gedit<space>
-nnoremap <Leader>gb :MerginalToggle<cr>
-nnoremap <Leader>gB :Gblame<cr>
-nnoremap <Leader>gl :GV --decorate --all<cr>
-nnoremap <Leader>gL :silent! Glog<cr>:bot copen<cr>
+nnoremap <Leader>gb :Gblame<cr>
 nnoremap <Leader>gp :Gpush<cr>
 nnoremap <Leader>gP :Gpush -f<cr>
-nnoremap <Leader>gu :Gpull<cr>
+nnoremap <Leader>gl :Gpull<cr>
+nnoremap <Leader>gL :silent! Glog<cr>:bot copen<cr>
 set diffopt+=vertical
 vmap <silent> <leader>dp V:diffput<cr>
-vmap <silent> <leader>dg V:diffget<cr>
+vmap <silent> <leader>do V:diffget<cr>
 if has("autocmd")
     autocmd BufReadPost fugitive://* set bufhidden=delete
 endif
@@ -240,24 +240,24 @@ command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 "pangloss/vim-javascript
 highlight Conceal guifg=fg guibg=bg
 let g:javascript_plugin_flow = 1
-let g:javascript_conceal_function             = "ƒ"
-let g:javascript_conceal_null                 = "ø"
-let g:javascript_conceal_this                 = "@"
-let g:javascript_conceal_return               = "⇚"
-let g:javascript_conceal_undefined            = "¿"
-let g:javascript_conceal_NaN                  = "ℕ"
-let g:javascript_conceal_prototype            = "¶"
-let g:javascript_conceal_static               = "•"
-let g:javascript_conceal_super                = "Ω"
-let g:javascript_conceal_arrow_function       = "⇒"
-let g:javascript_conceal_noarg_arrow_function = "○"
+let g:javascript_conceal_function                  = "ƒ"
+let g:javascript_conceal_null                      = "ø"
+let g:javascript_conceal_this                      = "@"
+let g:javascript_conceal_return                    = "⇚"
+let g:javascript_conceal_undefined                 = "¿"
+let g:javascript_conceal_NaN                       = "ℕ"
+let g:javascript_conceal_prototype                 = "¶"
+let g:javascript_conceal_static                    = "•"
+let g:javascript_conceal_super                     = "Ω"
+let g:javascript_conceal_arrow_function            = "⇒"
+let g:javascript_conceal_noarg_arrow_function      = "○"
 let g:javascript_conceal_underscore_arrow_function = "○"
 map <leader>l :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
 
 "godlygeek/tabular
 nmap <Leader>ta :Tabularize/
 vmap <Leader>ta :Tabularize/
-inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+inoremap <silent> <Bar> <Bar><Esc>:call <SID>align()<CR>a
 function! s:align()
   let p = '^\s*|\s.*\s|\s*$'
   if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
@@ -333,7 +333,7 @@ nnoremap <Leader>md :InstantMarkdownPreview<cr>
 "brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 nmap <Leader>F :tag<space>
 nmap <Leader>ct :!ctags -R .<cr>
-nmap <Leader>tl :TagbarToggle<cr>
+nmap <Leader>0 :TagbarToggle<cr>
 
 "-----AUTO-COMMANDS------"
 "Auto sourcing self
