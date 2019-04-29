@@ -314,6 +314,11 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_mruf_relative = 1
 nmap <F5> :CtrlPClearCache<cr>
 
+"mbbill/undotree
+nnoremap <leader>u :UndotreeToggle<cr>
+let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_WindowLayout = 3
+
 "gabrielelana/vim-markdown
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_conceal = 1

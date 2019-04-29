@@ -42,8 +42,9 @@ Plugin 'tpope/vim-surround'                                 "Easy text wrap tool
 
 "General Vim Tool
 Plugin 'gabrielelana/vim-markdown'                          "Easy MD tools
-Plugin 'wesQ3/vim-windowswap'                               "Split Panel switch
+Plugin 'mbbill/undotree'                                    "Magic of Undos
 Plugin 'skywind3000/asyncrun.vim'                           "Asyncrun tasks
+Plugin 'wesQ3/vim-windowswap'                               "Split Panel switch
 
 "Search Tool
 Plugin 'mileszs/ack.vim'                                    "Project search
