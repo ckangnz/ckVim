@@ -17,7 +17,7 @@ const app = express(); //Creating a server
 
 //Render HTML
 app.get('/',(req,res)=>{
-  let HTML= fs.readfileSync('./index.html')
+  let HTML= fs.readFileSync('./index.html')
   res.send(`${HTML}`)
 })
 

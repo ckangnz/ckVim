@@ -23,6 +23,8 @@ const fs = require ('fs');
 const urlencodeParser = bodyParser.urlencoded({extended:false})
 //json parser expects a json
 const jsonParser = bodyParser.json();
+app.use(urlencodeParser)
+app.use(jsonParser)
 
 app.get('/user',(req,res)=>{
   let HTML = fs.readFileSync(`${__dirname}/index.html`)
