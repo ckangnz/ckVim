@@ -49,15 +49,14 @@ Plugin 'wesQ3/vim-windowswap'                               "Split Panel switch
 "Search Tool
 Plugin 'mileszs/ack.vim'                                    "Project search
 Plugin 'skwp/greplace.vim'                                  "Project search and replace
-Plugin 'majutsushi/tagbar'                                  "Browse Tags
 
-"Autofill (YCM needs brew install)
-Plugin 'MarcWeber/vim-addon-mw-utils'                       "Util needed for snipmate
+"Autofill (YCM requires macvim : run install.py --all in bundle/ycm folder)
 Plugin 'Valloric/YouCompleteMe'                             "Autofill Tool
-Plugin 'garbas/vim-snipmate'                                "Previews automatic fill
-Plugin 'ervandew/supertab'                                  "Automatic Fill detection
-Plugin 'honza/vim-snippets'                                 "Snippet Library
+Plugin 'ervandew/supertab'                                  "Use autocompleted text with tab
+
+"Snippets
 Plugin 'SirVer/ultisnips'                                   "Snippet Tool
+Plugin 'honza/vim-snippets'                                 "Snippet Library
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required

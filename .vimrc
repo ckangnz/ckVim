@@ -279,12 +279,11 @@ let g:ycm_key_list_stop_completion = ['<cr>']
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-" If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
 "ervandew/supertab
 let g:SuperTabDefaultCompletionType = '<C-n>'
-"let g:SuperTabCrMapping=1
+let g:SuperTabCrMapping=1
 let g:SuperTabClosePreviewOnPopupClose = 1
 autocmd FileType *
   \ if &omnifunc != '' |
@@ -338,7 +337,6 @@ nnoremap <Leader>md :InstantMarkdownPreview<cr>
 "brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 nmap <Leader>F :tag<space>
 nmap <Leader>ct :!ctags -R .<cr>
-nmap <Leader>0 :TagbarToggle<cr>
 
 "-----AUTO-COMMANDS------"
 "Auto sourcing self
