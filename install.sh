@@ -13,6 +13,7 @@ if brew ls --versions fzf > /dev/null; then
 else
     echo 'Installing fzf...'
     brew install fzf
+    $(brew --prefix)/opt/fzf/install
     echo 'Completed Installing fzf!'
 fi
 
