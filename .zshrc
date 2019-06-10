@@ -64,3 +64,5 @@ eval "$(pyenv init -)"
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYENV="true"
 export WORKON_HOME=$HOME/.virtualenvs
 pyenv virtualenvwrapper_lazy
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

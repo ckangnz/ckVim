@@ -30,7 +30,7 @@ Plugin 'junegunn/gv.vim'                                    "Git commit history 
 "General IDE Tools
 Plugin 'Valloric/MatchTagAlways'                            "Highlights HTML tag pair
 Plugin 'arithran/vim-delete-hidden-buffers'                 "Delete Hidden Buffer
-Plugin 'ctrlpvim/ctrlp.vim'                                 "Project Tree browser
+Plugin 'junegunn/fzf.vim'                                   "Fuzzy find files/content/tags
 Plugin 'godlygeek/tabular'                                  "Text Aligning Tool
 Plugin 'jiangmiao/auto-pairs'                               "Automatic closing ({['']})
 Plugin 'kristijanhusak/vim-carbon-now-sh'                   "Export to Carbon Now

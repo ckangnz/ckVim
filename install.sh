@@ -7,6 +7,15 @@ else
     echo 'Completed Installing Macvim!'
 fi
 
+#Install FZF
+if brew ls --versions fzf > /dev/null; then
+    echo 'Detected existing fzf'
+else
+    echo 'Installing fzf...'
+    brew install fzf
+    echo 'Completed Installing fzf!'
+fi
+
 #Install Universal Ctags
 if brew ls --versions universal-ctags > /dev/null; then
     echo 'Detected ctags'

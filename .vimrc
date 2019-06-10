@@ -290,28 +290,25 @@ autocmd FileType *
   \   call SuperTabChain(&omnifunc, "<c-p>") |
 \ endif
 
-"mileszs/ack.vim
-nnoremap <Leader>f :Ack!<space>
-let g:ackprg = "ag --vimgrep -i --group --follow --match"
-let g:ack_wildignore=0
+"junegunn/fzf
+set rtp+=/usr/local/opt/fzf
+autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
+let g:fzf_layout = {'down':'15~'}
+nnoremap <C-p> :Files<CR>
+nnoremap <C-e> :History<CR>
+nnoremap <C-t> :Tags<CR>
+nnoremap <Leader>f :Ag <c-r><c-w>
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>,
+        \ fzf#vim#with_preview(
+            \   {'down':'~60%','options': '--delimiter : --nth 4..'},
+            \   'up:60%',
+        \   ),<bang>0)
+nnoremap ? :BLines<CR>
 
 "skwp/greplace.vim
 nnoremap <Leader>h :Gsearch<cr>
-set grepprg=ack
+set grepprg=ag
 let g:grep_cmd_opts = '--noheading'
-
-"ctrlpvim/ctrlp.vim
-nmap <C-p> :CtrlP<cr>
-nmap <C-t> :CtrlPTag<cr>
-nmap <C-e> :CtrlPMRUFiles<cr>
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
-let g:ctrlp_custom_ignore = {
-    \'dir': '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$',
-    \'file': '\v\.(dll|tags|min.js|min.css|jpg|png|mp4)$'
-\}
-let g:ctrlp_mruf_relative = 1
-nmap <F5> :CtrlPClearCache<cr>
 
 "mbbill/undotree
 nnoremap <leader>u :UndotreeToggle<cr>
