@@ -294,10 +294,16 @@ autocmd FileType *
 set rtp+=/usr/local/opt/fzf
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 let g:fzf_layout = {'down':'15~'}
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-o': 'split',
+  \ 'ctrl-v': 'vsplit' }
 nnoremap <C-p> :Files<CR>
 nnoremap <C-e> :History<CR>
 nnoremap <C-t> :Tags<CR>
-nnoremap <Leader>f :Ag <c-r><c-w>
+noremap <Leader>f :Ag 
+vnoremap <Leader>f y:Ag <c-r>"<cr>
+nnoremap <Leader>F :Ag <c-r><c-w><cr>
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>,
         \ fzf#vim#with_preview(
             \   {'down':'~60%','options': '--delimiter : --nth 4..'},
@@ -332,7 +338,6 @@ nnoremap <Leader>md :InstantMarkdownPreview<cr>
 
 "-----CTAGS--------"
 "brew install --HEAD universal-ctags/universal-ctags/universal-ctags
-nmap <Leader>F :tag<space>
 nmap <Leader>ct :!ctags -R .<cr>
 
 "-----AUTO-COMMANDS------"
