@@ -310,6 +310,7 @@ command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>,
             \   'up:60%',
         \   ),<bang>0)
 nnoremap ? :BLines<CR>
+vnoremap ? y:BLines <c-r><c-w><cr>
 
 "skwp/greplace.vim
 nnoremap <Leader>h :Gsearch<cr>
