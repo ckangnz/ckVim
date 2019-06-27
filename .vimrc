@@ -334,6 +334,37 @@ let g:carbon_now_sh_options = {
             \'fm':'Fira' }
 vnoremap <leader>cn :CarbonNowSh<CR>
 
+"w0rp/ale
+nnoremap <leader><leader> :call ToggleSaveLint()<cr>
+
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '!'
+let g:ale_sign_warning = '?'
+let b:ale_linters = {
+            \'javascript':['flow', 'eslint'],
+            \'python':['flake8', 'pylint'],
+            \}
+let b:ale_fixers = {
+            \'javascript':['flow', 'eslint'],
+            \'python':['autopep8', 'yapf'],
+            \}
+let g:ale_fix_on_save = 1
+
+"Always lint toggle
+let s:ale_lint_on_save_toggle = 0
+let g:ale_lint_on_text_changed = 'never'
+function! ToggleSaveLint()
+    if s:ale_lint_on_save_toggle
+        let g:ale_lint_on_text_changed = 'normal'
+        let s:ale_lint_on_save_toggle = 0
+        echo 'Linting on save ON'
+    else
+        let g:ale_lint_on_text_changed = 'never'
+        let s:ale_lint_on_save_toggle = 1
+        echo 'Linting on save OFF'
+    endif
+endfunction
+
 "--------VIM INSTANT MARKDOWN-------------
 let g:instant_markdown_autostart = 0
 nnoremap <Leader>md :InstantMarkdownPreview<cr>

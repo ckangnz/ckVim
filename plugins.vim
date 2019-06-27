@@ -39,6 +39,7 @@ Plugin 'nathanaelkane/vim-indent-guides'                    "Indentation Guide (
 Plugin 'scrooloose/nerdcommenter'                           "Easy Commenting tool
 Plugin 'tmhedberg/matchit'                                  "More functionality to %
 Plugin 'tpope/vim-surround'                                 "Easy text wrap tool
+Plugin 'w0rp/ale'                                           "Liniting Engine
 
 "General Vim Tool
 Plugin 'gabrielelana/vim-markdown'                          "Easy MD tools
