@@ -23,9 +23,11 @@ Plugin 'nikvdp/ejs-syntax'                                  "EJS Syntax
 Plugin 'vim-python/python-syntax'                           "Python Syntax
 
 "Git Tool
-Plugin 'tpope/vim-fugitive'                                 "Git on Vim
 Plugin 'idanarye/vim-merginal'                              "Git branch organiser
 Plugin 'junegunn/gv.vim'                                    "Git commit history browser
+Plugin 'tpope/vim-fugitive'                                 "Git on Vim
+Plugin 'tyru/open-browser-github.vim'                       "Open Github URL
+Plugin 'tyru/open-browser.vim'                              "Open URL
 
 "General IDE Tools
 Plugin 'Valloric/MatchTagAlways'                            "Highlights HTML tag pair

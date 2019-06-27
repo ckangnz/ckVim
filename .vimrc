@@ -231,6 +231,12 @@ if has("autocmd")
     autocmd BufReadPost fugitive://* set bufhidden=delete
 endif
 
+"tyru/open-browser.vim, tyru/open-browser-github.vim
+nnoremap <Leader>go. :OpenGithubProject<cr>
+nnoremap <Leader>gof :OpenGithubFile<cr>
+nnoremap <Leader>goi :OpenGithubIssue<cr>
+nnoremap <Leader>gor :OpenGithubPullReq<cr>
+
 "skywind3000/asyncrun.vim
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
