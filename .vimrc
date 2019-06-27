@@ -144,10 +144,6 @@ set foldtext=NeatFoldText()
 "-------------SYNTAX HIGHLIGHTING-------------
 "Python Syntax
 let g:python_highlight_all = 1
-augroup EnableSyntaxHighlighting
-    autocmd! BufWinEnter,WinEnter * nested if exists('syntax_on') && ! exists('b:current_syntax') && ! empty(&l:filetype) && index(split(&eventignore, ','), 'Syntax') == -1 | syntax enable | endif
-    autocmd! BufRead * if exists('syntax_on') && exists('b:current_syntax') && ! empty(&l:filetype) && index(split(&eventignore, ','), 'Syntax') != -1 | unlet! b:current_syntax | endif
-augroup END
 
 "Custom ext highlighting
 au BufNewFile,BufRead *.ejs set filetype=html
