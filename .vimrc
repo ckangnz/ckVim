@@ -216,7 +216,7 @@ nnoremap <leader>% :MtaJumpToOtherTag<cr>
 
 "tpope/vim-fugitive / idanarye/vim-merginal / junegunn/gv.vim
 nnoremap <Leader>1 :Gstatus<cr><c-w>T
-nnoremap <Leader>2 :GV --decorate --all<cr>
+nnoremap <Leader>2 :GV --all<cr>
 nnoremap <Leader>3 :MerginalToggle<cr>
 nnoremap <Leader>gr :Gread<cr>
 nnoremap <Leader>gw :Gwrite<cr>
@@ -226,7 +226,8 @@ nnoremap <Leader>gb :Gblame<cr>
 nnoremap <Leader>gp :Gpush<cr>
 nnoremap <Leader>gP :Gpush -f<cr>
 nnoremap <Leader>gl :Gpull<cr>
-nnoremap <Leader>gL :silent! Glog<cr>:bot copen<cr>
+nnoremap <Leader>gL :GV!<cr>
+vnoremap <Leader>gL :GV!<cr>
 set diffopt+=vertical
 vmap <silent> <leader>dp V:diffput<cr>
 vmap <silent> <leader>do V:diffget<cr>
