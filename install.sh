@@ -35,15 +35,6 @@ else
     echo 'Completed Installing the_silver_searcher!'
 fi
 
-#Install Ack
-if brew ls --versions ack > /dev/null; then
-    echo 'Detected ack'
-else
-    echo 'Installing Ack...'
-    brew install --HEAD the_silver_searcher
-    echo 'Completed Installing Ack!'
-fi
-
 #Install Instant Markdown
 if npm ls --versions instant-markdown-d > /dev/null; then
     echo 'Instant-Markdown already exists'
