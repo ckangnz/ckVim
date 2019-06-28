@@ -44,6 +44,7 @@ Plugin 'tpope/vim-surround'                                 "Easy text wrap tool
 Plugin 'w0rp/ale'                                           "Liniting Engine
 
 "General Vim Tool
+Plugin 'easymotion/vim-easymotion'                          "Easy Navigation
 Plugin 'gabrielelana/vim-markdown'                          "Easy MD tools
 Plugin 'mbbill/undotree'                                    "Magic of Undos
 Plugin 'skywind3000/asyncrun.vim'                           "Asyncrun tasks

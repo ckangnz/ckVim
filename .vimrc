@@ -210,6 +210,13 @@ let g:mta_filetypes = {
     \}
 nnoremap <leader>% :MtaJumpToOtherTag<cr>
 
+"easymotion/vim-easymotion
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_smartcase = 1
+nmap f <Plug>(easymotion-overwin-f2)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
 "tpope/vim-fugitive / idanarye/vim-merginal / junegunn/gv.vim
 nnoremap <Leader>1 :Gstatus<cr><c-w>T
 nnoremap <Leader>2 :GV --all<cr>
