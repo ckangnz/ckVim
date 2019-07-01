@@ -349,10 +349,13 @@ let g:carbon_now_sh_options = {
 vnoremap <leader>cn :CarbonNowSh<CR>
 
 "w0rp/ale
-nnoremap <leader><leader> :call ToggleSaveLint()<cr>
+nnoremap <leader><leader> :ALEToggle<cr>
+nnoremap <leader>an :ALENext<cr>
+nnoremap <leader>ap :ALEPrevious<cr>
 nnoremap <leader>0 :ALEFix prettier<cr>
 nnoremap <C-]> :ALEGoToDefinition<cr>
 
+let g:ale_lint_on_text_changed = 'normal'
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '·'
 let g:ale_sign_warning = '?'
@@ -369,16 +372,6 @@ let g:ale_fixers = {
 let g:ale_fix_on_save = 1
 
 "Always lint toggle
-let g:ale_lint_on_text_changed = 'never'
-function! ToggleSaveLint()
-    if g:ale_lint_on_text_changed == 'normal'
-        let g:ale_lint_on_text_changed = 'never'
-        echo 'Linting only on save'
-    else
-        let g:ale_lint_on_text_changed = 'normal'
-        echo 'Automatic Linting'
-    endif
-endfunction
 
 "-----CTAGS--------"
 "brew install --HEAD universal-ctags/universal-ctags/universal-ctags
