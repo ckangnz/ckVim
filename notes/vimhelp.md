@@ -81,6 +81,7 @@
     :s/old/new/g                    Change word old to new
     :s/from.*end/new/               Change word old to new
     :s/id=".\{-}"                   Change `id="*****"`
+    :s/id="\v\zs.{-}\ze"            Change id="`*****`"
 
 ### UltiSnippets  + YCM
     tab                             autocomplete
