@@ -247,7 +247,8 @@ endif
 nnoremap <Leader>go. :OpenGithubProject<cr>
 nnoremap <Leader>gof :OpenGithubFile<cr>
 nnoremap <Leader>goi :OpenGithubIssue<cr>
-nnoremap <Leader>gor :OpenGithubPullReq<cr>
+nnoremap <Leader>gop :OpenGithubPullReq<cr>
+nnoremap <Leader>gor :exec "OpenGithubPullReq #" . fugitive#head()<cr>
 
 "skywind3000/asyncrun.vim
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
