@@ -30,6 +30,7 @@ set splitbelow                                  "Horizontal split to below
 set splitright                                  "Vertical split to right
 set hlsearch                                    "highlight search
 set incsearch                                   "Show preview of search
+set diffopt+=vertical
 let mapleader = ','                             "The default leader is '\'
 
 "GUI Adjust"
@@ -231,7 +232,7 @@ nnoremap <Leader>gP :Gpush -f<cr>
 nnoremap <Leader>gl :Gpull<cr>
 nnoremap <Leader>gL :GV!<cr>
 vnoremap <Leader>gL :GV!<cr>
-set diffopt+=vertical
+nnoremap <Leader>gof :Gbrowse<cr>
 vmap <silent> <leader>dp V:diffput<cr>
 vmap <silent> <leader>do V:diffget<cr>
 if has("autocmd")
@@ -240,7 +241,6 @@ endif
 
 "tyru/open-browser.vim, tyru/open-browser-github.vim
 nnoremap <Leader>go. :OpenGithubProject<cr>
-nnoremap <Leader>gof :OpenGithubFile<cr>
 nnoremap <Leader>goi :OpenGithubIssue<cr>
 nnoremap <Leader>gop :OpenGithubPullReq<cr>
 nnoremap <Leader>gor :exec "OpenGithubPullReq #" . fugitive#head()<cr>
