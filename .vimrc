@@ -312,7 +312,7 @@ let g:fzf_action = {
 nnoremap <C-p> :Files<CR>
 nnoremap <C-e> :History<CR>
 nnoremap <C-t> :Tags<CR>
-noremap <Leader>f :Ag 
+nnoremap <Leader>f :Ag 
 vnoremap <Leader>f y:Ag <c-r>"<cr>
 nnoremap <Leader>F :Ag <c-r><c-w><cr>
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>,
@@ -336,6 +336,7 @@ let g:undotree_WindowLayout = 3
 "gabrielelana/vim-markdown
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_conceal = 1
+let g:markdown_enable_folding = 1
 
 "kristijanhusak/vim-carbon-now-sh
 let g:carbon_now_sh_options = {
@@ -351,13 +352,13 @@ nnoremap <leader>ap :ALEPrevious<cr>
 nnoremap <leader>0 :ALEFix prettier<cr>
 nnoremap <C-]> :ALEGoToDefinition<cr>
 
-let g:ale_lint_on_text_changed = 'normal'
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '·'
 let g:ale_sign_warning = '?'
 let g:ale_linters = {
             \'css':['stylelint'],
-            \'javascript':['flow', 'eslint'],
+            \'javascript.jsx':['eslint', 'flow', 'flow-language-server'],
+            \'javascript':['eslint', 'flow', 'flow-language-server'],
             \'python':['flake8', 'pylint'],
             \}
 let g:ale_fixers = {
@@ -366,8 +367,6 @@ let g:ale_fixers = {
             \'python':['autopep8', 'yapf'],
             \}
 let g:ale_fix_on_save = 1
-
-"Always lint toggle
 
 "-----CTAGS--------"
 "brew install --HEAD universal-ctags/universal-ctags/universal-ctags
