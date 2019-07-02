@@ -36,6 +36,7 @@ let mapleader = ','                             "The default leader is '\'
 hi LineNr ctermbg=0 guibg=bg
 hi vertsplit ctermbg=0 guibg=bg
 hi foldcolumn ctermbg=0 guibg=bg guifg=white
+hi SignColumn guibg=bg
 
 "----------VISUALS---------
 set guifont=FuraCode\ Nerd\ Font:h12            "Set font family
@@ -192,13 +193,6 @@ let g:user_emmet_settings = {
 
 "arithran/vim-delete-hidden-buffers
 nnoremap <Leader>q :DeleteHiddenBuffers<CR>
-
-"nathanaelkane/vim-indent-guides (,ig)
-let g:indent_guides_auto_colors = 1
-let g:indent_guides_start_level = 1
-let g:indent_guides_guide_size = 1
-hi IndentGuidesOdd  ctermbg=black
-hi IndentGuidesEven ctermbg=darkgrey
 
 "Valloric/MatchTagAlways
 let g:mta_use_matchparen_group = 1
