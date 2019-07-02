@@ -16,13 +16,6 @@ git clone https://github.com/chris542/ckVim ~/.vim
 ```
 ##### WARNING: This will override your .vimrc file
 
-### YCM Install
-* If you see YCM error on vim startup, follow this :
-```bash
-cd ~/.vim/bundle/YouCompleteMe
-./install.py
-```
-
 ## Zsh Terminal Theme .zshrc
 Install powerline
 ```bash
