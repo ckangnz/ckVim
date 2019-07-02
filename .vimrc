@@ -86,7 +86,8 @@ nmap <leader>ez :vsp ~/.zshrc<cr>
 nmap <leader>eh :vsp ~/.vim/vimhelp.MD<cr>
 nmap <leader>en :vsp ~/.vim/notes<cr>
 nmap <leader>ep :vsp ~/.vim/plugins.vim<cr>
-nmap <leader>pi :PluginInstall<cr>
+nmap <leader>pi :PlugInstall<cr>
+nmap <leader>pu :PlugUpdate<cr>
 
 "Panel Navigation
 nmap <C-J> <C-W><C-J>

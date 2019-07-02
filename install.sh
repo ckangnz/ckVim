@@ -7,16 +7,6 @@ else
     echo 'Completed Installing Macvim!'
 fi
 
-#Install FZF
-if brew ls --versions fzf > /dev/null; then
-    echo 'Detected existing fzf'
-else
-    echo 'Installing fzf...'
-    brew install fzf
-    $(brew --prefix)/opt/fzf/install
-    echo 'Completed Installing fzf!'
-fi
-
 #Install Universal Ctags
 if brew ls --versions universal-ctags > /dev/null; then
     echo 'Detected ctags'
@@ -43,16 +33,6 @@ else
     npm -g install instant-markdown-d
     echo 'Completed Installing Markdown!'
 fi
-
-#Install Vundle then plugins
-if [! -e ~/.vim/bundle/Vundle.vim ]; then
-    echo 'Installing Vundle...'
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-    echo 'Completed Installing Vundle'
-fi
-echo 'Installing all vim plugins...'
-vim -c 'PluginInstall' -c 'qa!'
-echo 'Completed installing all vim plugins'
 
 #Symlink vimrc
 if [ -e ~/.vimrc ]; then
