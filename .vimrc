@@ -221,6 +221,8 @@ hi link EasyMotionIncSearch Search
 "tpope/vim-fugitive / idanarye/vim-merginal / junegunn/gv.vim
 nnoremap <Leader>1 :Gstatus<cr><c-w>T
 nnoremap <Leader>2 :GV --all<cr>
+nnoremap <Leader>@ :GV!<cr>
+vnoremap <Leader>2 :GV!<cr>
 nnoremap <Leader>3 :MerginalToggle<cr>
 nnoremap <Leader>gr :Gread<cr>
 nnoremap <Leader>gw :Gwrite<cr>
@@ -230,8 +232,6 @@ nnoremap <Leader>gb :Gblame<cr>
 nnoremap <Leader>gp :Gpush<cr>
 nnoremap <Leader>gP :Gpush -f<cr>
 nnoremap <Leader>gl :Gpull<cr>
-nnoremap <Leader>gL :GV!<cr>
-vnoremap <Leader>gL :GV!<cr>
 nnoremap <Leader>gof :Gbrowse<cr>
 vmap <silent> <leader>dp V:diffput<cr>
 vmap <silent> <leader>do V:diffget<cr>
