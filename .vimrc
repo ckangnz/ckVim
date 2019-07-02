@@ -348,7 +348,7 @@ let g:carbon_now_sh_options = {
             \'t':'material',
             \'ln':'false',
             \'fm':'Fira' }
-vnoremap <leader>cn :CarbonNowSh<CR>
+vnoremap <leader>C :CarbonNowSh<CR>
 
 "w0rp/ale
 nnoremap <leader><leader> :ALEToggle<cr>
