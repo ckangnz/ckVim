@@ -229,7 +229,7 @@ nnoremap <Leader>gw :Gwrite<cr>
 nnoremap <Leader>gd :Gdiff<cr>
 nnoremap <Leader>ge :Gedit<space>
 nnoremap <Leader>gb :Gblame<cr>
-nnoremap <Leader>gp :Gpush<cr>
+nnoremap <Leader>gp :exec "Gpush origin " . fugitive#head()<cr>
 nnoremap <Leader>gP :Gpush -f<cr>
 nnoremap <Leader>gl :Gpull<cr>
 nnoremap <Leader>gof :Gbrowse<cr>
