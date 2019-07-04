@@ -314,6 +314,7 @@ nnoremap <C-t> :Tags<CR>
 nnoremap <Leader>f :Ag 
 vnoremap <Leader>f y:Ag <c-r>"<cr>
 nnoremap <Leader>F :Ag <c-r><c-w><cr>
+nnoremap <Leader>r :Rg 
 nnoremap ? :BLines<CR>
 vnoremap ? y:BLines <c-r><c-w><cr>
 nnoremap <Leader>@ :BCommits<cr>
@@ -327,6 +328,11 @@ command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>,
             \ fzf#vim#with_preview(
             \   {'down':'~60%','options': '--delimiter : --nth 4..'},'up:60%','?'
             \   ),)
+
+command! -bang -nargs=* Rg call fzf#vim#grep('rg --line-number --column --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+            \ fzf#vim#with_preview(
+            \   {'down':'~60%','options': '--delimiter : --nth 4..'},'up:60%','?'
+            \   ),<bang>0)
 
 "skwp/greplace.vim
 nnoremap <Leader>h :Gsearch<cr>

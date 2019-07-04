@@ -25,6 +25,15 @@ else
     echo 'Completed Installing the_silver_searcher!'
 fi
 
+#Install Ripgrep 
+if brew ls --versions ripgrep > /dev/null; then
+    echo 'Detected ripgrep'
+else
+    echo 'Installing ripgrep...'
+    brew install --HEAD ripgrep
+    echo 'Completed Installing Ripgrep!'
+fi
+
 #Install Instant Markdown
 if npm ls --versions instant-markdown-d > /dev/null; then
     echo 'Instant-Markdown already exists'
