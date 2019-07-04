@@ -221,7 +221,6 @@ hi link EasyMotionIncSearch Search
 "tpope/vim-fugitive / idanarye/vim-merginal / junegunn/gv.vim
 nnoremap <Leader>1 :Gstatus<cr><c-w>T
 nnoremap <Leader>2 :GV --all<cr>
-nnoremap <Leader>@ :GV!<cr>
 vnoremap <Leader>2 :GV!<cr>
 nnoremap <Leader>3 :MerginalToggle<cr>
 nnoremap <Leader>gr :Gread<cr>
@@ -315,13 +314,19 @@ nnoremap <C-t> :Tags<CR>
 nnoremap <Leader>f :Ag 
 vnoremap <Leader>f y:Ag <c-r>"<cr>
 nnoremap <Leader>F :Ag <c-r><c-w><cr>
-command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>,
-        \ fzf#vim#with_preview(
-            \   {'down':'~60%','options': '--delimiter : --nth 4..'},
-            \   'up:60%',
-        \   ),<bang>0)
 nnoremap ? :BLines<CR>
 vnoremap ? y:BLines <c-r><c-w><cr>
+nnoremap <Leader>@ :BCommits<cr>
+
+command! -bang -nargs=? -complete=dir Files
+            \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(
+            \   {'down':'~60%','options': '--delimiter : --nth 1..'},'up:60%','?'
+            \), <bang>0)
+
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>,
+            \ fzf#vim#with_preview(
+            \   {'down':'~60%','options': '--delimiter : --nth 4..'},'up:60%','?'
+            \   ),)
 
 "skwp/greplace.vim
 nnoremap <Leader>h :Gsearch<cr>
@@ -411,4 +416,4 @@ function! ClearReg()
     endfor
     unlet regs
 endfunction
-nnoremap <Leader>rq :call ClearReg()<CR>
+nnoremap <Leader>Q :call ClearReg()<CR>

@@ -16,7 +16,7 @@ else
     echo 'Completed Installing Ctags!'
 fi
 
-#Install The Silver Searcher
+#Install The Silver Searcher (Ag)
 if brew ls --versions the_silver_searcher > /dev/null; then
     echo 'Detected the_silver searcher'
 else
