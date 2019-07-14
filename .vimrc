@@ -86,6 +86,7 @@ vnoremap ˚ :m '<-2<CR>gv=gv
 nmap <leader>ev :vsp $MYVIMRC<cr>
 nmap <leader>ez :vsp ~/.zshrc<cr>
 nmap <leader>eh :vsp ~/.vim/vimhelp.MD<cr>
+nmap <leader>ec :e ~/code<cr>
 nmap <leader>en :vsp ~/.vim/notes<cr>
 nmap <leader>ep :vsp ~/.vim/plugins.vim<cr>
 nmap <leader>pi :PlugInstall<cr>
