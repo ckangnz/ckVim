@@ -79,13 +79,11 @@ yarn add redux-saga
   import userSaga from 'user/sagas';
   import headerSaga from 'header/sagas';
 
-  function* rootSaga(){
+  export default function* rootSaga(){
     const sagas = [
       fork(userSaga),
       fork(headerSaga),
     ]
     yield all(sagas);
   }
-
-  export default rootSaga;
   ```

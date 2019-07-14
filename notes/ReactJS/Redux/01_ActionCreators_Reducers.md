@@ -77,7 +77,7 @@ export const otherlist2=()=>{...type:'OTHER_LIST2'}
    - `arg1` = mapStateToProps
    - `arg2` = actions
 ```js
-import { connect } from 'react';
+import { connect } from 'react-redux';
 import * as actions from './actions'
 
 //…ComponentName…

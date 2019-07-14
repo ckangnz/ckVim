@@ -36,10 +36,10 @@ componentWillMount() {
 … 
 
 const mapDispatchToProps = (dispatch)=>{
-    return bindActionCreators({
-        movieslist,
-        directorslist,
-    },dispatch)
+  return {
+    getMovies : bindActionCreators(movielist, dispatch),
+    getDirectors : bindActionCreators(directorslist, dispatch),
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
