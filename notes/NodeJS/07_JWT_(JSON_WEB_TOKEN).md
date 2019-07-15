@@ -102,7 +102,7 @@ userSchema.statics.findByToken = function(token, cb){
   * Find user by token from cookie. If exists, pass user and token
 ```js
 // server/middleware/auth.js
-const { User  } = require('../models/users');
+const { User } = require('../models/users');
 
 let auth = (req,res,next) =>{
     let token = req.cookies.auth;

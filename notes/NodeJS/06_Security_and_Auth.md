@@ -1,5 +1,16 @@
 # Setting up
 
+* Overview : 
+  * When user is created:
+    * Check password is changed => save hashed password ('presave' method in userSchema)
+  * When user submits login form:
+    * Find user by email
+    * Compare password value with hash (model method in userSchema)
+    * Generate/save jwt token in cookie + database (`jwt.sign(id,super)`)
+  * Authentication
+    * Find user with token (static method from userSchema) (`jwt.verify(token,super)`)
+    * Include user data/token in response
+
 ```bash
 //init then:
 npm install express mongoose body-parser
