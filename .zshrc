@@ -48,6 +48,7 @@ alias divioshell="PATH=/virtualenv/bin:/pipsi/bin:$HOME/.local/bin:/usr/local/bi
 #ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
 alias pgstart="launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
 alias pgstop="launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
+alias dyna="docker run --rm -it -p 8000:8000 amazon/dynamodb-local"
 
 alias jserv="json-server --watch db.json --port 3004"
 
