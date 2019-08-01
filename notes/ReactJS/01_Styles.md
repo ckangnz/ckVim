@@ -42,7 +42,7 @@ return <div className="class_name"></div>
 * or you could import css as a module
 
 ```js
-import xxx from '../css/styles.css'
+import xxx from '../css/styles.module.css'
 ...
 return <div className={xxx.class_name}></div> )
 ```
