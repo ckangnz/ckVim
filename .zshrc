@@ -36,7 +36,6 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 #alias
 alias zshconfig="vim ~/.zshrc"
-alias ohmyzsh="vim ~/.oh-my-zsh"
 alias dcup="docker-compose up"
 alias dczsh="docker-compose run --rm web zsh"
 alias dcbash="docker-compose run --rm web bash"
