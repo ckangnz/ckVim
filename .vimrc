@@ -410,7 +410,7 @@ function! Todo()
     let t = input('Enter todo: ')
     call inputrestore()
     if t !=""
-        call append(2, '  - [ ] ' . t)
+        call append(3, '  - [ ] ' . t)
     endif
 endfunction
 nnoremap <Leader>n :call Todo()<CR>
