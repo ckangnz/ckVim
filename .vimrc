@@ -369,12 +369,14 @@ let g:ale_sign_error = '·'
 let g:ale_sign_warning = '?'
 let g:ale_linters = {
             \'css':['stylelint'],
+            \'typescript':['tsserver','tslint'],
             \'javascript.jsx':['eslint', 'flow', 'flow-language-server'],
             \'javascript':['eslint', 'flow', 'flow-language-server'],
             \'python':['flake8', 'pylint'],
             \}
 let g:ale_fixers = {
             \'css':['stylelint'],
+            \'typescript':['tslint'],
             \'javascript':['eslint'],
             \'python':['autopep8', 'yapf'],
             \}
@@ -410,7 +412,7 @@ function! Todo()
     let t = input('Enter todo: ')
     call inputrestore()
     if t !=""
-        call append(3, '  - [ ] ' . t)
+        call append(3, '- [ ] ' . t)
     endif
 endfunction
 nnoremap <Leader>n :call Todo()<CR>
