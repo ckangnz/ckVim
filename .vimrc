@@ -122,7 +122,7 @@ vnoremap / <Esc>/\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 vnoremap ? <Esc>?\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 
 "highlight word under cursor - more options :so $VIMRUNTIME/syntax/hitest.vim
-:autocmd CursorMoved * exe printf('match SpellRare /\V\%%%dl\@!\<%s\>/', line('.'), escape(expand('<cword>'), '/\'))
+:autocmd CursorMoved * exe printf('match SpellLocal /\V\%%%dl\@!\<%s\>/', line('.'), escape(expand('<cword>'), '/\'))
 
 "Folding
 set foldmethod=syntax
