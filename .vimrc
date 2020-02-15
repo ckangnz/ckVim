@@ -362,7 +362,7 @@ nnoremap <leader><leader> :ALEToggle<cr>
 nnoremap <leader>an :ALENext<cr>
 nnoremap <leader>ap :ALEPrevious<cr>
 nnoremap <leader>0 :ALEFix prettier<cr>
-nnoremap <C-]> :ALEGoToDefinition<cr>
+nnoremap gd :ALEGoToDefinition<cr>
 
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '·'
