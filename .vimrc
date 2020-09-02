@@ -85,7 +85,7 @@ vnoremap ˚ :m '<-2<CR>gv=gv
 "Hotkeys to edit
 nmap <leader>ev :vsp $MYVIMRC<cr>
 nmap <leader>ez :vsp ~/.zshrc<cr>
-nmap <leader>eh :vsp ~/.vim/vimhelp.MD<cr>
+nmap <leader>eh :vsp ~/.vim/notes/vimhelp.MD<cr>
 nmap <leader>ec :e ~/code<cr>
 nmap <leader>en :vsp ~/.vim/notes<cr>
 nmap <leader>ep :vsp ~/.vim/plugins.vim<cr>
@@ -285,6 +285,17 @@ let g:ycm_disable_for_files_larger_than_kb = 0
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:ycm_key_list_stop_completion = ['<cr>']
+nnoremap gd :YcmCompleter GoTo<cr>
+nnoremap gt :YcmCompleter GoToType<cr>
+nnoremap gr :YcmCompleter GoToReferences<cr>
+nnoremap <leader>oi :YcmCompleter OrganizeImports<cr>
+nnoremap R :call YCMRefactorRename()<cr>
+nmap <silent> gh <plug>(YCMHover)
+
+function! YCMRefactorRename()
+  let n = input('Rename to : ')
+  :exec "YcmCompleter RefactorRename " . n
+endfunction
 
 "SirVer/ultisnips
 let g:UltiSnipsExpandTrigger = "<tab>"
@@ -362,7 +373,6 @@ nnoremap <leader><leader> :ALEToggle<cr>
 nnoremap <leader>an :ALENext<cr>
 nnoremap <leader>ap :ALEPrevious<cr>
 nnoremap <leader>0 :ALEFix prettier<cr>
-nnoremap gd :ALEGoToDefinition<cr>
 
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '·'
