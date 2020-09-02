@@ -53,10 +53,10 @@ set guioptions-=l                               "Disable scrollbars
 set guioptions-=L
 set guioptions-=r
 set guioptions-=R
-set tabstop=4                                   "Default tabs
+set tabstop=2                                   "Default tabs
 set expandtab                                   "Use space as a tab
-set softtabstop=4                               "Width applied by tab
-set shiftwidth=4                                "Width of tab in normal mode
+set softtabstop=2                               "Width applied by tab
+set shiftwidth=2                                "Width of tab in normal mode
 let &t_SI.="\e[5 q"                             "Cursor shape change in different mode
 let &t_SR.="\e[4 q"
 let &t_EI.="\e[1 q"
