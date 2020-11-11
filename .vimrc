@@ -8,7 +8,6 @@ filetype plugin indent on
 runtime macros
 :filetype indent on
 set t_CO=256                                    "Number of colours
-set macligatures                                "Enables special characters from font (only on gvim)
 set display+=lastline                           "Show long lines"
 set autoindent                                  "Copy indent from previous line
 set smartindent                                 "Smart indenting when { is used
@@ -30,7 +29,6 @@ set splitbelow                                  "Horizontal split to below
 set splitright                                  "Vertical split to right
 set hlsearch                                    "highlight search
 set incsearch                                   "Show preview of search
-set diffopt+=vertical
 let mapleader = ','                             "The default leader is '\'
 
 "GUI Adjust"

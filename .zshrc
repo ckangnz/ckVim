@@ -1,7 +1,7 @@
 export ZSH=$HOME/.oh-my-zsh
 export TERM="xterm-256color"
 
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE="nerdfont-complete"
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 POWERLEVEL9K_PROMPT_ON_NEWLINE=false
@@ -20,6 +20,8 @@ COMPLETION_WAITING_DOTS="true"
 
 plugins=(
   git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -55,14 +57,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-
 #VirtualEnvWrapper and Pyenv
-eval "$(pyenv init -)"
-export PYENV_VIRTUALENVWRAPPER_PREFER_PYENV="true"
-export WORKON_HOME=$HOME/.virtualenvs
-pyenv virtualenvwrapper_lazy
+#eval "$(pyenv init -)"
+#export PYENV_VIRTUALENVWRAPPER_PREFER_PYENV="true"
+#export WORKON_HOME=$HOME/.virtualenvs
+#pyenv virtualenvwrapper_lazy
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
