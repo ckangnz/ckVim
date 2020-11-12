@@ -38,7 +38,7 @@ hi foldcolumn ctermbg=0 guibg=bg guifg=white
 hi SignColumn guibg=bg
 
 "----------VISUALS---------
-set guifont=FuraCode\ Nerd\ Font:h12            "Set font family
+set guifont=FiraCode\ Nerd\ Font:h12            "Set font family
 set linespace=10                                "Set line space
 set wrapmargin=0                                "line number margins
 set textwidth=0                                 "Set text width"

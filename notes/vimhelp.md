@@ -1,9 +1,9 @@
 # Vinegar(Netrw) File Management Tips
     F1                              Help
     I                               info box at the top
-    v                               Open on right pane"
-    o                               Open on below pane"
-    i                               toggle different folder structure view"
+    v                               Open on right pane
+    o                               Open on below pane
+    i                               toggle different folder structure view
     r                               reorder
     s                               change structure
     x                               open in finder
