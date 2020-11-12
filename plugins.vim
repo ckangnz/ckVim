@@ -43,6 +43,7 @@ Plug 'gabrielelana/vim-markdown'                          "Easy MD tools
 Plug 'mbbill/undotree'                                    "Magic of Undos
 Plug 'skywind3000/asyncrun.vim'                           "Asyncrun tasks
 Plug 'wesQ3/vim-windowswap'                               "Split Panel switch
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}     "InstantMarkdownPreview
 
 "Search Tool
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
