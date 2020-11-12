@@ -1,9 +1,23 @@
+#Install python3
+if brew ls --versions python3 > /dev/null; then
+    echo 'Detected existing Python3'
+else
+    echo 'Installing Python3...'
+    brew install python3
+    echo 'Completed Installing Python3!'
+fi
+
+#Install vim
+echo 'Installing vim...'
+brew install macvim --with-override-system-vim
+echo 'Completed Installing vim!'
+
 #Install Macvim
 if brew ls --versions macvim > /dev/null; then
     echo 'Detected existing Macvim'
 else
     echo 'Installing Macvim...'
-    brew install macvim --with-override-system-vim
+    brew install macvim
     echo 'Completed Installing Macvim!'
 fi
 
@@ -14,6 +28,15 @@ else
     echo 'Installing Ctags...'
     brew install --HEAD universal-ctags/universal-ctags/universal-ctags
     echo 'Completed Installing Ctags!'
+fi
+
+#Install The cmake
+if brew ls --versions cmake > /dev/null; then
+    echo 'Detected cmake'
+else
+    echo 'Installing cmake...'
+    brew install --HEAD cmake
+    echo 'Completed Installing cmake!'
 fi
 
 #Install The Silver Searcher (Ag)
