@@ -156,7 +156,7 @@ au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 "---------------THEMES---------------
 set background=dark
 colorscheme hybrid_reverse
-let g:airline_theme='bubblegum'
+let g:airline_theme='hybrid'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
@@ -187,7 +187,7 @@ let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c
 "mattn/emmet-vim
 let g:user_emmet_settings = {
 \  'javascript' : {
-\      'extends' : 'jsx',
+\      'extends' :['jsx','tsx'],
 \  },
 \}
 
