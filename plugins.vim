@@ -54,6 +54,10 @@ Plug 'skwp/greplace.vim'                                  "Project search and re
 Plug 'ervandew/supertab'                                  "Use autocompleted text with tab
 Plug 'Valloric/YouCompleteMe', { 'do' : './install.py --ts-completer' }
 
+"Test
+Plug 'vim-test/vim-test'                                  "Test files
+
+
 "Snippets
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'       "Snippet Library
 
