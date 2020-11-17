@@ -36,7 +36,7 @@ Plug 'scrooloose/nerdcommenter'                           "Easy Commenting tool
 Plug 'tmhedberg/matchit'                                  "More functionality to %
 Plug 'tpope/vim-surround'                                 "Easy text wrap tool
 Plug 'tpope/vim-vinegar'                                  "Easy Netrw with '-'
-Plug 'w0rp/ale'                                           "Liniting Engine
+Plug 'dense-analysis/ale'                                 "Liniting Engine
 
 "General Vim Tool
 Plug 'easymotion/vim-easymotion'                          "Easy Navigation
