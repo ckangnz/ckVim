@@ -29,6 +29,7 @@ set splitbelow                                  "Horizontal split to below
 set splitright                                  "Vertical split to right
 set hlsearch                                    "highlight search
 set incsearch                                   "Show preview of search
+set diffopt+=vertical                           "Set split and diff to vertical
 let mapleader = ','                             "The default leader is '\'
 
 "GUI Adjust"
@@ -51,10 +52,10 @@ set guioptions-=l                               "Disable scrollbars
 set guioptions-=L
 set guioptions-=r
 set guioptions-=R
-set tabstop=2                                   "Default tabs
+set tabstop=4                                   "Default tabs
 set expandtab                                   "Use space as a tab
-set softtabstop=2                               "Width applied by tab
-set shiftwidth=2                                "Width of tab in normal mode
+set softtabstop=4                               "Width applied by tab
+set shiftwidth=4                                "Width of tab in normal mode
 let &t_SI.="\e[5 q"                             "Cursor shape change in different mode
 let &t_SR.="\e[4 q"
 let &t_EI.="\e[1 q"
@@ -231,6 +232,7 @@ nnoremap <Leader>gp :exec "Gpush origin " . fugitive#head()<cr>
 nnoremap <Leader>gP :Gpush -f<cr>
 nnoremap <Leader>gl :Gpull<cr>
 nnoremap <Leader>gof :Gbrowse<cr>
+nnoremap <leader>df :diffupdate<cr>
 vmap <silent> <leader>dp V:diffput<cr>
 vmap <silent> <leader>do V:diffget<cr>
 if has("autocmd")
@@ -279,12 +281,14 @@ function! s:align()
 endfunction
 
 "Valloric/YouCompleteMe
+set completeopt+=popup
+let g:ycm_auto_hover = ''
 let g:ycm_disable_for_files_larger_than_kb = 0
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:ycm_key_list_stop_completion = ['<cr>']
 nnoremap gd :YcmCompleter GoTo<cr>
-nnoremap gt :YcmCompleter GoToType<cr>
+nnoremap gy :YcmCompleter GoToType<cr>
 nnoremap gr :YcmCompleter GoToReferences<cr>
 nnoremap <leader>oi :YcmCompleter OrganizeImports<cr>
 nnoremap R :call YCMRefactorRename()<cr>
