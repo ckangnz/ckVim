@@ -10,6 +10,7 @@ Plug 'vim-airline/vim-airline-themes'                     "Vim Airline Theme
 "Syntax Highlighting
 Plug 'tobyS/vmustache'                                    "Mustache Template syntax
 Plug 'pangloss/vim-javascript'                            "JS syntax & indentation
+Plug 'HerringtonDarkholme/yats.vim'                       "Yet another ts syntax
 Plug 'leafgarland/typescript-vim'                         "Typescript syntax
 Plug 'peitalin/vim-jsx-typescript'                        "jsx syntax
 Plug 'MaxMEllon/vim-jsx-pretty'                           "JSX Syntax
