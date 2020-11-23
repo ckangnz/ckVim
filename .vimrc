@@ -1,4 +1,5 @@
 syntax on                                       "Syntax ON
+set re=0
 set nocompatible                                "Latest Vim Setting used 
 set encoding=utf-8
 so ~/.vim/plugins.vim                           "Source the plugins 
@@ -149,14 +150,21 @@ set foldtext=NeatFoldText()
 let g:python_highlight_all = 1
 
 "Custom ext highlighting
-au BufNewFile,BufRead *.ejs set filetype=html
-au BufNewFile,BufRead *.vue set filetype=html
-au BufNewFile,BufRead *.hbs set filetype=html
+au BufNewFile,BufRead *.ejs,*.vue,*hbs set filetype=html
+au BufNewFile,BufRead *.jsx,*.tsx set filetype=typescriptreact
 au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 "---------------THEMES---------------
 set background=dark
 colorscheme hybrid_reverse
+
+hi Comment ctermfg=243 guifg=#4a5158
+hi ALEError guibg=#612E2D cterm=italic
+hi def link typescriptBinaryOp Operator
+hi def link typescriptParenExp Function
+hi def link typescriptES6SetMethod Function
+hi def link typescriptArrayMethod Function 
+
 let g:airline_theme='hybrid'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -181,6 +189,11 @@ let g:airline_mode_map = {
       \ 'S' : 'S',
       \ '' : 'S',
       \ }
+
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
 let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c4fe', '#ff3f80', '#64fcda', '#fefefe', '#b0bec4', '#ff8980', '#b9f6c9', '#ffe47e', '#80d7fe', '#ff80ab', '#a7fdeb', '#fefefe',]
 "black, dark red, dark green, dark yellow, dark blue, dark magenta, dark cyan, light grey, dark grey, red, green, yellow, blue, magenta, cyan, white
 
