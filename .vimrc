@@ -236,6 +236,7 @@ nnoremap <Leader>1 :Gstatus<cr><c-w>T
 nnoremap <Leader>2 :GV --all<cr>
 vnoremap <Leader>2 :GV!<cr>
 nnoremap <Leader>3 :MerginalToggle<cr>
+nnoremap <Leader>gc :Gcommit<cr>
 nnoremap <Leader>gr :Gread<cr>
 nnoremap <Leader>gw :Gwrite<cr>
 nnoremap <Leader>gd :Gdiff<cr>
