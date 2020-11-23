@@ -416,7 +416,7 @@ nmap <silent> <leader>tL :TestVisit<CR>
 
 let test#strategy = {
   \ 'nearest': 'vimterminal',
-  \ 'file':    'dispatch',
+  \ 'file':    'vimterminal',
   \ 'suite':   'basic',
 \}
 let g:test#javascript#runner = 'jest'
