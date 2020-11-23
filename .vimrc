@@ -1,5 +1,6 @@
 syntax on                                       "Syntax ON
 set re=0
+set noimd                                       "Revert back to English when on different language
 set nocompatible                                "Latest Vim Setting used 
 set encoding=utf-8
 so ~/.vim/plugins.vim                           "Source the plugins 
