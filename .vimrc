@@ -338,7 +338,7 @@ let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-o': 'split',
   \ 'ctrl-v': 'vsplit' }
-nnoremap <C-p> :Files<CR>
+nnoremap <C-p> :GFiles<CR>
 nnoremap <C-e> :History<CR>
 nnoremap <C-t> :Tags<CR>
 nnoremap <Leader>f :Ag 
@@ -348,6 +348,11 @@ nnoremap <Leader>r :Rg
 nnoremap ? :BLines<CR>
 vnoremap ? y:BLines <c-r><c-w><cr>
 nnoremap <Leader>@ :BCommits<cr>
+
+command! -bang -nargs=? -complete=dir GFiles
+            \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(
+            \   {'down':'~60%','options': '--delimiter : --nth 1..'},'up:60%','?'
+            \), <bang>0)
 
 command! -bang -nargs=? -complete=dir Files
             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(
