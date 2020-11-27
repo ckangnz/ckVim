@@ -1,7 +1,6 @@
 syntax on                                       "Syntax ON
 set re=0
 set noimd                                       "Revert back to English when on different language
-set tags=tags;/                                 "Search tags from current folder
 set nocompatible                                "Latest Vim Setting used 
 set encoding=utf-8
 so ~/.vim/plugins.vim                           "Source the plugins 
@@ -158,11 +157,11 @@ au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 "---------------THEMES---------------
 set background=dark
-colorscheme one
+colorscheme hybrid_reverse
 
+hi def link vimHighlight vimHighlight
 hi Comment ctermfg=243 guifg=#4a5158
 hi def link typescriptBinaryOp Operator
-hi def link typescriptBlock Function
 hi def link typescriptParenExp Function
 hi def link typescriptES6SetMethod Function
 hi def link typescriptArrayMethod Function 
