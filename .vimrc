@@ -1,6 +1,7 @@
 syntax on                                       "Syntax ON
 set re=0
 set noimd                                       "Revert back to English when on different language
+set tags=tags;/                                 "Search tags from current folder
 set nocompatible                                "Latest Vim Setting used 
 set encoding=utf-8
 so ~/.vim/plugins.vim                           "Source the plugins 
@@ -18,7 +19,7 @@ set ignorecase                                  "Ignores case when searching
 set smartcase                                   "Disables ignorecase when capitals used
 set so=10                                       "Keep cursor to not touch the bottom or top"
 set backspace=indent,eol,start                  "Make backspace as normal
-highlight clear SignColumn                      "Disable signcolumn
+hi clear SignColumn                      "Disable signcolumn
 set noerrorbells visualbell t_vb=               "No error bells
 set autowriteall                                "Automatically writes file
 set complete=.,w,b,u                            "Set autocomplete
@@ -157,14 +158,15 @@ au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 "---------------THEMES---------------
 set background=dark
-colorscheme hybrid_reverse
+colorscheme one
 
 hi Comment ctermfg=243 guifg=#4a5158
-hi ALEError guibg=#612E2D cterm=italic
 hi def link typescriptBinaryOp Operator
+hi def link typescriptBlock Function
 hi def link typescriptParenExp Function
 hi def link typescriptES6SetMethod Function
 hi def link typescriptArrayMethod Function 
+hi def link typescriptDefault StorageClass
 
 let g:airline_theme='hybrid'
 let g:airline_powerline_fonts = 1
@@ -337,7 +339,7 @@ let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-o': 'split',
   \ 'ctrl-v': 'vsplit' }
-nnoremap <C-p> :Files<CR>
+nnoremap <C-p> :GFiles<CR>
 nnoremap <C-e> :History<CR>
 nnoremap <C-t> :Tags<CR>
 nnoremap <Leader>f :Ag 
@@ -347,6 +349,11 @@ nnoremap <Leader>r :Rg
 nnoremap ? :BLines<CR>
 vnoremap ? y:BLines <c-r><c-w><cr>
 nnoremap <Leader>@ :BCommits<cr>
+
+command! -bang -nargs=? -complete=dir GFiles
+            \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(
+            \   {'down':'~60%','options': '--delimiter : --nth 1..'},'up:60%','?'
+            \), <bang>0)
 
 command! -bang -nargs=? -complete=dir Files
             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(
