@@ -39,9 +39,18 @@ else
     echo 'Completed Installing cmake!'
 fi
 
+#Install bat
+if brew ls --versions bat > /dev/null; then
+    echo 'Detected bat'
+else
+    echo 'Installing bat...'
+    brew install --HEAD bat
+    echo 'Completed Installing bat!'
+fi
+
 #Install The Silver Searcher (Ag)
 if brew ls --versions the_silver_searcher > /dev/null; then
-    echo 'Detected the_silver searcher'
+    echo 'Detected the_silver_searcher'
 else
     echo 'Installing the_silver_searcher...'
     brew install --HEAD the_silver_searcher
