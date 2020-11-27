@@ -18,7 +18,7 @@ set ignorecase                                  "Ignores case when searching
 set smartcase                                   "Disables ignorecase when capitals used
 set so=10                                       "Keep cursor to not touch the bottom or top"
 set backspace=indent,eol,start                  "Make backspace as normal
-highlight clear SignColumn                      "Disable signcolumn
+hi clear SignColumn                      "Disable signcolumn
 set noerrorbells visualbell t_vb=               "No error bells
 set autowriteall                                "Automatically writes file
 set complete=.,w,b,u                            "Set autocomplete
@@ -157,14 +157,15 @@ au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 "---------------THEMES---------------
 set background=dark
-colorscheme hybrid_reverse
+colorscheme one
 
 hi Comment ctermfg=243 guifg=#4a5158
-hi ALEError guibg=#612E2D cterm=italic
 hi def link typescriptBinaryOp Operator
+hi def link typescriptBlock Function
 hi def link typescriptParenExp Function
 hi def link typescriptES6SetMethod Function
 hi def link typescriptArrayMethod Function 
+hi def link typescriptDefault StorageClass
 
 let g:airline_theme='hybrid'
 let g:airline_powerline_fonts = 1

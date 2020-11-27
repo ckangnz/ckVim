@@ -3,7 +3,8 @@ filetype off                  " required
 call plug#begin('~/.vim/plugged')
 
 "Themes
-Plug 'kristijanhusak/vim-hybrid-material'                 "Vim Syntax and UI Theme
+Plug 'kristijanhusak/vim-hybrid-material'                 "Vim Hybrid Material Theme
+Plug 'rakr/vim-one'                                       "Vim One Theme
 Plug 'vim-airline/vim-airline'                            "Vim Airline
 Plug 'vim-airline/vim-airline-themes'                     "Vim Airline Theme
 
