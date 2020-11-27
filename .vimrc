@@ -338,7 +338,8 @@ let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-o': 'split',
   \ 'ctrl-v': 'vsplit' }
-nnoremap <C-p> :GFiles<CR>
+command! Ctrlp execute (len(system('git rev-parse'))) ? ':Files' : ':GFiles'
+nnoremap <C-p> :Ctrlp<CR>
 nnoremap <C-e> :History<CR>
 nnoremap <C-t> :Tags<CR>
 nnoremap <Leader>f :Ag 
