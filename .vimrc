@@ -243,6 +243,7 @@ nnoremap <Leader>gc :Gcommit<cr>
 nnoremap <Leader>gr :Gread<cr>
 nnoremap <Leader>gw :Gwrite<cr>
 nnoremap <Leader>gd :Gdiff<cr>
+nnoremap <silent> <Leader>4 :call ToggleQuickFix()<cr>
 nnoremap <Leader>ge :Gedit<space>
 nnoremap <Leader>gb :Gblame<cr>
 nnoremap <Leader>gp :exec "Gpush origin " . fugitive#head()<cr>
@@ -426,7 +427,7 @@ nmap <silent> <leader>ta :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tL :TestVisit<CR>
 
-let test#strategy = "asyncrun"
+let test#strategy = "asyncrun_background"
 let g:test#javascript#runner = 'jest'
 
 "-----CTAGS--------"
@@ -463,6 +464,18 @@ function! Todo()
     endif
 endfunction
 nnoremap <Leader>n :call Todo()<CR>
+
+"Toggle copen and cclose
+autocmd FileType qf if (getwininfo(win_getid())[0].loclist != 1) | wincmd J | endif "Quickfix to be full width on the bottom
+function! ToggleQuickFix()
+    if empty(filter(getwininfo(), 'v:val.quickfix'))
+        copen
+    else
+        cclose
+    endif
+endfunction
+
+nnoremap <silent> <F2> :call ToggleQuickFix()<cr>
 
 "clear register
 function! ClearReg()
