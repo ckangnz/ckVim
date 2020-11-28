@@ -429,7 +429,7 @@ nmap <silent> <leader>ta :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tL :TestVisit<CR>
 
-let test#strategy = "asyncrun_background"
+let test#strategy = "asyncrun_background_term"
 let g:test#javascript#runner = 'jest'
 
 "-----CTAGS--------"
