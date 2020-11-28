@@ -176,6 +176,7 @@ let g:airline#extensions#tabline#show_tabs = 1
 let g:airline#extensions#tabline#close_symbol = '×'
 let g:airline#extensions#tabline#show_close_button = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:asyncrun_open = 8
 let g:asyncrun_status = ''
 let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
 let g:airline_mode_map = {
@@ -247,6 +248,7 @@ nnoremap <Leader>gb :Gblame<cr>
 nnoremap <Leader>gp :exec "Gpush origin " . fugitive#head()<cr>
 nnoremap <Leader>gP :Gpush -f<cr>
 nnoremap <Leader>gl :Gpull<cr>
+nnoremap <Leader>gf :Gfetch origin 
 nnoremap <Leader>gof :Gbrowse<cr>
 nnoremap <leader>df :diffupdate<cr>
 vmap <silent> <leader>dp V:diffput<cr>
@@ -423,11 +425,7 @@ nmap <silent> <leader>ta :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tL :TestVisit<CR>
 
-let test#strategy = {
-  \ 'nearest': 'vimterminal',
-  \ 'file':    'vimterminal',
-  \ 'suite':   'basic',
-\}
+let test#strategy = "asyncrun"
 let g:test#javascript#runner = 'jest'
 
 "-----CTAGS--------"
