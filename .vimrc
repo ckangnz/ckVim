@@ -416,6 +416,7 @@ let g:ale_fixers = {
             \'javascript':['eslint'],
             \'python':['autopep8', 'yapf'],
             \}
+let g:ale_javascript_prettier_options = "--print-width 100 --tab-width 4 --single-quote true --trailing-comma all --jsx-single-quote true --no-bracket-spacing true --jsx-bracket-same-line true --arrow-parens avoid"
 let g:ale_fix_on_save = 1
 
 "--------Testing vim-test/vim-test--------"
