@@ -238,7 +238,7 @@ hi link EasyMotionIncSearch Search
 nnoremap <silent> <Leader>1 :Gstatus<cr><c-w>T
 nnoremap <silent> <Leader>2 :GV --all<cr>
 vnoremap <silent> <Leader>2 :GV!<cr>
-nnoremap <silent> <Leader>3 :MerginalToggle<cr>
+nnoremap <silent> <Leader>3 :ToggleMerginal<cr>
 nnoremap <silent> <Leader>4 :call ToggleQuickFix()<cr>
 nnoremap <silent> <Leader>gc :Gcommit<cr>
 nnoremap <silent> <Leader>gr :Gread<cr>
@@ -254,6 +254,8 @@ nnoremap <silent> <Leader>gof :Gbrowse<cr>
 nnoremap <silent> <leader>df :diffupdate<cr>
 vmap <silent> <leader>dp V:diffput<cr>
 vmap <silent> <leader>do V:diffget<cr>
+
+command! ToggleMerginal execute (len(system('git rev-parse'))) ? 'echoerr "Not in git repo"' : ':MerginalToggle'
 if has("autocmd")
     autocmd BufReadPost fugitive://* set bufhidden=delete
 endif
