@@ -235,23 +235,23 @@ hi link EasyMotionMoveHL Search
 hi link EasyMotionIncSearch Search
 
 "tpope/vim-fugitive / idanarye/vim-merginal / junegunn/gv.vim
-nnoremap <Leader>1 :Gstatus<cr><c-w>T
-nnoremap <Leader>2 :GV --all<cr>
-vnoremap <Leader>2 :GV!<cr>
-nnoremap <Leader>3 :MerginalToggle<cr>
-nnoremap <Leader>gc :Gcommit<cr>
-nnoremap <Leader>gr :Gread<cr>
-nnoremap <Leader>gw :Gwrite<cr>
-nnoremap <Leader>gd :Gdiff<cr>
+nnoremap <silent> <Leader>1 :Gstatus<cr><c-w>T
+nnoremap <silent> <Leader>2 :GV --all<cr>
+vnoremap <silent> <Leader>2 :GV!<cr>
+nnoremap <silent> <Leader>3 :MerginalToggle<cr>
 nnoremap <silent> <Leader>4 :call ToggleQuickFix()<cr>
+nnoremap <silent> <Leader>gc :Gcommit<cr>
+nnoremap <silent> <Leader>gr :Gread<cr>
+nnoremap <silent> <Leader>gw :Gwrite<cr>
+nnoremap <silent> <Leader>gd :Gdiff<cr>
 nnoremap <Leader>ge :Gedit<space>
-nnoremap <Leader>gb :Gblame<cr>
-nnoremap <Leader>gp :exec "Gpush origin " . fugitive#head()<cr>
-nnoremap <Leader>gP :Gpush -f<cr>
-nnoremap <Leader>gl :Gpull<cr>
+nnoremap <silent> <Leader>gb :Gblame<cr>
+nnoremap <silent> <Leader>gp :exec "Gpush origin " . fugitive#head()<cr>
+nnoremap <silent> <Leader>gP :Gpush -f<cr>
+nnoremap <silent> <Leader>gl :Gpull<cr>
 nnoremap <Leader>gf :Gfetch origin 
-nnoremap <Leader>gof :Gbrowse<cr>
-nnoremap <leader>df :diffupdate<cr>
+nnoremap <silent> <Leader>gof :Gbrowse<cr>
+nnoremap <silent> <leader>df :diffupdate<cr>
 vmap <silent> <leader>dp V:diffput<cr>
 vmap <silent> <leader>do V:diffget<cr>
 if has("autocmd")
