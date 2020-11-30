@@ -12,11 +12,13 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 ZSH_DISABLE_COMPFIX=true
 POWERLINE_DISABLE_RPROMPT="true"
 COMPLETION_WAITING_DOTS="true"
+export NVM_LAZY_LOAD=true
 
 plugins=(
   git
   zsh-autosuggestions
   zsh-syntax-highlighting
+  zsh-nvm
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -47,16 +49,6 @@ alias pgstop="launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.p
 alias dyna="docker run --rm -it -p 8000:8000 amazon/dynamodb-local"
 
 alias jserv="json-server --watch db.json --port 3004"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-#VirtualEnvWrapper and Pyenv
-#eval "$(pyenv init -)"
-#export PYENV_VIRTUALENVWRAPPER_PREFER_PYENV="true"
-#export WORKON_HOME=$HOME/.virtualenvs
-#pyenv virtualenvwrapper_lazy
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
