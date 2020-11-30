@@ -42,6 +42,7 @@ Plug 'dense-analysis/ale'                                 "Liniting Engine
 Plug 'easymotion/vim-easymotion'                          "Easy Navigation
 Plug 'gabrielelana/vim-markdown'                          "Easy MD tools
 Plug 'mbbill/undotree'                                    "Magic of Undos
+Plug 'MattesGroeger/vim-bookmarks'                        "Vim Bookmarks
 Plug 'skywind3000/asyncrun.vim'                           "Asyncrun tasks
 Plug 'wesQ3/vim-windowswap'                               "Split Panel switch
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}     "InstantMarkdownPreview

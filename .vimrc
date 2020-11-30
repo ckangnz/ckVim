@@ -378,6 +378,12 @@ nnoremap <Leader>h :Gsearch<cr>
 set grepprg=ag
 let g:grep_cmd_opts = '--noheading'
 
+"MattesGroeger/vim-bookmarks
+hi BookmarkSign ctermbg=NONE ctermfg=160
+hi BookmarkLine ctermbg=194 ctermfg=NONE
+let g:bookmark_sign = '♥'
+let g:bookmark_highlight_lines = 1
+
 "mbbill/undotree
 nnoremap <leader>u :UndotreeToggle<cr>
 let g:undotree_SetFocusWhenToggle = 1
