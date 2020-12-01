@@ -415,17 +415,21 @@ let g:ale_sign_warning = '?'
 let g:ale_linters = {
             \'css':['stylelint'],
             \'typescript':['tsserver','tslint'],
-            \'javascript.jsx':['eslint', 'flow', 'flow-language-server'],
+            \'typescriptreact':['tsserver','tslint'],
             \'javascript':['eslint', 'flow', 'flow-language-server'],
+            \'javascriptreact':['eslint', 'flow', 'flow-language-server'],
             \'python':['flake8', 'pylint'],
             \}
 let g:ale_fixers = {
             \'css':['stylelint'],
-            \'typescript':['tslint'],
-            \'javascript':['eslint'],
+            \'typescript':['prettier', 'tslint'],
+            \'typescriptreact':['prettier', 'tslint'],
+            \'javascript':['prettier', 'eslint'],
+            \'javascriptreact':['prettier', 'eslint'],
             \'python':['autopep8', 'yapf'],
             \}
-let g:ale_javascript_prettier_options = "--print-width 100 --tab-width 4 --single-quote true --trailing-comma all --jsx-single-quote true --no-bracket-spacing true --jsx-bracket-same-line true --arrow-parens avoid"
+let g:ale_javascript_prettier_use_global = 1
+let g:ale_javascript_prettier_options = "--print-width 100 --tab-width 4 --single-quote true --trailing-comma ees5 --jsx-single-quote false --bracket-spacing true --jsx-bracket-same-line true --arrow-parens avoid"
 let g:ale_fix_on_save = 1
 
 "--------Testing vim-test/vim-test--------"
