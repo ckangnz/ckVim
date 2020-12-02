@@ -2,7 +2,7 @@
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 export ZSH=$HOME/.oh-my-zsh
@@ -15,10 +15,10 @@ COMPLETION_WAITING_DOTS="true"
 export NVM_LAZY_LOAD=true
 
 plugins=(
-  git
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-  zsh-nvm
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-nvm
 )
 
 source $ZSH/oh-my-zsh.sh

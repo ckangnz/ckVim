@@ -1,9 +1,9 @@
 syntax on                                       "Syntax ON
 set re=0
 set noimd                                       "Revert back to English when on different language
-set nocompatible                                "Latest Vim Setting used 
+set nocompatible                                "Latest Vim Setting used
 set encoding=utf-8
-so ~/.vim/plugins.vim                           "Source the plugins 
+so ~/.vim/plugins.vim                           "Source the plugins
 filetype plugin indent on
 
 "-------------GENERAL SETTINGS-------------
@@ -62,10 +62,10 @@ let &t_SI.="\e[5 q"                             "Cursor shape change in differen
 let &t_SR.="\e[4 q"
 let &t_EI.="\e[1 q"
 if has('linebreak')
-  set breakindent
-  let &showbreak = '↳ '
-  set cpo+=n
-  let &breakat = " \t;:,])}"
+    set breakindent
+    let &showbreak = '↳ '
+    set cpo+=n
+    let &breakat = " \t;:,])}"
 end
 set list lcs=trail:·,tab:»»,nbsp:~              "Show whitespaces with symbol
 
@@ -130,7 +130,7 @@ set foldmethod=syntax
 :setlocal foldcolumn=0
 let javascript_fold=1
 set foldlevelstart=99
-set fillchars=fold:\ 
+set fillchars=fold:\
 "Space to toggle folds
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 "Neat Folding
@@ -152,7 +152,8 @@ let g:python_highlight_all = 1
 
 "Custom ext highlighting
 au BufNewFile,BufRead *.ejs,*.vue,*hbs set filetype=html
-au BufNewFile,BufRead *.jsx,*.tsx set filetype=typescriptreact
+au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+au BufNewFile,BufRead *.tsx set filetype=typescript.tsx
 au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 "---------------THEMES---------------
@@ -160,12 +161,15 @@ set background=dark
 colorscheme hybrid_reverse
 
 hi def link vimHighlight vimHighlight
-hi Comment ctermfg=243 guifg=#4a5158
 hi def link typescriptBinaryOp Operator
 hi def link typescriptParenExp Function
 hi def link typescriptES6SetMethod Function
-hi def link typescriptArrayMethod Function 
+hi def link typescriptArrayMethod Function
 hi def link typescriptDefault StorageClass
+hi RedundantSpaces ctermbg=red guibg=red
+hi ExtraWhitespace ctermbg=red guibg=red
+2match RedundantSpaces /\s\+$/
+2match ExtraWhitespace /\s\+$/
 
 let g:airline_theme='hybrid'
 let g:airline_powerline_fonts = 1
@@ -180,22 +184,22 @@ let g:asyncrun_open = 8
 let g:asyncrun_status = ''
 let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
 let g:airline_mode_map = {
-      \ '__' : '-',
-      \ 'n' : 'N',
-      \ 'i' : 'I',
-      \ 'R' : 'R',
-      \ 'c' : 'C',
-      \ 'v' : 'V',
-      \ 'V' : 'V',
-      \ '' : 'V',
-      \ 's' : 'S',
-      \ 'S' : 'S',
-      \ '' : 'S',
-      \ }
+            \ '__' : '-',
+            \ 'n' : 'N',
+            \ 'i' : 'I',
+            \ 'R' : 'R',
+            \ 'c' : 'C',
+            \ 'v' : 'V',
+            \ 'V' : 'V',
+            \ '' : 'V',
+            \ 's' : 'S',
+            \ 'S' : 'S',
+            \ '' : 'S',
+            \ }
 
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c4fe', '#ff3f80', '#64fcda', '#fefefe', '#b0bec4', '#ff8980', '#b9f6c9', '#ffe47e', '#80d7fe', '#ff80ab', '#a7fdeb', '#fefefe',]
 "black, dark red, dark green, dark yellow, dark blue, dark magenta, dark cyan, light grey, dark grey, red, green, yellow, blue, magenta, cyan, white
@@ -203,10 +207,10 @@ let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c
 "-------------PLUGINS------------
 "mattn/emmet-vim
 let g:user_emmet_settings = {
-\  'javascript' : {
-\      'extends' :['jsx','tsx'],
-\  },
-\}
+            \  'javascript' : {
+            \      'extends' :['jsx','tsx'],
+            \  },
+            \}
 
 "arithran/vim-delete-hidden-buffers
 nnoremap <Leader>q :DeleteHiddenBuffers<CR>
@@ -214,12 +218,12 @@ nnoremap <Leader>q :DeleteHiddenBuffers<CR>
 "Valloric/MatchTagAlways
 let g:mta_use_matchparen_group = 1
 let g:mta_filetypes = {
-    \ 'html' : 1,
-    \ 'ejs' : 1,
-    \ 'xhtml' : 1,
-    \ 'xml' : 1,
-    \ 'php' : 1,
-    \}
+            \ 'html' : 1,
+            \ 'ejs' : 1,
+            \ 'xhtml' : 1,
+            \ 'xml' : 1,
+            \ 'php' : 1,
+            \}
 nnoremap <leader>% :MtaJumpToOtherTag<cr>
 
 "easymotion/vim-easymotion
@@ -249,7 +253,7 @@ nnoremap <silent> <Leader>gb :Gblame<cr>
 nnoremap <silent> <Leader>gp :exec "Gpush origin " . fugitive#head()<cr>
 nnoremap <silent> <Leader>gP :Gpush -f<cr>
 nnoremap <silent> <Leader>gl :Gpull<cr>
-nnoremap <Leader>gf :Gfetch origin 
+nnoremap <Leader>gf :Gfetch origin
 nnoremap <silent> <Leader>gof :Gbrowse<cr>
 nnoremap <silent> <leader>df :diffupdate<cr>
 vmap <silent> <leader>dp V:diffput<cr>
@@ -291,14 +295,14 @@ nmap <Leader>ta :Tabularize/
 vmap <Leader>ta :Tabularize/
 inoremap <silent> <Bar> <Bar><Esc>:call <SID>align()<CR>a
 function! s:align()
-  let p = '^\s*|\s.*\s|\s*$'
-  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-    Tabularize/|/l1
-    normal! 0
-    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
-  endif
+    let p = '^\s*|\s.*\s|\s*$'
+    if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+        let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+        let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+        Tabularize/|/l1
+        normal! 0
+        call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+    endif
 endfunction
 
 "Valloric/YouCompleteMe
@@ -316,8 +320,8 @@ nnoremap R :call YCMRefactorRename()<cr>
 nmap <silent> gh <plug>(YCMHover)
 
 function! YCMRefactorRename()
-  let n = input('Rename to : ')
-  :exec "YcmCompleter RefactorRename " . n
+    let n = input('Rename to : ')
+    :exec "YcmCompleter RefactorRename " . n
 endfunction
 
 "SirVer/ultisnips
@@ -331,26 +335,26 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:SuperTabCrMapping=1
 let g:SuperTabClosePreviewOnPopupClose = 1
 autocmd FileType *
-  \ if &omnifunc != '' |
-  \   call SuperTabChain(&omnifunc, "<c-p>") |
-\ endif
+            \ if &omnifunc != '' |
+            \   call SuperTabChain(&omnifunc, "<c-p>") |
+            \ endif
 
 "junegunn/fzf
 set rtp+=/usr/local/opt/fzf
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 let g:fzf_layout = {'down':'15~'}
 let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-o': 'split',
-  \ 'ctrl-v': 'vsplit' }
+            \ 'ctrl-t': 'tab split',
+            \ 'ctrl-o': 'split',
+            \ 'ctrl-v': 'vsplit' }
 command! Ctrlp execute (len(system('git rev-parse'))) ? ':Files' : ':GFiles'
 nnoremap <C-p> :Ctrlp<CR>
 nnoremap <C-e> :History<CR>
 nnoremap <C-t> :Tags<CR>
-nnoremap <Leader>f :Ag 
+nnoremap <Leader>f :Ag
 vnoremap <Leader>f y:Ag <c-r>"<cr>
 nnoremap <Leader>F :Ag <c-r><c-w><cr>
-nnoremap <Leader>r :Rg 
+nnoremap <Leader>r :Rg
 nnoremap ? :BLines<CR>
 vnoremap ? y:BLines <c-r><c-w><cr>
 nnoremap <Leader>@ :BCommits<cr>
@@ -407,28 +411,27 @@ vnoremap <leader>C :CarbonNowSh<CR>
 nnoremap <leader><leader> :ALEToggle<cr>
 nnoremap <leader>an :ALENext<cr>
 nnoremap <leader>ap :ALEPrevious<cr>
-nnoremap <leader>0 :ALEFix prettier<cr>
+nnoremap <leader>0 :ALEFix<cr>
 
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '·'
 let g:ale_sign_warning = '?'
+let g:vim_vint_show_style_issues = 1
+let g:ale_linter_aliases = {
+            \'js': ['javascript', 'javascript.tsx', 'typescript', 'typescript.tsx']
+            \}
 let g:ale_linters = {
+            \'vim':['vint'],
             \'css':['stylelint'],
-            \'typescript':['tsserver','tslint'],
-            \'typescriptreact':['tsserver','tslint'],
-            \'javascript':['eslint', 'flow', 'flow-language-server'],
-            \'javascriptreact':['eslint', 'flow', 'flow-language-server'],
+            \'js':['eslint', 'tsserver', 'tslint', 'flow', 'flow-language-server'],
             \'python':['flake8', 'pylint'],
             \}
 let g:ale_fixers = {
+            \'*':['remove_trailing_lines', 'trim_whitespace'],
             \'css':['stylelint'],
-            \'typescript':['prettier', 'tslint'],
-            \'typescriptreact':['prettier', 'tslint'],
-            \'javascript':['prettier', 'eslint'],
-            \'javascriptreact':['prettier', 'eslint'],
+            \'js':['prettier', 'eslint', 'tslint'],
             \'python':['autopep8', 'yapf'],
             \}
-let g:ale_javascript_prettier_use_global = 1
 let g:ale_javascript_prettier_options = "--print-width 100 --tab-width 4 --single-quote true --trailing-comma ees5 --jsx-single-quote false --bracket-spacing true --jsx-bracket-same-line true --arrow-parens avoid"
 let g:ale_fix_on_save = 1
 
@@ -453,9 +456,9 @@ nnoremap <Leader>md :InstantMarkdownPreview<cr>
 "-----AUTO-COMMANDS------"
 "Auto sourcing self
 augroup autosourcing
-	autocmd!
-	autocmd BufWritePost $MYVIMRC source $MYVIMRC
-	autocmd BufWritePost $MYVIMRC AirlineRefresh
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+    autocmd BufWritePost $MYVIMRC AirlineRefresh
 augroup END
 
 "--------CUSTOM VIM SCRIPT------------
@@ -493,7 +496,7 @@ nnoremap <silent> <F2> :call ToggleQuickFix()<cr>
 function! ClearReg()
     let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
     for r in regs
-      call setreg(r, [])
+        call setreg(r, [])
     endfor
     unlet regs
 endfunction
