@@ -152,8 +152,8 @@ let g:python_highlight_all = 1
 
 "Custom ext highlighting
 au BufNewFile,BufRead *.ejs,*.vue,*hbs set filetype=html
-au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
-au BufNewFile,BufRead *.tsx set filetype=typescript.tsx
+au BufNewFile,BufRead *.jsx set filetype=javascriptreact
+au BufNewFile,BufRead *.tsx set filetype=typescriptreact
 au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 "---------------THEMES---------------
@@ -351,10 +351,10 @@ command! Ctrlp execute (len(system('git rev-parse'))) ? ':Files' : ':GFiles'
 nnoremap <C-p> :Ctrlp<CR>
 nnoremap <C-e> :History<CR>
 nnoremap <C-t> :Tags<CR>
-nnoremap <Leader>f :Ag
+nnoremap <Leader>f :Ag<space>
 vnoremap <Leader>f y:Ag <c-r>"<cr>
 nnoremap <Leader>F :Ag <c-r><c-w><cr>
-nnoremap <Leader>r :Rg
+nnoremap <Leader>r :Rg<space>
 nnoremap ? :BLines<CR>
 vnoremap ? y:BLines <c-r><c-w><cr>
 nnoremap <Leader>@ :BCommits<cr>
@@ -411,27 +411,31 @@ vnoremap <leader>C :CarbonNowSh<CR>
 nnoremap <leader><leader> :ALEToggle<cr>
 nnoremap <leader>an :ALENext<cr>
 nnoremap <leader>ap :ALEPrevious<cr>
-nnoremap <leader>0 :ALEFix<cr>
+nnoremap <leader>0 :ALEFix prettier<cr>
 
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '·'
 let g:ale_sign_warning = '?'
 let g:vim_vint_show_style_issues = 1
-let g:ale_linter_aliases = {
-            \'js': ['javascript', 'javascript.tsx', 'typescript', 'typescript.tsx']
-            \}
 let g:ale_linters = {
             \'vim':['vint'],
             \'css':['stylelint'],
-            \'js':['eslint', 'tsserver', 'tslint', 'flow', 'flow-language-server'],
+            \'typescript':['tsserver','tslint'],
+            \'typescriptreact':['tsserver','tslint'],
+            \'javascript':['eslint', 'flow', 'flow-language-server'],
+            \'javascriptreact':['eslint', 'flow', 'flow-language-server'],
             \'python':['flake8', 'pylint'],
             \}
 let g:ale_fixers = {
             \'*':['remove_trailing_lines', 'trim_whitespace'],
             \'css':['stylelint'],
-            \'js':['prettier', 'eslint', 'tslint'],
+            \'typescript':['prettier', 'tslint'],
+            \'typescriptreact':['prettier', 'tslint'],
+            \'javascript':['prettier', 'eslint'],
+            \'javascriptreact':['prettier', 'eslint'],
             \'python':['autopep8', 'yapf'],
             \}
+let g:ale_javascript_prettier_use_global = 1
 let g:ale_javascript_prettier_options = "--print-width 100 --tab-width 4 --single-quote true --trailing-comma ees5 --jsx-single-quote false --bracket-spacing true --jsx-bracket-same-line true --arrow-parens avoid"
 let g:ale_fix_on_save = 1
 
