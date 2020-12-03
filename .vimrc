@@ -123,7 +123,7 @@ vnoremap / <Esc>/\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 vnoremap ? <Esc>?\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 
 "highlight word under cursor - more options :so $VIMRUNTIME/syntax/hitest.vim
-:autocmd CursorMoved * exe printf('match SpellLocal /\V\%%%dl\@!\<%s\>/', line('.'), escape(expand('<cword>'), '/\'))
+":autocmd CursorMoved * exe printf('match SpellLocal /\V\%%%dl\@!\<%s\>/', line('.'), escape(expand('<cword>'), '/\'))
 
 "Folding
 set foldmethod=syntax
@@ -158,20 +158,16 @@ au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 "---------------THEMES---------------
 set background=dark
-colorscheme hybrid_reverse
+let g:gruvbox_material_background = 'hard'
+colorscheme gruvbox-material
 
-hi def link vimHighlight vimHighlight
-hi def link typescriptBinaryOp Operator
-hi def link typescriptParenExp Function
-hi def link typescriptES6SetMethod Function
-hi def link typescriptArrayMethod Function
-hi def link typescriptDefault StorageClass
+hi clear SignColumn
 hi RedundantSpaces ctermbg=red guibg=red
 hi ExtraWhitespace ctermbg=red guibg=red
 2match RedundantSpaces /\s\+$/
 2match ExtraWhitespace /\s\+$/
 
-let g:airline_theme='hybrid'
+let g:airline_theme='gruvbox_material'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
@@ -414,6 +410,7 @@ nnoremap <leader>ap :ALEPrevious<cr>
 nnoremap <leader>0 :ALEFix prettier<cr>
 
 let g:ale_sign_column_always = 1
+let g:ale_change_sign_column_color = 1
 let g:ale_sign_error = '·'
 let g:ale_sign_warning = '?'
 let g:vim_vint_show_style_issues = 1

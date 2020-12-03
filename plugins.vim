@@ -3,19 +3,15 @@ filetype off                  " required
 call plug#begin('~/.vim/plugged')
 
 "Themes
-Plug 'kristijanhusak/vim-hybrid-material'                 "Vim Hybrid Material Theme
+Plug 'sainnhe/gruvbox-material'
 Plug 'vim-airline/vim-airline'                            "Vim Airline
 Plug 'vim-airline/vim-airline-themes'                     "Vim Airline Theme
 
 "Syntax Highlighting
+Plug 'sheerun/vim-polyglot'                            "All Syntax
 Plug 'tobyS/vmustache'                                    "Mustache Template syntax
 Plug 'pangloss/vim-javascript'                            "JS syntax & indentation
-Plug 'HerringtonDarkholme/yats.vim'                       "Yet another ts syntax
-Plug 'leafgarland/typescript-vim'                         "Typescript syntax
-Plug 'peitalin/vim-jsx-typescript'                        "jsx syntax
-Plug 'MaxMEllon/vim-jsx-pretty'                           "JSX Syntax
 Plug 'nikvdp/ejs-syntax'                                  "EJS Syntax
-Plug 'vim-python/python-syntax'                           "Python Syntax
 
 "Git Tool
 Plug 'idanarye/vim-merginal'                              "Git branch organiser
