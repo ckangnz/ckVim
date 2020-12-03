@@ -108,7 +108,7 @@ tnoremap <Esc> <C-\><C-n>
 ",ww -> ,ww to change pane
 ",bp ,bn change panes
 nnoremap <Leader>wf <C-W>\|
-nnoremap <Leader>wm <C-W>=
+nnoremap <Leader>w= <C-W>=
 nnoremap <Leader>wh <C-W>t<C-W>K
 nnoremap <Leader>wv <C-W>t<C-W>H
 nnoremap <Leader>wt <C-W>T
@@ -417,11 +417,12 @@ let g:ale_sign_column_always = 1
 let g:ale_sign_error = '·'
 let g:ale_sign_warning = '?'
 let g:vim_vint_show_style_issues = 1
+let g:ale_linters = {}
 let g:ale_linters = {
             \'vim':['vint'],
             \'css':['stylelint'],
-            \'typescript':['tsserver','tslint'],
-            \'typescriptreact':['tsserver','tslint'],
+            \'typescript':['tsserver','eslint'],
+            \'typescriptreact':['tsserver','eslint'],
             \'javascript':['eslint', 'flow', 'flow-language-server'],
             \'javascriptreact':['eslint', 'flow', 'flow-language-server'],
             \'python':['flake8', 'pylint'],
@@ -429,14 +430,15 @@ let g:ale_linters = {
 let g:ale_fixers = {
             \'*':['remove_trailing_lines', 'trim_whitespace'],
             \'css':['stylelint'],
-            \'typescript':['prettier', 'tslint'],
-            \'typescriptreact':['prettier', 'tslint'],
-            \'javascript':['prettier', 'eslint'],
+            \'typescriptreact':['prettier', 'eslint'],
+            \'typescript':['prettier', 'eslint'],
             \'javascriptreact':['prettier', 'eslint'],
+            \'javascript':['prettier', 'eslint'],
             \'python':['autopep8', 'yapf'],
             \}
-let g:ale_javascript_prettier_use_global = 1
-let g:ale_javascript_prettier_options = "--print-width 100 --tab-width 4 --single-quote true --trailing-comma ees5 --jsx-single-quote false --bracket-spacing true --jsx-bracket-same-line true --arrow-parens avoid"
+let g:ale_linters_explicit = 1
+let g:ale_javascript_prettier_use_global = 0
+let g:ale_javascript_prettier_eslint_executable = 'prettier_eslint'
 let g:ale_fix_on_save = 1
 
 "--------Testing vim-test/vim-test--------"
