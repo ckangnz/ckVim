@@ -18,7 +18,7 @@ set ignorecase                                  "Ignores case when searching
 set smartcase                                   "Disables ignorecase when capitals used
 set so=10                                       "Keep cursor to not touch the bottom or top"
 set backspace=indent,eol,start                  "Make backspace as normal
-hi clear SignColumn                      "Disable signcolumn
+hi clear SignColumn                             "Disable signcolumn
 set noerrorbells visualbell t_vb=               "No error bells
 set autowriteall                                "Automatically writes file
 set complete=.,w,b,u                            "Set autocomplete
@@ -123,7 +123,7 @@ vnoremap / <Esc>/\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 vnoremap ? <Esc>?\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 
 "highlight word under cursor - more options :so $VIMRUNTIME/syntax/hitest.vim
-":autocmd CursorMoved * exe printf('match SpellLocal /\V\%%%dl\@!\<%s\>/', line('.'), escape(expand('<cword>'), '/\'))
+:autocmd CursorMoved * exe printf('match SpellLocal /\V\%%%dl\@!\<%s\>/', line('.'), escape(expand('<cword>'), '/\'))
 
 "Folding
 set foldmethod=syntax
@@ -158,10 +158,14 @@ au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 "---------------THEMES---------------
 set background=dark
+let g:gruvbox_material_better_performance = 1
+let g:gruvbox_material_disable_italic_comment = 1
+let g:gruvbox_material_enable_italic = 0
 let g:gruvbox_material_background = 'hard'
 colorscheme gruvbox-material
 
 hi clear SignColumn
+hi Comment cterm=NONE
 hi RedundantSpaces ctermbg=red guibg=red
 hi ExtraWhitespace ctermbg=red guibg=red
 2match RedundantSpaces /\s\+$/
@@ -176,7 +180,7 @@ let g:airline#extensions#tabline#show_tabs = 1
 let g:airline#extensions#tabline#close_symbol = '×'
 let g:airline#extensions#tabline#show_close_button = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:asyncrun_open = 8
+let g:asyncrun_open = 0
 let g:asyncrun_status = ''
 let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
 let g:airline_mode_map = {
@@ -330,10 +334,10 @@ let g:UltiSnipsEditSplit="vertical"
 let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:SuperTabCrMapping=1
 let g:SuperTabClosePreviewOnPopupClose = 1
-autocmd FileType *
-            \ if &omnifunc != '' |
-            \   call SuperTabChain(&omnifunc, "<c-p>") |
-            \ endif
+"autocmd FileType *
+            "\ if &omnifunc != '' |
+            "\   call SuperTabChain(&omnifunc, "<c-p>") |
+            "\ endif
 
 "junegunn/fzf
 set rtp+=/usr/local/opt/fzf
