@@ -158,14 +158,17 @@ au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 "---------------THEMES---------------
 set background=dark
-let g:gruvbox_material_better_performance = 1
+let g:gruvbox_material_better_performance = 0
+let g:gruvbox_material_sign_column_background = 'none'
 let g:gruvbox_material_disable_italic_comment = 1
 let g:gruvbox_material_enable_italic = 0
+let g:gruvbox_material_palette = "original"
 let g:gruvbox_material_background = 'hard'
 colorscheme gruvbox-material
 
-hi clear SignColumn
 hi Comment cterm=NONE
+hi diffAdded ctermfg=142 guifg=#a9b665
+hi diffRemoved ctermfg=167 guifg=#ea6962
 hi RedundantSpaces ctermbg=red guibg=red
 hi ExtraWhitespace ctermbg=red guibg=red
 2match RedundantSpaces /\s\+$/
@@ -178,7 +181,7 @@ let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_tabs = 1
 let g:airline#extensions#tabline#close_symbol = '×'
-let g:airline#extensions#tabline#show_close_button = 1
+let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:asyncrun_open = 0
 let g:asyncrun_status = ''
@@ -205,6 +208,7 @@ let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c
 "black, dark red, dark green, dark yellow, dark blue, dark magenta, dark cyan, light grey, dark grey, red, green, yellow, blue, magenta, cyan, white
 
 "-------------PLUGINS------------
+
 "mattn/emmet-vim
 let g:user_emmet_settings = {
             \  'javascript' : {
