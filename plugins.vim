@@ -57,12 +57,6 @@ Plug 'vim-test/vim-test'                                  "Test files
 "Snippets
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'       "Snippet Library
 
-"sheerun/vim-polyglot
-let g:polyglot_disabled = ['markdown.plugin', 'sensible', 'autoindent', 'sleuth']
-let g:vim_markdown_autowrite = 1
-let g:vim_markdown_new_list_item_indent = 0
-let g:vim_markdown_auto_insert_bullets = 1
-let g:markdown_fenced_languages = ['html', 'css', 'scss', 'sql', 'js=javascript', 'go', 'py=python', 'bash=sh', 'c', 'ruby']
 Plug 'sheerun/vim-polyglot'                               "All Syntax
 
 call plug#end()

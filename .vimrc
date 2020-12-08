@@ -108,7 +108,7 @@ tnoremap <Esc> <C-\><C-n>
 ",ww -> ,ww to change pane
 ",bp ,bn change panes
 nnoremap <Leader>wf <C-W>\|
-nnoremap <Leader>w= <C-W>=
+nnoremap <Leader>wm <C-W>=
 nnoremap <Leader>wh <C-W>t<C-W>K
 nnoremap <Leader>wv <C-W>t<C-W>H
 nnoremap <Leader>wt <C-W>T
@@ -390,7 +390,11 @@ nnoremap <leader>u :UndotreeToggle<cr>
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_WindowLayout = 3
 
+"sheerun/vim-polygot
+let g:markdown_fenced_languages = ['html', 'css', 'scss', 'sql', 'js=javascript', 'go', 'py=python', 'bash=sh', 'c', 'ruby']
+
 "gabrielelana/vim-markdown
+let g:markdown_enable_mappings = 1
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_conceal = 1
 let g:markdown_enable_folding = 1
