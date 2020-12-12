@@ -337,15 +337,15 @@ let g:UltiSnipsEditSplit="vertical"
 let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:SuperTabCrMapping=1
 let g:SuperTabClosePreviewOnPopupClose = 1
-"autocmd FileType *
-            "\ if &omnifunc != '' |
-            "\   call SuperTabChain(&omnifunc, "<c-p>") |
-            "\ endif
 
 "junegunn/fzf
 set rtp+=/usr/local/opt/fzf
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
-let g:fzf_layout = {'down':'15~'}
+if v:version < 802
+    let g:fzf_layout = {'down':'15~'}
+else
+    let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9  }  }
+endif
 let g:fzf_action = {
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-o': 'split',
@@ -357,21 +357,22 @@ nnoremap <C-t> :Tags<CR>
 nnoremap <Leader>f :Ag<space>
 vnoremap <Leader>f y:Ag <c-r>"<cr>
 nnoremap <Leader>F :Ag <c-r><c-w><cr>
-nnoremap <Leader>r :Rg<space>
 nnoremap ? :BLines<CR>
 vnoremap ? y:BLines <c-r><c-w><cr>
 nnoremap <Leader>@ :BCommits<cr>
-let spec = {'down':'~60%','options': '--delimiter : --nth 1..'}
+
 let preview_window = 'up:60%'
+let spec = {'down':'~60%','options': '--delimiter : --nth 1..'}
+
 command! -bang -nargs=? -complete=dir GFiles
             \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(spec, preview_window), <bang>0)
 command! -bang -nargs=? -complete=dir Files
             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(spec, preview_window), <bang>0)
-command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>,
-            \ fzf#vim#with_preview(spec, preview_window), <bang>0)
-command! -bang -nargs=* Rg call fzf#vim#grep(
-            \'rg --line-number --column --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-            \ fzf#vim#with_preview(spec, preview_window), <bang>0)
+command! -bang -nargs=* Ag
+            \call fzf#vim#ag(<q-args>, fzf#vim#with_preview(spec, preview_window), <bang>0)
+command! -bang -nargs=* History
+            \call fzf#vim#history(fzf#vim#with_preview(spec, preview_window))
+
 
 "skwp/greplace.vim
 nnoremap <Leader>h :Gsearch<cr>
