@@ -8,7 +8,6 @@ Plug 'vim-airline/vim-airline'                            "Vim Airline
 Plug 'vim-airline/vim-airline-themes'                     "Vim Airline Theme
 
 "Syntax Highlighting
-Plug 'sheerun/vim-polyglot'                            "All Syntax
 Plug 'tobyS/vmustache'                                    "Mustache Template syntax
 Plug 'pangloss/vim-javascript'                            "JS syntax & indentation
 Plug 'nikvdp/ejs-syntax'                                  "EJS Syntax
@@ -55,8 +54,9 @@ Plug 'Valloric/YouCompleteMe', { 'do' : './install.py --ts-completer' }
 "Test
 Plug 'vim-test/vim-test'                                  "Test files
 
-
 "Snippets
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'       "Snippet Library
+
+Plug 'sheerun/vim-polyglot'                               "All Syntax
 
 call plug#end()
