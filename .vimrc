@@ -155,7 +155,7 @@ au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 "---------------THEMES---------------
 set background=dark
-let g:gruvbox_material_better_performance = 0
+let g:gruvbox_material_better_performance = 1
 let g:gruvbox_material_sign_column_background = 'none'
 let g:gruvbox_material_disable_italic_comment = 1
 let g:gruvbox_material_enable_italic = 0
@@ -292,7 +292,7 @@ let g:javascript_conceal_super                     = "Ω"
 let g:javascript_conceal_arrow_function            = "⇒"
 let g:javascript_conceal_noarg_arrow_function      = "○"
 let g:javascript_conceal_underscore_arrow_function = "○"
-map <leader>l :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
+map <silent> <Leader>l :let &cole=(&cole == 1) ? 0 : 1 <bar> echo 'conceallevel ' . &cole <CR>
 
 "godlygeek/tabular
 nmap <Leader>ta :Tabularize/
