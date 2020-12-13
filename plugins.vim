@@ -40,6 +40,7 @@ Plug 'mbbill/undotree'                                    "Magic of Undos
 Plug 'MattesGroeger/vim-bookmarks'                        "Vim Bookmarks
 Plug 'skywind3000/asyncrun.vim'                           "Asyncrun tasks
 Plug 'wesQ3/vim-windowswap'                               "Split Panel switch
+Plug 'dominikduda/vim_current_word'                       "Highlight current word
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}     "InstantMarkdownPreview
 
 "Search Tool

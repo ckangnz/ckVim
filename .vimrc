@@ -122,9 +122,6 @@ vnoremap // y/<C-R>"<CR>
 vnoremap / <Esc>/\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 vnoremap ? <Esc>?\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 
-"highlight word under cursor - more options :so $VIMRUNTIME/syntax/hitest.vim
-:autocmd CursorMoved * exe printf('match SpellLocal /\V\%%%dl\@!\<%s\>/', line('.'), escape(expand('<cword>'), '/\'))
-
 "Folding
 set foldmethod=syntax
 :setlocal foldcolumn=0
@@ -382,6 +379,10 @@ command! -bang -nargs=* History
 nnoremap <Leader>h :Gsearch<cr>
 set grepprg=ag
 let g:grep_cmd_opts = '--noheading'
+
+"dominikduda/vim_current_word
+let g:vim_current_word#highlight_current_word = 1
+let g:vim_current_word#highlight_twins = 1
 
 "MattesGroeger/vim-bookmarks
 hi BookmarkSign ctermbg=NONE ctermfg=160
