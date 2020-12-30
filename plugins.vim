@@ -9,12 +9,12 @@ Plug 'vim-airline/vim-airline-themes'                     "Vim Airline Theme
 
 "Syntax Highlighting
 Plug 'tobyS/vmustache'                                    "Mustache Template syntax
-Plug 'pangloss/vim-javascript'                            "JS syntax & indentation
+Plug 'nikvdp/ejs-syntax'                                  "EJS Syntax
+Plug 'HerringtonDarkholme/yats.vim'                       "Yet another typescript syntax
+Plug 'leafgarland/typescript-vim'                         "Typescript syntax
 Plug 'othree/yajs.vim'                                    "Yet another javascript syntax
 Plug 'maxmellon/vim-jsx-pretty'                           "JSX syntax
-Plug 'leafgarland/typescript-vim'                         "Typescript syntax
-Plug 'HerringtonDarkholme/yats.vim'                       "Yet another typescript syntax
-Plug 'nikvdp/ejs-syntax'                                  "EJS Syntax
+Plug 'pangloss/vim-javascript'                            "JS syntax & indentation
 
 "Git Tool
 Plug 'idanarye/vim-merginal'                              "Git branch organiser
