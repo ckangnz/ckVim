@@ -50,7 +50,7 @@ Plug 'suan/vim-instant-markdown', {'for': 'markdown'}     "InstantMarkdownPrevie
 "Search Tool
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'                                   "Fuzzy find files/content/tags
-Plug 'skwp/greplace.vim'                                  "Project search and replace
+Plug 'dyng/ctrlsf.vim'                                    "Project search and replace
 
 "Autofill
 Plug 'ervandew/supertab'                                  "Use autocompleted text with tab

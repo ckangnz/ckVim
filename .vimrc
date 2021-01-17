@@ -368,10 +368,24 @@ command! -bang -nargs=* History
             \call fzf#vim#history(fzf#vim#with_preview(spec, preview_window))
 
 
-"skwp/greplace.vim
-nnoremap <Leader>h :Gsearch<cr>
-set grepprg=ag
-let g:grep_cmd_opts = '--noheading'
+"dyng/ctrlsf.vim
+nmap <C-F>f <Plug>CtrlSFPrompt
+vmap <C-F>f <Plug>CtrlSFVwordExec
+nmap <C-F>n <Plug>CtrlSFCwordPath
+nmap <C-F>p <Plug>CtrlSFPwordPath
+nnoremap <C-F>t :CtrlSFToggle<CR>
+inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
+let g:ctrlsf_regex_pattern = 1
+let g:ctrlsf_auto_preview = 1
+let g:ctrlsf_case_sensitive = 'no'
+let g:ctrlsf_default_view_mode = 'compact'
+let g:ctrlsf_search_mode = 'async'
+let g:ctrlsf_mapping = {
+    \ "next": "n",
+    \ "prev": "N",
+    \ }
+let g:ctrlsf_position = 'bottom'
+let g:ctrlsf_winsize = '50%'
 
 "dominikduda/vim_current_word
 let g:vim_current_word#highlight_current_word = 1
