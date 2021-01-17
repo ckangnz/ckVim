@@ -356,13 +356,8 @@ nnoremap <Leader>F :Ag <c-r><c-w><cr>
 nnoremap ? :BLines<CR>
 vnoremap ? y:BLines <c-r><c-w><cr>
 nnoremap <Leader>@ :BCommits<cr>
-if v:version < 802
-    let spec = {'down':'~60%','options': '--delimiter : --nth 1..'}
-else
-    let spec = {'window': { 'width': 0.9, 'height': 0.9  },'options': '--delimiter : --nth 1..'}
-endif
+let spec = {'down':'~60%','options': '--delimiter : --nth 1..'}
 let preview_window = 'up:60%'
-
 command! -bang -nargs=? -complete=dir GFiles
             \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(spec, preview_window), <bang>0)
 command! -bang -nargs=? -complete=dir Files
