@@ -498,6 +498,14 @@ function! Todo()
 endfunction
 nnoremap <Leader>n :call Todo()<CR>
 
+"Change in between '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '-', '#'
+for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '-', '#' ]
+  execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
+  execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
+  execute 'xnoremap a' . char . ' :<C-u>normal! F' . char . 'vf' . char . '<CR>'
+  execute 'onoremap a' . char . ' :normal va' . char . '<CR>'
+endfor
+
 "Toggle copen and cclose
 autocmd FileType qf if (getwininfo(win_getid())[0].loclist != 1) | wincmd J | endif "Quickfix to be full width on the bottom
 function! ToggleQuickFix()
