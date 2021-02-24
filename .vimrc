@@ -395,6 +395,8 @@ hi BookmarkSign ctermbg=NONE ctermfg=160
 hi BookmarkLine ctermbg=194 ctermfg=NONE
 let g:bookmark_sign = '♥'
 let g:bookmark_highlight_lines = 1
+let g:bookmark_auto_close = 1
+let g:bookmark_center = 1
 
 "mbbill/undotree
 nnoremap <leader>u :UndotreeToggle<cr>
