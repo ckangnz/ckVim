@@ -464,7 +464,7 @@ let g:test#javascript#runner = 'jest'
 
 "-----CTAGS--------"
 "brew install --HEAD universal-ctags/universal-ctags/universal-ctags
-nmap <Leader>ct :!ctags -R .<cr>
+nmap <Leader>ct :AsyncRun ctags -R .<cr>
 
 "--------VIM INSTANT MARKDOWN-------------
 let g:instant_markdown_autostart = 0
