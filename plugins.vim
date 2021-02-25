@@ -38,8 +38,10 @@ Plug 'tpope/vim-vinegar'                                  "Easy Netrw with '-'
 Plug 'dense-analysis/ale'                                 "Liniting Engine
 
 "General Vim Tool
-Plug 'easymotion/vim-easymotion'                          "Easy Navigation
+Plug 'junegunn/goyo.vim'                                  "Silence view
 Plug 'gabrielelana/vim-markdown'                          "Easy MD tools
+Plug 'sotte/presenting.vim'                               "Vim Presenting tool
+Plug 'easymotion/vim-easymotion'                          "Easy Navigation
 Plug 'mbbill/undotree'                                    "Magic of Undos
 Plug 'MattesGroeger/vim-bookmarks'                        "Vim Bookmarks
 Plug 'skywind3000/asyncrun.vim'                           "Asyncrun tasks

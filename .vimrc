@@ -406,11 +406,16 @@ let g:undotree_WindowLayout = 3
 "sheerun/vim-polygot
 let g:markdown_fenced_languages = ['html', 'css', 'scss', 'sql', 'js=javascript', 'go', 'py=python', 'bash=sh', 'c', 'ruby']
 
+"sotte/presenting.vim
+au FileType md let b:presenting_slide_separator = '\v(^|\n)----{4,}'
+au FileType markdown let b:presenting_slide_separator = '\v(^|\n)----{4,}'
 "gabrielelana/vim-markdown
 let g:markdown_enable_mappings = 1
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_conceal = 1
 let g:markdown_enable_folding = 1
+let g:vim_markdown_conceal_code_blocks = 0
+let g:vim_markdown_fenced_languages = ['csharp=cs', 'js=javascript', 'sh=bash']
 
 "kristijanhusak/vim-carbon-now-sh
 let g:carbon_now_sh_options = {
