@@ -246,7 +246,6 @@ nnoremap <silent> <Leader>1 :Gstatus<cr><c-w>T
 nnoremap <silent> <Leader>2 :GV --all<cr>
 vnoremap <silent> <Leader>2 :GV!<cr>
 nnoremap <silent> <Leader>3 :ToggleMerginal<cr>
-nnoremap <silent> <Leader>4 :call ToggleQuickFix()<cr>
 nnoremap <silent> <Leader>gc :Gcommit<cr>
 nnoremap <silent> <Leader>gr :Gread<cr>
 nnoremap <silent> <Leader>gw :Gwrite<cr>
@@ -366,7 +365,6 @@ command! -bang -nargs=* Ag
 command! -bang -nargs=* History
             \call fzf#vim#history(fzf#vim#with_preview(spec, preview_window))
 
-
 "dyng/ctrlsf.vim
 nmap <C-F>f <Plug>CtrlSFPrompt
 vmap <C-F>f <Plug>CtrlSFVwordExec
@@ -409,6 +407,7 @@ let g:markdown_fenced_languages = ['html', 'css', 'scss', 'sql', 'js=javascript'
 "sotte/presenting.vim
 au FileType md let b:presenting_slide_separator = '\v(^|\n)----{4,}'
 au FileType markdown let b:presenting_slide_separator = '\v(^|\n)----{4,}'
+
 "gabrielelana/vim-markdown
 let g:markdown_enable_mappings = 1
 let g:markdown_enable_spell_checking = 0
@@ -522,7 +521,7 @@ function! ToggleQuickFix()
     endif
 endfunction
 
-nnoremap <silent> <F2> :call ToggleQuickFix()<cr>
+nnoremap <silent> <Leader>4 :call ToggleQuickFix()<cr>
 
 "clear register
 function! ClearReg()
