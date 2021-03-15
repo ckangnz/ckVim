@@ -254,14 +254,14 @@ nnoremap <Leader>ge :Gedit<space>
 nnoremap <silent> <Leader>gb :Gblame<cr>
 nnoremap <silent> <Leader>gp :exec "Git -c push.default=current push"<cr>
 nnoremap <silent> <Leader>gP :Gpush -f<cr>
-nnoremap <silent> <Leader>gl :Gpull<cr>
+nnoremap <silent> <Leader>gl :Git pull<cr>
 nnoremap <Leader>gf :Gfetch origin
 nnoremap <silent> <Leader>gof :Gbrowse<cr>
 nnoremap <silent> <leader>df :diffupdate<cr>
 vmap <silent> <leader>dp V:diffput<cr>
 vmap <silent> <leader>do V:diffget<cr>
 
-command! ToggleMerginal execute (len(system('git rev-parse'))) ? 'echoerr "Not in git repo"' : ':MerginalToggle'
+command! ToggleMerginal execute (exists("*fugitive#head") && len(fugitive#head())) ? ':MerginalToggle' : 'echoerr "Not in a git repo"'
 if has("autocmd")
     autocmd BufReadPost fugitive://* set bufhidden=delete
 endif
@@ -344,7 +344,7 @@ let g:fzf_action = {
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-o': 'split',
             \ 'ctrl-v': 'vsplit' }
-command! Ctrlp execute (len(system('git rev-parse'))) ? ':Files' : ':GFiles'
+command! Ctrlp execute (exists("*fugitive#head") && len(fugitive#head())) ? ':GFiles' : ':Files'
 nnoremap <C-p> :Ctrlp<CR>
 nnoremap <C-e> :History<CR>
 nnoremap <C-t> :Tags<CR>
