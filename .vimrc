@@ -251,11 +251,12 @@ nnoremap <silent> <Leader>gr :Gread<cr>
 nnoremap <silent> <Leader>gw :Gwrite<cr>
 nnoremap <silent> <Leader>gd :Gdiff<cr>
 nnoremap <Leader>ge :Gedit<space>
-nnoremap <silent> <Leader>gb :Gblame<cr>
-nnoremap <silent> <Leader>gp :exec "Git -c push.default=current push"<cr>
-nnoremap <silent> <Leader>gP :Gpush -f<cr>
-nnoremap <silent> <Leader>gl :Git pull<cr>
-nnoremap <Leader>gf :Gfetch origin
+nnoremap <silent> <Leader>gb :Git blame<cr>
+nnoremap <silent> <Leader>gp :AsyncRun git -c push.default=current push"<cr>
+nnoremap <silent> <Leader>gP :AsyncRun Git push -f<cr>
+nnoremap <silent> <Leader>gl :AsyncRun Git pull<cr>
+nnoremap <Leader>gfo :AsyncRun Git fetch origin
+nnoremap <Leader>gfa :AsyncRun Git fetch --all --prune<cr>
 nnoremap <silent> <Leader>gof :Gbrowse<cr>
 nnoremap <silent> <leader>df :diffupdate<cr>
 vmap <silent> <leader>dp V:diffput<cr>
