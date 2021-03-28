@@ -57,13 +57,22 @@ else
     echo 'Completed Installing the_silver_searcher!'
 fi
 
-#Install Ripgrep 
+#Install Ripgrep
 if brew ls --versions ripgrep > /dev/null; then
     echo 'Detected ripgrep'
 else
     echo 'Installing ripgrep...'
     brew install --HEAD ripgrep
     echo 'Completed Installing Ripgrep!'
+fi
+
+#Install Figlet
+if brew ls --versions figlet > /dev/null; then
+    echo 'Detected existing Figlet'
+else
+    echo 'Installing Figlet...'
+    brew install figlet
+    echo 'Completed Installing Figlet!'
 fi
 
 #Install Instant Markdown
