@@ -406,8 +406,7 @@ let g:undotree_WindowLayout = 3
 let g:markdown_fenced_languages = ['html', 'css', 'scss', 'sql', 'js=javascript', 'go', 'py=python', 'bash=sh', 'c', 'ruby']
 
 "sotte/presenting.vim
-au FileType md let b:presenting_slide_separator = '\v(^|\n)----{4,}'
-au FileType markdown let b:presenting_slide_separator = '\v(^|\n)----{4,}'
+au FileType markdown let b:presenting_slide_separator = '\v(^|\n)\-{4,}'
 
 "gabrielelana/vim-markdown
 let g:markdown_enable_mappings = 1

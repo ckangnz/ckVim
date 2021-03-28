@@ -38,15 +38,15 @@ Plug 'tpope/vim-vinegar'                                  "Easy Netrw with '-'
 Plug 'dense-analysis/ale'                                 "Liniting Engine
 
 "General Vim Tool
-Plug 'junegunn/goyo.vim'                                  "Silence view
-Plug 'gabrielelana/vim-markdown'                          "Easy MD tools
 Plug 'sotte/presenting.vim'                               "Vim Presenting tool
+Plug 'junegunn/goyo.vim'                                  "Silence view
 Plug 'easymotion/vim-easymotion'                          "Easy Navigation
 Plug 'mbbill/undotree'                                    "Magic of Undos
 Plug 'MattesGroeger/vim-bookmarks'                        "Vim Bookmarks
 Plug 'skywind3000/asyncrun.vim'                           "Asyncrun tasks
 Plug 'wesQ3/vim-windowswap'                               "Split Panel switch
 Plug 'dominikduda/vim_current_word'                       "Highlight current word
+Plug 'gabrielelana/vim-markdown'                          "Easy MD tools
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}     "InstantMarkdownPreview
 
 "Search Tool
