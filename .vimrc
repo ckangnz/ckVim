@@ -252,7 +252,7 @@ nnoremap <silent> <Leader>gw :Gwrite<cr>
 nnoremap <silent> <Leader>gd :Gdiff<cr>
 nnoremap <Leader>ge :Gedit<space>
 nnoremap <silent> <Leader>gb :Git blame<cr>
-nnoremap <silent> <Leader>gp :AsyncRun git -c push.default=current push"<cr>
+nnoremap <silent> <Leader>gp :AsyncRun git -c push.default=current push<cr>
 nnoremap <silent> <Leader>gP :AsyncRun Git push -f<cr>
 nnoremap <silent> <Leader>gl :AsyncRun Git pull<cr>
 nnoremap <Leader>gfo :AsyncRun Git fetch origin
