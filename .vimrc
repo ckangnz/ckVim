@@ -1,13 +1,4 @@
 so ~/.vim/general.vim                           "General Vim settings
-so ~/.vim/plugins.vim                           "Source the plugins
-
-"-------------SYNTAX HIGHLIGHTING-------------
-"Python Syntax
-let g:python_highlight_all = 1
-au BufNewFile,BufRead *.ejs,*.vue,*hbs set filetype=html
-au BufNewFile,BufRead *.jsx set filetype=javascriptreact
-au BufNewFile,BufRead *.tsx set filetype=typescriptreact
-au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 "---------------THEMES---------------
 set background=dark
@@ -57,21 +48,14 @@ let g:airline_mode_map = {
             \ '' : 'S',
             \ }
 
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c4fe', '#ff3f80', '#64fcda', '#fefefe', '#b0bec4', '#ff8980', '#b9f6c9', '#ffe47e', '#80d7fe', '#ff80ab', '#a7fdeb', '#fefefe',]
-"black, dark red, dark green, dark yellow, dark blue, dark magenta, dark cyan, light grey, dark grey, red, green, yellow, blue, magenta, cyan, white
-
 "-------------PLUGINS------------
 
 "mattn/emmet-vim
 let g:user_emmet_settings = {
             \  'javascript' : {
-            \      'extends' :['jsx','tsx'],
-            \  },
-            \}
+                \      'extends' :['jsx','tsx'],
+                \  },
+                \}
 
 "arithran/vim-delete-hidden-buffers
 nnoremap <Leader>q :DeleteHiddenBuffers<CR>
@@ -237,9 +221,9 @@ let g:ctrlsf_case_sensitive = 'no'
 let g:ctrlsf_default_view_mode = 'compact'
 let g:ctrlsf_search_mode = 'async'
 let g:ctrlsf_mapping = {
-    \ "next": "n",
-    \ "prev": "N",
-    \ }
+            \ "next": "n",
+            \ "prev": "N",
+            \ }
 let g:ctrlsf_position = 'bottom'
 let g:ctrlsf_winsize = '50%'
 

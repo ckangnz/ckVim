@@ -1,14 +1,14 @@
 "-------------GENERAL SETTINGS-------------
 syntax on                                       "Syntax ON
-filetype plugin indent on
-runtime macros
-:filetype indent on
-
-let mapleader = ','                             "The default leader is '\'
 set re=0
 set noimd                                       "Revert back to English when on different language
 set nocompatible                                "Latest Vim Setting used
 set encoding=utf-8
+so ~/.vim/plugins.vim                           "Source the plugins
+filetype plugin indent on
+runtime macros
+:filetype indent on
+
 set t_CO=256                                    "Number of colours
 set display+=lastline                           "Show long lines"
 set autoindent                                  "Copy indent from previous line
@@ -32,6 +32,7 @@ set splitright                                  "Vertical split to right
 set hlsearch                                    "highlight search
 set incsearch                                   "Show preview of search
 set diffopt+=vertical                           "Set split and diff to vertical
+let mapleader = ','                             "The default leader is '\'
 
 "GUI Adjust"
 hi LineNr ctermbg=0 guibg=bg
@@ -84,11 +85,12 @@ vnoremap ˚ :m '<-2<CR>gv=gv
 
 "Hotkeys to edit
 nmap <leader>ev :vsp $MYVIMRC<cr>
+nmap <leader>eg :vsp ~/.vim/general.vim<cr>
+nmap <leader>ei :vsp ~/.vim/install.sh<cr>
 nmap <leader>ez :vsp ~/.zshrc<cr>
 nmap <leader>eh :vsp ~/.vim/notes/vimhelp.MD<cr>
 nmap <leader>ec :e ~/code<cr>
 nmap <leader>en :vsp ~/.vim/notes<cr>
-nmap <leader>eg :vsp ~/.vim/general.vim<cr>
 nmap <leader>ep :vsp ~/.vim/plugins.vim<cr>
 nmap <leader>pi :PlugInstall<cr>
 nmap <leader>pu :PlugUpdate<cr>
@@ -118,9 +120,28 @@ nnoremap <Leader>bn :bn<cr>
 "Search visually selected word
 nmap <Leader><space> :nohlsearch<cr>
 vnoremap // y/<C-R>"<CR>
+
 "Find/ Search within visual block
 vnoremap / <Esc>/\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 vnoremap ? <Esc>?\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
+
+let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c4fe', '#ff3f80', '#64fcda', '#fefefe', '#b0bec4', '#ff8980', '#b9f6c9', '#ffe47e', '#80d7fe', '#ff80ab', '#a7fdeb', '#fefefe',]
+"black, dark red, dark green, dark yellow, dark blue, dark magenta, dark cyan, light grey, dark grey, red, green, yellow, blue, magenta, cyan, white
+
+
+"-------------SYNTAX HIGHLIGHTING-------------
+"Python Syntax
+let g:python_highlight_all = 1
+au BufNewFile,BufRead *.ejs,*.vue,*hbs set filetype=html
+au BufNewFile,BufRead *.jsx set filetype=javascriptreact
+au BufNewFile,BufRead *.tsx set filetype=typescriptreact
+au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+"Show Hilight type pressing F10
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
 
 "Folding
 set foldmethod=syntax
@@ -162,10 +183,10 @@ nnoremap <Leader>n :call Todo()<CR>
 
 "Change in between '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '-', '#'
 for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '-', '#' ]
-  execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
-  execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
-  execute 'xnoremap a' . char . ' :<C-u>normal! F' . char . 'vf' . char . '<CR>'
-  execute 'onoremap a' . char . ' :normal va' . char . '<CR>'
+    execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
+    execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
+    execute 'xnoremap a' . char . ' :<C-u>normal! F' . char . 'vf' . char . '<CR>'
+    execute 'onoremap a' . char . ' :normal va' . char . '<CR>'
 endfor
 
 "Toggle copen and cclose

@@ -511,7 +511,7 @@
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
-			<string>Recycle</string>
+			<string>No</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>
@@ -893,7 +893,7 @@
 			<key>Rows</key>
 			<integer>25</integer>
 			<key>Screen</key>
-			<integer>0</integer>
+			<integer>-2</integer>
 			<key>Scrollback Lines</key>
 			<integer>0</integer>
 			<key>Selected Text Color</key>
@@ -951,6 +951,8 @@
 		</dict>
 	</array>
 	<key>OpenArrangementAtStartup</key>
+	<false/>
+	<key>OpenBookmark</key>
 	<false/>
 	<key>OpenNoWindowsAtStartup</key>
 	<true/>

@@ -7,17 +7,14 @@ else
     echo 'Completed Installing Python3!'
 fi
 
-#Install vim
-echo 'Installing vim...'
-brew install macvim --with-override-system-vim
-echo 'Completed Installing vim!'
-
 #Install Macvim
 if brew ls --versions macvim > /dev/null; then
     echo 'Detected existing Macvim'
 else
     echo 'Installing Macvim...'
-    brew install macvim
+    brew unlink vim
+    brew install vim && brew install macvim
+    brew unlink macvim && brew link macvim
     echo 'Completed Installing Macvim!'
 fi
 
