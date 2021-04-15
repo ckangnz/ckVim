@@ -56,7 +56,7 @@ Plug 'dyng/ctrlsf.vim'                                    "Project search and re
 
 "Autofill
 Plug 'ervandew/supertab'                                  "Use autocompleted text with tab
-Plug 'Valloric/YouCompleteMe', { 'do' : 'python3 ./install.py --ts-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do' : './install.py --ts-completer' }
 
 "Test
 Plug 'vim-test/vim-test'                                  "Test files

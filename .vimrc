@@ -1,4 +1,8 @@
 so ~/.vim/general.vim                           "General Vim settings
+so ~/.vim/plugins.vim                           "Source the plugins
+filetype plugin indent on
+runtime macros
+:filetype indent on
 
 "---------------THEMES---------------
 set background=dark
@@ -280,7 +284,6 @@ let g:ale_linters = {}
 let g:ale_linters = {
             \'vim':['vint'],
             \'css':['stylelint'],
-            \'cs':['OmniSharp'],
             \'typescript':['tsserver','eslint'],
             \'typescriptreact':['tsserver','eslint'],
             \'javascript':['eslint', 'flow', 'flow-language-server'],

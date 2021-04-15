@@ -4,11 +4,6 @@ set re=0
 set noimd                                       "Revert back to English when on different language
 set nocompatible                                "Latest Vim Setting used
 set encoding=utf-8
-so ~/.vim/plugins.vim                           "Source the plugins
-filetype plugin indent on
-runtime macros
-:filetype indent on
-
 set t_CO=256                                    "Number of colours
 set display+=lastline                           "Show long lines"
 set autoindent                                  "Copy indent from previous line
