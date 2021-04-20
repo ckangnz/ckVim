@@ -99,7 +99,7 @@ nnoremap <silent> <Leader>gd :Gdiff<cr>
 nnoremap <silent> <Leader>gD :Gdiffsplit!<cr>
 nnoremap <Leader>ge :Gedit<space>
 nnoremap <silent> <Leader>gb :Git blame<cr>
-nnoremap <silent> <Leader>gp :AsyncRun git -c push.default=current push<cr>
+nnoremap <silent> <Leader>gp :AsyncRun Git -c push.default=current push<cr>
 nnoremap <silent> <Leader>gP :AsyncRun Git push -f<cr>
 nnoremap <silent> <Leader>gl :AsyncRun Git pull<cr>
 nnoremap <Leader>gfo :AsyncRun Git fetch origin
@@ -311,9 +311,12 @@ nmap <silent> <leader>tf :TestFile<CR>
 nmap <silent> <leader>ts :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tL :TestVisit<CR>
+nmap <silent> <leader>to :Cypress open -C ./*/**/cypress.json<CR>
 
 let test#strategy = "asyncrun_background_term"
 let g:test#javascript#runner = 'jest'
+"let test#javascript#cypress#options={ 'all':'run -C ./*/**/cypress.json' }
+let g:test#runner_commands= ['Jest','Cypress']
 
 "-----CTAGS--------"
 "brew install --HEAD universal-ctags/universal-ctags/universal-ctags
