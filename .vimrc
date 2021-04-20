@@ -96,6 +96,7 @@ nnoremap <silent> <Leader>gc :Gcommit<cr>
 nnoremap <silent> <Leader>gr :Gread<cr>
 nnoremap <silent> <Leader>gw :Gwrite<cr>
 nnoremap <silent> <Leader>gd :Gdiff<cr>
+nnoremap <silent> <Leader>gD :Gdiffsplit!<cr>
 nnoremap <Leader>ge :Gedit<space>
 nnoremap <silent> <Leader>gb :Git blame<cr>
 nnoremap <silent> <Leader>gp :AsyncRun git -c push.default=current push<cr>
