@@ -64,6 +64,10 @@ Plug 'vim-test/vim-test'                                  "Test files
 "Snippets
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'       "Snippet Library
 
+"Docker
+Plug 'skanehira/docker.vim'                              "Docker
+
+
 Plug 'sheerun/vim-polyglot'                               "All Syntax
 
 call plug#end()

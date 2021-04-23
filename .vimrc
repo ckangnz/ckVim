@@ -105,9 +105,6 @@ nnoremap <silent> <Leader>gl :AsyncRun Git pull<cr>
 nnoremap <Leader>gfo :AsyncRun Git fetch origin
 nnoremap <Leader>gfa :AsyncRun Git fetch --all --prune<cr>
 nnoremap <silent> <Leader>gof :Gbrowse<cr>
-nnoremap <silent> <leader>df :diffupdate<cr>
-vmap <silent> <leader>dp V:diffput<cr>
-vmap <silent> <leader>do V:diffget<cr>
 
 command! ToggleMerginal execute (exists("*fugitive#head") && len(fugitive#head())) ? ':MerginalToggle' : 'echoerr "Not in a git repo"'
 if has("autocmd")
@@ -318,6 +315,11 @@ let g:test#javascript#runner = 'jest'
 "let test#javascript#cypress#options={ 'all':'run -C ./*/**/cypress.json' }
 let g:test#runner_commands= ['Jest','Cypress']
 
+"-----------Docker skanehira/docker.vim-------------"
+nmap <leader>di :DockerImages<CR>
+nmap <leader>dc :DockerContainers<CR>
+nmap <leader>ds :DockerImageSearch<CR>
+
 "-----CTAGS--------"
 "brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 nmap <Leader>ct :AsyncRun ctags -R .<cr>
@@ -331,5 +333,9 @@ nnoremap <Leader>md :InstantMarkdownPreview<cr>
 augroup autosourcing
     autocmd!
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
+    autocmd BufWritePost $HOME/.vim/general.vim source $MYVIMRC
+    autocmd BufWritePost $HOME/.vim/plugins.vim source $MYVIMRC
     autocmd BufWritePost $MYVIMRC AirlineRefresh
+    autocmd BufWritePost $HOME/.vim/general.vim AirlineRefresh
+    autocmd BufWritePost $HOME/.vim/plugins.vim AirlineRefresh
 augroup END
