@@ -27,6 +27,7 @@ Plug 'tyru/open-browser.vim'                              "Open URL
 "General IDE Tools
 Plug 'Valloric/MatchTagAlways'                            "Highlights HTML tag pair
 Plug 'arithran/vim-delete-hidden-buffers'                 "Delete Hidden Buffer
+Plug 'Yggdroot/indentLine'                                "Indentation line
 Plug 'godlygeek/tabular'                                  "Text Aligning Tool
 Plug 'jiangmiao/auto-pairs'                               "Automatic closing ({['']})
 Plug 'kristijanhusak/vim-carbon-now-sh'                   "Export to Carbon Now

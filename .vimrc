@@ -137,6 +137,14 @@ let g:javascript_conceal_noarg_arrow_function      = "○"
 let g:javascript_conceal_underscore_arrow_function = "○"
 map <silent> <Leader>l :let &cole=(&cole == 1) ? 0 : 1 <bar> echo 'conceallevel ' . &cole <CR>
 
+"Yggdroot/indentLine
+":IndentLinesToggle
+let g:indentLine_char_list = ['┊','┆']
+let g:indentLine_enabled = 1
+let g:indentLine_defaultGroup = 'SpecialKey'
+let g:indentLine_concealcursor = 'inc'
+let g:indentLine_conceallevel = 2
+
 "godlygeek/tabular
 nmap <Leader>ta :Tabularize/
 vmap <Leader>ta :Tabularize/
