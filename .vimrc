@@ -315,6 +315,7 @@ nmap <silent> <leader>tf :TestFile<CR>
 nmap <silent> <leader>ts :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tL :TestVisit<CR>
+nmap <silent> <leader>tus :Jest --update-snapshot<CR>
 nmap <silent> <leader>to :Cypress open -C ./*/**/cypress.json<CR>
 
 let test#strategy = "asyncrun_background_term"
