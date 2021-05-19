@@ -135,12 +135,14 @@ let g:javascript_conceal_super                     = "Ω"
 let g:javascript_conceal_arrow_function            = "⇒"
 let g:javascript_conceal_noarg_arrow_function      = "○"
 let g:javascript_conceal_underscore_arrow_function = "○"
-map <silent> <Leader>l :let &cole=(&cole == 1) ? 0 : 1 <bar> echo 'conceallevel ' . &cole <CR>
+map <silent> <Leader>lj :let &cole=(&cole == 1) ? 0 : 1 <bar> echo 'Javascript conceal ' . &cole <CR>
 
 "Yggdroot/indentLine
-":IndentLinesToggle
-let g:indentLine_char_list = ['┊','┆']
+map <silent> <Leader>ll :IndentLinesToggle<cr>
 let g:indentLine_enabled = 1
+let g:indentLine_setColors = 1
+let g:indentLine_showFirstIndentLevel = 1
+let g:indentLine_char_list = ['┊','|', '¦', '┆']
 let g:indentLine_defaultGroup = 'SpecialKey'
 let g:indentLine_concealcursor = 'inc'
 let g:indentLine_conceallevel = 2

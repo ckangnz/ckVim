@@ -37,7 +37,7 @@ hi SignColumn guibg=bg
 
 "----------VISUALS---------
 set guifont=FiraCode\ Nerd\ Font:h12            "Set font family
-set linespace=10                                "Set line space
+set linespace=0                                "Set line space
 set wrapmargin=0                                "line number margins
 set textwidth=0                                 "Set text width"
 set nonumber                                    "No line numbers
