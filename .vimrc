@@ -162,35 +162,75 @@ function! s:align()
     endif
 endfunction
 
-"Valloric/YouCompleteMe
-set completeopt+=popup
-let g:ycm_auto_hover = ''
-let g:ycm_disable_for_files_larger_than_kb = 0
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:ycm_key_list_stop_completion = ['<cr>']
-nnoremap gd :YcmCompleter GoTo<cr>
-nnoremap gy :YcmCompleter GoToType<cr>
-nnoremap gr :YcmCompleter GoToReferences<cr>
-nnoremap <leader>oi :YcmCompleter OrganizeImports<cr>
-nnoremap R :call YCMRefactorRename()<cr>
-nmap <silent> gh <plug>(YCMHover)
+"neoclide/coc.nvim
+let g:coc_user_config = {}
+let g:coc_global_extensions = [
+      \ 'coc-emmet',
+      \ 'coc-css',
+      \ 'coc-html',
+      \ 'coc-json',
+      \ 'coc-prettier',
+      \ 'coc-tsserver',
+      \ 'coc-snippets',
+      \ 'coc-eslint']
+" " To go back to previous state use Ctrl+O
+nmap <silent>gd <Plug>(coc-definition)
+nmap <silent>gy <Plug>(coc-type-definition)
+nmap <silent>gi <Plug>(coc-implementation)
+nmap <silent>gr <Plug>(coc-references)
+nmap <silent><S-r> <Plug>(coc-rename)
+xmap <leader>0  <Plug>(coc-format-selected)
+vmap <leader>0  <Plug>(coc-format-selected
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>qf  <Plug>(coc-fix-current)
 
-function! YCMRefactorRename()
-    let n = input('Rename to : ')
-    :exec "YcmCompleter RefactorRename " . n
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-"SirVer/ultisnips
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-let g:UltiSnipsEditSplit="vertical"
+if has("patch-8.1.1564")
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
 
-"ervandew/supertab
-let g:SuperTabDefaultCompletionType = '<C-n>'
-let g:SuperTabCrMapping=1
-let g:SuperTabClosePreviewOnPopupClose = 1
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+augroup mygroup
+  autocmd!
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+command! -nargs=0 Format :call CocAction('format')
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
 "junegunn/fzf
 set rtp+=/usr/local/opt/fzf
@@ -285,8 +325,8 @@ nnoremap <leader>0 :ALEFix prettier<cr>
 
 let g:ale_sign_column_always = 1
 let g:ale_change_sign_column_color = 1
-let g:ale_sign_error = '·'
-let g:ale_sign_warning = '?'
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️'
 let g:vim_vint_show_style_issues = 1
 let g:ale_linters = {
             \'vim':['vint'],

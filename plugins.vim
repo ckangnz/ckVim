@@ -5,14 +5,8 @@ call plug#begin('~/.vim/plugged')
 "Themes
 Plug 'sainnhe/gruvbox-material'
 Plug 'vim-airline/vim-airline'                            "Vim Airline
-Plug 'vim-airline/vim-airline-themes'                     "Vim Airline Theme
 
 "Syntax Highlighting
-Plug 'tobyS/vmustache'                                    "Mustache Template syntax
-Plug 'nikvdp/ejs-syntax'                                  "EJS Syntax
-Plug 'HerringtonDarkholme/yats.vim'                       "Yet another typescript syntax
-Plug 'leafgarland/typescript-vim'                         "Typescript syntax
-Plug 'othree/yajs.vim'                                    "Yet another javascript syntax
 Plug 'maxmellon/vim-jsx-pretty'                           "JSX syntax
 Plug 'pangloss/vim-javascript'                            "JS syntax & indentation
 
@@ -25,7 +19,6 @@ Plug 'tyru/open-browser-github.vim'                       "Open Github URL
 Plug 'tyru/open-browser.vim'                              "Open URL
 
 "General IDE Tools
-Plug 'Valloric/MatchTagAlways'                            "Highlights HTML tag pair
 Plug 'arithran/vim-delete-hidden-buffers'                 "Delete Hidden Buffer
 Plug 'Yggdroot/indentLine'                                "Indentation line
 Plug 'godlygeek/tabular'                                  "Text Aligning Tool
@@ -55,19 +48,17 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'                                   "Fuzzy find files/content/tags
 Plug 'dyng/ctrlsf.vim'                                    "Project search and replace
 
-"Autofill
-Plug 'ervandew/supertab'                                  "Use autocompleted text with tab
-Plug 'Valloric/YouCompleteMe', { 'do' : './install.py --ts-completer' }
+"Completer
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 "Test
 Plug 'vim-test/vim-test'                                  "Test files
 
 "Snippets
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'       "Snippet Library
+Plug 'honza/vim-snippets'                                 "snippets
 
 "Docker
 Plug 'skanehira/docker.vim'                              "Docker
-
 
 Plug 'sheerun/vim-polyglot'                               "All Syntax
 
