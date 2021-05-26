@@ -122,6 +122,11 @@ command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
 "pangloss/vim-javascript
 highlight Conceal guifg=fg guibg=bg
+augroup javascript_folding
+    au!
+    au FileType javascript setlocal foldmethod=syntax
+    au FileType typescript setlocal foldmethod=syntax
+augroup END
 let g:javascript_plugin_flow = 1
 let g:javascript_conceal_function                  = "ƒ"
 let g:javascript_conceal_null                      = "ø"
@@ -135,11 +140,10 @@ let g:javascript_conceal_super                     = "Ω"
 let g:javascript_conceal_arrow_function            = "⇒"
 let g:javascript_conceal_noarg_arrow_function      = "○"
 let g:javascript_conceal_underscore_arrow_function = "○"
-map <silent> <Leader>lj :let &cole=(&cole == 1) ? 0 : 1 <bar> echo 'Javascript conceal ' . &cole <CR>
 
 "Yggdroot/indentLine
-map <silent> <Leader>ll :IndentLinesToggle<cr>
-let g:indentLine_enabled = 1
+map <silent> <Leader>l :IndentLinesToggle<cr>
+let g:indentLine_enabled = 0
 let g:indentLine_setColors = 1
 let g:indentLine_showFirstIndentLevel = 1
 let g:indentLine_char_list = ['┊','|', '¦', '┆']
@@ -171,8 +175,10 @@ let g:coc_global_extensions = [
       \ 'coc-json',
       \ 'coc-prettier',
       \ 'coc-tsserver',
-      \ 'coc-snippets',
-      \ 'coc-eslint']
+      \ 'coc-omnisharp',
+      \ 'coc-eslint',
+      \ 'coc-snippets'
+      \]
 " " To go back to previous state use Ctrl+O
 nmap <silent>gd <Plug>(coc-definition)
 nmap <silent>gy <Plug>(coc-type-definition)
@@ -184,7 +190,7 @@ vmap <leader>0  <Plug>(coc-format-selected
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>ac  <Plug>(coc-codeaction)
-nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <leader>.  <Plug>(coc-fix-current)
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 

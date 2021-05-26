@@ -58,7 +58,7 @@ let &t_SR.="\e[4 q"
 let &t_EI.="\e[1 q"
 if has('linebreak')
     set breakindent
-    let &showbreak = '↳ '
+    let &showbreak ='↳ '
     set cpo+=n
     let &breakat = " \t;:,])}"
 end
@@ -141,7 +141,6 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 "Folding
 set foldmethod=syntax
 :setlocal foldcolumn=0
-let javascript_fold=1
 set foldlevelstart=99
 "Space to toggle folds
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>

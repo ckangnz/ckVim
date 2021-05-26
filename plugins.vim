@@ -32,8 +32,8 @@ Plug 'tpope/vim-vinegar'                                  "Easy Netrw with '-'
 Plug 'dense-analysis/ale'                                 "Liniting Engine
 
 "General Vim Tool
-"Plug 'sotte/presenting.vim'                               "Vim Presenting tool
 Plug 'gabrielelana/vim-markdown'                          "Easy MD tools
+Plug 'sotte/presenting.vim'                               "Vim Presenting tool
 Plug 'junegunn/goyo.vim'                                  "Silence view
 Plug 'easymotion/vim-easymotion'                          "Easy Navigation
 Plug 'mbbill/undotree'                                    "Magic of Undos
