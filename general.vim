@@ -87,6 +87,7 @@ nmap <leader>eh :vsp ~/.vim/notes/vimhelp.MD<cr>
 nmap <leader>ec :e ~/code<cr>
 nmap <leader>en :vsp ~/.vim/notes<cr>
 nmap <leader>ep :vsp ~/.vim/plugins.vim<cr>
+nmap <leader>eP :vsp ~/.vim/plugins.zsh<cr>
 nmap <leader>pi :PlugInstall<cr>
 nmap <leader>pu :PlugUpdate<cr>
 

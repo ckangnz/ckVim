@@ -9,34 +9,28 @@
 ---
 
 #### Run this to install everything automatically :)
+##### WARNING: This will override your .vimrc file
 
 ```bash
 git clone https://github.com/chris542/ckVim ~/.vim
 ~/.vim/install.sh
 ```
+
+## Zsh Setup .zshrc
 ##### WARNING: This will override your .vimrc file
 
-## Zsh Terminal Theme .zshrc
-### Install Fira font
+### Install Oh-my-zsh
 ```bash
-brew tap homebrew/cask-fonts
-brew cask install font-fira-code-nerd-font
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
 ```
-### Install Powerlevel10k
+### Install zplug
 ```bash
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+brew install zplug
 ```
-### Install zsh-autosuggestions
+### Install plugins
 ```bash
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-```
-### Install zsh-syntax-highlighting
-```bash
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-```
-### Install zsh-nvm
-```bash
-git clone https://github.com/lukechilds/zsh-nvm ~/.oh-my-zsh/custom/plugins/zsh-nvm
+zplug install
 ```
 
 ### Link zshrc

@@ -18,6 +18,11 @@ else
     echo 'Completed Installing Macvim!'
 fi
 
+# Install Fira Font
+
+brew tap homebrew/cask-fonts
+brew install --cask font-fira-code-nerd-font
+
 #Install Universal Ctags
 if brew ls --versions universal-ctags > /dev/null; then
     echo 'Detected ctags'

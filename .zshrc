@@ -1,27 +1,31 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
+
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export ZSH=$HOME/.oh-my-zsh
 export TERM="xterm-256color"
 
-ZSH_THEME="powerlevel10k/powerlevel10k"
+source $HOME/.vim/plugins.zsh
+zplug load
+
+export ZSH=$HOME/.oh-my-zsh
+source $ZSH/oh-my-zsh.sh
+
 ZSH_DISABLE_COMPFIX=true
+
+# powerlevel10k
 POWERLINE_DISABLE_RPROMPT="true"
 COMPLETION_WAITING_DOTS="true"
+
+# zsh-users/zsh-syntax
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+
+# lukechilds/zsh-nvm
+export NVM_COMPLETION=true
 export NVM_LAZY_LOAD=true
-
-plugins=(
-    git
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    zsh-nvm
-)
-
-source $ZSH/oh-my-zsh.sh
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
