@@ -7,8 +7,9 @@ Plug 'sainnhe/gruvbox-material'
 Plug 'vim-airline/vim-airline'                            "Vim Airline
 
 "Syntax Highlighting
-Plug 'maxmellon/vim-jsx-pretty'                           "JSX syntax
 Plug 'pangloss/vim-javascript'                            "JS syntax & indentation
+Plug 'mxw/vim-jsx'                                        "JSX
+
 
 "Git Tool
 Plug 'idanarye/vim-merginal'                              "Git branch organiser
