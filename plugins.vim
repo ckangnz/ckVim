@@ -29,6 +29,7 @@ Plug 'mattn/emmet-vim'                                    "Emmet
 Plug 'scrooloose/nerdcommenter'                           "Easy Commenting tool
 Plug 'tmhedberg/matchit'                                  "More functionality to %
 Plug 'tpope/vim-surround'                                 "Easy text wrap tool
+Plug 'tpope/vim-repeat'                                       "Repeat tpope's plugins
 Plug 'tpope/vim-vinegar'                                  "Easy Netrw with '-'
 Plug 'dense-analysis/ale'                                 "Liniting Engine
 

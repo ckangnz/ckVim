@@ -111,6 +111,9 @@ if has("autocmd")
     autocmd BufReadPost fugitive://* set bufhidden=delete
 endif
 
+"tpope/vim-repeat
+silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
+
 "tyru/open-browser.vim, tyru/open-browser-github.vim
 nnoremap <Leader>go. :OpenGithubProject<cr>
 nnoremap <Leader>goi :OpenGithubIssue<cr>
