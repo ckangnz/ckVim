@@ -27,6 +27,11 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 export NVM_COMPLETION=true
 export NVM_LAZY_LOAD=true
 
+source <(kubectl completion zsh)
+complete -F __start_kubectl k
+autoload -Uz compinit
+compinit
+
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 NPM_PACKAGES="${HOME}/.npm-packages"
