@@ -32,6 +32,7 @@ Plug 'tpope/vim-surround'                                 "Easy text wrap tool
 Plug 'tpope/vim-repeat'                                       "Repeat tpope's plugins
 Plug 'tpope/vim-vinegar'                                  "Easy Netrw with '-'
 Plug 'pedrohdz/vim-yaml-folds'                            "Yaml Folding
+Plug 'Omnisharp/omnisharp-vim'                            "C# Omnisharp for vim
 Plug 'dense-analysis/ale'                                 "Liniting Engine
 
 "General Vim Tool

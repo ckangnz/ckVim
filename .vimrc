@@ -185,9 +185,8 @@ let g:coc_global_extensions = [
       \ 'coc-eslint',
       \ 'coc-snippets'
       \]
-" " To go back to previous state use Ctrl+O
 nmap <silent>gd <Plug>(coc-definition)
-nmap <silent>gy <Plug>(coc-type-definition)
+nmap <silent>gt <Plug>(coc-type-definition)
 nmap <silent>gi <Plug>(coc-implementation)
 nmap <silent>gr <Plug>(coc-references)
 nmap <silent><S-r> <Plug>(coc-rename)
@@ -195,8 +194,9 @@ xmap <leader>0  <Plug>(coc-format-selected)
 vmap <leader>0  <Plug>(coc-format-selected
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>.  <Plug>(coc-codeaction)
 nmap <leader>.  <Plug>(coc-fix-current)
+nnoremap <silent><nowait> gs :<C-u>CocList -I symbols<cr>
 command -nargs=0 Swagger :CocCommand swagger.render
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -244,6 +244,29 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+"Omnisharp/omnisharp-vim
+augroup omnisharp_commands
+  autocmd!
+  autocmd CursorHold *.cs OmniSharpTypeLookup
+  autocmd FileType cs nmap <silent> <buffer> gd <Plug>(omnisharp_go_to_definition)
+  autocmd FileType cs nmap <silent> <buffer> gu <Plug>(omnisharp_find_usages)
+  autocmd FileType cs nmap <silent> <buffer> gi <Plug>(omnisharp_find_implementations)
+  autocmd FileType cs nmap <silent> <buffer> gt <Plug>(omnisharp_type_lookup)
+  autocmd FileType cs nmap <silent> <buffer> g. <Plug>(omnisharp_documentation)
+  autocmd FileType cs nmap <silent> <buffer> gs <Plug>(omnisharp_find_symbol)
+  autocmd FileType cs nmap <silent> <buffer> gf <Plug>(omnisharp_fix_usings)
+  autocmd FileType cs nmap <silent> <buffer> <C-n> <Plug>(omnisharp_signature_help)
+  autocmd FileType cs imap <silent> <buffer> <C-n> <Plug>(omnisharp_signature_help)
+  autocmd FileType cs nmap <silent> <buffer> g= <Plug>(omnisharp_global_code_check)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>0 <Plug>(omnisharp_code_format)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_actions)
+  autocmd FileType cs xmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_actions)
+  autocmd FileType cs nmap <silent> <buffer> <S-R> <Plug>(omnisharp_rename)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>omr <Plug>(omnisharp_restart_server)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>oms <Plug>(omnisharp_start_server)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>omS <Plug>(omnisharp_stop_server)
+augroup END
 
 "junegunn/fzf
 set rtp+=/usr/local/opt/fzf
@@ -349,6 +372,7 @@ let g:ale_linters = {
             \'javascript':['eslint', 'flow', 'flow-language-server'],
             \'javascriptreact':['eslint', 'flow', 'flow-language-server'],
             \'python':['flake8', 'pylint'],
+            \'cs':['Omnisharp'],
             \}
 let g:ale_fixers = {
             \'*':['remove_trailing_lines', 'trim_whitespace'],
