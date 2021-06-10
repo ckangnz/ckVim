@@ -9,7 +9,7 @@ Plug 'vim-airline/vim-airline'                            "Vim Airline
 "Syntax Highlighting
 Plug 'pangloss/vim-javascript'                            "JS syntax & indentation
 Plug 'mxw/vim-jsx'                                        "JSX
-
+Plug 'sheerun/vim-polyglot'                               "All Syntax
 
 "Git Tool
 Plug 'idanarye/vim-merginal'                              "Git branch organiser
@@ -31,6 +31,7 @@ Plug 'tmhedberg/matchit'                                  "More functionality to
 Plug 'tpope/vim-surround'                                 "Easy text wrap tool
 Plug 'tpope/vim-repeat'                                       "Repeat tpope's plugins
 Plug 'tpope/vim-vinegar'                                  "Easy Netrw with '-'
+Plug 'pedrohdz/vim-yaml-folds'                            "Yaml Folding
 Plug 'dense-analysis/ale'                                 "Liniting Engine
 
 "General Vim Tool
@@ -61,7 +62,5 @@ Plug 'honza/vim-snippets'                                 "snippets
 
 "Docker
 Plug 'skanehira/docker.vim'                              "Docker
-
-Plug 'sheerun/vim-polyglot'                               "All Syntax
 
 call plug#end()

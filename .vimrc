@@ -176,6 +176,9 @@ let g:coc_global_extensions = [
       \ 'coc-css',
       \ 'coc-html',
       \ 'coc-json',
+      \ 'coc-jest',
+      \ 'coc-yaml',
+      \ 'coc-swagger',
       \ 'coc-prettier',
       \ 'coc-tsserver',
       \ 'coc-omnisharp',
@@ -194,6 +197,7 @@ xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>ac  <Plug>(coc-codeaction)
 nmap <leader>.  <Plug>(coc-fix-current)
+command -nargs=0 Swagger :CocCommand swagger.render
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
