@@ -192,8 +192,10 @@ nmap <silent>gr <Plug>(coc-references)
 nmap <silent><S-r> <Plug>(coc-rename)
 xmap <leader>0  <Plug>(coc-format-selected)
 vmap <leader>0  <Plug>(coc-format-selected
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+xmap <leader>ac  <Plug>(coc-codeaction-selected)
+nmap <leader>ac  <Plug>(coc-codeaction-selected)
+nmap <leader>ap  <Plug>(coc-diagnostic-prev)
+nmap <leader>an  <Plug>(coc-diagnostic-next)
 nmap <leader>.  <Plug>(coc-codeaction)
 nmap <leader>.  <Plug>(coc-fix-current)
 nnoremap <silent><nowait> gs :<C-u>CocList -I symbols<cr>
@@ -267,6 +269,8 @@ augroup omnisharp_commands
   autocmd FileType cs nmap <silent> <buffer> <Leader>os <Plug>(omnisharp_start_server)
   autocmd FileType cs nmap <silent> <buffer> <Leader>oS <Plug>(omnisharp_stop_server)
   autocmd FileType cs nmap <silent> <buffer> <Leader>ob :call MakeSolution()<CR>
+  autocmd FileType cs nmap <buffer> <Leader>tt :OmniSharpRunTest<CR>
+  autocmd FileType cs nmap <buffer> <Leader>tf :OmniSharpRunTestsInFile<CR>
 
   function! MakeSolution() abort
       let makeprg = 'dotnet msbuild /nologo /v:m /property:GenerateFullPaths=true /clp:ErrorsOnly'
@@ -343,9 +347,6 @@ nnoremap <leader>u :UndotreeToggle<cr>
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_WindowLayout = 3
 
-"sheerun/vim-polygot
-let g:markdown_fenced_languages = ['html', 'css', 'scss', 'sql', 'js=javascript', 'go', 'py=python', 'bash=sh', 'c', 'ruby']
-
 "sotte/presenting.vim
 let g:presenting_figlets = 1
 
@@ -363,41 +364,6 @@ let g:carbon_now_sh_options = {
             \'ln':'false',
             \'fm':'Fira' }
 vnoremap <leader>C :CarbonNowSh<CR>
-
-"w0rp/ale
-nnoremap <leader><leader> :ALEToggle<cr>
-nnoremap <leader>an :ALENext<cr>
-nnoremap <leader>ap :ALEPrevious<cr>
-nnoremap <leader>0 :ALEFix prettier<cr>
-
-let g:ale_sign_column_always = 1
-let g:ale_change_sign_column_color = 1
-let g:ale_sign_error = '❌'
-let g:ale_sign_warning = '⚠️'
-let g:vim_vint_show_style_issues = 1
-let g:ale_linters = {
-            \'vim':['vint'],
-            \'css':['stylelint'],
-            \'typescript':['tsserver','eslint'],
-            \'typescriptreact':['tsserver','eslint'],
-            \'javascript':['eslint', 'flow', 'flow-language-server'],
-            \'javascriptreact':['eslint', 'flow', 'flow-language-server'],
-            \'python':['flake8', 'pylint'],
-            \'cs':['Omnisharp'],
-            \}
-let g:ale_fixers = {
-            \'*':['remove_trailing_lines', 'trim_whitespace'],
-            \'css':['stylelint'],
-            \'typescriptreact':['prettier', 'eslint'],
-            \'typescript':['prettier', 'eslint'],
-            \'javascriptreact':['prettier', 'eslint'],
-            \'javascript':['prettier', 'eslint'],
-            \'python':['autopep8', 'yapf'],
-            \}
-let g:ale_linters_explicit = 1
-let g:ale_javascript_prettier_use_global = 0
-let g:ale_javascript_prettier_eslint_executable = 'prettier_eslint'
-let g:ale_fix_on_save = 1
 
 "--------Testing vim-test/vim-test--------"
 nmap <silent> <leader>tt :TestNearest<CR>

@@ -8,8 +8,6 @@ Plug 'vim-airline/vim-airline'                            "Vim Airline
 
 "Syntax Highlighting
 Plug 'pangloss/vim-javascript'                            "JS syntax & indentation
-Plug 'mxw/vim-jsx'                                        "JSX
-Plug 'sheerun/vim-polyglot'                               "All Syntax
 
 "Git Tool
 Plug 'idanarye/vim-merginal'                              "Git branch organiser
@@ -33,7 +31,6 @@ Plug 'tpope/vim-repeat'                                       "Repeat tpope's pl
 Plug 'tpope/vim-vinegar'                                  "Easy Netrw with '-'
 Plug 'pedrohdz/vim-yaml-folds'                            "Yaml Folding
 Plug 'Omnisharp/omnisharp-vim'                            "C# Omnisharp for vim
-Plug 'dense-analysis/ale'                                 "Liniting Engine
 
 "General Vim Tool
 Plug 'gabrielelana/vim-markdown'                          "Easy MD tools
