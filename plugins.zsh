@@ -1,4 +1,11 @@
-export ZPLUG_HOME=/usr/local/opt/zplug
+if [[ -d "/usr/local/opt/zplug" ]]; then
+    export ZPLUG_HOME=/usr/local/opt/zplug
+elif [[ -d "/usr/share/zplug" ]]; then
+    export ZPLUG_HOME=/usr/share/zplug
+else
+    echo "ZPLUG IS NOT INSTALLED!"
+fi
+
 source $ZPLUG_HOME/init.zsh
 
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'

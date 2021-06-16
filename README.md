@@ -17,7 +17,8 @@ git clone https://github.com/chris542/ckVim ~/.vim
 ```
 
 ## Zsh Setup .zshrc
-##### WARNING: This will override your .vimrc file
+##### WARNING: This will override your .zshrc file
+##### WARNING: ZPlug requires docker
 
 ### Install Oh-my-zsh
 ```bash
@@ -27,6 +28,9 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 ### Install zplug
 ```bash
 brew install zplug
+# On Linux/Windows Terminal
+sudo apt-get update -y
+sudo apt-get install -y zplug
 ```
 ### Install plugins
 ```bash
@@ -37,4 +41,10 @@ zplug install
 ```bash
 #Synlink .zshrc
 ln -s ~/.vim/.zshrc ~/.zshrc
+```
+
+#### If you get an error
+- zsh compinit: insecure directories, run compaudit for list, run :
+```bash
+compaudit | xargs chmod g-w
 ```
