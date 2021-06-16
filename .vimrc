@@ -215,12 +215,6 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-if has("patch-8.1.1564")
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
-
 if exists('*complete_info')
   inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 else
