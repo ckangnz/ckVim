@@ -57,6 +57,7 @@ Plug 'vim-test/vim-test'                                            "Test files
 
 "Snippets
 Plug 'honza/vim-snippets'                                           "snippets
+Plug 'andrewstuart/vim-kubernetes'                                "Kubernetes snippets
 
 "Docker
 Plug 'skanehira/docker.vim'                                         "Docker

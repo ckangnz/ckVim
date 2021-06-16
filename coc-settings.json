@@ -1,9 +1,22 @@
 {
     "snippets.extends": {
+        "html" : ["html"],
+        "css" : ["css"],
         "javascriptreact": ["javascript"],
         "typescriptreact": ["javascript", "javascript-jasmine-arrow"],
-        "typescript": ["javascript", "javascript-jasmine-arrow"]
+        "typescript": ["javascript", "javascript-jasmine-arrow"],
+        "cs" : ["cs"],
+        "python" : ["django"]
     },
-    "diagnostic.errorSign":"❌",
-    "diagnostic.warningSign": "⚠️"
+    "yaml.schemas": {
+        "kubernetes": "/*.yaml"
+    },
+    "omnisharp" : {
+        "trace.server" : "information",
+        "debug.server" : true
+    },
+    "dianostic" : {
+        "errorSign" : "❌",
+        "warningSign" : "⚠️"
+    }
 }
