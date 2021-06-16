@@ -243,42 +243,42 @@ endfunction
 
 "Omnisharp/omnisharp-vim
 augroup omnisharp_commands
-  autocmd!
-  autocmd CursorHold *.cs OmniSharpTypeLookup
-  autocmd FileType cs nmap <silent> <buffer> gd <Plug>(omnisharp_go_to_definition)
-  autocmd FileType cs nmap <silent> <buffer> gu <Plug>(omnisharp_find_usages)
-  autocmd FileType cs nmap <silent> <buffer> gi <Plug>(omnisharp_find_implementations)
-  autocmd FileType cs nmap <silent> <buffer> gt <Plug>(omnisharp_type_lookup)
-  autocmd FileType cs nmap <silent> <buffer> g. <Plug>(omnisharp_documentation)
-  autocmd FileType cs nmap <silent> <buffer> gs <Plug>(omnisharp_find_symbol)
-  autocmd FileType cs nmap <silent> <buffer> gf <Plug>(omnisharp_fix_usings)
-  autocmd FileType cs nmap <silent> <buffer> <C-n> <Plug>(omnisharp_signature_help)
-  autocmd FileType cs imap <silent> <buffer> <C-n> <Plug>(omnisharp_signature_help)
-  autocmd FileType cs nmap <silent> <buffer> g= <Plug>(omnisharp_global_code_check)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>0 <Plug>(omnisharp_code_format)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_actions)
-  autocmd FileType cs xmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_actions)
-  autocmd FileType cs nmap <silent> <buffer> <S-R> <Plug>(omnisharp_rename)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>oR <Plug>(omnisharp_restart_server)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>os <Plug>(omnisharp_start_server)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>oS <Plug>(omnisharp_stop_server)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>ob :call MakeSolution()<CR>
-  autocmd FileType cs nmap <silent> <buffer> <Leader>or :call RunSolution()<CR>
-  autocmd FileType cs nmap <buffer> <Leader>tt :OmniSharpRunTest<CR>
-  autocmd FileType cs nmap <buffer> <Leader>tf :OmniSharpRunTestsInFile<CR>
+    autocmd!
+    autocmd CursorHold *.cs OmniSharpTypeLookup
+    autocmd FileType cs nmap <silent> <buffer> gd <Plug>(omnisharp_go_to_definition)
+    autocmd FileType cs nmap <silent> <buffer> gu <Plug>(omnisharp_find_usages)
+    autocmd FileType cs nmap <silent> <buffer> gi <Plug>(omnisharp_find_implementations)
+    autocmd FileType cs nmap <silent> <buffer> gt <Plug>(omnisharp_type_lookup)
+    autocmd FileType cs nmap <silent> <buffer> g. <Plug>(omnisharp_documentation)
+    autocmd FileType cs nmap <silent> <buffer> gs <Plug>(omnisharp_find_symbol)
+    autocmd FileType cs nmap <silent> <buffer> gf <Plug>(omnisharp_fix_usings)
+    autocmd FileType cs nmap <silent> <buffer> <C-n> <Plug>(omnisharp_signature_help)
+    autocmd FileType cs imap <silent> <buffer> <C-n> <Plug>(omnisharp_signature_help)
+    autocmd FileType cs nmap <silent> <buffer> g= <Plug>(omnisharp_global_code_check)
+    autocmd FileType cs nmap <silent> <buffer> <Leader>0 <Plug>(omnisharp_code_format)
+    autocmd FileType cs nmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_actions)
+    autocmd FileType cs xmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_actions)
+    autocmd FileType cs nmap <silent> <buffer> <S-R> <Plug>(omnisharp_rename)
+    autocmd FileType cs nmap <silent> <buffer> <Leader>oR <Plug>(omnisharp_restart_server)
+    autocmd FileType cs nmap <silent> <buffer> <Leader>os <Plug>(omnisharp_start_server)
+    autocmd FileType cs nmap <silent> <buffer> <Leader>oS <Plug>(omnisharp_stop_server)
+    autocmd FileType cs nmap <silent> <buffer> <Leader>ob :call MakeSolution()<CR>
+    autocmd FileType cs nmap <silent> <buffer> <Leader>or :call RunSolution()<CR>
+    autocmd FileType cs nmap <buffer> <Leader>tt :OmniSharpRunTest<CR>
+    autocmd FileType cs nmap <buffer> <Leader>tf :OmniSharpRunTestsInFile<CR>
 
-  function! MakeSolution() abort
-      let makeprg = 'dotnet build /nologo /v:m /property:GenerateFullPaths=true /clp:ErrorsOnly'
-      let sln = fnamemodify(OmniSharp#FindSolutionOrDir(), ':.')
-      setlocal errorformat=\ %#%f(%l\\\,%c):\ %m
-      echomsg makeprg . sln
-      call asyncrun#run(1, sln, makeprg)
-  endfunction
+    function! MakeSolution() abort
+        let makeprg = 'dotnet build /nologo /v:m /property:GenerateFullPaths=true /clp:ErrorsOnly'
+        let sln = fnamemodify(OmniSharp#FindSolutionOrDir(), ':.')
+        setlocal errorformat=\ %#%f(%l\\\,%c):\ %m
+        echomsg makeprg . sln
+        call asyncrun#run(1, sln, makeprg)
+    endfunction
 
-  function! RunSolution() abort
-      let sln = fnamemodify(OmniSharp#FindProjectOrDir(), ':.')
-      echo sln
-  endfunction
+    function! RunSolution() abort
+        let sln = fnamemodify(OmniSharp#FindProjectOrDir(), ':.')
+        echo sln
+    endfunction
 
 augroup END
 
@@ -382,6 +382,17 @@ let g:test#runner_commands= ['Jest','Cypress']
 nmap <leader>di :DockerImages<CR>
 nmap <leader>dc :DockerContainers<CR>
 nmap <leader>ds :DockerImageSearch<CR>
+nmap <leader>db :call DockerImageBuildWithTag()<CR>
+
+function! DockerImageBuildWithTag()
+    call inputsave()
+    let t = input('Enter tag name: ')
+    call inputrestore()
+    let script = ':DockerImageBuild -t ' . t . ' .'
+    if t!=""
+        execute script
+    endif
+endfunction
 
 "-----CTAGS--------"
 "brew install --HEAD universal-ctags/universal-ctags/universal-ctags

@@ -8,14 +8,18 @@
         "cs" : ["cs"],
         "python" : ["django"]
     },
-    "yaml.schemas": {
-        "kubernetes": "/*.yaml"
-    },
+    "eslint.enable": false,
+    "eslint.filetypes": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ],
     "omnisharp" : {
         "trace.server" : "information",
         "debug.server" : true
     },
-    "dianostic" : {
+    "diagnostic" : {
         "errorSign" : "❌",
         "warningSign" : "⚠️"
     }

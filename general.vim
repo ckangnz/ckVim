@@ -160,7 +160,7 @@ set foldtext=NeatFoldText()
 "--------CUSTOM VIM SCRIPT------------
 "To do notes
 function! Todo()
-    let fname= "~/.vim/notes/todo.md"
+    let fname= "$HOME/.vim/notes/todo.md"
     let winnum=bufwinnr(fname)
     if winnum != -1
         exe winnum . "wincmd w"

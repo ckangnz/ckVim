@@ -180,7 +180,7 @@
       l                                 Monitor container logs
       ctrl-d                            Delete container
       ctrl-r                            Rename container
-      p                                 Switch to iamges popup window
+      p                                 Switch to image popup window
       c                                 Copy file/folders between container and local file system
       C                                 Create a new image from container
       <CR>                              Inspect a container
