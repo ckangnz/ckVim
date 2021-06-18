@@ -3,10 +3,13 @@
 * Before proceeding, **you must download Docker**
 
 ### Create a `Dockerfile`
+
 * Dockerfile will create an image when we build.
 * An image should contain libraries for app to run properly.
   * npm install / yarn add / pip install ...
 * [ Select your base image ](https://hub.docker.com)
+
+#### Example
 
 ```docker
 FROM python:3.6
@@ -32,7 +35,6 @@ RUN . $HOME/.nvm/nvm.sh &&\
 COPY . .
 ```
 
-
 ### Create a `.dockerignore`
 
 ```docker
@@ -47,46 +49,73 @@ ___
 ### Build your docker image
 
 ```bash
-# Creates a docker image
-docker build -tag docker-image-name .
+# Creates a docker image using DOCKERFILE
+docker image build -t docker-image-name .
+docker build --tag docker-image-name .
 
 # Removes a docker image
+docker image rm docker-image-name
 docker rmi docker-image-name
 ```
 
-### Run docker
+### Pull docker image from src
+
+```bash
+docker image pull hello-world
+docker pull hello-world
+```
+
+### Run docker container
 * Either run with docker or docker-compose
 
 ```bash
-#Run your docker
+# Run your container with the image
 docker run docker-image-name
+# Run container with name
+docker run --name myContainer docker-image-name
+# Run container detached
+docker run -d docker-image-name
+docker run --detach docker-image-name
+# Run container with container's port 5678 published to the host 80
+docker run -p 5678:80 docker-image-name
+
+# Start your container
+docker container start docker-container-name
+docker start docker-container-name
+docker restart docker-container-name
+
+# Stop your container
+docker container stop docker-container-name
+docker stop docker-container-name
+docker kill docker-container-name
 
 # Run / interactive / allocate pseudo-TTY / remove when it exits
 docker run --rm -it docker-image-name
 ```
 
+### Listing Images
 
+```bash
+docker images
+docker image ls
+```
 
+### Listing Containers
 
+- You can include `-a` at the end to see exited containers
 
+```bash
+docker ps
+docker container ls
+```
 
+### Prune
 
-
-### Installing node/npm using NVM
-
-### For Node/NPM in docker `./scripts/node.sh`
-
-```sh
-set -e
-
-SCRIPT=$(readlink -f "$0")
-BASEDIR=$(dirname "$SCRIPT")
-
-source $NVM_DIR/nvm.sh
-nvm install $NODE_VERSION
-nvm alias default $NODE_VERSION
-nvm use default
-
-npm install -g npm@"$NPM_VERSION"
-npm install -g gulp bower
+```bash
+# Prune everything that's exited
+docker system prune -a
+# Prune image that has dangling containers
+docker image prune -a
+# Prune exited containers
+docker container prune
 ```
