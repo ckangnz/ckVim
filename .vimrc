@@ -88,7 +88,7 @@ hi link EasyMotionMoveHL Search
 hi link EasyMotionIncSearch Search
 
 "tpope/vim-fugitive / idanarye/vim-merginal / junegunn/gv.vim
-nnoremap <silent> <Leader>1 :Gstatus<cr><c-w>T
+nnoremap <silent> <Leader>1 :Git<cr><c-w>T
 nnoremap <silent> <Leader>2 :GV --all<cr>
 vnoremap <silent> <Leader>2 :GV!<cr>
 nnoremap <silent> <Leader>3 :ToggleMerginal<cr>
@@ -181,12 +181,13 @@ let g:coc_global_extensions = [
       \ 'coc-swagger',
       \ 'coc-prettier',
       \ 'coc-tsserver',
+      \ 'coc-docker',
       \ 'coc-omnisharp',
       \ 'coc-eslint',
       \ 'coc-snippets'
       \]
 nmap <silent>gd <Plug>(coc-definition)
-nmap <silent>gt <Plug>(coc-type-definition)
+nmap <silent>gy <Plug>(coc-type-definition)
 nmap <silent>gi <Plug>(coc-implementation)
 nmap <silent>gr <Plug>(coc-references)
 nmap <silent><S-r> <Plug>(coc-rename)
@@ -200,8 +201,6 @@ nmap <leader>.  <Plug>(coc-codeaction)
 nmap <leader>.  <Plug>(coc-fix-current)
 nnoremap <silent><nowait> gs :<C-u>CocList -I symbols<cr>
 command -nargs=0 Swagger :CocCommand swagger.render
-
-autocmd CursorHold * silent call CocActionAsync('highlight')
 
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? coc#_select_confirm() :
@@ -223,21 +222,23 @@ endif
 
 augroup mygroup
   autocmd!
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd FileType typescript,json setl formatexpr=CocActionAsync('formatSelected')
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-command! -nargs=0 Format :call CocAction('format')
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 Format : call CocActionAsync('format')
+command! -nargs=? Fold   : call CocActionAsync('fold', <f-args>)
+command! -nargs=0 OR     : call CocActionAsync('runCommand', 'editor.action.organizeImport')
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+"set updatetime=2000
+"autocmd CursorHold * silent call CocActionAsync('doHover')
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   else
-    call CocAction('doHover')
+    call CocActionAsync('doHover')
   endif
 endfunction
 

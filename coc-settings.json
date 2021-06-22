@@ -20,6 +20,7 @@
         "debug.server" : true
     },
     "diagnostic" : {
+        "enableMssage" : "jump",
         "errorSign" : "❌",
         "warningSign" : "⚠️"
     }
