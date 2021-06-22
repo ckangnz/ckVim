@@ -2,50 +2,6 @@
 
 * Before proceeding, **you must download Docker**
 
-### Create a `Dockerfile`
-
-* Dockerfile will create an image when we build.
-* An image should contain libraries for app to run properly.
-  * npm install / yarn add / pip install ...
-* [ Select your base image ](https://hub.docker.com)
-
-#### Example
-
-```docker
-FROM python:3.6
-
-WORKDIR /usr/src/app
-
-# Zsh
-RUN apt-get update &&\
-    apt-get install curl zsh &&\
-    wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
-
-# Node and Global NPM
-ENV NODE_VERSION=v10.4.0 \ NPM_VERSION=4.1.0
-
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash
-ENV NVM_DIR=/root/.nvm
-RUN . $HOME/.nvm/nvm.sh &&\
-    nvm install $NODE_VERSION &&\
-    nvm alias default $NODE_VERSION &&\
-    nvm use default &&\
-    npm i -g webpack-cli
-
-COPY . .
-```
-
-### Create a `.dockerignore`
-
-```docker
-*.pyc
-*.pyo
-/node_modules
-...
-```
-
-___
-
 ### Build your docker image
 
 ```bash
@@ -58,27 +14,47 @@ docker image rm docker-image-name
 docker rmi docker-image-name
 ```
 
-### Pull docker image from src
+#### Find local docker images
 
 ```bash
-docker image pull hello-world
-docker pull hello-world
+docker images | grep { search-text }
 ```
 
-### Run docker container
+### Run Docker Container
 * Either run with docker or docker-compose
+
+##### Docker Container from Image
 
 ```bash
 # Run your container with the image
 docker run docker-image-name
-# Run container with name
-docker run --name myContainer docker-image-name
-# Run container detached
-docker run -d docker-image-name
-docker run --detach docker-image-name
-# Run container with container's port 5678 published to the host 80
-docker run -p 5678:80 docker-image-name
 
+docker run 
+# Name the container
+          --name myContainer
+# Detached
+          -d
+          --detach
+# Port mapping localPort:containerPort
+          -p 5678:80
+          --publish 5678:80
+# interacive terminal
+          -it
+# remove container on exit
+          -rm
+
+
+# Attach interactive mode to running container
+docker exec -it {container-name} sh
+
+# Show container logs
+docker exec {container-name} ps -ef
+docker exec -ti {container-name} sh -c "top -n 1"
+```
+
+##### Docker Container from existing Container
+
+```bash
 # Start your container
 docker container start docker-container-name
 docker start docker-container-name
@@ -88,9 +64,6 @@ docker restart docker-container-name
 docker container stop docker-container-name
 docker stop docker-container-name
 docker kill docker-container-name
-
-# Run / interactive / allocate pseudo-TTY / remove when it exits
-docker run --rm -it docker-image-name
 ```
 
 ### Listing Images
@@ -118,4 +91,31 @@ docker system prune -a
 docker image prune -a
 # Prune exited containers
 docker container prune
+```
+
+### Inspect local images
+
+- Shows details of the image
+
+```bash
+docker inspect {image-name}
+docker inspect -f '{{ .Config.[nameOfConfig] }}' {image-name}
+```
+
+### Tagging
+
+- Clone existing image to a new version(tag)
+
+```bash
+docker tag {image-name} {new-image-name}:tag
+```
+
+## Docker Hub
+
+```bash
+docker search {image-name}
+docker pull {image-name}
+docker push {image-name}
+docker inspect {image-name}
+docker login {registry-url}
 ```

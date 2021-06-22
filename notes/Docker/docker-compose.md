@@ -7,6 +7,7 @@
 ```docker
 version: '3'
 services:
+
   web:
     build: ./
     ports:
@@ -20,6 +21,7 @@ services:
     - "db:postgres"
     command: python manage.py runserver 0.0.0.0:80
     env_file: .env-local
+
   db:
     image: postgres:9.4
     volumes:
@@ -28,12 +30,13 @@ services:
 
 ###### web
 
-* `build`: build it from the Dockerfile in the parent directory
-* `links`: link to the database container
+* `build`: location of Dockerfile
 * `ports`: map the external port 8000 to the internal port 80
 * `volumes`:
   * map the parent directory on the host to /app in the container, with read and write access
   * map the data directory on the host to /data in the container, with read and write access
+* `depends_on`: which other service need to exist before this runs
+* `links`: link to the database container
 * `command`: by default, when the command docker-compose run is issued, execute python manage.py runserver 0.0.0.0:80
 * `env_file`: use the .env-local to supply environment variables to the container
 
@@ -46,4 +49,5 @@ services:
 docker-compose build
 docker-compose run --rm web bash
 docker-compose up
+docker-compose up --scale web=10
 ```
