@@ -8,6 +8,7 @@ fi
 
 source $HOME/.vim/plugins.zsh
 source <(kubectl completion zsh)
+source <(helm completion zsh)
 complete -F __start_kubectl k
 autoload -Uz compinit
 compinit
