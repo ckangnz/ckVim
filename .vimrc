@@ -191,16 +191,22 @@ nmap <silent>gy <Plug>(coc-type-definition)
 nmap <silent>gi <Plug>(coc-implementation)
 nmap <silent>gr <Plug>(coc-references)
 nmap <silent><S-r> <Plug>(coc-rename)
-xmap <leader>0  <Plug>(coc-format-selected)
-vmap <leader>0  <Plug>(coc-format-selected
-xmap <leader>ac  <Plug>(coc-codeaction-selected)
-nmap <leader>ac  <Plug>(coc-codeaction-selected)
-nmap <leader>ap  <Plug>(coc-diagnostic-prev)
-nmap <leader>an  <Plug>(coc-diagnostic-next)
-nmap <leader>.  <Plug>(coc-codeaction)
-nmap <leader>.  <Plug>(coc-fix-current)
+xmap <leader>0 <Plug>(coc-format-selected)
+nmap <leader>0 <Plug>(coc-format)
+xmap <leader>ac <Plug>(coc-codeaction-selected)
+nmap <leader>ac <Plug>(coc-codeaction-selected)
+nmap <leader>ap <Plug>(coc-diagnostic-prev)
+nmap <leader>an <Plug>(coc-diagnostic-next)
+nmap <leader>. <Plug>(coc-codeaction)
+nmap <leader>. <Plug>(coc-fix-current)
 nnoremap <silent><nowait> gs :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> ? :<C-u>CocList outline<CR>
+
 command -nargs=0 Swagger :CocCommand swagger.render
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+command! -nargs=0 Format : call CocActionAsync('format')
+command! -nargs=? Fold   : call CocActionAsync('fold', <f-args>)
+command! -nargs=0 OR     : call CocActionAsync('runCommand', 'editor.action.organizeImport')
 
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? coc#_select_confirm() :
@@ -226,13 +232,8 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-command! -nargs=0 Format : call CocActionAsync('format')
-command! -nargs=? Fold   : call CocActionAsync('fold', <f-args>)
-command! -nargs=0 OR     : call CocActionAsync('runCommand', 'editor.action.organizeImport')
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-"set updatetime=2000
-"autocmd CursorHold * silent call CocActionAsync('doHover')
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -298,8 +299,6 @@ nnoremap <C-t> :Tags<CR>
 nnoremap <Leader>f :Ag<space>
 vnoremap <Leader>f y:Ag <c-r>"<cr>
 nnoremap <Leader>F :Ag <c-r><c-w><cr>
-nnoremap ? :BLines<CR>
-vnoremap ? y:BLines <c-r><c-w><cr>
 nnoremap <Leader>@ :BCommits<cr>
 let spec = {'down':'~60%','options': '--delimiter : --nth 1..'}
 let preview_window = 'up:60%'
