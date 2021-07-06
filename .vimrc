@@ -287,7 +287,9 @@ augroup END
 
 "junegunn/fzf
 set rtp+=/usr/local/opt/fzf
-autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
+let $FZF_DEFAULT_OPTS="--bind ctrl-k:preview-up,ctrl-j:preview-down"
+let g:fzf_layout={'down':'~60%'}
+let g:fzf_preview_window = ['right:50%', 'ctrl-/']
 let g:fzf_action = {
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-o': 'split',
@@ -300,16 +302,12 @@ nnoremap <Leader>f :Ag<space>
 vnoremap <Leader>f y:Ag <c-r>"<cr>
 nnoremap <Leader>F :Ag <c-r><c-w><cr>
 nnoremap <Leader>@ :BCommits<cr>
-let spec = {'down':'~60%','options': '--delimiter : --nth 1..'}
-let preview_window = 'up:60%'
-command! -bang -nargs=? -complete=dir GFiles
-            \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(spec, preview_window), <bang>0)
-command! -bang -nargs=? -complete=dir Files
-            \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(spec, preview_window), <bang>0)
-command! -bang -nargs=* Ag
-            \call fzf#vim#ag(<q-args>, fzf#vim#with_preview(spec, preview_window), <bang>0)
-command! -bang -nargs=* History
-            \call fzf#vim#history(fzf#vim#with_preview(spec, preview_window))
+
+autocmd! FileType fzf
+autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
 
 "dyng/ctrlsf.vim
 nmap <C-F>f <Plug>CtrlSFPrompt
