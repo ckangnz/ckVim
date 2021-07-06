@@ -20,7 +20,6 @@
   },
   "prettier": {
     "eslintIntegration": true,
-    "tslintIntegration": true,
     "trailingComma": "all",
     "singleQuote": true,
     "disableSuccessMessage": true
@@ -31,7 +30,7 @@
   },
   "diagnostic": {
     "enableMssage": "jump",
-    "errorSign": "❌",
-    "warningSign": "⚠️"
+    "errorSign": "x",
+    "warningSign": "!"
   }
 }
