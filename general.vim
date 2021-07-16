@@ -96,6 +96,15 @@ nmap <C-J> <C-W><C-J>
 nmap <C-K> <C-W><C-K>
 nmap <C-H> <C-W><C-H>
 nmap <C-L> <C-W><C-L>
+augroup vimrc
+  au!
+  autocmd FileType netrw call s:RemoveNetrwMap()
+augroup END
+function s:RemoveNetrwMap()
+  if hasmapto('<Plug>NetrwRefresh')
+    unmap <buffer> <C-L>
+  endif
+endfunction
 
 "Terminal commands
 tnoremap <Esc> <C-\><C-n>
