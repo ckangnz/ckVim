@@ -48,6 +48,7 @@ Plug 'suan/vim-instant-markdown', {'for': 'markdown'}               "InstantMark
 "Search Tool
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'                                             "Fuzzy find files/content/tags
+Plug 'antoinemadec/coc-fzf'                                         "Fzf for coc
 Plug 'dyng/ctrlsf.vim'                                              "Project search and replace
 
 "Completer

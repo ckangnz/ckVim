@@ -192,6 +192,8 @@ let g:coc_global_extensions = [
       \ 'coc-eslint',
       \ 'coc-snippets'
       \]
+let g:coc_fzf_preview='right:50%'
+let g:coc_fzf_opts=[]
 nmap <silent>gd <Plug>(coc-definition)
 nmap <silent>gy <Plug>(coc-type-definition)
 nmap <silent>gi <Plug>(coc-implementation)
@@ -363,10 +365,10 @@ let g:vim_markdown_fenced_languages = ['csharp=cs', 'js=javascript', 'sh=bash']
 
 "kristijanhusak/vim-carbon-now-sh
 let g:carbon_now_sh_options = {
-            \'t':'material',
+            \'t':'monokai',
             \'ln':'false',
-            \'fm':'Fira' }
-vnoremap <leader>C :CarbonNowSh<CR>
+            \'fm':'Fira Code' }
+vnoremap <leader>E :CarbonNowSh<CR>
 
 "--------Testing vim-test/vim-test--------"
 nmap <silent> <leader>tt :TestNearest<CR>
