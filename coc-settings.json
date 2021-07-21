@@ -30,7 +30,7 @@
   },
   "diagnostic": {
     "enableMssage": "jump",
-    "errorSign": "x",
-    "warningSign": "!"
+    "errorSign": "",
+    "warningSign": ""
   }
 }
