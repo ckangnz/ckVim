@@ -29,6 +29,7 @@ Plug 'tmhedberg/matchit'                                            "More functi
 Plug 'tpope/vim-surround'                                           "Easy text wrap tool
 Plug 'tpope/vim-repeat'                                             "Repeat tpope's plugins
 Plug 'tpope/vim-vinegar'                                            "Easy Netrw with '-'
+Plug 'miyakogi/conoline.vim'                                        "Highlight current line
 Plug 'pedrohdz/vim-yaml-folds'                                      "Yaml Folding
 Plug 'Omnisharp/omnisharp-vim'                                      "C# Omnisharp for vim
 

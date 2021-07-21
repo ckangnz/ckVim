@@ -145,7 +145,7 @@ let g:javascript_conceal_noarg_arrow_function      = "○"
 let g:javascript_conceal_underscore_arrow_function = "○"
 
 "Yggdroot/indentLine
-map <silent> <Leader>l :IndentLinesToggle<cr>
+map <silent> <Leader>ll :IndentLinesToggle<cr>
 let g:indentLine_enabled = 0
 let g:indentLine_setColors = 1
 let g:indentLine_showFirstIndentLevel = 1
@@ -153,6 +153,12 @@ let g:indentLine_char_list = ['┊','|', '¦', '┆']
 let g:indentLine_defaultGroup = 'SpecialKey'
 let g:indentLine_concealcursor = 'inc'
 let g:indentLine_conceallevel = 2
+
+"miyakogi/conoline.vim
+map <silent> <leader>lp :ConoLineToggle<cr>
+let g:conoline_auto_enable = 1
+let g:conoline_use_colorscheme_default_normal=1
+let g:conoline_use_colorscheme_default_insert=1
 
 "godlygeek/tabular
 nmap <Leader>ta :Tabularize/
@@ -283,7 +289,6 @@ augroup omnisharp_commands
     endfunction
 
 augroup END
-
 
 "junegunn/fzf
 set rtp+=/usr/local/opt/fzf
