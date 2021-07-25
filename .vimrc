@@ -311,7 +311,7 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
 "dyng/ctrlsf.vim
 nmap <C-F>f <Plug>CtrlSFPrompt
 vmap <C-F>f <Plug>CtrlSFVwordExec
-nmap <C-F>n <Plug>CtrlSFCwordPath
+nmap <C-F>F <Plug>CtrlSFCwordPath
 nmap <C-F>p <Plug>CtrlSFPwordPath
 nnoremap <C-F>t :CtrlSFToggle<CR>
 inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
