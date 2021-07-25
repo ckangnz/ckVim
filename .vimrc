@@ -64,6 +64,8 @@ let g:mta_filetypes = {
             \ 'xhtml' : 1,
             \ 'xml' : 1,
             \ 'php' : 1,
+            \ 'javascriptreact' : 1,
+            \ 'typescriptreact' : 1,
             \}
 nnoremap <leader>% :MtaJumpToOtherTag<cr>
 
