@@ -142,6 +142,15 @@ au BufNewFile,BufRead *.jsx set filetype=javascriptreact
 au BufNewFile,BufRead *.tsx set filetype=typescriptreact
 au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
+"Highlights
+hi Comment cterm=NONE
+hi diffAdded ctermfg=142 guifg=#a9b665
+hi diffRemoved ctermfg=167 guifg=#ea6962
+hi RedundantSpaces ctermbg=red guibg=red
+hi ExtraWhitespace ctermbg=red guibg=red
+2match RedundantSpaces /\s\+$/
+2match ExtraWhitespace /\s\+$/
+
 "Show Hilight type pressing F10
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
             \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"

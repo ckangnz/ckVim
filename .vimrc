@@ -14,14 +14,6 @@ let g:gruvbox_material_palette = "original"
 let g:gruvbox_material_background = 'hard'
 colorscheme gruvbox-material
 
-hi Comment cterm=NONE
-hi diffAdded ctermfg=142 guifg=#a9b665
-hi diffRemoved ctermfg=167 guifg=#ea6962
-hi RedundantSpaces ctermbg=red guibg=red
-hi ExtraWhitespace ctermbg=red guibg=red
-2match RedundantSpaces /\s\+$/
-2match ExtraWhitespace /\s\+$/
-
 let g:airline_theme='gruvbox_material'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#left_sep=''
