@@ -330,7 +330,7 @@ let g:ctrlsf_position = 'bottom'
 let g:ctrlsf_winsize = '50%'
 
 "dominikduda/vim_current_word
-let g:vim_current_word#highlight_current_word = 1
+let g:vim_current_word#highlight_current_word = 0
 let g:vim_current_word#highlight_twins = 1
 
 "MattesGroeger/vim-bookmarks
