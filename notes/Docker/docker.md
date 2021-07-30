@@ -1,6 +1,6 @@
 # Docker
 
-* Before proceeding, **you must download Docker**
+- Before proceeding, **you must download Docker**
 
 ### Build your docker image
 
@@ -21,7 +21,8 @@ docker images | grep { search-text }
 ```
 
 ### Run Docker Container
-* Either run with docker or docker-compose
+
+- Either run with docker or docker-compose
 
 ##### Docker Container from Image
 
@@ -29,9 +30,7 @@ docker images | grep { search-text }
 # Run your container with the image
 docker run docker-image-name
 
-docker run 
-# Name the container
-          --name myContainer
+docker run
 # Detached
           -d
           --detach
@@ -114,8 +113,9 @@ docker tag {image-name} {new-image-name}:tag
 
 ```bash
 docker search {image-name}
-docker pull {image-name}
 docker push {image-name}
+docker pull {image-name}
 docker inspect {image-name}
 docker login {registry-url}
+docker login -u {username} -p {password} {registry-url}
 ```
