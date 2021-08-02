@@ -1,4 +1,5 @@
 # Kubectl
+
 - `k` is alias to `kubectl`
 
 ## Installation
@@ -11,7 +12,7 @@ kubectl version
 # Server Version : Kubernetes version installed on the master
 ```
 
-## Clusters
+## Clusters (Contexts)
 
 ```bash
 # Cluster state
@@ -31,7 +32,7 @@ kubectl config use-context {name-of-context}
 ```bash
 #Starting to serve on 127.0.0.1:8001
 kubectl proxy
-kubectl proxy --port 8080 
+kubectl proxy --port 8001
 
 curl http://localhost:8001/version
 ```
@@ -57,7 +58,6 @@ k get ns {MY_NAMESPACE} -o yaml > ns.yaml
 k config set-context --current --namespace={MY_NAMESPACE}
 ```
 
-
 ## GET commands
 
 ```bash
@@ -75,6 +75,7 @@ k config set-context --current --namespace={MY_NAMESPACE}
 ```
 
 ## APPLY/DELETE template commands
+
 [How to use template](./k8sTemplate.md)
 
 ## Deployment
