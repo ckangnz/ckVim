@@ -176,6 +176,9 @@ endfunction
 set foldtext=NeatFoldText()
 
 "--------CUSTOM VIM SCRIPT------------
+"Delete all white spaces in the beginning
+nmap <leader>dw :%s/^$\\|^\s\+//g<CR>
+
 "To do notes
 function! Todo()
     let fname= "$HOME/.vim/notes/todo.md"
