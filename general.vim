@@ -140,7 +140,7 @@ let g:python_highlight_all = 1
 au BufNewFile,BufRead *.ejs,*.vue,*hbs set filetype=html
 au BufNewFile,BufRead *.jsx set filetype=javascriptreact
 au BufNewFile,BufRead *.tsx set filetype=typescriptreact
-au BufRead,BufNewFile .py,.pyw,*.c,*.h match BadWhitespace /\s\+$/
+au BufRead,BufNewFile .py,.pyw match BadWhitespace /\s\+$/
 
 "Highlights
 hi Comment cterm=NONE

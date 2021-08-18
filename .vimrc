@@ -96,8 +96,8 @@ nnoremap <silent> <Leader>gb :Git blame<cr>
 nnoremap <silent> <Leader>gp :AsyncRun git -c push.default=current push<cr>
 nnoremap <silent> <Leader>gP :AsyncRun git push -f<cr>
 nnoremap <silent> <Leader>gl :AsyncRun git pull<cr>
-nnoremap <Leader>gfo :AsyncRun :Git fetch origin
-nnoremap <Leader>gfa :AsyncRun :Git fetch --all --prune<cr>
+nnoremap <Leader>gfo :AsyncRun git fetch origin
+nnoremap <Leader>gfa :AsyncRun git fetch --all --prune<cr>
 nnoremap <silent> <Leader>gof :Gbrowse<cr>
 
 command! ToggleMerginal execute (exists("*fugitive#head") && len(fugitive#head())) ? ':MerginalToggle' : 'echoerr "Not in a git repo"'
@@ -296,11 +296,11 @@ let g:fzf_action = {
             \ 'ctrl-o': 'split',
             \ 'ctrl-v': 'vsplit' }
 command! Ctrlp execute (exists("*fugitive#head") && len(fugitive#head())) ? ':GFiles' : ':Files'
-nnoremap <C-p> :Ctrlp<CR>
-nnoremap <C-e> :History<CR>
-nnoremap <C-t> :Tags<CR>
+nnoremap <silent> <C-p> :Ctrlp<CR>
+nnoremap <silent> <C-e> :History<CR>
+nnoremap <silent> <C-t> :Tags<CR>
 nnoremap <Leader>f :Ag<space>
-vnoremap <Leader>f y:Ag <c-r>"<cr>
+vnoremap <Leader>f y:Ag <c-r><cr>
 nnoremap <Leader>F :Ag <c-r><c-w><cr>
 nnoremap <Leader>@ :BCommits<cr>
 
