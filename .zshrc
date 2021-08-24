@@ -26,11 +26,18 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 export NVM_COMPLETION=true
 export NVM_LAZY_LOAD=true
 
+<<<<<<< Updated upstream
 export ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
 ZSH_DISABLE_COMPFIX=true
 
+if [ kubectl ];then
+    source <(kubectl completion zsh)
+    complete -F __start_kubectl k
+    autoload -Uz compinit
+    compinit
+fi
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
