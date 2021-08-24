@@ -375,6 +375,7 @@ nmap <silent> <leader>to :Cypress open -C ./*/**/cypress.json<CR>
 
 let test#strategy = "asyncrun_background_term"
 let g:test#javascript#runner = 'jest'
+let g:test#javascript#options = '--update-snapshot'
 let g:test#runner_commands= ['Jest','Cypress']
 
 "-----------Docker skanehira/docker.vim-------------"
