@@ -26,7 +26,6 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 export NVM_COMPLETION=true
 export NVM_LAZY_LOAD=true
 
-<<<<<<< Updated upstream
 export ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
