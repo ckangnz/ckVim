@@ -7,10 +7,6 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 source $HOME/.vim/plugins.zsh
-source <(kubectl completion zsh)
-source <(helm completion zsh)
-complete -F __start_kubectl k
-autoload -Uz compinit
 compinit
 
 export TERM="xterm-256color"
@@ -31,11 +27,27 @@ source $ZSH/oh-my-zsh.sh
 
 ZSH_DISABLE_COMPFIX=true
 
+# softmoth/zsh-vim-mode
+bindkey -v
+MODE_CURSOR_VICMD="green block"
+MODE_CURSOR_VIINS="#20d08a blinking bar"
+MODE_CURSOR_SEARCH="#ff00ff blinking underline"
+MODE_INDICATOR_VIINS='%F{15}<%F{8}INSERT<%f'
+MODE_INDICATOR_VICMD='%F{10}<%F{2}NORMAL<%f'
+MODE_INDICATOR_REPLACE='%F{9}<%F{1}REPLACE<%f'
+MODE_INDICATOR_SEARCH='%F{13}<%F{5}SEARCH<%f'
+MODE_INDICATOR_VISUAL='%F{12}<%F{4}VISUAL<%f'
+MODE_INDICATOR_VLINE='%F{12}<%F{4}V-LINE<%f'
+
+# Kubectl and helm
 if [ kubectl ];then
     source <(kubectl completion zsh)
     complete -F __start_kubectl k
     autoload -Uz compinit
     compinit
+fi
+if [ helm ];then
+    source <(helm completion zsh)
 fi
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
