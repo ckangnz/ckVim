@@ -79,6 +79,7 @@
     :s/id="\v\zs.{-}\ze"            Change id="`*****`"
     ctrl+f f                        Search all project (ctrlsf)
     ctrl+f t                        Reopen search view
+    shift+m                         Edit mode for ctrlsf
 
 ### Commenting (NerdCommenter)
     ,c<space>                       comment toggle
