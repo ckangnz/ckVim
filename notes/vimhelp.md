@@ -1,4 +1,5 @@
 ### Vinegar(Netrw) File Management Tips
+
     F1                              Help
     I                               info box at the top
     v                               Open on right pane
@@ -21,6 +22,7 @@
     :Explore/Sexplore/Vexplore      To Explore in Netrw without Vinegar
 
 ### General Normal Mode
+
     hjkl                            left down up right
     gg / G                          top / bottom of page
     ctrl + u / d                    jump half page up / down
@@ -35,10 +37,12 @@
     ,q                              delete hidden buffers
 
 ### General Visual Mode
+
     //                              search visually selected word
     U / u                           change upper/lowercase (in visual mode only)
 
 ### Panes / Buffers
+
     ctrl+hjkl                       move cursors from buffer to buffer
     ,ww                             swap buffer
     ,wf                             maximize pane
@@ -48,9 +52,11 @@
     ,wt                             open to a new tab
 
 ### Vim-easymotion
+
     F                               Type two characters to jump position on screen
 
 ### Folding
+
     zf                              create folds
     za                              toggle folds
     zd                              delete folds
@@ -59,15 +65,18 @@
     ze                              reset folds
 
 ### Vim-surround
+
     shift + s                       Surround with...(visual mode)
     c + s + ' + "                   change surrounding ' to "
 
 ### FZF Plugin
+
     ctrl + p                        open files
     ctrl + e                        open from history
     ctrl + t                        look for tags
 
 ### Search and change:
+
     ,f (Ack)                        Search all project
     ,F                              Search the word on cursor in all project
     ,h (Gsearch)                    Replace all project
@@ -82,6 +91,7 @@
     shift+m                         Edit mode for ctrlsf
 
 ### Commenting (NerdCommenter)
+
     ,c<space>                       comment toggle
     ,cy                             comment and yank
     ,ca                             change commenting method
@@ -89,6 +99,7 @@
     ,cs                             sexy commenting
 
 ### Vim Fugitive + Merginal + GV
+
     ,1                              Gstatus
         cc                              commit
         ca                              commit --amend
@@ -112,12 +123,14 @@
     ,gfa                            git fetch --all --prune
 
 ### Open Browser
+
     ,go.                            Open Git repo
     ,goi                            Open Issues
     ,gop                            Open Pull Reqs
     ,gor                            Create PR
 
 ### Emmet Control
+
     c-y,                            for tags
     c-yd                            for inward
     c-yD                            for Outward
@@ -132,38 +145,51 @@
 ### Test
 
 #### Jest
+
     ,tt                             Test nearest function
     ,tf                             Test current file
     ,ts                             Test all suite
     ,tl                             Test last
     ,tL                             Test visited
+
 #### Cypress
+
     ,to                             Open Cypress with nearest cypress.json
 
 ### Vim Bookmark
+
     ,ma                             Show all bookmarks
     ,mm                             Bookmark current line
 
 ### Undotree
+
     ,u                              Show undo tree
     ?                               Hotkeys
 
 ### Javascript Syntax Concealing
+
     ,l                              toggle conceal
 
 ### CTags
+
     ,ct                             Create Ctags
 
 ### Vim Instant Markdown
+
     ,md                             View markdown on browser
 
 ### Tabular
+
     ,ta                             :Tabularize e.g. (,ta=  will prettify =)
 
 ### Docker commands
+
     ,di                             Docker image list
       /                                 Filter image
       r                                 Run image
+        -d (detached)
+        -p 1234:80 (expose 1234 to 80)
+        --rm (remove when stopped)
       R                                 Refresh image
       t                                 Tag image
       s                                 Save image to tarball

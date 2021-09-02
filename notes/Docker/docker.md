@@ -40,7 +40,7 @@ docker run
 # interacive terminal
           -it
 # remove container on exit
-          -rm
+          --rm
 
 
 # Attach interactive mode to running container
