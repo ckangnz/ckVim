@@ -29,6 +29,7 @@
     "debug.server": true
   },
   "diagnostic": {
+    "checkCurrentLine": true,
     "enableMssage": "jump",
     "errorSign": "",
     "warningSign": ""
