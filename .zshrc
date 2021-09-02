@@ -4,9 +4,8 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 source $HOME/.vim/plugins.zsh
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 compinit
 
 export TERM="xterm-256color"
