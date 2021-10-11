@@ -137,7 +137,7 @@ let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c
 "-------------SYNTAX HIGHLIGHTING-------------
 "Python Syntax
 let g:python_highlight_all = 1
-au BufNewFile,BufRead *.ejs,*.vue,*hbs set filetype=html
+au BufNewFile,BufRead *.vue,*hbs set filetype=html
 au BufNewFile,BufRead *.jsx set filetype=javascriptreact
 au BufNewFile,BufRead *.tsx set filetype=typescriptreact
 au BufRead,BufNewFile .py,.pyw match BadWhitespace /\s\+$/

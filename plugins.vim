@@ -8,6 +8,7 @@ Plug 'vim-airline/vim-airline'                                      "Vim Airline
 
 "Syntax Highlighting
 Plug 'pangloss/vim-javascript'                                      "JS syntax & indentation
+Plug 'briancollins/vim-jst'                                         "EJS syntax & indentation
 Plug 'udalov/kotlin-vim'                                            "Kotlin Syntax
 
 "Git Tool
