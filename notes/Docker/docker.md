@@ -5,13 +5,18 @@
 ### Build your docker image
 
 ```bash
-# Creates a docker image using DOCKERFILE
-docker image build -t docker-image-name .
-docker build --tag docker-image-name .
+// to build docker image with DOCKERFILE
+docker build -t IMAGE-NAME-TAG .
+
+// build with tag:latest
+docker build -t IMAGE-NAME-TAG -f ./DOCKERFILE .
+
+// build with tag:1.0.0
+docker build -t IMAGE-NAME-TAG:1.0.0 -f ./DOCKERFILE .
 
 # Removes a docker image
-docker image rm docker-image-name
-docker rmi docker-image-name
+docker image rm docker-image-tag
+docker rmi docker-image-tag
 ```
 
 #### Find local docker images

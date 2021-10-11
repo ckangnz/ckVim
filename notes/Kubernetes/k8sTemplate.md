@@ -141,11 +141,14 @@ spec:
       hosts:
         - host.tld
   rules:
-    - host: host.tld
+    - host: example.com //(will forward to path below)
       http:
         paths:
           - path: /
-            backend:
-              serviceName: service
-              servicePort: portNumberOrName
+            pathType: Prefix
+            backend: //service where it will redirect to
+              service:
+                name: service
+                port:
+                  number: portNumberOrName
 ```
