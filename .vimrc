@@ -289,7 +289,7 @@ augroup END
 "junegunn/fzf
 set rtp+=/usr/local/opt/fzf
 let $FZF_DEFAULT_OPTS="--bind ctrl-k:preview-up,ctrl-j:preview-down"
-let g:fzf_layout={'down':'~60%'}
+let g:fzf_layout={'window':{ 'width': 0.9, 'height': 0.6 }}
 let g:fzf_preview_window = ['right:50%', 'ctrl-/']
 let g:fzf_action = {
             \ 'ctrl-t': 'tab split',
