@@ -333,9 +333,9 @@ let g:ctrlsf_winsize = '50%'
 let g:vim_current_word#highlight_current_word = 0
 let g:vim_current_word#highlight_twins = 1
 
-"MattesGroeger/vim-bookmarks
+"MattesGroeger/vim-bNONEookmarks
 hi BookmarkSign ctermbg=NONE ctermfg=160
-hi BookmarkLine ctermbg=194 ctermfg=NONE
+hi BookmarkLine ctermbg=NONE ctermfg=160
 let g:bookmark_sign = '♥'
 let g:bookmark_highlight_lines = 1
 let g:bookmark_auto_close = 1

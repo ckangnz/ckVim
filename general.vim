@@ -13,7 +13,7 @@ set ignorecase                                  "Ignores case when searching
 set smartcase                                   "Disables ignorecase when capitals used
 set so=10                                       "Keep cursor to not touch the bottom or top"
 set backspace=indent,eol,start                  "Make backspace as normal
-set signcolumn=number                           "Show signcolumn
+set signcolumn=yes                              "Show signcolumn
 set noerrorbells visualbell t_vb=               "No error bells
 set autowriteall                                "Automatically writes file
 set complete=.,w,b,u                            "Set autocomplete

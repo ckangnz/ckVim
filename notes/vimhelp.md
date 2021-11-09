@@ -158,8 +158,9 @@
 
 ### Vim Bookmark
 
-    ,ma                             Show all bookmarks
-    ,mm                             Bookmark current line
+    ma                             Show all bookmarks
+    mm                             Bookmark current line
+    mx                             Clear All bookmarks
 
 ### Undotree
 
