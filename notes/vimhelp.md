@@ -86,9 +86,6 @@
     :s/from.*end/new/               Change word old to new
     :s/id=".\{-}"                   Change `id="*****"`
     :s/id="\v\zs.{-}\ze"            Change id="`*****`"
-    ctrl+f f                        Search all project (ctrlsf)
-    ctrl+f t                        Reopen search view
-    shift+m                         Edit mode for ctrlsf
 
 ### Commenting (NerdCommenter)
 

@@ -186,7 +186,6 @@ let g:coc_global_extensions = [
       \ 'coc-eslint',
       \ 'coc-snippets'
       \]
-let g:coc_fzf_preview='right:50%'
 let g:coc_fzf_opts=[]
 nmap <silent>gd <Plug>(coc-definition)
 nmap <silent>gy <Plug>(coc-type-definition)
@@ -288,9 +287,9 @@ augroup END
 
 "junegunn/fzf
 set rtp+=/usr/local/opt/fzf
-let $FZF_DEFAULT_OPTS="--bind ctrl-k:preview-up,ctrl-j:preview-down"
+let $FZF_DEFAULT_OPTS="--layout=reverse --bind ctrl-k:preview-up,ctrl-j:preview-down,?:toggle-preview"
 let g:fzf_layout={'window':{ 'width': 0.9, 'height': 0.6 }}
-let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+let g:fzf_preview_window = ''
 let g:fzf_action = {
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-o': 'split',
@@ -299,35 +298,15 @@ command! Ctrlp execute (exists("*fugitive#head") && len(fugitive#head())) ? ':GF
 nnoremap <silent> <C-p> :Ctrlp<CR>
 nnoremap <silent> <C-e> :History<CR>
 nnoremap <silent> <C-t> :Tags<CR>
-nnoremap <Leader>f :Ag<space>
-vnoremap <Leader>f y:Ag <c-r><cr>
-nnoremap <Leader>F :Ag <c-r><c-w><cr>
+nnoremap <Leader>f :Rg<space>
+vnoremap <Leader>f y:Rg <c-r><cr>
+nnoremap <Leader>F :Rg <c-r><c-w><cr>
 nnoremap <Leader>@ :BCommits<cr>
 
 autocmd! FileType fzf
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-
-
-"dyng/ctrlsf.vim
-nmap <C-F>f <Plug>CtrlSFPrompt
-vmap <C-F>f <Plug>CtrlSFVwordExec
-nmap <C-F>F <Plug>CtrlSFCwordPath
-nmap <C-F>p <Plug>CtrlSFPwordPath
-nnoremap <C-F>t :CtrlSFToggle<CR>
-inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
-let g:ctrlsf_regex_pattern = 1
-let g:ctrlsf_auto_preview = 1
-let g:ctrlsf_case_sensitive = 'no'
-let g:ctrlsf_default_view_mode = 'compact'
-let g:ctrlsf_search_mode = 'async'
-let g:ctrlsf_mapping = {
-            \ "next": "n",
-            \ "prev": "N",
-            \ }
-let g:ctrlsf_position = 'bottom'
-let g:ctrlsf_winsize = '50%'
 
 "dominikduda/vim_current_word
 let g:vim_current_word#highlight_current_word = 0
