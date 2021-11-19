@@ -23,6 +23,11 @@ docker exec -it <containerName> /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -
 ### Listing tables
 
 ```bash
+   //List all table names
    select * from INFORMATION_SCHEMA.TABLES;
+   go
+
+   //select top 10 items from table
+   select top(10) * from TABLE_NAME
    go
 ```
