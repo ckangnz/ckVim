@@ -299,7 +299,7 @@ nnoremap <silent> <C-p> :Ctrlp<CR>
 nnoremap <silent> <C-e> :History<CR>
 nnoremap <silent> <C-t> :Tags<CR>
 nnoremap <Leader>f :Rg<space>
-vnoremap <Leader>f y:Rg <c-r><cr>
+vnoremap <Leader>f y:Rg <c-r>"<cr>
 nnoremap <Leader>F :Rg <c-r><c-w><cr>
 nnoremap <Leader>@ :BCommits<cr>
 
@@ -309,10 +309,11 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 "dominikduda/vim_current_word
-let g:vim_current_word#highlight_current_word = 0
+let g:vim_current_word#highlight_current_word = 1
 let g:vim_current_word#highlight_twins = 1
+hi CurrentWord gui=bold cterm=bold
 
-"MattesGroeger/vim-bNONEookmarks
+"MattesGroeger/vim-bookmarks
 hi BookmarkSign ctermbg=NONE ctermfg=160
 hi BookmarkLine ctermbg=NONE ctermfg=160
 let g:bookmark_sign = '♥'
