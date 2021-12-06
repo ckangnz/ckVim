@@ -202,6 +202,13 @@ nmap <leader>. <Plug>(coc-codeaction)
 nmap <leader>. <Plug>(coc-fix-current)
 nnoremap <silent><nowait> gs :<C-u>CocList -I symbols<cr>
 nnoremap <silent><nowait> ? :<C-u>CocList outline<CR>
+"Floating scroll
+nnoremap <silent><expr> <c-j> coc#float#has_scroll() ? coc#float#scroll(1, 1) : "\<c-j>"
+nnoremap <silent><expr> <c-k> coc#float#has_scroll() ? coc#float#scroll(0, 1) : "\<c-k>"
+inoremap <silent><expr> <c-j> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1, 1)\<cr>" : "\<c-j>"
+inoremap <silent><expr> <c-k> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0, 1)\<cr>" : "\<c-k>"
+vnoremap <silent><expr> <c-j> coc#float#has_scroll() ? coc#float#scroll(1, 1) : "\<c-j>"
+vnoremap <silent><expr> <c-k> coc#float#has_scroll() ? coc#float#scroll(0, 1) : "\<c-k>"
 
 command -nargs=0 Swagger :CocCommand swagger.render
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
