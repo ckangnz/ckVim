@@ -123,7 +123,7 @@ nnoremap <Leader>bp :bp<cr>
 nnoremap <Leader>bn :bn<cr>
 
 "Search visually selected word
-nmap <Leader><space> :nohlsearch<cr>
+nmap <silent> <Leader><space> :nohlsearch<cr>
 vnoremap // y/<C-R>"<CR>
 
 "Find/ Search within visual block
