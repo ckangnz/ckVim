@@ -11,6 +11,7 @@ compinit
 export TERM="xterm-256color"
 
 # powerlevel10k
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 POWERLINE_DISABLE_RPROMPT="true"
 COMPLETION_WAITING_DOTS="true"
 

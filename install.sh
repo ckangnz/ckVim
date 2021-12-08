@@ -7,14 +7,23 @@ else
     echo 'Completed Installing Python3!'
 fi
 
+#Install nvm
+if brew ls --versions nvm > /dev/null; then
+    echo 'Detected existing nvm'
+else
+    echo 'Installing nvm...'
+    brew install nvm
+    echo 'Completed Installing nvm!'
+fi
+
 #Install Macvim
 if brew ls --versions macvim > /dev/null; then
     echo 'Detected existing Macvim'
 else
     echo 'Installing Macvim...'
+    brew install vim
     brew unlink vim
-    brew install vim && brew install macvim
-    brew unlink macvim && brew link macvim
+    brew install macvim
     echo 'Completed Installing Macvim!'
 fi
 
