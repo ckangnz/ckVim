@@ -350,8 +350,8 @@ nmap . .<Plug>Pulse
 let g:vim_search_pulse_duration = 100
 
 "MattesGroeger/vim-bookmarks
-hi BookmarkSign ctermbg=NONE ctermfg=160
-hi BookmarkLine ctermbg=NONE ctermfg=160
+hi BookmarkSign ctermbg=NONE ctermfg=red guibg=NONE guifg=red
+hi BookmarkLine ctermbg=NONE ctermfg=NONE guibg=#343434 guifg=NONE
 let g:bookmark_sign = '♥'
 let g:bookmark_highlight_lines = 1
 let g:bookmark_auto_close = 1
