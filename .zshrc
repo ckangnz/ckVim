@@ -22,10 +22,28 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 export NVM_COMPLETION=true
 export NVM_LAZY_LOAD=true
 
-export ZSH=$HOME/.oh-my-zsh
-source $ZSH/oh-my-zsh.sh
+# autoload nvmrc
+autoload -U add-zsh-hook
+load-nvmrc() {
+  [[ -a .nvmrc ]] || return
+  local node_version="$(nvm version)"
+  local nvmrc_path="$(nvm_find_nvmrc)"
 
-ZSH_DISABLE_COMPFIX=true
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
 
 # softmoth/zsh-vim-mode
 bindkey -v
@@ -38,6 +56,13 @@ MODE_INDICATOR_REPLACE='%F{9}<%F{1}REPLACE<%f'
 MODE_INDICATOR_SEARCH='%F{13}<%F{5}SEARCH<%f'
 MODE_INDICATOR_VISUAL='%F{12}<%F{4}VISUAL<%f'
 MODE_INDICATOR_VLINE='%F{12}<%F{4}V-LINE<%f'
+
+# oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
+source $ZSH/oh-my-zsh.sh
+
+ZSH_DISABLE_COMPFIX=true
+
 
 # Kubectl and helm
 if [ kubectl ];then
@@ -63,8 +88,8 @@ export PATH="$PATH:$HOME/.rvm/bin"
 #alias
 alias zshconfig="vim ~/.zshrc"
 [ -f ~/.extraAlias.zsh ] && source ~/.extraAlias.zsh
-#alias dczsh="docker-compose run --rm web zsh"
-#alias dcbash="docker-compose run --rm web bash"
+alias dczsh="docker-compose run --rm web zsh"
+alias dcbash="docker-compose run --rm web bash"
 
 #Postgresql
 #brew install postgresql
