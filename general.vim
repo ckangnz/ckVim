@@ -83,7 +83,7 @@ nmap <leader>ev :vsp $MYVIMRC<cr>
 nmap <leader>eg :vsp ~/.vim/general.vim<cr>
 nmap <leader>ei :vsp ~/.vim/install.sh<cr>
 nmap <leader>ez :vsp ~/.zshrc<cr>
-nmap <leader>eh :vsp ~/.vim/notes/vimhelp.MD<cr>
+nmap <leader>eh :sp ~/.vim/notes/vimhelp.MD<cr>
 nmap <leader>ec :e ~/code<cr>
 nmap <leader>en :vsp ~/.vim/notes<cr>
 nmap <leader>ep :vsp ~/.vim/plugins.vim<cr>

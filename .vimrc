@@ -318,10 +318,20 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
 "dominikduda/vim_current_word
 let g:vim_current_word#highlight_current_word = 1
 let g:vim_current_word#highlight_twins = 1
-hi CurrentWord gui=bold,underline cterm=bold
+hi CurrentWord gui=bold,underline cterm=bold,underline
 hi CurrentWordTwins gui=bold cterm=bold
 
-"qxxb/vim-searchhi
+"qxxb/vim-searchhi & inside/vim-search-pulse
+let g:vim_search_pulse_disable_auto_mappings = 1
+let g:vim_search_pulse_duration = 100
+nmap <C-d> <C-d><Plug>Pulse
+nmap <C-u> <C-u><Plug>Pulse
+nmap <C-O> <C-O><Plug>Pulse
+nmap <C-I> <C-I><Plug>Pulse
+nmap gg gg<Plug>Pulse
+nmap G G<Plug>Pulse
+nmap % %<Plug>Pulse
+nmap . .<Plug>Pulse
 nmap / <Plug>(searchhi-/)
 vmap / <Plug>(searchhi-v-/)
 nmap n <Plug>(searchhi-n)<Plug>Pulse
@@ -334,20 +344,9 @@ vmap * <Plug>(searchhi-v-*)<Plug>Pulse
 vmap # <Plug>(searchhi-v-#)<Plug>Pulse
 nmap <silent> <leader><space> <Plug>(searchhi-clear-all)
 vmap <silent> <leader><space> <Plug>(searchhi-v-clear-all)
-highlight CurrentSearch cterm=reverse,bold gui=reverse,bold
-highlight link SearchCursor WarningMsg
-
-"inside/vim-search-pulse
-let g:vim_search_pulse_disable_auto_mappings = 1
-nmap <C-d> <C-d><Plug>Pulse
-nmap <C-u> <C-u><Plug>Pulse
-nmap <C-O> <C-O><Plug>Pulse
-nmap <C-I> <C-I><Plug>Pulse
-nmap gg gg<Plug>Pulse
-nmap G G<Plug>Pulse
-nmap % %<Plug>Pulse
-nmap . .<Plug>Pulse
-let g:vim_search_pulse_duration = 100
+hi Search ctermbg=12 guibg=#40c4fe
+hi CurrentSearch cterm=reverse,bold gui=reverse,bold
+hi link SearchCursor CocListBgRed
 
 "MattesGroeger/vim-bookmarks
 hi BookmarkSign ctermbg=NONE ctermfg=red guibg=NONE guifg=red

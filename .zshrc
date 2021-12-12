@@ -86,6 +86,7 @@ MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 export PATH="$PATH:$HOME/.rvm/bin"
 
 #alias
+alias vim="mvim -v"
 alias zshconfig="vim ~/.zshrc"
 [ -f ~/.extraAlias.zsh ] && source ~/.extraAlias.zsh
 alias dczsh="docker-compose run --rm web zsh"
