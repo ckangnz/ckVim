@@ -21,8 +21,6 @@ if brew ls --versions macvim > /dev/null; then
     echo 'Detected existing Macvim'
 else
     echo 'Installing Macvim...'
-    brew install vim
-    brew unlink vim
     brew install macvim
     echo 'Completed Installing Macvim!'
 fi

@@ -16,8 +16,8 @@ colorscheme gruvbox-material
 
 let g:airline_theme='gruvbox_material'
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#ycm#enabled = 0
 let g:airline#extensions#tabline#left_sep=''
-let g:airline#extensions#ycm#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tabline#show_splits = 0
@@ -25,8 +25,8 @@ let g:airline#extensions#tabline#show_tabs = 1
 let g:airline#extensions#tabline#close_symbol = '×'
 let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
+let g:airline_left_sep = "\uE0B4"
+let g:airline_right_sep = "\uE0B6"
 let g:asyncrun_open = 0
 let g:asyncrun_status = ''
 let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
@@ -424,6 +424,7 @@ augroup autosourcing
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
     autocmd BufWritePost $HOME/.vim/general.vim source $MYVIMRC
     autocmd BufWritePost $HOME/.vim/plugins.vim source $MYVIMRC
+
     autocmd BufWritePost $MYVIMRC AirlineRefresh
     autocmd BufWritePost $HOME/.vim/general.vim AirlineRefresh
     autocmd BufWritePost $HOME/.vim/plugins.vim AirlineRefresh
