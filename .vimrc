@@ -237,6 +237,7 @@ endif
 augroup mygroup
   autocmd!
   autocmd FileType typescript,json setl formatexpr=CocActionAsync('formatSelected')
+  autocmd FileType markdown let b:coc_suggest_disable = 1
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
