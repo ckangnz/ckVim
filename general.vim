@@ -227,3 +227,23 @@ function! ClearReg()
     unlet regs
 endfunction
 nnoremap <Leader>Q :call ClearReg()<CR>
+
+
+func NpmSelected(id, result)
+       let cmd = "npm run " . b:ks[a:result - 1]
+	exec "terminal " . cmd
+endfunc
+
+function! RunNpm()
+        if filereadable("./package.json")
+                let st = readfile("./package.json")
+                let package = json_decode(join(st, " "))
+                if has_key(package, "scripts")
+                        let b:ks = keys(package.scripts)
+                        call popup_menu(b:ks, #{callback: 'NpmSelected'})
+                endif
+        else
+                echo "No package.json found"
+        endif
+endfunction
+nnoremap <Leader>r :call RunNpm()<CR>
