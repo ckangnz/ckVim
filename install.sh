@@ -1,97 +1,22 @@
-#Install python3
-if brew ls --versions python3 > /dev/null; then
-    echo 'Detected existing Python3'
-else
-    echo 'Installing Python3...'
-    brew install python3
-    echo 'Completed Installing Python3!'
-fi
+. ./install_methods.sh --source-only
 
-#Install nvm
-if brew ls --versions nvm > /dev/null; then
-    echo 'Detected existing nvm'
-else
-    echo 'Installing nvm...'
-    brew install nvm
-    echo 'Completed Installing nvm!'
-fi
+echo "LET'S INSTALL CKVIM!!!!!!!"
 
-#Install Macvim
-if brew ls --versions macvim > /dev/null; then
-    echo 'Detected existing Macvim'
-else
-    echo 'Installing Macvim...'
-    brew install macvim
-    echo 'Completed Installing Macvim!'
-fi
+brew_install "python3"
+brew_install "node"
+brew_install "nvm"
+brew_install "macvim"
+brew_install "universal-ctags"
+brew_install "cmake"
+brew_install "bat"
+brew_install "the_silver_searcher"
+brew_install "ripgrep"
+brew_install "figlet"
 
-# Install Fira Font
+npm_install "instant-markdown-d"
 
-brew tap homebrew/cask-fonts
-brew install --cask font-fira-code-nerd-font
-
-#Install Universal Ctags
-if brew ls --versions universal-ctags > /dev/null; then
-    echo 'Detected ctags'
-else
-    echo 'Installing Ctags...'
-    brew install --HEAD universal-ctags/universal-ctags/universal-ctags
-    echo 'Completed Installing Ctags!'
-fi
-
-#Install The cmake
-if brew ls --versions cmake > /dev/null; then
-    echo 'Detected cmake'
-else
-    echo 'Installing cmake...'
-    brew install --HEAD cmake
-    echo 'Completed Installing cmake!'
-fi
-
-#Install bat
-if brew ls --versions bat > /dev/null; then
-    echo 'Detected bat'
-else
-    echo 'Installing bat...'
-    brew install --HEAD bat
-    echo 'Completed Installing bat!'
-fi
-
-#Install The Silver Searcher (Ag)
-if brew ls --versions the_silver_searcher > /dev/null; then
-    echo 'Detected the_silver_searcher'
-else
-    echo 'Installing the_silver_searcher...'
-    brew install --HEAD the_silver_searcher
-    echo 'Completed Installing the_silver_searcher!'
-fi
-
-#Install Ripgrep
-if brew ls --versions ripgrep > /dev/null; then
-    echo 'Detected ripgrep'
-else
-    echo 'Installing ripgrep...'
-    brew install --HEAD ripgrep
-    echo 'Completed Installing Ripgrep!'
-fi
-
-#Install Figlet
-if brew ls --versions figlet > /dev/null; then
-    echo 'Detected existing Figlet'
-else
-    echo 'Installing Figlet...'
-    brew install figlet
-    echo 'Completed Installing Figlet!'
-fi
-
-#Install Instant Markdown
-if npm ls --versions instant-markdown-d > /dev/null; then
-    echo 'Instant-Markdown already exists'
-else
-    echo 'Installing Markdown...'
-    npm -g install instant-markdown-d
-    echo 'Completed Installing Markdown!'
-fi
+brew_install_cask "dotnet"
+brew_install_cask "font-fira-code-nerd-font" "homebrew/cask-fonts"
 
 #Symlink vimrc
 if [ -e ~/.vimrc ]; then
@@ -120,4 +45,4 @@ echo "Y88b.    888 88b     Y888P    888 888  888  888"
 echo " Y88888P 888  888     Y8P     888 888  888  888 "
 echo "."
 echo "."
-echo "Installation Completed"
+echo "Installation Completed!!"

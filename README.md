@@ -51,6 +51,7 @@ ln -s ~/.vim/.zshrc ~/.zshrc
 ### Install plugins
 
 ```bash
+brew install zplug
 zplug install
 ```
 
