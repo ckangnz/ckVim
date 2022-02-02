@@ -234,7 +234,7 @@ func NpmSelected(id, result)
 	exec "terminal " . cmd
 endfunc
 
-function! RunNpm()
+function! NpmRun()
         if filereadable("./package.json")
                 let st = readfile("./package.json")
                 let package = json_decode(join(st, " "))
@@ -246,4 +246,4 @@ function! RunNpm()
                 echo "No package.json found"
         endif
 endfunction
-nnoremap <Leader>r :call RunNpm()<CR>
+command! NPMRun call NpmRun()
