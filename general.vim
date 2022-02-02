@@ -229,6 +229,11 @@ endfunction
 nnoremap <Leader>Q :call ClearReg()<CR>
 
 
+func GenerateGUID()
+    execute 'r !uuidgen|sed "s/.*/&/"|tr "[A-Z]" "[a-z]"'
+endfunction
+command! GenerateGUID call GenerateGUID()
+
 func NpmSelected(id, result)
        let cmd = "npm run " . b:ks[a:result - 1]
 	exec "terminal " . cmd
