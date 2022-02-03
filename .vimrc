@@ -373,13 +373,6 @@ let g:markdown_enable_folding = 1
 let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_fenced_languages = ['csharp=cs', 'js=javascript', 'sh=bash']
 
-"kristijanhusak/vim-carbon-now-sh
-let g:carbon_now_sh_options = {
-            \'t':'monokai',
-            \'ln':'false',
-            \'fm':'Fira Code' }
-vnoremap <leader>E :CarbonNowSh<CR>
-
 "--------Testing vim-test/vim-test--------"
 nmap <silent> <leader>tt :TestNearest<CR>
 nmap <silent> <leader>tf :TestFile<CR>

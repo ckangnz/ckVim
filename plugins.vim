@@ -24,7 +24,6 @@ Plug 'arithran/vim-delete-hidden-buffers'                           "Delete Hidd
 Plug 'Yggdroot/indentLine'                                          "Indentation line
 Plug 'godlygeek/tabular'                                            "Text Aligning Tool
 Plug 'jiangmiao/auto-pairs'                                         "Automatic closing ({['']})
-Plug 'kristijanhusak/vim-carbon-now-sh'                             "Export to Carbon Now
 Plug 'mattn/emmet-vim'                                              "Emmet
 Plug 'scrooloose/nerdcommenter'                                     "Easy Commenting tool
 Plug 'tmhedberg/matchit'                                            "More functionality to %
