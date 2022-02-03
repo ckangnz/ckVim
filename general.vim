@@ -180,6 +180,13 @@ set foldtext=NeatFoldText()
 "Delete all white spaces in the beginning
 nmap <leader>dw :%s/^$\\|^\s\+//g<CR>
 
+for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '-', '#' ]
+    execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
+    execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
+    execute 'xnoremap a' . char . ' :<C-u>normal! F' . char . 'vf' . char . '<CR>'
+    execute 'onoremap a' . char . ' :normal va' . char . '<CR>'
+endfor
+
 "To do notes
 function! Todo()
     let fname= "$HOME/.vim/notes/todo.md"
@@ -198,14 +205,6 @@ function! Todo()
 endfunction
 nnoremap <Leader>n :call Todo()<CR>
 
-"Change in between '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '-', '#'
-for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '-', '#' ]
-    execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
-    execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
-    execute 'xnoremap a' . char . ' :<C-u>normal! F' . char . 'vf' . char . '<CR>'
-    execute 'onoremap a' . char . ' :normal va' . char . '<CR>'
-endfor
-
 "Toggle copen and cclose
 autocmd FileType qf if (getwininfo(win_getid())[0].loclist != 1) | wincmd J | endif "Quickfix to be full width on the bottom
 function! ToggleQuickFix()
@@ -218,7 +217,6 @@ endfunction
 
 nnoremap <silent> <Leader>4 :call ToggleQuickFix()<cr>
 
-"clear register
 function! ClearReg()
     let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
     for r in regs
@@ -230,25 +228,27 @@ nnoremap <Leader>Q :call ClearReg()<CR>
 
 
 func GenerateGUID()
-    execute 'r !uuidgen|sed "s/.*/&/"|tr "[A-Z]" "[a-z]"'
+    let l:new_uuid=system('uuidgen')[:-2]
+    let l:nuuid_case = "lower"
+    let l:id= l:nuuid_case == "lower" ? tolower(l:new_uuid) : toupper(l:new_uuid)
+    let @"=l:id
+    echo "NEW GUID: " . l:id
 endfunction
-command! GenerateGUID call GenerateGUID()
 
 func NpmSelected(id, result)
-       let cmd = "npm run " . b:ks[a:result - 1]
-	exec "terminal " . cmd
+    let cmd = "npm run " . b:ks[a:result - 1]
+    exec "terminal " . cmd
 endfunc
-
 function! NpmRun()
-        if filereadable("./package.json")
-                let st = readfile("./package.json")
-                let package = json_decode(join(st, " "))
-                if has_key(package, "scripts")
-                        let b:ks = keys(package.scripts)
-                        call popup_menu(b:ks, #{callback: 'NpmSelected'})
-                endif
-        else
-                echo "No package.json found"
+    if filereadable("./package.json")
+        let st = readfile("./package.json")
+        let package = json_decode(join(st, " "))
+        if has_key(package, "scripts")
+            let b:ks = keys(package.scripts)
+            call popup_menu(b:ks, #{callback: 'NpmSelected'})
         endif
+    else
+        echo "No package.json found"
+    endif
 endfunction
 command! NPMRun call NpmRun()

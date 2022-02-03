@@ -20,6 +20,7 @@ Plug 'tyru/open-browser-github.vim'                                 "Open Github
 Plug 'tyru/open-browser.vim'                                        "Open URL
 
 "General IDE Tools
+Plug 'skywind3000/vim-quickui'                                      "Context Quick UI
 Plug 'arithran/vim-delete-hidden-buffers'                           "Delete Hidden Buffer
 Plug 'Yggdroot/indentLine'                                          "Indentation line
 Plug 'godlygeek/tabular'                                            "Text Aligning Tool

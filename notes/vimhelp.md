@@ -77,7 +77,7 @@
 
 ### Search and change:
 
-    ,f (Ack)                        Search all project
+    ,f (Rg)                        Search all project
     ,F                              Search the word on cursor in all project
     ,h (Gsearch)                    Replace all project
     R                               Rename a variable
@@ -119,13 +119,6 @@
     ,gfo                            git fetch origin ??:??
     ,gfa                            git fetch --all --prune
 
-### Open Browser
-
-    ,go.                            Open Git repo
-    ,goi                            Open Issues
-    ,gop                            Open Pull Reqs
-    ,gor                            Create PR
-
 ### Emmet Control
 
     c-y,                            for tags
@@ -159,26 +152,9 @@
     mm                             Bookmark current line
     mx                             Clear All bookmarks
 
-### Undotree
-
-    ,u                              Show undo tree
-    ?                               Hotkeys
-
-### Javascript Syntax Concealing
-
-    ,l                              toggle conceal
-
-### CTags
-
-    ,ct                             Create Ctags
-
-### Vim Instant Markdown
-
-    ,md                             View markdown on browser
-
 ### Tabular
 
-    ,ta                             :Tabularize e.g. (,ta=  will prettify =)
+    ,T                             :Tabularize e.g. (,ta=  will prettify =)
 
 ### Docker commands
 

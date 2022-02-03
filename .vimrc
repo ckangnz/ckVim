@@ -44,6 +44,7 @@ let g:airline_mode_map = {
             \ '' : 'S',
             \ }
 
+
 "-------------PLUGINS------------
 
 "mattn/emmet-vim
@@ -54,7 +55,7 @@ let g:user_emmet_settings = {
                 \}
 
 "arithran/vim-delete-hidden-buffers
-nnoremap <Leader>q :DeleteHiddenBuffers<CR>
+nnoremap <Leader>Q :DeleteHiddenBuffers<CR>
 
 "Valloric/MatchTagAlways
 let g:mta_use_matchparen_group = 1
@@ -67,7 +68,7 @@ let g:mta_filetypes = {
             \ 'javascriptreact' : 1,
             \ 'typescriptreact' : 1,
             \}
-nnoremap <leader>% :MtaJumpToOtherTag<cr>
+nnoremap % :MtaJumpToOtherTag<cr>
 
 "easymotion/vim-easymotion
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -96,8 +97,8 @@ nnoremap <silent> <Leader>gb :Git blame<cr>
 nnoremap <silent> <Leader>gp :AsyncRun git -c push.default=current push<cr>
 nnoremap <silent> <Leader>gP :AsyncRun git push -f<cr>
 nnoremap <silent> <Leader>gl :AsyncRun git pull<cr>
-nnoremap <Leader>gfo :AsyncRun git fetch origin
-nnoremap <Leader>gfa :AsyncRun git fetch --all --prune<cr>
+nnoremap <silent><Leader>gfo :AsyncRun git fetch origin
+nnoremap <silent><Leader>gfa :AsyncRun git fetch --all --prune<cr>
 nnoremap <silent> <Leader>gof :Gbrowse<cr>
 
 command! ToggleMerginal execute (exists("*fugitive#head") && len(fugitive#head())) ? ':MerginalToggle' : 'echoerr "Not in a git repo"'
@@ -105,14 +106,18 @@ if has("autocmd")
     autocmd BufReadPost fugitive://* set bufhidden=delete
 endif
 
+"tyru/open-browser.vim, tyru/open-browser-github.vim
+let gitOpt = {'title':'GITHUB Menu'}
+let githubMenu = []
+call add(githubMenu , ['Open PR (&r)'                     , 'exec "OpenGithubPullReq #" . fugitive#head()'])
+call add(githubMenu , ['Open current file (&f)' , 'Gbrowse'])
+call add(githubMenu , ['Open project (&g)'         , 'OpenGithubProject'])
+call add(githubMenu , ['Open issues (&i)'       , 'OpenGithubIssue'])
+call add(githubMenu , ['Open pull requests (&p)'         , 'OpenGithubPullReq'])
+noremap <silent><nowait><leader>go :call quickui#context#open(githubMenu, gitOpt)<cr>
+
 "tpope/vim-repeat
 silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
-
-"tyru/open-browser.vim, tyru/open-browser-github.vim
-nnoremap <Leader>go. :OpenGithubProject<cr>
-nnoremap <Leader>goi :OpenGithubIssue<cr>
-nnoremap <Leader>gop :OpenGithubPullReq<cr>
-nnoremap <Leader>gor :exec "OpenGithubPullReq #" . fugitive#head()<cr>
 
 "skywind3000/asyncrun.vim
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
@@ -138,7 +143,7 @@ let g:javascript_conceal_arrow_function            = "⇒"
 let g:javascript_conceal_noarg_arrow_function      = "○"
 let g:javascript_conceal_underscore_arrow_function = "○"
 
-"Yggdroot/indentLine
+"Yggdroot/indentLine "miyakogi/conoline.vim
 map <silent> <Leader>ll :IndentLinesToggle<cr>
 let g:indentLine_enabled = 0
 let g:indentLine_setColors = 1
@@ -148,15 +153,20 @@ let g:indentLine_defaultGroup = 'SpecialKey'
 let g:indentLine_concealcursor = 'inc'
 let g:indentLine_conceallevel = 2
 
-"miyakogi/conoline.vim
 map <silent> <leader>lp :ConoLineToggle<cr>
 let g:conoline_auto_enable = 1
 let g:conoline_use_colorscheme_default_normal=1
 let g:conoline_use_colorscheme_default_insert=1
 
+let concealMenu=[]
+call add(concealMenu, ['Toggle Indent Lines(&l)', 'IndentLinesToggle'])
+call add(concealMenu, ['Toggle Conoline(&p) ', 'ConoLineToggle'])
+let concealOpt = {'title':'Conceal Menu'}
+noremap <silent><nowait><leader>l :call quickui#listbox#open(concealMenu, concealOpt)<cr>
+
 "godlygeek/tabular
-nmap <Leader>ta :Tabularize/
-vmap <Leader>ta :Tabularize/
+nmap <Leader>T :Tabularize/
+vmap <Leader>T :Tabularize/
 inoremap <silent> <Bar> <Bar><Esc>:call <SID>align()<CR>a
 function! s:align()
     let p = '^\s*|\s.*\s|\s*$'
@@ -357,6 +367,18 @@ let g:bookmark_highlight_lines = 1
 let g:bookmark_auto_close = 1
 let g:bookmark_center = 1
 
+let bookmarkMenu = []
+call add(bookmarkMenu, ['Add/Delete bookmark (&m)', 'BookmarkToggle'])
+call add(bookmarkMenu, ['Bookmark Annotate(&i)', 'BookmarkAnnotate'])
+call add(bookmarkMenu, ['Bookmark Show all (&a)', 'BookmarkShowAll'])
+call add(bookmarkMenu, ['-'])
+call add(bookmarkMenu, ['Bookmark Next (&n)', 'BookmarkNext'])
+call add(bookmarkMenu, ['Bookmark Previous (&p)', 'BookmarkPrev'])
+call add(bookmarkMenu, ['-'])
+call add(bookmarkMenu, ['Clear all bookmarks (&x)', 'BookmarkClearAll'])
+let bookmarkOpt={'title':'Bookmarks'}
+noremap <silent><nowait>m :call quickui#context#open(bookmarkMenu, bookmarkOpt)<cr>
+"
 "mbbill/undotree
 nnoremap <leader>u :UndotreeToggle<cr>
 let g:undotree_SetFocusWhenToggle = 1
@@ -381,6 +403,17 @@ nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tL :TestVisit<CR>
 nmap <silent> <leader>tus :Jest --update-snapshot<CR>
 nmap <silent> <leader>to :Cypress open -C ./*/**/cypress.json<CR>
+let testMenu = [
+            \ [ 'Test &this', 'TestNearest' ],
+            \ [ 'Test &file', 'TestFile' ],
+            \ [ 'Test &suite', 'TestSuite' ],
+            \ [ 'Test &last', 'TestLast' ],
+            \ [ 'Test &visit', 'TestVisit' ],
+            \ [ '&Update snapshot', 'Jest --update-snapshot' ],
+            \ [ '&Open Cypress', 'Cypress open -c ./*/**/cypress.json' ],
+            \]
+let testOpt = {'title': 'Jest Test'}
+map <silent><nowait><leader>t :call quickui#listbox#open(testMenu, testOpt)<cr>
 
 let test#strategy = "asyncrun_background_term"
 let g:test#javascript#runner = 'jest'
@@ -388,10 +421,14 @@ let g:test#javascript#options = '--update-snapshot'
 let g:test#runner_commands= ['Jest','Cypress']
 
 "-----------Docker skanehira/docker.vim-------------"
-nmap <leader>di :DockerImages<CR>
-nmap <leader>dc :DockerContainers<CR>
-nmap <leader>ds :DockerImageSearch<CR>
-nmap <leader>db :call DockerImageBuildWithTag()<CR>
+let dockerMenu = [
+            \ [ '&1. &Images', ':DockerImages' ],
+            \ [ '&2. &Containers', ':DockerContainers' ],
+            \ [ '&3. Image &Search', 'DockerImageSearch' ],
+            \ [ '&4. &Build with Tag', 'call DockerImageBuildWithTag()' ],
+            \]
+let dockerOpt = {'title': 'Docker Menu'}
+map <silent><nowait><leader>d :call quickui#listbox#open(dockerMenu, dockerOpt)<cr>
 
 function! DockerImageBuildWithTag()
     call inputsave()
@@ -403,13 +440,8 @@ function! DockerImageBuildWithTag()
     endif
 endfunction
 
-"-----CTAGS--------"
-"brew install --HEAD universal-ctags/universal-ctags/universal-ctags
-nmap <Leader>ct :AsyncRun ctags -R .<cr>
 
-"--------VIM INSTANT MARKDOWN-------------
-let g:instant_markdown_autostart = 0
-nnoremap <Leader>md :InstantMarkdownPreview<cr>
+
 
 "-----AUTO-COMMANDS------"
 "Auto sourcing self
@@ -422,4 +454,31 @@ augroup autosourcing
     autocmd BufWritePost $MYVIMRC AirlineRefresh
     autocmd BufWritePost $HOME/.vim/general.vim AirlineRefresh
     autocmd BufWritePost $HOME/.vim/plugins.vim AirlineRefresh
-augroup END
+
+"------------------------------------------------------------------
+"skywind3000/vim-quickui-------------------
+let g:quickui_border_style = 2
+let g:quickui_color_scheme = 'gruvbox'
+let g:utilOpts = {'title': 'Utility Menu'}
+let g:utilContent = []
+
+call add(g:utilContent, [ 'NPM Run (&n)', 'call NpmRun()' ])
+call add(g:utilContent, ['-'])
+
+call add(g:utilContent, [ 'Generate GUID (&i)', 'call GenerateGUID()' ])
+call add(g:utilContent, ['-'])
+
+"universal-ctags/universal-ctags
+nmap <Leader>ct :AsyncRun ctags -R .<cr>
+call add(g:utilContent, [ 'Create Ctags (&t)', 'AsyncRun ctags -R' ])
+call add(g:utilContent, ['-'])
+
+"instant-markdown-g
+let g:instant_markdown_autostart = 0
+call add(g:utilContent, [ 'Markdown Preview (&d)', 'InstantMarkdownPreview' ])
+call add(g:utilContent, ['-'])
+
+call add(g:utilContent, [ 'Clear Registers (&x)', 'call ClearReg()' ])
+
+noremap <silent><nowait><leader>m :call quickui#context#open(g:utilContent, g:utilOpts)<cr>
+"------------------------------------------------------------------
