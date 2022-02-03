@@ -355,9 +355,9 @@ vmap * <Plug>(searchhi-v-*)<Plug>Pulse
 vmap # <Plug>(searchhi-v-#)<Plug>Pulse
 nmap <silent> <leader><space> <Plug>(searchhi-clear-all)
 vmap <silent> <leader><space> <Plug>(searchhi-v-clear-all)
-hi Search ctermbg=12 guibg=#40c4fe
+hi IncSearch cterm=none gui=none ctermbg=45 guibg=#40E0D0
+hi Search ctermfg=black ctermbg=white guifg=black guibg=white
 hi CurrentSearch cterm=reverse,bold gui=reverse,bold
-hi link SearchCursor CocListBgRed
 
 "MattesGroeger/vim-bookmarks
 hi BookmarkSign ctermbg=NONE ctermfg=red guibg=NONE guifg=red
