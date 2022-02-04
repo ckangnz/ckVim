@@ -47,6 +47,25 @@ let g:airline_mode_map = {
 
 "-------------PLUGINS------------
 
+"Hotkeys to edit with quickUI
+
+let myPathsOpts={ "title": "Edit.." }
+let myPaths=[]
+call add(myPaths,['Help (&h)','vsp $HOME/.vim/notes/vimhelp.md'])
+call add(myPaths,['-'])
+call add(myPaths,['Vimrc (&v)','vsp $MYVIMRC'])
+call add(myPaths,['General (&g)','vsp $HOME/.vim/general.vim'])
+call add(myPaths,['Plugin (&p)','vsp $HOME/.vim/plugins.vim'])
+call add(myPaths,['-'])
+call add(myPaths,['Zshrc (&z)','vsp $HOME/.zshrc'])
+call add(myPaths,['Zsh Plugin (&P)','vsp $HOME/.vim/plugins.zsh'])
+call add(myPaths,['-'])
+call add(myPaths,['Install.sh (&i)','vsp $HOME/.vim/install.sh'])
+call add(myPaths,['-'])
+call add(myPaths,['/code (&c)','vsp $HOME/code'])
+noremap <silent><leader>e :call quickui#context#open(myPaths, myPathsOpts)<cr>
+
+
 "mattn/emmet-vim
 let g:user_emmet_settings = {
             \  'javascript' : {
@@ -246,7 +265,7 @@ endif
 
 augroup mygroup
   autocmd!
-  autocmd FileType typescript,json setl formatexpr=CocActionAsync('formatSelected')
+  autocmd FileType javasccript,javascriptreact,typescript,typescriptreact,json setl formatexpr=CocActionAsync('formatSelected')
   autocmd FileType markdown let b:coc_suggest_disable = 1
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
@@ -404,13 +423,13 @@ nmap <silent> <leader>tL :TestVisit<CR>
 nmap <silent> <leader>tus :Jest --update-snapshot<CR>
 nmap <silent> <leader>to :Cypress open -C ./*/**/cypress.json<CR>
 let testMenu = [
-            \ [ 'Test &this', 'TestNearest' ],
-            \ [ 'Test &file', 'TestFile' ],
-            \ [ 'Test &suite', 'TestSuite' ],
-            \ [ 'Test &last', 'TestLast' ],
-            \ [ 'Test &visit', 'TestVisit' ],
-            \ [ '&Update snapshot', 'Jest --update-snapshot' ],
-            \ [ '&Open Cypress', 'Cypress open -c ./*/**/cypress.json' ],
+            \ [ 'Test this (&t)'       , 'TestNearest' ]                         ,
+            \ [ 'Test file (&f)'       , 'TestFile' ]                            ,
+            \ [ 'Test suite (&s)'      , 'TestSuite' ]                           ,
+            \ [ 'Test last (&l)'       , 'TestLast' ]                            ,
+            \ [ 'Test visit (&v)'      , 'TestVisit' ]                           ,
+            \ [ 'Update snapshot (&u)' , 'Jest --update-snapshot' ]              ,
+            \ [ 'Open Cypress (&o)'    , 'Cypress open -c ./*/**/cypress.json' ] ,
             \]
 let testOpt = {'title': 'Jest Test'}
 map <silent><nowait><leader>t :call quickui#listbox#open(testMenu, testOpt)<cr>
@@ -422,10 +441,10 @@ let g:test#runner_commands= ['Jest','Cypress']
 
 "-----------Docker skanehira/docker.vim-------------"
 let dockerMenu = [
-            \ [ '&1. &Images', ':DockerImages' ],
-            \ [ '&2. &Containers', ':DockerContainers' ],
-            \ [ '&3. Image &Search', 'DockerImageSearch' ],
-            \ [ '&4. &Build with Tag', 'call DockerImageBuildWithTag()' ],
+            \ [ 'Images (&i)', ':DockerImages' ],
+            \ [ 'Containers (&c)', ':DockerContainers' ],
+            \ [ 'Image Search (&s)', 'DockerImageSearch' ],
+            \ [ 'Build with Tag (&b)', 'call DockerImageBuildWithTag()' ],
             \]
 let dockerOpt = {'title': 'Docker Menu'}
 map <silent><nowait><leader>d :call quickui#listbox#open(dockerMenu, dockerOpt)<cr>
@@ -439,9 +458,6 @@ function! DockerImageBuildWithTag()
         execute script
     endif
 endfunction
-
-
-
 
 "-----AUTO-COMMANDS------"
 "Auto sourcing self
@@ -459,6 +475,8 @@ augroup autosourcing
 "skywind3000/vim-quickui-------------------
 let g:quickui_border_style = 2
 let g:quickui_color_scheme = 'gruvbox'
+nnoremap <silent><nowait><leader>b :call quickui#tools#list_buffer('e')<cr>
+
 let g:utilOpts = {'title': 'Utility Menu'}
 let g:utilContent = []
 
