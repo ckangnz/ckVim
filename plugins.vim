@@ -47,7 +47,8 @@ Plug 'wesQ3/vim-windowswap'                                         "Split Panel
 Plug 'dominikduda/vim_current_word'                                 "Highlight current word
 Plug 'qxxxb/vim-searchhi'                                           "Highlight searched
 Plug 'inside/vim-search-pulse'                                      "Pulse searched word
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}               "InstantMarkdownPreview
+Plug 'iamcco/markdown-preview.nvim',
+            \{ 'do': 'cd app && npm install'  }                    "InstantMarkdownPreview
 
 "Search Tool
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }

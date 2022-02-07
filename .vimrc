@@ -491,9 +491,8 @@ nmap <Leader>ct :AsyncRun ctags -R .<cr>
 call add(g:utilContent, [ 'Create Ctags (&t)', 'AsyncRun ctags -R' ])
 call add(g:utilContent, ['-'])
 
-"instant-markdown-g
-let g:instant_markdown_autostart = 0
-call add(g:utilContent, [ 'Markdown Preview (&d)', 'InstantMarkdownPreview' ])
+"iamcco/markdown-preview.nvim
+call add(g:utilContent, [ 'Markdown Preview (&d)', 'MarkdownPreview' ])
 call add(g:utilContent, ['-'])
 
 call add(g:utilContent, [ 'Clear Registers (&x)', 'call ClearReg()' ])
