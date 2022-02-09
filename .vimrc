@@ -47,9 +47,6 @@ let g:airline_mode_map = {
 
 
 "-------------PLUGINS------------
-
-"Hotkeys to edit with quickUI
-
 let myPathsOpts={ "title": "Edit.." }
 let myPaths=[]
 call add(myPaths,['Help (&h)','vsp $HOME/.vim/notes/vimhelp.md'])
@@ -416,13 +413,6 @@ let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_fenced_languages = ['csharp=cs', 'js=javascript', 'sh=bash']
 
 "--------Testing vim-test/vim-test--------"
-nmap <silent> <leader>tt :TestNearest<CR>
-nmap <silent> <leader>tf :TestFile<CR>
-nmap <silent> <leader>ts :TestSuite<CR>
-nmap <silent> <leader>tl :TestLast<CR>
-nmap <silent> <leader>tL :TestVisit<CR>
-nmap <silent> <leader>tus :Jest --update-snapshot<CR>
-nmap <silent> <leader>to :Cypress open -C ./*/**/cypress.json<CR>
 let testMenu = [
             \ [ 'Test this (&t)'       , 'TestNearest' ]                         ,
             \ [ 'Test file (&f)'       , 'TestFile' ]                            ,
@@ -471,6 +461,7 @@ augroup autosourcing
     autocmd BufWritePost $MYVIMRC AirlineRefresh
     autocmd BufWritePost $HOME/.vim/general.vim AirlineRefresh
     autocmd BufWritePost $HOME/.vim/plugins.vim AirlineRefresh
+augroup END
 
 "------------------------------------------------------------------
 "skywind3000/vim-quickui-------------------
@@ -485,6 +476,7 @@ call add(g:utilContent, [ 'NPM Run (&n)', 'call NpmRun()' ])
 call add(g:utilContent, ['-'])
 
 call add(g:utilContent, [ 'Generate GUID (&i)', 'call GenerateGUID()' ])
+call add(g:utilContent, [ 'Delete all white spaces (&w)', '%s/^$\\|^\s\+//g' ])
 call add(g:utilContent, ['-'])
 
 "universal-ctags/universal-ctags

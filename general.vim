@@ -177,9 +177,6 @@ endfunction
 set foldtext=NeatFoldText()
 
 "--------CUSTOM VIM SCRIPT------------
-"Delete all white spaces in the beginning
-nmap <leader>dw :%s/^$\\|^\s\+//g<CR>
-
 for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '-', '#' ]
     execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
     execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
