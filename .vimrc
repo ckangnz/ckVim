@@ -9,7 +9,7 @@ set background=dark
 let g:gruvbox_material_better_performance = 1
 let g:gruvbox_material_sign_column_background = 'none'
 let g:gruvbox_material_disable_italic_comment = 1
-let g:gruvbox_material_enable_italic = 0
+let g:gruvbox_material_enable_italic = 1
 let g:gruvbox_material_palette = "original"
 let g:gruvbox_material_background = 'hard'
 colorscheme gruvbox-material
@@ -18,6 +18,7 @@ let g:airline_theme='gruvbox_material'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#ycm#enabled = 0
 let g:airline#extensions#tabline#left_sep=''
+let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tabline#show_splits = 0
