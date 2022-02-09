@@ -202,11 +202,11 @@ endfunction
 "neoclide/coc.nvim
 let g:coc_user_config = {}
 let g:coc_global_extensions = [
+      \ 'coc-vimlsp',
       \ 'coc-emmet',
       \ 'coc-css',
       \ 'coc-html',
       \ 'coc-json',
-      \ 'coc-jest',
       \ 'coc-yaml',
       \ 'coc-swagger',
       \ 'coc-prettier',
