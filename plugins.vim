@@ -68,6 +68,4 @@ Plug 'andrewstuart/vim-kubernetes'                                "Kubernetes sn
 "Docker
 Plug 'skanehira/docker.vim'                                         "Docker
 
-Plug 'ryanoasis/vim-devicons'
-
 call plug#end()
