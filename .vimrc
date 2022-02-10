@@ -72,7 +72,7 @@ let g:user_emmet_settings = {
                 \}
 
 "arithran/vim-delete-hidden-buffers
-nnoremap <Leader>Q :DeleteHiddenBuffers<CR>
+nnoremap <Leader>q :DeleteHiddenBuffers<CR>
 
 "Valloric/MatchTagAlways
 let g:mta_use_matchparen_group = 1
