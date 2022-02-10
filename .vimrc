@@ -139,26 +139,14 @@ silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 "skywind3000/asyncrun.vim
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
-"pangloss/vim-javascript
-highlight Conceal guifg=fg guibg=bg
-augroup javascript_folding
-    au!
-    au FileType javascript setlocal foldmethod=syntax
-    au FileType typescript setlocal foldmethod=syntax
-augroup END
-let g:javascript_plugin_flow = 1
-let g:javascript_conceal_function                  = "ƒ"
-let g:javascript_conceal_null                      = "ø"
-let g:javascript_conceal_this                      = "@"
-let g:javascript_conceal_return                    = "⇚"
-let g:javascript_conceal_undefined                 = "¿"
-let g:javascript_conceal_NaN                       = "ℕ"
-let g:javascript_conceal_prototype                 = "¶"
-let g:javascript_conceal_static                    = "•"
-let g:javascript_conceal_super                     = "Ω"
-let g:javascript_conceal_arrow_function            = "⇒"
-let g:javascript_conceal_noarg_arrow_function      = "○"
-let g:javascript_conceal_underscore_arrow_function = "○"
+"HerringtonDarkholme/yats.vim
+let g:typescript_conceal_function             = "ƒ"
+let g:typescript_conceal_null                 = "ø"
+let g:typescript_conceal_undefined            = "¿"
+let g:typescript_conceal_this                 = "@"
+let g:typescript_conceal_return               = "⇚"
+let g:typescript_conceal_prototype            = "¶"
+let g:typescript_conceal_super                = "Ω"
 
 "Yggdroot/indentLine "miyakogi/conoline.vim
 map <silent> <Leader>ll :IndentLinesToggle<cr>
@@ -176,6 +164,7 @@ let g:conoline_use_colorscheme_default_normal=1
 let g:conoline_use_colorscheme_default_insert=1
 
 let concealMenu=[]
+call add(concealMenu, ['Toggle TS Conceal(&t)', 'exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"'])
 call add(concealMenu, ['Toggle Indent Lines(&l)', 'IndentLinesToggle'])
 call add(concealMenu, ['Toggle Conoline(&p) ', 'ConoLineToggle'])
 let concealOpt = {'title':'Conceal Menu'}

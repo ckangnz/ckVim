@@ -7,7 +7,7 @@ Plug 'sainnhe/gruvbox-material'
 Plug 'vim-airline/vim-airline'                                      "Vim Airline
 
 "Syntax Highlighting
-Plug 'pangloss/vim-javascript'                                      "JS syntax & indentation
+Plug 'HerringtonDarkholme/yats.vim'
 Plug 'briancollins/vim-jst'                                         "EJS syntax & indentation
 Plug 'udalov/kotlin-vim'                                            "Kotlin Syntax
 
