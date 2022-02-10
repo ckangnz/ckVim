@@ -403,8 +403,8 @@ let g:vim_markdown_fenced_languages = ['csharp=cs', 'js=javascript', 'sh=bash']
 
 "--------Testing vim-test/vim-test--------"
 let testMenu = [
-            \ [ 'Test this (&t)'       , 'TestNearest' ]                         ,
-            \ [ 'Test file (&f)'       , 'TestFile' ]                            ,
+            \ [ 'Test this (&t)'       , 'TestNearest -strategy=test_below' ]    ,
+            \ [ 'Test file (&f)'       , 'TestFile -strategy=test_left' ]        ,
             \ [ 'Test suite (&s)'      , 'TestSuite' ]                           ,
             \ [ 'Test last (&l)'       , 'TestLast' ]                            ,
             \ [ 'Test visit (&v)'      , 'TestVisit' ]                           ,
@@ -414,7 +414,21 @@ let testMenu = [
 let testOpt = {'title': 'Jest Test'}
 map <silent><nowait><leader>t :call quickui#listbox#open(testMenu, testOpt)<cr>
 
-let test#strategy = "asyncrun_background_term"
+function! s:TestBelow(cmd) abort
+  let g:test#strategy#cmd = a:cmd
+  call test#strategy#asyncrun_setup_unlet_global_autocmd()
+  execute 'AsyncRun -mode=term -pos=bottom -focus=0 -post=echo\ eval("g:asyncrun_code\ ?\"Failure\":\"Success\"").":"'
+          \ .'\ substitute(g:test\#strategy\#cmd,\ "\\",\ "",\ "") '.a:cmd
+endfunction
+
+function! s:TestLeft(cmd) abort
+  let g:test#strategy#cmd = a:cmd
+  call test#strategy#asyncrun_setup_unlet_global_autocmd()
+  execute 'AsyncRun -mode=term -pos=left -focus=0 -post=echo\ eval("g:asyncrun_code\ ?\"Failure\":\"Success\"").":"'
+          \ .'\ substitute(g:test\#strategy\#cmd,\ "\\",\ "",\ "") '.a:cmd
+endfunction
+
+let test#strategy='asyncrun_background_term'
 let g:test#javascript#runner = 'jest'
 let g:test#javascript#options = '--update-snapshot'
 let g:test#runner_commands= ['Jest','Cypress']
