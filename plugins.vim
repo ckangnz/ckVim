@@ -28,6 +28,7 @@ Plug 'jiangmiao/auto-pairs'                                         " Automatic 
 Plug 'mattn/emmet-vim'                                              " Emmet
 Plug 'scrooloose/nerdcommenter'                                     " Easy Commenting tool
 Plug 'tmhedberg/matchit'                                            " More functionality to %
+Plug 'AndrewRadev/tagalong.vim'                                     "Change tag pairs automatically
 Plug 'tpope/vim-surround'                                           " Easy text wrap tool
 Plug 'tpope/vim-repeat'                                             " Repeat tpope's plugins
 Plug 'tpope/vim-vinegar'                                            " Easy Netrw with '-'

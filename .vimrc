@@ -74,6 +74,10 @@ let g:user_emmet_settings = {
 "arithran/vim-delete-hidden-buffers
 nnoremap <Leader>q :DeleteHiddenBuffers<CR>
 
+"andrewradev/tagalong.vim
+"let g:tagalong_additional_filetypes = []
+let g:tagalong_verbose = 1
+
 "Valloric/MatchTagAlways
 let g:mta_use_matchparen_group = 1
 let g:mta_filetypes = {
