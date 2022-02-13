@@ -6,7 +6,6 @@ brew_install "python3"
 brew_install "node"
 brew_install "nvm"
 brew_install "macvim"
-brew_install "universal-ctags"
 brew_install "cmake"
 brew_install "bat"
 brew_install "the_silver_searcher"
@@ -25,11 +24,6 @@ fi
 echo 'Linking vimrc...'
 ln -s ~/.vim/.vimrc ~/.vimrc
 echo 'Completed Linking vimrc!'
-
-#Symlink ctags
-echo 'Linking ctag config...'
-ln -s ~/.vim/.ctags.d ~/.ctags.d
-echo 'Completed Linking ctag config!'
 
 echo "."
 echo "."

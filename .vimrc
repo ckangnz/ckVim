@@ -482,11 +482,6 @@ call add(g:utilContent, [ 'Generate GUID (&i)', 'call GenerateGUID()' ])
 call add(g:utilContent, [ 'Delete all white spaces (&w)', '%s/^$\\|^\s\+//g' ])
 call add(g:utilContent, ['-'])
 
-"universal-ctags/universal-ctags
-nmap <Leader>ct :AsyncRun ctags -R .<cr>
-call add(g:utilContent, [ 'Create Ctags (&t)', 'AsyncRun ctags -R' ])
-call add(g:utilContent, ['-'])
-
 "iamcco/markdown-preview.nvim
 call add(g:utilContent, [ 'Markdown Preview (&d)', 'MarkdownPreview' ])
 call add(g:utilContent, ['-'])
