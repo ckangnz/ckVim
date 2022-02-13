@@ -4,6 +4,7 @@ set re=0
 set noimd                                       "Revert back to English when on different language
 set nocompatible                                "Latest Vim Setting used
 set encoding=utf-8
+set termguicolors
 set t_CO=256                                    "Number of colours
 set display+=lastline                           "Show long lines"
 set autoindent                                  "Copy indent from previous line
@@ -53,6 +54,8 @@ set tabstop=2                                   "Default tabs
 set expandtab                                   "Use space as a tab
 set softtabstop=2                               "Width applied by tab
 set shiftwidth=2                                "Width of tab in normal mode
+let &t_8f = "\e[38;2;%lu;%lu;%lum"              "Sets foreground color (ANSI, true-color mode)
+let &t_8b = "\e[48;2;%lu;%lu;%lum"              "Sets background color (ANSI, true-color mode)
 let &t_SI.="\e[5 q"                             "Cursor shape change in different mode
 let &t_SR.="\e[4 q"
 let &t_EI.="\e[1 q"
