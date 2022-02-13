@@ -224,7 +224,6 @@ function! ClearReg()
     endfor
     unlet regs
 endfunction
-nnoremap <Leader>Q :call ClearReg()<CR>
 
 
 func GenerateGUID()
@@ -251,4 +250,3 @@ function! NpmRun()
         echo "No package.json found"
     endif
 endfunction
-command! NPMRun call NpmRun()
