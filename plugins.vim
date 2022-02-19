@@ -37,6 +37,7 @@ Plug 'pedrohdz/vim-yaml-folds'                                      " Yaml Foldi
 Plug 'Omnisharp/omnisharp-vim'                                      " C# Omnisharp for vim
 
 " General Vim Tool
+Plug 'dstein64/vim-startuptime'                                     " Easy MD tools
 Plug 'gabrielelana/vim-markdown'                                    " Easy MD tools
 Plug 'sotte/presenting.vim'                                         " Vim Presenting tool
 Plug 'junegunn/goyo.vim'                                            " Silence view
