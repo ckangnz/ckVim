@@ -55,10 +55,10 @@ Plug 'iamcco/markdown-preview.nvim',
 " Search Tool
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'                                             " Fuzzy find files/content/tags
-Plug 'antoinemadec/coc-fzf'                                         " Fzf for coc
 
 " Completer
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocUpdate'}
+"Plug 'antoinemadec/coc-fzf'                                         " Fzf for coc
 
 " Test
 Plug 'vim-test/vim-test'                                            " Test files

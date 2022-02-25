@@ -206,7 +206,7 @@ let g:coc_global_extensions = [
       \ 'coc-eslint',
       \ 'coc-snippets'
       \]
-let g:coc_fzf_opts=[]
+
 nmap <silent>gd <Plug>(coc-definition)
 nmap <silent>gy <Plug>(coc-type-definition)
 nmap <silent>gi <Plug>(coc-implementation)
@@ -314,10 +314,11 @@ augroup omnisharp_commands
 augroup END
 
 "junegunn/fzf
-set rtp+=/usr/local/opt/fzf
-let $FZF_DEFAULT_OPTS="--layout=reverse --bind ctrl-k:preview-up,ctrl-j:preview-down,?:toggle-preview"
+set rtp+=~/.fzf
+let $FZF_DEFAULT_OPTS="--layout=reverse --bind ctrl-k:preview-up,ctrl-j:preview-down,?:toggle-preview --no-unicode"
+let $FZF_DEFAULT_COMMAND='rg --files --follow --no-ignore-vcs --hidden -g "!{node_modules/*,.git/*}"'
 let g:fzf_layout={'window':{ 'width': 0.9, 'height': 0.6 }}
-let g:fzf_preview_window = ''
+let g:fzf_preview_window = []
 let g:fzf_action = {
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-o': 'split',
