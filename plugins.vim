@@ -38,6 +38,7 @@ Plug 'Omnisharp/omnisharp-vim'                                      " C# Omnisha
 
 " General Vim Tool
 Plug 'dstein64/vim-startuptime'                                     " Easy MD tools
+Plug 'markonm/traces.vim'                                           " Preview substitute
 Plug 'gabrielelana/vim-markdown'                                    " Easy MD tools
 Plug 'sotte/presenting.vim'                                         " Vim Presenting tool
 Plug 'junegunn/goyo.vim'                                            " Silence view
