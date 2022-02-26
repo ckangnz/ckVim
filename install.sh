@@ -14,7 +14,6 @@ brew_install "figlet"
 
 brew_install_cask "dotnet"
 brew_install_cask "font-fira-code-nerd-font" "homebrew/cask-fonts"
-brew_install_cask "font-caskaydia-cove-nerd-font" "homebrew/cask-fonts"
 
 #Symlink vimrc
 if [ -e ~/.vimrc ]; then

@@ -212,8 +212,8 @@ nmap <silent>gy <Plug>(coc-type-definition)
 nmap <silent>gi <Plug>(coc-implementation)
 nmap <silent>gr <Plug>(coc-references)
 nmap <silent><S-r> <Plug>(coc-rename)
-xmap <leader>0 <Plug>(coc-format-selected)
-nmap <leader>0 <Plug>(coc-format)
+xmap <leader>= <Plug>(coc-format-selected)
+nmap <leader>= <Plug>(coc-format)
 xmap <leader>ac <Plug>(coc-codeaction-selected)
 nmap <leader>ac <Plug>(coc-codeaction-selected)
 nmap <leader>ap <Plug>(coc-diagnostic-prev)
@@ -286,7 +286,7 @@ augroup omnisharp_commands
     autocmd FileType cs nmap <silent> <buffer> <C-n> <Plug>(omnisharp_signature_help)
     autocmd FileType cs imap <silent> <buffer> <C-n> <Plug>(omnisharp_signature_help)
     autocmd FileType cs nmap <silent> <buffer> g= <Plug>(omnisharp_global_code_check)
-    autocmd FileType cs nmap <silent> <buffer> <Leader>0 <Plug>(omnisharp_code_format)
+    autocmd FileType cs nmap <silent> <buffer> <Leader>= <Plug>(omnisharp_code_format)
     autocmd FileType cs nmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_actions)
     autocmd FileType cs xmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_actions)
     autocmd FileType cs nmap <silent> <buffer> <S-R> <Plug>(omnisharp_rename)
@@ -315,7 +315,7 @@ augroup END
 
 "junegunn/fzf
 set rtp+=~/.fzf
-let $FZF_DEFAULT_OPTS="--layout=reverse --bind ctrl-k:preview-up,ctrl-j:preview-down,?:toggle-preview --no-unicode"
+let $FZF_DEFAULT_OPTS="--layout=reverse --bind ctrl-k:preview-up,ctrl-j:preview-down,?:toggle-preview"
 let $FZF_DEFAULT_COMMAND='rg --files --follow --no-ignore-vcs --hidden -g "!{node_modules/*,.git/*}"'
 let g:fzf_layout={'window':{ 'width': 0.9, 'height': 0.6 }}
 let g:fzf_preview_window = []
