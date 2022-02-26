@@ -189,17 +189,17 @@ endfor
 
 "To do notes
 function! Todo()
-    let fname= "$HOME/.vim/notes/todo.md"
-    let winnum=bufwinnr(fname)
-    if winnum != -1
-        exe winnum . "wincmd w"
-    else
-        exe "60vsp" .  fname
-    endif
     call inputsave()
     let t = input('Enter todo: ')
     call inputrestore()
     if t !=""
+        let fname = "~/.vim/notes/todo.md"
+        let winnum = bufwinnr(fname)
+        if winnum != -1
+            exe winnum . "wincmd w"
+        else
+            exe "60vsp" .  fname
+        endif
         call append(line('$'), '- [ ] ' . t)
     endif
 endfunction
