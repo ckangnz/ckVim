@@ -473,6 +473,7 @@ call add(g:utilContent, [ 'Delete all white spaces (&w)', '%s/^$\\|^\s\+//g' ])
 call add(g:utilContent, ['-'])
 
 "iamcco/markdown-preview.nvim
+let g:mkdp_auto_start = 0
 call add(g:utilContent, [ 'Markdown Preview (&d)', 'MarkdownPreview' ])
 call add(g:utilContent, ['-'])
 
