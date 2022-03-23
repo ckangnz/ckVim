@@ -20,10 +20,64 @@ yarn add babel-jest @babel/core @babel/preset-env
 // in babel.config.js
 module.exports = {
   presets: [
-    ["@babel/preset-env", { targets: { node: "current" } }]
+    ['@babel/preset-env', { targets: { node: 'current' } }],
     //'@babel/preset-typescript',
-  ]
+  ],
 };
+```
+
+#### Setting up Typescript jest
+
+- package.json
+
+```json
+{
+  "jest": {
+    "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.(ts|js)x?$": "babel-jest"
+    },
+    "moduleNameMapper": {
+      "^.+\\.(css|less|scss)$": "babel-jest"
+    },
+    "setupFilesAfterEnv": ["<rootDir>/src/setupTests.ts"]
+  }
+}
+```
+
+- .babelrc
+
+```
+{
+  "presets":["@babel/preset-react", "@babel/preset-env", "@babel/preset-typescript"]
+}
+```
+
+### Setting up Typescript jest
+
+- package.json
+
+```json
+{
+  "jest": {
+    "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.(ts|js)x?$": "babel-jest"
+    },
+    "moduleNameMapper": {
+      "^.+\\.(css|less|scss)$": "babel-jest"
+    },
+    "setupFilesAfterEnv": ["<rootDir>/src/setupTests.ts"]
+  }
+}
+```
+
+- .babelrc
+
+```
+{
+  "presets":["@babel/preset-react", "@babel/preset-env", "@babel/preset-typescript"]
+}
 ```
 
 ### Definitions
@@ -39,7 +93,7 @@ module.exports = {
   - Testing things working together
 
 ```javascript
-it("Fake Test", () => {
+it('Fake Test', () => {
   expect(true).toBeTruthy(); //pass
   expect(false).toBeTruthy(); //fail
   expect(3).toBe(3); //pass
