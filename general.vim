@@ -113,6 +113,10 @@ endfunction
 
 "Terminal commands
 tnoremap <Esc> <C-\><C-n>
+tnoremap <C-J> <C-W><C-J>
+tnoremap <C-K> <C-W><C-K>
+tnoremap <C-H> <C-W><C-H>
+tnoremap <C-L> <C-W><C-L>
 
 ",wf maximise ,wm minimise pane
 ",wt open on a new tab
