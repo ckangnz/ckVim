@@ -201,11 +201,13 @@ function! Todo()
         let fname = "~/.vim/notes/todo.md"
         let winnum = bufwinnr(fname)
         if winnum != -1
-            exe winnum . "wincmd w"
+          exe winnum . "wincmd w"
         else
-            exe "60vsp" .  fname
+          exe "60vsp" .  fname
         endif
+      if len(t) > 0 && t != " "
         call append(line('$'), '- [ ] ' . t)
+      endif
     endif
 endfunction
 nnoremap <Leader>n :call Todo()<CR>
