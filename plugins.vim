@@ -69,6 +69,10 @@ Plug 'honza/vim-snippets'                                           " snippets
 Plug 'andrewstuart/vim-kubernetes'                                  " Kubernetes snippets
 
 " Docker
-Plug 'skanehira/docker.vim'                                         " Docker
+Plug 'skanehira/docker.vim',
+      \{ 'on':
+      \['DockerImages',
+      \'DockerContainers'
+      \,'DockerImageBuildWithTag'] }                                " Docker
 
 call plug#end()
