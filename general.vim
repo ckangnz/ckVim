@@ -113,8 +113,8 @@ endfunction
 
 "Terminal commands
 tnoremap <Esc> <C-\><C-n>
-tnoremap <C-J> <C-W><C-J>
-tnoremap <C-K> <C-W><C-K>
+tnoremap <silent><expr> <c-j> len(popup_list()) > 0 ? "<C-J>" : "\<C-W><C-J>"
+tnoremap <silent><expr> <c-k> len(popup_list()) > 0 ? "<c-k>" : "\<c-w><c-k>"
 tnoremap <C-H> <C-W><C-H>
 tnoremap <C-L> <C-W><C-L>
 

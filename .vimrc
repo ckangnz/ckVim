@@ -207,19 +207,19 @@ let g:coc_global_extensions = [
       \ 'coc-snippets'
       \]
 
-nmap <silent>gd <Plug>(coc-definition)
-nmap <silent>gy <Plug>(coc-type-definition)
-nmap <silent>gi <Plug>(coc-implementation)
-nmap <silent>gr <Plug>(coc-references)
-nmap <silent><S-r> <Plug>(coc-rename)
-xmap <leader>= <Plug>(coc-format-selected)
-nmap <leader>= <Plug>(coc-format)
-xmap <leader>ac <Plug>(coc-codeaction-selected)
-nmap <leader>ac <Plug>(coc-codeaction-selected)
-nmap <leader>ap <Plug>(coc-diagnostic-prev)
-nmap <leader>an <Plug>(coc-diagnostic-next)
-nmap <leader>. <Plug>(coc-codeaction)
-nmap <leader>. <Plug>(coc-fix-current)
+nmap <silent><nowait>gd <Plug>(coc-definition)
+nmap <silent><nowait>gy <Plug>(coc-type-definition)
+nmap <silent><nowait>gi <Plug>(coc-implementation)
+nmap <silent><nowait>gr <Plug>(coc-references)
+nmap <silent><nowait><S-r> <Plug>(coc-rename)
+xmap <nowait><leader>= <Plug>(coc-format-selected)
+nmap <nowait><leader>= <Plug>(coc-format)
+xmap <nowait><leader>ac <Plug>(coc-codeaction-selected)
+nmap <nowait><leader>ac <Plug>(coc-codeaction-selected)
+nmap <nowait><leader>ap <Plug>(coc-diagnostic-prev)
+nmap <nowait><leader>an <Plug>(coc-diagnostic-next)
+nmap <nowait><leader>. <Plug>(coc-codeaction)
+nmap <nowait><leader>. <Plug>(coc-fix-current)
 nnoremap <silent><nowait> gs :<C-u>CocList -I symbols<cr>
 nnoremap <silent><nowait> ? :<C-u>CocList outline<CR>
 "Floating scroll
@@ -315,10 +315,10 @@ augroup END
 
 "junegunn/fzf
 set rtp+=~/.fzf
-let $FZF_DEFAULT_OPTS="--layout=reverse --bind ctrl-k:preview-up,ctrl-j:preview-down,?:toggle-preview"
+let $FZF_DEFAULT_OPTS="--layout=reverse --bind ctrl-k:preview-up,ctrl-j:preview-down"
 let $FZF_DEFAULT_COMMAND='rg --files --follow --no-ignore-vcs --hidden -g "!{node_modules/*,.git/*}"'
 let g:fzf_layout={'window':{ 'width': 0.9, 'height': 0.6 }}
-let g:fzf_preview_window = []
+let g:fzf_preview_window = ['right:60%:hidden','?']
 let g:fzf_action = {
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-o': 'split',
