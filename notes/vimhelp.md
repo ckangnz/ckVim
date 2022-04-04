@@ -79,7 +79,6 @@
 
     ,f (Rg)                        Search all project
     ,F                              Search the word on cursor in all project
-    ,h (Gsearch)                    Replace all project
     R                               Rename a variable
     cgn =>  . / n                   Change word => Repeat / Skip
     :s/old/new/g                    Change word old to new

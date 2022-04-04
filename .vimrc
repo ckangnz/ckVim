@@ -108,7 +108,7 @@ nnoremap <silent> <Leader>1 :Git<cr><c-w>T
 nnoremap <silent> <Leader>2 :GV --all<cr>
 vnoremap <silent> <Leader>2 :GV!<cr>
 nnoremap <silent> <Leader>3 :ToggleMerginal<cr>
-nnoremap <silent> <Leader>gc :Gcommit<cr>
+nnoremap <silent> <Leader>gc :Git commit<cr>
 nnoremap <silent> <Leader>gr :Gread<cr>
 nnoremap <silent> <Leader>gw :Gwrite<cr>
 nnoremap <silent> <Leader>gd :Gdiff<cr>
