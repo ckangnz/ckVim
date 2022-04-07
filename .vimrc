@@ -407,17 +407,33 @@ let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_fenced_languages = ['csharp=cs', 'js=javascript', 'sh=bash']
 
 "--------Testing vim-test/vim-test--------"
-let testMenu = [
-            \ [ 'Test this (&t)'       , 'TestNearest' ]                         ,
-            \ [ 'Test file (&f)'       , 'TestFile' ]                            ,
-            \ [ 'Test suite (&s)'      , 'TestSuite' ]                           ,
-            \ [ 'Test last (&l)'       , 'TestLast' ]                            ,
-            \ [ 'Test visit (&v)'      , 'TestVisit' ]                           ,
-            \ [ 'Update snapshot (&u)' , 'Jest --update-snapshot' ]              ,
-            \ [ 'Open Cypress (&o)'    , 'Cypress open -c ./*/**/cypress.json' ] ,
-            \]
-let testOpt = {'title': 'Jest Test'}
-map <silent><nowait><leader>t :call quickui#listbox#open(testMenu, testOpt)<cr>
+function! OpenJestMenu()
+  let jestOpt = {'title': 'Jest Test'}
+  let jestMenu = [
+              \ [ 'Test this (&t)'       , 'TestNearest' ]            ,
+              \ [ 'Test file (&f)'       , 'TestFile' ]               ,
+              \ [ 'Test suite (&s)'      , 'TestSuite' ]              ,
+              \ [ 'Test last (&l)'       , 'TestLast' ]               ,
+              \ [ 'Test visit (&v)'      , 'TestVisit' ]              ,
+              \ [ 'Update snapshot (&u)' , 'Jest --update-snapshot' ] ,
+              \ [ 'Cypress(&o)'          , 'OpenCypressMenu' ]        ,
+              \]
+  call quickui#listbox#open(jestMenu, jestOpt)
+endfunction
+
+function! OpenCypressMenu()
+  let cypressOpt = {'title': 'CypressTest'}
+  let cypressMenu = [
+              \ [ 'Run Cypress'           , 'Cypress run -C ./*/**/cypress.json' ]                ,
+              \ [ 'Run Cypress file (&f)' , 'Cypress run -C ./*/**/cypress.json --spec \"./%\"' ] ,
+              \]
+  call quickui#listbox#open(cypressMenu, cypressOpt)
+endfunction
+
+command! OpenJestMenu call OpenJestMenu()
+command! OpenCypressMenu call OpenCypressMenu()
+
+map <silent><nowait><leader>t :OpenJestMenu<cr>
 let test#strategy='asyncrun_background_term'
 let g:test#javascript#runner = 'jest'
 let g:test#javascript#options = '--update-snapshot'
