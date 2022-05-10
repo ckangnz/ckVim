@@ -2,6 +2,7 @@
 
 brew_install_cask "iterm2"
 brew_install_cask "postman"
+brew_install_cask "docker"
 brew_install_cask "itsycal"
 brew_install_cask "rectangle"
 
