@@ -1,33 +1,34 @@
 # Props
 
-* A state passed from different component.
+- A state passed from different component.
+
+### Functional component
+
+```js
+const TextBox = (props) => {
+  return <div>{props.s}</div>;
+};
+```
+
+### Class based component
 
 ```js
 // index.js
-import TextBox from './component/textbox'
+import TextBox from './component/textbox';
 
 class App extends Component {
-
   state = {
-    sayingHi : 'Hi',
-    satingBye : 'Bye',
-  }
+    sayingHi: 'Hi',
+    satingBye: 'Bye',
+  };
 
   render() {
-    return <TextBox s={this.state.sayingHi} b={this.state.sayingBye}/>
+    return <TextBox s={this.state.sayingHi} b={this.state.sayingBye} />;
   }
-
-}
-
-//textbox.js
-const TextBox = (props) => {
-  return (
-    <div>{props.s}</div>
-  )
 }
 ```
 
-* props.children
+- props.children
 
 ```js
 

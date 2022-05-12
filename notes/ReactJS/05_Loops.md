@@ -1,6 +1,6 @@
 # Looping (ES6)
 
-* Whenever working with the loop/iterator you need to pass a key(id)
+- Whenever working with the loop/iterator you need to pass a key(id)
 
 ```js
 const lists = props.listItem.map((i)=>{

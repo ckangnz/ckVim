@@ -5,8 +5,7 @@
 ```js
 import { PureComponent } from 'react';
 
-class ComponentName extends PureComponent {
-}
+class ComponentName extends PureComponent {}
 ```
 
-* Pure Component does not require shouldComponentUpdate(), but automatically checks them.
+- Pure Component does not require shouldComponentUpdate(), but automatically checks them.

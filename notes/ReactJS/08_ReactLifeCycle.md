@@ -17,14 +17,13 @@ class SomeComponent extends React.Component {
   // 03 componentDidUpdate(){}
 
   // Checking the next prop/state value before rerender (return boolean)
-  shouldComponentUpdate(nextProps,nextState){
-    console.log(this.state)
-    console.log(nextState)
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(this.state);
+    console.log(nextState);
     return true;
   }
 
   // Checking if component is unmounted
   // componentWillUnmout(){}
 }
-
 ```

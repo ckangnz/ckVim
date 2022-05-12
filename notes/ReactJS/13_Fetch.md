@@ -7,7 +7,7 @@ class App extends Component {
       isLoading: false,
       error: null,
     };
- 
+
   componentDidMount() {
     this.setState({ isLoading: true }); // set loading to true
 
@@ -46,7 +46,6 @@ class App extends Component {
   }
   ...
 ```
-
 
 ### Using axios
 

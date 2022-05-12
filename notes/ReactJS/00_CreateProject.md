@@ -5,12 +5,12 @@
 ```bash
 npm create-react-app .
 npm init react-app .
-yarn create react-app . 
+yarn create react-app .
 ```
 
 ### Basic of ReactJS
 
-* index.js
+- index.js
 
 ```js
 import React from 'react'; //Always need to be imported
@@ -20,31 +20,29 @@ import Header from './components/header'; //Importing components
 //Functional Componenet
 const App = () => {
   //return React.createElement('h1',{className:'title'}, 'Hello World!')
-    return ( <Header/> )
-}
+  return <Header />;
+};
 
 //Class Based Component
 class App extends React.Component {
-    render() {
-      return ( <Header/> )
-    }
+  render() {
+    return <Header />;
+  }
 }
 
-ReactDOM.render(<App/>, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-* components/header.js
+- components/header.js
 
 ```js
 // if you import React,{Component} from 'react', you can write :
 // class Header extends Componenet {}
-import React, {Componenet} from 'react';
+import React, { Componenet } from 'react';
 
-class Header extends Component{
-  render(){
-      return (
-        <div>Header</div>
-      )
+class Header extends Component {
+  render() {
+    return <div>Header</div>;
   }
 }
 

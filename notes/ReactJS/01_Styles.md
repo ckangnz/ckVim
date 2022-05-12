@@ -31,7 +31,7 @@ class Header extends Component{
 
 ### CSS file
 
-* Create `src/css/styles.css`
+- Create `src/css/styles.css`
 
 ```
 import '../css/styles.css'
@@ -39,7 +39,7 @@ import '../css/styles.css'
 return <div className="class_name"></div>
 ```
 
-* or you could import css as a module
+- or you could import css as a module
 
 ```js
 import xxx from '../css/styles.module.css'
@@ -54,20 +54,19 @@ npm install glamor --save
 ```
 
 ```js
-import {css} from 'glamor';
+import { css } from 'glamor';
 
 const Item = () => {
   let button = css({
-    border:'1px solid white',
-  })
+    border: '1px solid white',
+  });
   let button_red = css({
     padding: '10px 20px',
     backgroundColor: 'red',
-  })
+  });
 
   //return <div {...button} {...button_red} ></div> )
   //or
   //return <div className={`${button} ${button_red}`} ></div> )
-}
+};
 ```
-

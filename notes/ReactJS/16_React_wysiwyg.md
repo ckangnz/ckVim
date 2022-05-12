@@ -34,12 +34,10 @@ import { stateToHTML } from 'draft-js-export-html';
     />
 ```
 
-* Import the css file from the `node_modules` to project for styling
+- Import the css file from the `node_modules` to project for styling
 
 ## To render WYSIWYG HTML in JSX
 
 ```js
-
 <div dangerouslySetInnerHTML={{ __html: article.text }}></div>
-
 ```

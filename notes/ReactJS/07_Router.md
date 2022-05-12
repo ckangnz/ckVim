@@ -10,8 +10,8 @@ yarn add react-router-dom@4.2.0
 
 ## Creating a router
 
-* BrowserRouter = interacts with urls with history (can only have one DOM)
-* Route = executes whatever BrowserRouter passed
+- BrowserRouter = interacts with urls with history (can only have one DOM)
+- Route = executes whatever BrowserRouter passed
 
 ```js
 import React from 'react';
@@ -52,21 +52,22 @@ const App = () => {
 
 ```js
 const Profile = (props) => {
-    //console.log(props)
-    return (
-        <div>
-            <Link to={{ pathname:`${props.match.url}/posts` }}>Take me to profile/posts</Link>
-        </div>
-    )
-}
+  //console.log(props)
+  return (
+    <div>
+      <Link to={{ pathname: `${props.match.url}/posts` }}>
+        Take me to profile/posts
+      </Link>
+    </div>
+  );
+};
 
 const PostItem = (props) => {
-    return (
-        <div>
-            {props.match.params.id}
-            {props.match.params.username}
-        </div>
-    )
-}
+  return (
+    <div>
+      {props.match.params.id}
+      {props.match.params.username}
+    </div>
+  );
+};
 ```
-
