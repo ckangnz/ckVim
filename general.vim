@@ -84,15 +84,18 @@ vnoremap ˚ :m '<-2<CR>gv=gv
 vnoremap <leader>y "+y
 
 "Hotkeys to edit
+nmap <silent><leader>en :vsp ~/.vim/notes<cr>
+nmap <silent><leader>eh :sp ~/.vim/notes/vimhelp.MD<cr>
+
 nmap <silent><leader>ev :vsp $MYVIMRC<cr>
 nmap <silent><leader>eg :vsp ~/.vim/general.vim<cr>
-nmap <silent><leader>ei :vsp ~/.vim/install.sh<cr>
-nmap <silent><leader>ez :vsp ~/.zshrc<cr>
-nmap <silent><leader>eh :sp ~/.vim/notes/vimhelp.MD<cr>
-nmap <silent><leader>ec :e ~/code<cr>
-nmap <silent><leader>en :vsp ~/.vim/notes<cr>
 nmap <silent><leader>ep :vsp ~/.vim/plugins.vim<cr>
-nmap <silent><leader>eP :vsp ~/.vim/plugins.zsh<cr>
+
+nmap <silent><leader>ez :vsp ~/.zshrc<cr>
+nmap <silent><leader>el :vsp ~/.vim/plugins.zsh<cr>
+
+nmap <silent><leader>ei :vsp ~/.vim/install.sh<cr>
+nmap <silent><leader>ec :e ~/code<cr>
 nmap <silent><leader>pi :PlugInstall<cr>
 nmap <silent><leader>pu :PlugUpdate<cr>
 

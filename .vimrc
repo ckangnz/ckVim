@@ -49,19 +49,20 @@ let g:airline_mode_map = {
 "-------------PLUGINS------------
 let myPathsOpts={ "title": "Edit.." }
 let myPaths=[]
-call add(myPaths,['Help (&h)','vsp $HOME/.vim/notes/vimhelp.md'])
+call add(myPaths,['Help (&n)','vsp $HOME/.vim/notes'])
+call add(myPaths,['Notes (&h)','vsp $HOME/.vim/notes/vimhelp.md'])
 call add(myPaths,['-'])
 call add(myPaths,['Vimrc (&v)','vsp $MYVIMRC'])
 call add(myPaths,['General (&g)','vsp $HOME/.vim/general.vim'])
 call add(myPaths,['Plugin (&p)','vsp $HOME/.vim/plugins.vim'])
 call add(myPaths,['-'])
 call add(myPaths,['Zshrc (&z)','vsp $HOME/.zshrc'])
-call add(myPaths,['Zsh Plugin (&P)','vsp $HOME/.vim/plugins.zsh'])
+call add(myPaths,['Zsh Plugin (&l)','vsp $HOME/.vim/plugins.zsh'])
 call add(myPaths,['-'])
 call add(myPaths,['Install.sh (&i)','vsp $HOME/.vim/install.sh'])
 call add(myPaths,['-'])
 call add(myPaths,['/code (&c)','vsp $HOME/code'])
-noremap <silent><leader>e :call quickui#context#open(myPaths, myPathsOpts)<cr>
+noremap <nowait><silent><leader>e :call quickui#context#open(myPaths, myPathsOpts)<cr>
 
 
 "mattn/emmet-vim
