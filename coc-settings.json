@@ -1,5 +1,6 @@
 {
   "coc.preferences.formatOnSaveFiletypes": ["*"],
+
   "snippets.extends": {
     "html": ["html"],
     "css": ["css"],
@@ -9,31 +10,29 @@
     "cs": ["cs"],
     "python": ["django"]
   },
-  "eslint": {
-    "enable": true,
-    "autoFixOnSave": true,
-    "filetypes": [
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact"
-    ]
-  },
-  "prettier": {
-    "eslintIntegration": true,
-    "trailingComma": "all",
-    "singleQuote": true,
-    "disableSuccessMessage": true
-  },
-  "omnisharp": {
-    "trace.server": "information",
-    "debug.server": true
-  },
-  "diagnostic": {
-    "enableMssage": "jump",
-    "errorSign": "",
-    "warningSign": ""
-  },
+
+  "eslint.enable": true,
+  "eslint.autoFixOnSave": true,
+
+  "yaml.hover": true,
+  "yaml.validate": true,
+  "yaml.schemaStore.enable": true,
+  "yaml.completion": true,
+  "yaml.format.enable": true,
+  "yaml.format.bracketSpacing": true,
+  "yaml.format.proseWrap": "never",
+  "yaml.format.singleQuote": true,
+
+  "prettier.trailingComma": "all",
+  "prettier.singleQuote": false,
+
+  "omnisharp.trace.server": "information",
+  "omnisharp.debug.server": true,
+
+  "diagnostic.enableMessage": "jump",
+  "diagnostic.errorSign": "",
+  "diagnostic.warningSign": "",
+
   "suggest.completionItemKindLabels": {
     "variable": "\uf71b",
     "constant": "\uf8ff",
