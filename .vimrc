@@ -211,6 +211,7 @@ let g:coc_global_extensions = [
       \ 'coc-snippets'
       \]
 
+nmap <silent><nowait>gh <Plug>(coc-diagnostic-info)
 nmap <silent><nowait>gd <Plug>(coc-definition)
 nmap <silent><nowait>gy <Plug>(coc-type-definition)
 nmap <silent><nowait>gi <Plug>(coc-implementation)
