@@ -64,7 +64,6 @@ call add(myPaths,['-'])
 call add(myPaths,['/code (&c)','vsp $HOME/code'])
 noremap <nowait><silent><leader>e :call quickui#context#open(myPaths, myPathsOpts)<cr>
 
-
 "mattn/emmet-vim
 let g:user_emmet_settings = {
             \  'javascript' : {
@@ -138,8 +137,12 @@ call add(githubMenu , ['Open issues (&i)'       , 'OpenGithubIssue'])
 call add(githubMenu , ['Open pull requests (&p)'         , 'OpenGithubPullReq'])
 noremap <silent><nowait><leader>go :call quickui#context#open(githubMenu, gitOpt)<cr>
 
-"tpope/vim-repeat
-silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
+"machakann/vim-sandwich
+xmap is <Plug>(textobj-sandwich-auto-i)
+xmap as <Plug>(textobj-sandwich-auto-a)
+omap is <Plug>(textobj-sandwich-auto-i)
+omap as <Plug>(textobj-sandwich-auto-a)
+runtime macros/sandwich/keymap/surround.vim
 
 "skywind3000/asyncrun.vim
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
