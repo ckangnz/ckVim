@@ -113,7 +113,7 @@ nnoremap <silent> <Leader>gr :Gread<cr>
 nnoremap <silent> <Leader>gw :Gwrite<cr>
 nnoremap <silent> <Leader>gd :Gdiff<cr>
 nnoremap <silent> <Leader>gD :Gdiffsplit!<cr>
-nnoremap <Leader>ge :Gedit<space>
+nnoremap <Leader>ge :Gedit<cr>
 nnoremap <silent> <Leader>gb :Git blame<cr>
 nnoremap <silent> <Leader>gp :AsyncRun git -c push.default=current push<cr>
 nnoremap <silent> <Leader>gP :AsyncRun git push -f<cr>
@@ -335,7 +335,6 @@ let g:fzf_action = {
 command! Ctrlp execute (exists("*fugitive#head") && len(fugitive#head())) ? ':GFiles' : ':Files'
 nnoremap <silent> <C-p> :Ctrlp<CR>
 nnoremap <silent> <C-e> :History<CR>
-nnoremap <silent> <C-t> :Tags<CR>
 nnoremap <Leader>f :Rg<space>
 vnoremap <Leader>f y:Rg <c-r>"<cr>
 nnoremap <Leader>F :Rg <c-r><c-w><cr>
@@ -357,8 +356,8 @@ let g:vim_search_pulse_disable_auto_mappings = 1
 let g:vim_search_pulse_duration = 100
 nmap <C-d> <C-d><Plug>Pulse
 nmap <C-u> <C-u><Plug>Pulse
-nmap <C-O> <C-O><Plug>Pulse
-nmap <C-I> <C-I><Plug>Pulse
+nmap <C-o> <C-o><Plug>Pulse
+nmap <C-i> <C-i><Plug>Pulse
 nmap gg gg<Plug>Pulse
 nmap G G<Plug>Pulse
 nmap % %<Plug>Pulse

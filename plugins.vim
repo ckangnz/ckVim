@@ -15,6 +15,7 @@ Plug 'mbbill/undotree'                                              " Magic of U
 Plug 'miyakogi/conoline.vim'                                        " Highlight current line
 Plug 'qxxxb/vim-searchhi'                                           " Highlight searched
 
+
 " Language Specific
 Plug 'briancollins/vim-jst'                                         " .ejs
 Plug 'gabrielelana/vim-markdown'                                    " .md

@@ -36,11 +36,6 @@
     ctrl x + ctrl + f               insert directory path
     ,q                              delete hidden buffers
 
-### General Visual Mode
-
-    //                              search visually selected word
-    U / u                           change upper/lowercase (in visual mode only)
-
 ### Panes / Buffers
 
     ctrl+hjkl                       move cursors from buffer to buffer
@@ -57,12 +52,7 @@
 
 ### Folding
 
-    zf                              create folds
-    za                              toggle folds
-    zd                              delete folds
-    zr                              open all folds
-    zM                              close all folds
-    ze                              reset folds
+    <space>                         Toggle fold
 
 ### Vim-surround
 
@@ -73,7 +63,7 @@
 
     ctrl + p                        open files
     ctrl + e                        open from history
-    ctrl + t                        look for tags
+    ?                               Find variables/functions
 
 ### Search and change:
 
@@ -100,7 +90,8 @@
         cc                              commit
         ca                              commit --amend
         ce                              commit --amend-noedit
-    ,2                              GV (Show logs)
+    ,2                              GV -all(Show all log history)
+    ,@                              GV!(Show log of current file)
     ,3                              Merginal (Show branches)
         ?                               Help to see more...
     ,gp                             Push
@@ -114,7 +105,6 @@
     ,gD                             Gdiffsplit (3 splits for conflicts)
     ,ge                             Gedit   (Toggle local / index)
     ,gb                             Gblame (Show blame for current file)
-    ,gL                             Glog (Show log of current file)
     ,gfo                            git fetch origin ??:??
     ,gfa                            git fetch --all --prune
 
@@ -130,30 +120,6 @@
     c-yk                            for Remove Tag
     c-y/                            toggle comment
     c-ya                            Make anchor tag
-
-### Test
-
-#### Jest
-
-    ,tt                             Test nearest function
-    ,tf                             Test current file
-    ,ts                             Test all suite
-    ,tl                             Test last
-    ,tL                             Test visited
-
-#### Cypress
-
-    ,to                             Open Cypress with nearest cypress.json
-
-### Vim Bookmark
-
-    ma                             Show all bookmarks
-    mm                             Bookmark current line
-    mx                             Clear All bookmarks
-
-### Tabular
-
-    ,T                             :Tabularize e.g. (,ta=  will prettify =)
 
 ### Docker commands
 
