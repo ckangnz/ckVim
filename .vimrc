@@ -130,14 +130,18 @@ endif
 "tyru/open-browser.vim, tyru/open-browser-github.vim
 let gitOpt = {'title':'GITHUB Menu'}
 let githubMenu = []
-call add(githubMenu , ['Open PR (&r)'                     , 'exec "OpenGithubPullReq #" . fugitive#head()'])
-call add(githubMenu , ['Open current file (&f)' , 'Gbrowse'])
-call add(githubMenu , ['Open project (&g)'         , 'OpenGithubProject'])
-call add(githubMenu , ['Open issues (&i)'       , 'OpenGithubIssue'])
-call add(githubMenu , ['Open pull requests (&p)'         , 'OpenGithubPullReq'])
+call add(githubMenu , ['Open PR (&r)', 'exec "OpenGithubPullReq #" . fugitive#head()'])
+call add(githubMenu , ['Open current file (&f)', 'Gbrowse'])
+call add(githubMenu , ['Open project (&g)', 'OpenGithubProect'])
+call add(githubMenu , ['Open issues (&i)', 'OpenGithubIssue'])
+call add(githubMenu , ['Open pull requests (&p)', 'OpenGithubPullReq'])
 noremap <silent><nowait><leader>go :call quickui#context#open(githubMenu, gitOpt)<cr>
 
 "machakann/vim-sandwich
+hi OperatorSandwichChange ctermfg=109 ctermbg=237 guifg=#83a598 guibg=#3c3836
+hi OperatorSandwichAdd cterm=bold ctermfg=10 gui=bold guifg=#7fbf00
+hi OperatorSandwichDelete cterm=bold ctermfg=10 gui=bold guifg=#fb4934
+
 xmap is <Plug>(textobj-sandwich-auto-i)
 xmap as <Plug>(textobj-sandwich-auto-a)
 omap is <Plug>(textobj-sandwich-auto-i)

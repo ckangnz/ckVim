@@ -134,9 +134,9 @@ nnoremap <Leader>wt <C-W>T
 nnoremap <Leader>bp :bp<cr>
 nnoremap <Leader>bn :bn<cr>
 
-"Search visually selected word
+"Search overrides
 nmap <silent> <Leader><space> :nohlsearch<cr>
-vnoremap // y/<C-R>"<CR>
+vnoremap // y/<C-R>"<CR>N
 
 "Find/ Search within visual block
 vnoremap / <Esc>/\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l

@@ -1,15 +1,28 @@
-filetype off                  " required
+filetype off                                                        " required
 
 call plug#begin('~/.vim/plugged')
 
-"Themes
+" VIM GUI
 Plug 'sainnhe/gruvbox-material'
 Plug 'vim-airline/vim-airline'                                      " Vim Airline
+Plug 'skywind3000/vim-quickui'                                      " Context Quick UI
+Plug 'tpope/vim-vinegar'                                            " Easy Netrw with '-'
+Plug 'dstein64/vim-startuptime'                                     " Show :StartupTime
+Plug 'junegunn/goyo.vim'                                            " Silence view
+Plug 'markonm/traces.vim'                                           " Preview highlights and substitute
+Plug 'sotte/presenting.vim'                                         " Vim Presenting tool
+Plug 'mbbill/undotree'                                              " Magic of Undos
+Plug 'miyakogi/conoline.vim'                                        " Highlight current line
+Plug 'qxxxb/vim-searchhi'                                           " Highlight searched
 
-" Syntax Highlighting
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'briancollins/vim-jst'                                         " EJS syntax & indentation
-Plug 'udalov/kotlin-vim'                                            " Kotlin Syntax
+" Language Specific
+Plug 'briancollins/vim-jst'                                         " .ejs
+Plug 'gabrielelana/vim-markdown'                                    " .md
+Plug 'herringtonDarkholme/yats.vim'                                 " .ts
+Plug 'mattn/emmet-vim'                                              " .html
+Plug 'omnisharp/omnisharp-vim'                                      " .cs
+Plug 'pedrohdz/vim-yaml-folds'                                      " .yaml
+Plug 'udalov/kotlin-vim'                                            " .kotlin
 
 " Git Tool
 Plug 'idanarye/vim-merginal'                                        " Git branch organiser
@@ -19,47 +32,32 @@ Plug 'tpope/vim-rhubarb'                                            " Github on 
 Plug 'tyru/open-browser-github.vim'                                 " Open Github URL
 Plug 'tyru/open-browser.vim'                                        " Open URL
 
-" General IDE Tools
-Plug 'skywind3000/vim-quickui'                                      " Context Quick UI
-Plug 'arithran/vim-delete-hidden-buffers'                           " Delete Hidden Buffer
-Plug 'Yggdroot/indentLine'                                          " Indentation line
-Plug 'godlygeek/tabular'                                            " Text Aligning Tool
+" Pairing
+Plug 'andrewRadev/tagalong.vim'                                     " Change tag pairs automatically
 Plug 'jiangmiao/auto-pairs'                                         " Automatic closing ({['']})
-Plug 'mattn/emmet-vim'                                              " Emmet
-Plug 'scrooloose/nerdcommenter'                                     " Easy Commenting tool
-Plug 'tmhedberg/matchit'                                            " More functionality to %
-Plug 'AndrewRadev/tagalong.vim'                                     "Change tag pairs automatically
 Plug 'machakann/vim-sandwich'                                       " Easy text wrap tool
+Plug 'tmhedberg/matchit'                                            " More functionality to %
 Plug 'tpope/vim-repeat'                                             " Repeat tpope's plugins
-Plug 'tpope/vim-vinegar'                                            " Easy Netrw with '-'
-Plug 'miyakogi/conoline.vim'                                        " Highlight current line
-Plug 'pedrohdz/vim-yaml-folds'                                      " Yaml Folding
-Plug 'Omnisharp/omnisharp-vim'                                      " C# Omnisharp for vim
 
-" General Vim Tool
-Plug 'dstein64/vim-startuptime'                                     " Easy MD tools
-Plug 'markonm/traces.vim'                                           " Preview substitute
-Plug 'gabrielelana/vim-markdown'                                    " Easy MD tools
-Plug 'sotte/presenting.vim'                                         " Vim Presenting tool
-Plug 'junegunn/goyo.vim'                                            " Silence view
-Plug 'easymotion/vim-easymotion'                                    " Easy Navigation
-Plug 'mbbill/undotree'                                              " Magic of Undos
-Plug 'MattesGroeger/vim-bookmarks'                                  " Vim Bookmarks
-Plug 'skywind3000/asyncrun.vim'                                     " Asyncrun tasks
-Plug 'wesQ3/vim-windowswap'                                         " Split Panel switch
-Plug 'dominikduda/vim_current_word'                                 " Highlight current word
-Plug 'qxxxb/vim-searchhi'                                           " Highlight searched
-Plug 'inside/vim-search-pulse'                                      " Pulse searched word
-Plug 'iamcco/markdown-preview.nvim',
-            \{ 'do': 'cd app && npm install'  }                     " InstantMarkdownPreview
+" LSP
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocUpdate'}
 
 " Search Tool
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'                                             " Fuzzy find files/content/tags
 
-" Completer
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocUpdate'}
-"Plug 'antoinemadec/coc-fzf'                                         " Fzf for coc
+" Functionality
+Plug 'arithran/vim-delete-hidden-buffers'                           " Delete Hidden Buffer
+Plug 'dominikduda/vim_current_word'                                 " Highlight current word
+Plug 'easymotion/vim-easymotion'                                    " Easy Navigation
+Plug 'godlygeek/tabular'                                            " Text Aligning Tool
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install'  } " InstantMarkdownPreview
+Plug 'inside/vim-search-pulse'                                      " Pulse searched word
+Plug 'mattesGroeger/vim-bookmarks'                                  " Vim Bookmarks
+Plug 'scrooloose/nerdcommenter'                                     " Easy Commenting tool
+Plug 'skywind3000/asyncrun.vim'                                     " Asyncrun tasks
+Plug 'wesQ3/vim-windowswap'                                         " Split Panel switch
+Plug 'yggdroot/indentLine'                                          " Indentation line
 
 " Test
 Plug 'vim-test/vim-test'                                            " Test files
