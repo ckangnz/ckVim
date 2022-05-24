@@ -122,7 +122,7 @@ nnoremap <silent><Leader>gfo :AsyncRun git fetch origin
 nnoremap <silent><Leader>gfa :AsyncRun git fetch --all --prune<cr>
 nnoremap <silent> <Leader>gof :Gbrowse<cr>
 
-command! ToggleMerginal execute (exists("*fugitive#head") && len(fugitive#head())) ? ':MerginalToggle' : 'echoerr "Not in a git repo"'
+command! ToggleMerginal execute (exists("*fugitive#head") && len(FugitiveHead())) ? ':MerginalToggle' : 'echoerr "Not in a git repo"'
 if has("autocmd")
     autocmd BufReadPost fugitive://* set bufhidden=delete
 endif
@@ -130,7 +130,7 @@ endif
 "tyru/open-browser.vim, tyru/open-browser-github.vim
 let gitOpt = {'title':'GITHUB Menu'}
 let githubMenu = []
-call add(githubMenu , ['Open PR (&r)', 'exec "OpenGithubPullReq #" . fugitive#head()'])
+call add(githubMenu , ['Open PR (&r)', 'exec "OpenGithubPullReq #" . FugitiveHead()'])
 call add(githubMenu , ['Open current file (&f)', 'Gbrowse'])
 call add(githubMenu , ['Open project (&g)', 'OpenGithubProect'])
 call add(githubMenu , ['Open issues (&i)', 'OpenGithubIssue'])
@@ -339,7 +339,7 @@ let g:fzf_action = {
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-o': 'split',
             \ 'ctrl-v': 'vsplit' }
-command! Ctrlp execute (exists("*fugitive#head") && len(fugitive#head())) ? ':GFiles' : ':Files'
+command! Ctrlp execute (exists("*fugitive#head") && len(FugitiveHead())) ? ':GFiles' : ':Files'
 nnoremap <silent> <C-p> :Ctrlp<CR>
 nnoremap <silent> <C-e> :History<CR>
 nnoremap <Leader>f :Rg<space>
