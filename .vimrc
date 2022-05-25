@@ -64,6 +64,13 @@ call add(myPaths,['-'])
 call add(myPaths,['/code (&c)','vsp $HOME/code'])
 noremap <nowait><silent><leader>e :call quickui#context#open(myPaths, myPathsOpts)<cr>
 
+"wfxr/minimap.vim
+let g:minimap_width = 5
+let g:minimap_auto_start = 1
+let g:minimap_highlight_range = 1
+hi MinimapCurrentLine ctermfg=Green guifg=#50FA7B guibg=#32302f
+let g:minimap_cursor_color = 'MinimapCurrentLine'
+
 "mattn/emmet-vim
 let g:user_emmet_settings = {
             \  'javascript' : {
