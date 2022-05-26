@@ -14,8 +14,6 @@ Plug 'sotte/presenting.vim'                                         " Vim Presen
 Plug 'mbbill/undotree'                                              " Magic of Undos
 Plug 'miyakogi/conoline.vim'                                        " Highlight current line
 Plug 'qxxxb/vim-searchhi'                                           " Highlight searched
-Plug 'wfxr/minimap.vim'                                             " Highlight searched
-
 
 " Language Specific
 Plug 'briancollins/vim-jst'                                         " .ejs

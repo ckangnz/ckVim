@@ -64,12 +64,12 @@ call add(myPaths,['-'])
 call add(myPaths,['/code (&c)','vsp $HOME/code'])
 noremap <nowait><silent><leader>e :call quickui#context#open(myPaths, myPathsOpts)<cr>
 
-"wfxr/minimap.vim
-let g:minimap_width = 5
-let g:minimap_auto_start = 1
-let g:minimap_highlight_range = 1
-hi MinimapCurrentLine ctermfg=Green guifg=#50FA7B guibg=#32302f
-let g:minimap_cursor_color = 'MinimapCurrentLine'
+augroup ScrollbarInit
+  autocmd!
+  autocmd CursorMoved,VimResized,QuitPre * silent! lua require('scrollbar').show()
+  autocmd WinEnter,FocusGained           * silent! lua require('scrollbar').show()
+  autocmd WinLeave,BufLeave,BufWinLeave,FocusLost * silent! lua require('scrollbar').clear()
+augroup end
 
 "mattn/emmet-vim
 let g:user_emmet_settings = {
@@ -503,6 +503,7 @@ nnoremap <silent><nowait><leader>b :call quickui#tools#list_buffer('e')<cr>
 let g:utilOpts = {'title': 'Utility Menu'}
 let g:utilContent = []
 
+call add(g:utilContent, [ 'Minimap Toggle (&m)', 'MinimapToggle' ])
 call add(g:utilContent, [ 'NPM Run (&n)', 'call NpmRun()' ])
 call add(g:utilContent, ['-'])
 
