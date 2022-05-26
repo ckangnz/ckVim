@@ -9,8 +9,6 @@ fi
 source $ZPLUG_HOME/init.zsh
 
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-zplug "romkatv/powerlevel10k", as:theme, depth:1
-zplug "lukechilds/zsh-nvm", lazy:1
 zplug "zsh-users/zsh-autosuggestions"
 
 zplug "plugins/git", from:oh-my-zsh
@@ -20,6 +18,10 @@ zplug "plugins/docker-compose", from:oh-my-zsh
 zplug "plugins/nvm", from:oh-my-zsh
 
 zplug "zdharma-continuum/fast-syntax-highlighting", defer:2
+
+zplug "lukechilds/zsh-nvm", lazy:1
+
+zplug "romkatv/powerlevel10k", as:theme
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
