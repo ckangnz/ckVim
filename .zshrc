@@ -1,6 +1,7 @@
 #zmodload zsh/zprof
-autoload -U +X bashcompinit && bashcompinit
-autoload -U +X compinit && compinit
+autoload -Uz +X bashcompinit && bashcompinit
+autoload -Uz +X compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 export TERM="xterm-256color"
 
@@ -110,4 +111,7 @@ add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 
 [ -f ~/.extraAlias.zsh ] && source ~/.extraAlias.zsh
+
+
+bindkey -e
 #zprof
