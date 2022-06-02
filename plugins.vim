@@ -3,6 +3,7 @@ filetype off                                                        " required
 call plug#begin('~/.vim/plugged')
 
 " VIM GUI
+Plug 'github/copilot.vim'
 Plug 'sainnhe/gruvbox-material'
 Plug 'vim-airline/vim-airline'                                      " Vim Airline
 Plug 'skywind3000/vim-quickui'                                      " Context Quick UI
