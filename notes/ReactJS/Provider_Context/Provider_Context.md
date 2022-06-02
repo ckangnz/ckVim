@@ -7,7 +7,7 @@ To avoid props drilling, you have an option to use Redux or to use React Context
 Create a context with default values
 
 ```js
-const SomeContext = createContext({ string: '', array: [], object: {} });
+const SomeContext = createContext({ string: "", array: [], object: {} });
 ```
 
 ## Create a component that renders the `.Provider`
@@ -18,7 +18,7 @@ const SomeContext = createContext({ string: '', array: [], object: {} });
 ```js
 const SomeProvider = ({ children }) => (
   <SomeContext.Provider
-    value={{ string: 'new string', array: [1, 2], object: { key: 'value' } }}
+    value={{ string: "new string", array: [1, 2], object: { key: "value" } }}
   >
     {children}
   </SomeContext.Provider>
@@ -66,7 +66,7 @@ const Component = () => (
 
 ```tsx
 //CountProvider.tsx
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext } from "react";
 
 //1
 const CountContext = createContext({ count: 0, setCount: () => {} });
@@ -94,8 +94,8 @@ This enables you to wrap the parent component with the Provider and access the C
 
 ```tsx
 //Component.tsx
-import React from 'react';
-import CountContext, { useCountContext } from './provider';
+import React from "react";
+import CountContext, { useCountContext } from "./provider";
 
 //Using custom hook
 
