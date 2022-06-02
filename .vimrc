@@ -17,36 +17,49 @@ colorscheme gruvbox-material
 let g:airline_theme='gruvbox_material'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#ycm#enabled = 0
-let g:airline#extensions#tabline#left_sep=''
-let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_splits = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#left_sep=''
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#right_alt_sep = '|'
 let g:airline#extensions#tabline#close_symbol = '×'
 let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline_left_sep = "\uE0B4"
-let g:airline_right_sep = "\uE0B6"
+let g:airline_left_sep = ""
+let g:airline_right_sep = ""
+let g:airline_section_y = airline#section#create(["%{coc#status()}%{get(b:,'coc_current_function','')}"])
+let g:airline_section_z = airline#section#create(['%{g:airline_symbols.linenr}%#__accent_bold#%3l/%3L', '%{g:airline_symbols.colnr}%#__accent_bold#%3v'])
+
+augroup HITABFILL
+  autocmd!
+  autocmd User AirlineAfterInit hi airline_tab     ctermfg=223 ctermbg=239 guifg=#ebdbb2 guibg=#504945
+  autocmd User AirlineAfterInit hi airline_tabsel  term=bold cterm=bold ctermfg=234 ctermbg=109 gui=bold guifg=#1d2021 guibg=#83a598
+  autocmd User AirlineAfterInit hi airline_tabmod  term=bold cterm=bold ctermfg=234 ctermbg=214 gui=bold guifg=#1d2021 guibg=#fabd2f
+
+  autocmd User AirlineAfterInit hi airline_tab_right  ctermfg=223 ctermbg=239 guifg=#ebdbb2 guibg=#504945
+  autocmd User AirlineAfterInit hi airline_tabsel_right  term=bold cterm=bold ctermfg=234 ctermbg=109 gui=bold guifg=#1d2021 guibg=#83a598
+  autocmd User AirlineAfterInit hi airline_tabmod_right  term=bold cterm=bold ctermfg=234 ctermbg=214 gui=bold guifg=#1d2021 guibg=#fabd2f
+
+
+
+augroup END
 
 let g:airline#extensions#coc#enabled = 1
 let g:airline#extensions#coc#show_coc_status = 0
 
 let g:asyncrun_open = 0
-let g:asyncrun_status = ''
-let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
+let g:airline_section_error = airline#section#create(['%{g:asyncrun_status}'])
 let g:airline_mode_map = {
             \ '__' : '-',
-            \ 'n' : 'N',
-            \ 'i' : 'I',
-            \ 'R' : 'R',
-            \ 'c' : 'C',
-            \ 'v' : 'V',
-            \ 'V' : 'V',
-            \ '' : 'V',
-            \ 's' : 'S',
-            \ 'S' : 'S',
-            \ '' : 'S',
+            \ 'n' : '⚡️',
+            \ 'i' : '✏️',
+            \ 'R' : '💫',
+            \ 'c' : '⚙️',
+            \ 'v' : '👀',
+            \ 'V' : '👀',
+            \ '' : '👀',
             \ }
 
 
