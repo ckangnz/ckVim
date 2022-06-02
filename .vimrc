@@ -28,6 +28,10 @@ let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_left_sep = "\uE0B4"
 let g:airline_right_sep = "\uE0B6"
+
+let g:airline#extensions#coc#enabled = 1
+let g:airline#extensions#coc#show_coc_status = 0
+
 let g:asyncrun_open = 0
 let g:asyncrun_status = ''
 let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
@@ -226,7 +230,8 @@ let g:coc_global_extensions = [
       \ 'coc-docker',
       \ 'coc-omnisharp',
       \ 'coc-eslint',
-      \ 'coc-snippets'
+      \ 'coc-snippets',
+      \ 'coc-kotlin'
       \]
 
 nmap <silent><nowait>gh <Plug>(coc-diagnostic-info)
@@ -283,8 +288,6 @@ augroup mygroup
   autocmd FileType markdown let b:coc_suggest_disable = 1
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
-
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()

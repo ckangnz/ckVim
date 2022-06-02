@@ -1,5 +1,6 @@
 {
   "coc.preferences.formatOnSaveFiletypes": ["*"],
+  "list.statusLineSegments": null,
 
   "snippets.extends": {
     "html": ["html"],
@@ -13,6 +14,8 @@
 
   "eslint.enable": true,
   "eslint.autoFixOnSave": true,
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.updateImportsOnFileMove.enable": true,
 
   "yaml.hover": true,
   "yaml.validate": true,
@@ -25,11 +28,12 @@
 
   "prettier.trailingComma": "all",
   "prettier.singleQuote": false,
+  "prettier.statusItemText": "",
 
   "omnisharp.trace.server": "information",
   "omnisharp.debug.server": true,
 
-  "diagnostic.enableMessage": "jump",
+  "diagnostic.enableMessage": "always",
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": "",
 
