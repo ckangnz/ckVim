@@ -23,7 +23,7 @@ let g:airline_section_y = airline#section#create(["%{coc#status()}%{get(b:,'coc_
 let g:airline_section_z = airline#section#create(['%{g:airline_symbols.linenr}%#__accent_bold#%3l/%3L', '%{g:airline_symbols.colnr}%#__accent_bold#%3v'])
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_tabs = 1
-let g:airline#extensions#tabline#show_splits = 1
+let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tabline#left_sep=''
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -133,7 +133,7 @@ nnoremap <silent><Leader>gfo :AsyncRun git fetch origin
 nnoremap <silent><Leader>gfa :AsyncRun git fetch --all --prune<cr>
 nnoremap <silent> <Leader>gof :Gbrowse<cr>
 
-command! ToggleMerginal execute (exists("*fugitive#head") && len(FugitiveHead())) ? ':MerginalToggle' : 'echoerr "Not in a git repo"'
+command! ToggleMerginal execute len(FugitiveHead()) > 0 ? ':MerginalToggle' : 'echoerr "Not in a git repo"'
 if has("autocmd")
     autocmd BufReadPost fugitive://* set bufhidden=delete
 endif
@@ -350,7 +350,7 @@ let g:fzf_action = {
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-o': 'split',
             \ 'ctrl-v': 'vsplit' }
-command! Ctrlp execute (exists("*fugitive#head") && len(FugitiveHead())) ? ':GFiles' : ':Files'
+command! Ctrlp execute len(FugitiveHead()) > 0 ? ':GFiles' : ':Files'
 nnoremap <silent> <C-p> :Ctrlp<CR>
 nnoremap <silent> <C-e> :History<CR>
 nnoremap <Leader>f :Rg<space>
