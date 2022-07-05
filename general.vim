@@ -1,4 +1,8 @@
 "-------------GENERAL SETTINGS-------------
+let mapleader = ','                             "The default leader is '\'
+let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c4fe', '#ff3f80', '#64fcda', '#fefefe', '#b0bec4', '#ff8980', '#b9f6c9', '#ffe47e', '#80d7fe', '#ff80ab', '#a7fdeb', '#fefefe',]
+"black, dark red, dark green, dark yellow, dark blue, dark magenta, dark cyan, light grey, dark grey, red, green, yellow, blue, magenta, cyan, white
+
 syntax on                                       "Syntax ON
 set re=0
 set noimd                                       "Revert back to English when on different language
@@ -28,17 +32,20 @@ set splitright                                  "Vertical split to right
 set hlsearch                                    "highlight search
 set incsearch                                   "Show preview of search
 set diffopt+=vertical                           "Set split and diff to vertical
-let mapleader = ','                             "The default leader is '\'
 
 "GUI Adjust"
 hi LineNr ctermbg=0 guibg=bg
 hi vertsplit ctermbg=0 guibg=bg
 hi foldcolumn ctermbg=0 guibg=bg guifg=white
 hi SignColumn guibg=bg
+hi Comment cterm=NONE
+hi diffAdded ctermfg=142 guifg=#a9b665
+hi diffRemoved ctermfg=167 guifg=#ea6962
+hi WhiteSpaces ctermbg=red guibg=red
+:2match WhiteSpaces /\s\+$/
 
 "----------VISUALS---------
 set guifont=FiraCode\ Nerd\ Font:h12            "Set font family
-"set guifont=CaskaydiaCove\ Nerd\ Font:h14            "Set font family
 set linespace=0                                "Set line space
 set wrapmargin=0                                "line number margins
 set textwidth=0                                 "Set text width"
@@ -66,7 +73,7 @@ if has('linebreak')
     set cpo+=n
     let &breakat = " \t;:,])}"
 end
-set list lcs=trail:·,tab:»»,nbsp:~              "Show whitespaces with symbol
+set list lcs=space:\ ,lead:·,trail:·,nbsp:◇,tab:»»,extends:▸,precedes:◂,multispace:····,
 
 "----------MAPPINGS---------
 map ; :
@@ -142,10 +149,6 @@ vnoremap // y/<C-R>"<CR>N
 vnoremap / <Esc>/\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 vnoremap ? <Esc>?\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 
-let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c4fe', '#ff3f80', '#64fcda', '#fefefe', '#b0bec4', '#ff8980', '#b9f6c9', '#ffe47e', '#80d7fe', '#ff80ab', '#a7fdeb', '#fefefe',]
-"black, dark red, dark green, dark yellow, dark blue, dark magenta, dark cyan, light grey, dark grey, red, green, yellow, blue, magenta, cyan, white
-
-
 "-------------SYNTAX HIGHLIGHTING-------------
 "Python Syntax
 let g:python_highlight_all = 1
@@ -153,15 +156,6 @@ au BufNewFile,BufRead *.vue,*hbs set filetype=html
 au BufNewFile,BufRead *.jsx set filetype=javascriptreact
 au BufNewFile,BufRead *.tsx set filetype=typescriptreact
 au BufRead,BufNewFile .py,.pyw match BadWhitespace /\s\+$/
-
-"Highlights
-hi Comment cterm=NONE
-hi diffAdded ctermfg=142 guifg=#a9b665
-hi diffRemoved ctermfg=167 guifg=#ea6962
-hi RedundantSpaces ctermbg=red guibg=red
-hi ExtraWhitespace ctermbg=red guibg=red
-2match RedundantSpaces /\s\+$/
-2match ExtraWhitespace /\s\+$/
 
 "Show Hilight type pressing F10
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
