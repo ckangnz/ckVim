@@ -1,21 +1,51 @@
 # DOTNET
 
-## Commands
+## Installing Dotnet with multiple SDK versions
+
+Visit [here](https://github.com/isen-ng/homebrew-dotnet-sdk-versions) for more versions
 
 ```sh
-  dotnet new webapi -n {NAME-OF-PROJECT}
-  dotnet build
-  dotnet run //check launchSettings.json for port configuration
-  //dotnet run --project .csproj_PATH --configFile Nuget.Config_PATH
+# Install dotnet with sdk handler (this will get the latest version as well)
+brew install dotnet-sdk
+
+# Install dotnet versions
+brew tap isen-ng/dotnet-sdk-versions
+brew install --cask <VERSION> # e.g. dotnet-sdk6-0-200
+
+# Check default version
+dotnet --version
+
+# List versions
+dotnet --list-sdks
+
+# Create projects with different versions
+dotnet new webapi -n {NAME-OF-PROJECT} -f [net6.0 / net5.0/ netcoreapp3.1]
 ```
 
-## Adding healthcheck middleware
+## Commands
+
+- The port is set in `launchSettings.json`
+
+```sh
+dotnet build
+dotnet run
+dotnet watch run #Opens browser
+
+# To run dotnet project using specific Nuget.Config
+dotnet run --project .csproj_PATH --configFile Nuget.Config_PATH
+```
+
+### Adding healthcheck middleware
+
+##### For Dotnet 3 & 5
 
 ```cs
+# Startup.cs
+
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddControllers();
-    services.AddHealthChecks();
+    services.AddHealthChecks(); #<-- Add This
     services.AddSwaggerGen(c =>
     {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "NAME-OF-PROJECT", Version = "v1" });
@@ -24,115 +54,159 @@ public void ConfigureServices(IServiceCollection services)
 
 public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 {
-    app.UseHealthChecks("/ping");
+    app.UseHealthChecks("/healthz"); #<-- Add This
 }
 ```
 
-## Using Docker to run the project
+##### For Dotnet 6
 
-```dockerfile
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-WORKDIR /app
-COPY . ./NAME-OF-PROJECT
-WORKDIR /app/NAME-OF-PROJECT
-RUN dotnet restore
-RUN dotnet build
+> [For more information](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-6.0)
 
-FROM build AS publish
-WORKDIR /app/NAME-OF-PROJECT
-RUN dotnet publish NAME-OF-PROJECT.csproj --configuration Release --no-restore --output /release
+```cs
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
+builder.Services.AddHealthChecks(); #<-- Add this
+builder.Services.AddSwaggerGen();
 
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS final
-EXPOSE 80
-EXPOSE 443
-WORKDIR /app/NAME-OF-PROJECT
-COPY --from=publish /release .
+var app = builder.Build();
+app.MapHealthChecks("/healthz"); #<-- Add this
 
-ENTRYPOINT [ "dotnet", "NAME-OF-PROJECT.dll" ]
+app.Run();
 ```
 
-### Run docker run project
+### Updating the launch URL
+
+To change the initial launch url, update it in the `launchSettings.json`
+
+```json
+{
+  "launchUrl": "api/todoitems"
+}
+```
+
+## Adding a Model class
+
+Model classes can go anywhere in the project, but the `Models` folder is used by convention.
+
+```cs
+namespace <PROJECTNAME>.<FOLDERNAME>
+{
+  public class <MODELNAME>
+  {
+    public long Id { get; set; }
+    public string? Name { get; set; }
+    public bool IsSomething { get; set; }
+  }
+}
+```
+
+## Add a Database Context
+
+The _database context_ is the main class that coordinates Entity Framework functionality for a data model.
+This class is created by deriving from the `Microsoft.EntityFrameworkCore.DbContext` class.
+
+Run `dotnet add package Microsoft.EntityFrameworkCore.InMemory` to use Entity Framework in the project.
+
+```cs
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
+
+namespace <PROJECT>.<FOLDERNAME>
+{
+    public class <DC_NAME> : DbContext
+    # public class TodoContext : DbContext
+    {
+        public <DC_NAME>(DbContextOptions<DC_NAME> options) : base(options)
+        {}
+
+        public DbSet<MODELNAME> <YOUR_DATA>s { get; set; } = null!;
+        // the DbSet name is going to be used as _context.<YOUR_DATA> in the generated controller
+
+    }
+}
+```
+
+Now register the database context to `Program.cs`
+
+```cs
+using Microsoft.EntityFrameworkCore;
+using TodoApi.Models;
+
+builder.Services.AddDbContext<DC_NAME>(opt => opt.UseInMemoryDatabase("InMemoryDbName"));
+# builder.Services.AddDbContext<DC_NAME>(opt => opt.UseInMemoryDatabase("TodoList"));
+```
+
+## Adding a controller
+
+### Pre-requisites
+
+> You MUST create controller/db context and register the db context to the service before scaffolding the controller
 
 ```sh
-// to build docker image with DOCKERFILE
-docker build -t IMAGE-NAME-TAG .
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 
-// build with tag:latest
-docker build -t IMAGE-NAME-TAG -f ./DOCKERFILE .
-
-// build with tag:1.0.0
-docker build -t IMAGE-NAME-TAG:1.0.0 -f ./DOCKERFILE .
-
-// to run a container with the image
-// Run -Detached -Port 1111:80
-docker run --rm -d -p 1111:80 IMAGE-NAME-TAG
+dotnet tool install -g dotnet-aspnet-codegenerator
+# This will require your .zshrc to be updated
 ```
 
-## Use Kubernetes to run the project
+### Generate Controller with CLI
 
-> Tips to watch pod generating!
+Let's use the `dotnet-aspnet-codegenerator` to automatically scaffold the controller!
 
 ```sh
-watch kubectl get pods
+dotnet aspnet-codegenerator controller
+  -name <CONTROLLER_NAME>
+  -async
+  -api
+  -m <MODELNAME>
+  -dc <DC_NAME>
+  -outDir Controllers
 ```
 
-### Create .yaml file with Service and Deployment
+#### Update [POST] method
 
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: SERVICE-NAME
-  namespace: default
-spec:
-  selector:
-    app: POD-NAME
-  ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 80
-      nodePort: 30000
-  type: NodePort
+> Everything should be created automatically. Simply update response for POST to use `nameof`
 
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: DEPLOYMENT-NAME
-  namespace: default
-  labels:
-    app: POD-NAME
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: POD-NAME
-  template:
-    metadata:
-      labels:
-        app: POD-NAME
-    spec:
-      containers:
-        - name: CONTAINER-NAME
-          image: DOCKER-IMAGE-NAME
-          imagePullPolicy: IfNotPresent
-          livenessProbe:
-            httpGet:
-              path: '/ping'
-              port: 80
-            initialDelaySeconds: 3
-            periodSeconds: 3
-          readinessProbe:
-            httpGet:
-              path: '/ping'
-              port: 80
-            initialDelaySeconds: 5
-            periodSeconds: 5
-          resources:
-            requests:
-              cpu: 100m
-              memory: 128Mi
-            limits:
-              cpu: 500m
-              memory: 128Mi
+```cs
+//return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
+return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
+```
+
+## Test with the REST call (use your tool!)
+
+```http
+GET https://localhost:7146/api/todoitems HTTP/1.1
+Content-Type: application/json
+
+-----------
+
+GET https://localhost:7146/api/todoitems/{3} HTTP/1.1
+Content-Type: application/json
+
+-----------
+
+POST https://localhost:7146/api/todoitems HTTP/1.1
+Content-Type: application/json
+
+{
+  "name":"hello",
+  "isCompleted":false
+}
+
+-----------
+
+PUT https://localhost:7146/api/todoitems/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name":"Updated",
+  "isCompleted":true
+}
+
+-----------
+
+DELETE https://localhost:7146/api/todoitems/1 HTTP/1.1
 ```

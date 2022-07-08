@@ -322,6 +322,26 @@ augroup omnisharp_commands
     autocmd FileType cs nmap <silent> <buffer> <Leader>oS <Plug>(omnisharp_stop_server)
     autocmd FileType cs nmap <buffer> <Leader>tt :OmniSharpRunTest<CR>
     autocmd FileType cs nmap <buffer> <Leader>tf :OmniSharpRunTestsInFile<CR>
+
+    function! s:create_dotnet_controller() abort
+      let controllerName = input('Controller Name: ')
+      let modelName = input('Model Name: ')
+      let dbContextName = input('DB Context Name: ')
+      if controllerName != "" && modelName != "" && dbContextName != ""
+        let script = ":!dotnet aspnet-codegenerator controller "
+              \.. "-name " .. controllerName .. "Controller "
+              \.. "-async "
+              \.. "-api "
+              \.. "-m " .. modelName .. " "
+              \.. "-dc " .. dbContextName .. " "
+              \.. "-outDir Controllers"
+        exe script
+      else
+        echo "Cancelled"
+      endif
+    endfunction
+
+    command! CreateController call s:create_dotnet_controller()
 augroup END
 
 "junegunn/fzf

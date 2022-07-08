@@ -67,6 +67,7 @@ unset MANPATH
 MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
 export PATH="$HOME/.rvm/bin:$PATH"
+export PATH="$PATH:/Users/chris.kang/.dotnet/tools"
 
 #alias
 alias vim="mvim -v"
