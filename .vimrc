@@ -405,9 +405,6 @@ nnoremap <leader>u :UndotreeToggle<cr>
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_WindowLayout = 3
 
-"sotte/presenting.vim
-let g:presenting_figlets = 1
-
 "gabrielelana/vim-markdown
 let g:markdown_enable_mappings = 1
 let g:markdown_enable_spell_checking = 0
@@ -450,9 +447,10 @@ let g:test#javascript#options = '--update-snapshot'
 let g:test#runner_commands= ["Jest","Cypress"]
 
 "nicwest/vim-http
-let g:vim_http_clean_before_do=1
+let g:vim_http_clean_before_do=0
 let g:vim_http_split_vertically=1
 let g:vim_http_tempbuffer=1
+let g:vim_http_additional_curl_args='-k'
 
 function! s:set_json_header() abort
   call http#set_header('Content-Type', 'application/json')

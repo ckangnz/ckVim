@@ -2,6 +2,7 @@ filetype off                                                        " required
 
 call plug#begin('~/.vim/plugged')
 
+
 " VIM GUI
 Plug 'github/copilot.vim'
 Plug 'sainnhe/gruvbox-material'
@@ -11,7 +12,6 @@ Plug 'tpope/vim-vinegar'                                            " Easy Netrw
 Plug 'dstein64/vim-startuptime'                                     " Show :StartupTime
 Plug 'junegunn/goyo.vim'                                            " Silence view
 Plug 'markonm/traces.vim'                                           " Preview highlights and substitute
-Plug 'sotte/presenting.vim'                                         " Vim Presenting tool
 Plug 'mbbill/undotree'                                              " Magic of Undos
 Plug 'miyakogi/conoline.vim'                                        " Highlight current line
 Plug 'qxxxb/vim-searchhi'                                           " Highlight searched

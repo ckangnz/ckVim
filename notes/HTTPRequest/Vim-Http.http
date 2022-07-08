@@ -1,0 +1,10 @@
+POST https://httpbin.org/post HTTP/1.1
+Host: httpbin.org
+Content-Length: 38
+Content-Type: application/json
+X-Foobar: hodor!
+
+{
+  "foo": "bar",
+  "some_flag": true
+}
