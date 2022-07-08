@@ -55,6 +55,7 @@ Plug 'godlygeek/tabular'                                            " Text Align
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install'  } " InstantMarkdownPreview
 Plug 'inside/vim-search-pulse'                                      " Pulse searched word
 Plug 'mattesGroeger/vim-bookmarks'                                  " Vim Bookmarks
+Plug 'nicwest/vim-http'                                             " Indentation line
 Plug 'scrooloose/nerdcommenter'                                     " Easy Commenting tool
 Plug 'skywind3000/asyncrun.vim'                                     " Asyncrun tasks
 Plug 'wesQ3/vim-windowswap'                                         " Split Panel switch

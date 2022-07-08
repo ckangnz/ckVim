@@ -465,6 +465,32 @@ let g:test#javascript#runner = 'jest'
 let g:test#javascript#options = '--update-snapshot'
 let g:test#runner_commands= ["Jest","Cypress"]
 
+"nicwest/vim-http
+let g:vim_http_clean_before_do=1
+let g:vim_http_split_vertically=1
+let g:vim_http_tempbuffer=1
+
+function! s:set_json_header() abort
+  call http#set_header('Content-Type', 'application/json')
+endfunction
+
+function! s:clean_personal_stuff() abort
+  call http#remove_header('Cookie')
+  call http#remove_header('Accept')
+  call http#remove_header('User-Agent')
+  call http#remove_header('Accept-Language')
+endfunction
+
+function! s:add_compression() abort
+  call http#set_header('Accept-Encoding', 'deflate, gzip')
+  let g:vim_http_additional_curl_args = '--compressed'
+endfunction
+
+command! JSON call s:set_json_header()
+command! Anon call s:clean_personal_stuff()
+command! Compression call s:add_compression()
+
+
 "-----------Docker skanehira/docker.vim-------------"
 let dockerMenu = [
             \ [ 'Images (&i)', ':DockerImages' ],
