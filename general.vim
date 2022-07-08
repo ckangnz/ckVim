@@ -73,7 +73,7 @@ if has('linebreak')
     set cpo+=n
     let &breakat = " \t;:,])}"
 end
-set list lcs=space:\ ,lead:·,trail:·,nbsp:◇,tab:»»,extends:▸,precedes:◂,multispace:····,
+set list lcs=space:\ ,lead:\ ,trail:·,nbsp:◇,tab:»»,extends:▸,precedes:◂,multispace:····,
 
 "----------MAPPINGS---------
 map ; :

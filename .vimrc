@@ -320,24 +320,8 @@ augroup omnisharp_commands
     autocmd FileType cs nmap <silent> <buffer> <Leader>oR <Plug>(omnisharp_restart_server)
     autocmd FileType cs nmap <silent> <buffer> <Leader>os <Plug>(omnisharp_start_server)
     autocmd FileType cs nmap <silent> <buffer> <Leader>oS <Plug>(omnisharp_stop_server)
-    autocmd FileType cs nmap <silent> <buffer> <Leader>ob :call MakeSolution()<CR>
-    autocmd FileType cs nmap <silent> <buffer> <Leader>or :call RunSolution()<CR>
     autocmd FileType cs nmap <buffer> <Leader>tt :OmniSharpRunTest<CR>
     autocmd FileType cs nmap <buffer> <Leader>tf :OmniSharpRunTestsInFile<CR>
-
-    function! MakeSolution() abort
-        let makeprg = 'dotnet build /nologo /v:m /property:GenerateFullPaths=true /clp:ErrorsOnly'
-        let sln = fnamemodify(OmniSharp#FindSolutionOrDir(), ':.')
-        setlocal errorformat=\ %#%f(%l\\\,%c):\ %m
-        echomsg makeprg . sln
-        call asyncrun#run(1, sln, makeprg)
-    endfunction
-
-    function! RunSolution() abort
-        let sln = fnamemodify(OmniSharp#FindProjectOrDir(), ':.')
-        echo sln
-    endfunction
-
 augroup END
 
 "junegunn/fzf
