@@ -14,7 +14,6 @@ Plug 'junegunn/goyo.vim'                                            " Silence vi
 Plug 'markonm/traces.vim'                                           " Preview highlights and substitute
 Plug 'mbbill/undotree'                                              " Magic of Undos
 Plug 'miyakogi/conoline.vim'                                        " Highlight current line
-Plug 'qxxxb/vim-searchhi'                                           " Highlight searched
 
 " Language Specific
 Plug 'briancollins/vim-jst'                                         " .ejs

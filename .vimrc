@@ -68,13 +68,6 @@ call add(myPaths,['-'])
 call add(myPaths,['/code (&c)','vsp $HOME/code'])
 noremap <nowait><silent><leader>e :call quickui#context#open(myPaths, myPathsOpts)<cr>
 
-augroup ScrollbarInit
-  autocmd!
-  autocmd CursorMoved,VimResized,QuitPre * silent! lua require('scrollbar').show()
-  autocmd WinEnter,FocusGained           * silent! lua require('scrollbar').show()
-  autocmd WinLeave,BufLeave,BufWinLeave,FocusLost * silent! lua require('scrollbar').clear()
-augroup end
-
 "mattn/emmet-vim
 let g:user_emmet_settings = {
             \  'javascript' : {
@@ -384,21 +377,16 @@ nmap gg gg<Plug>Pulse
 nmap G G<Plug>Pulse
 nmap % %<Plug>Pulse
 nmap . .<Plug>Pulse
-nmap / <Plug>(searchhi-/)
-vmap / <Plug>(searchhi-v-/)
-nmap n <Plug>(searchhi-n)<Plug>Pulse
-nmap N <Plug>(searchhi-N)<Plug>Pulse
-nmap * <Plug>(searchhi-*)<Plug>Pulse
-nmap # <Plug>(searchhi-#)<Plug>Pulse
-vmap n <Plug>(searchhi-v-n)<Plug>Pulse
-vmap N <Plug>(searchhi-v-N)<Plug>Pulse
-vmap * <Plug>(searchhi-v-*)<Plug>Pulse
-vmap # <Plug>(searchhi-v-#)<Plug>Pulse
-nmap <silent> <leader><space> <Plug>(searchhi-clear-all)
-vmap <silent> <leader><space> <Plug>(searchhi-v-clear-all)
-hi IncSearch cterm=none gui=none ctermbg=45 guibg=#40E0D0
+nmap n n<Plug>Pulse
+nmap N N<Plug>Pulse
+nmap * *<Plug>Pulse
+nmap # #<Plug>Pulse
+vmap n n<Plug>Pulse
+vmap N N<Plug>Pulse
+vmap * *<Plug>Pulse
+vmap # #<Plug>Pulse
 hi Search ctermfg=black ctermbg=white guifg=black guibg=white
-hi CurrentSearch cterm=reverse,bold gui=reverse,bold
+hi CurSearch cterm=reverse,bold gui=reverse,bold
 
 "MattesGroeger/vim-bookmarks
 hi BookmarkSign ctermbg=NONE ctermfg=red guibg=NONE guifg=red
