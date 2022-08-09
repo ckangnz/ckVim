@@ -17,10 +17,6 @@ Plug 'miyakogi/conoline.vim'                                        " Highlight 
 
 " Language Specific
 Plug 'nvim-treesitter/nvim-treesitter', {'do':':TSUpdate'}          " Colour syntax treesitter
-"Plug 'briancollins/vim-jst'                                         " .ejs
-"Plug 'gabrielelana/vim-markdown'                                    " .md
-"Plug 'herringtonDarkholme/yats.vim'                                 " .ts
-"Plug 'mattn/emmet-vim'                                              " .html
 Plug 'omnisharp/omnisharp-vim'                                      " .cs
 Plug 'pedrohdz/vim-yaml-folds'                                      " .yaml
 Plug 'udalov/kotlin-vim'                                            " .kotlin
