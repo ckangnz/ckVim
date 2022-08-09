@@ -6,6 +6,8 @@ brew_install "python3"
 brew_install "node"
 brew_install "nvm"
 brew_install "macvim"
+brew_install "nvim"
+brew_install_cask "neovide"
 brew_install "cmake"
 brew_install "bat"
 brew_install "watchman"
@@ -23,6 +25,15 @@ fi
 echo 'Linking vimrc...'
 ln -s ~/.vim/.vimrc ~/.vimrc
 echo 'Completed Linking vimrc!'
+
+#Symlink init.vim
+if [ -e ~/.config/nvim/init.vim ]; then
+    echo '.vimrc already exists! Deleting existing .vimrc...'
+    rm ~/.config/nvim/init.vim
+fi
+echo 'Linking vimrc...'
+ln -s ~/.vim/init.vim ~/.config/nvim/init.vim
+echo 'Completed Linking init.vim for nvim!'
 
 echo "."
 echo "."

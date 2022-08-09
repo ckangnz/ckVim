@@ -16,10 +16,11 @@ Plug 'mbbill/undotree'                                              " Magic of U
 Plug 'miyakogi/conoline.vim'                                        " Highlight current line
 
 " Language Specific
-Plug 'briancollins/vim-jst'                                         " .ejs
-Plug 'gabrielelana/vim-markdown'                                    " .md
-Plug 'herringtonDarkholme/yats.vim'                                 " .ts
-Plug 'mattn/emmet-vim'                                              " .html
+Plug 'nvim-treesitter/nvim-treesitter', {'do':':TSUpdate'}          " Colour syntax treesitter
+"Plug 'briancollins/vim-jst'                                         " .ejs
+"Plug 'gabrielelana/vim-markdown'                                    " .md
+"Plug 'herringtonDarkholme/yats.vim'                                 " .ts
+"Plug 'mattn/emmet-vim'                                              " .html
 Plug 'omnisharp/omnisharp-vim'                                      " .cs
 Plug 'pedrohdz/vim-yaml-folds'                                      " .yaml
 Plug 'udalov/kotlin-vim'                                            " .kotlin
@@ -52,7 +53,6 @@ Plug 'dominikduda/vim_current_word'                                 " Highlight 
 Plug 'easymotion/vim-easymotion'                                    " Easy Navigation
 Plug 'godlygeek/tabular'                                            " Text Aligning Tool
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install'  } " InstantMarkdownPreview
-Plug 'inside/vim-search-pulse'                                      " Pulse searched word
 Plug 'mattesGroeger/vim-bookmarks'                                  " Vim Bookmarks
 Plug 'nicwest/vim-http'                                             " Indentation line
 Plug 'scrooloose/nerdcommenter'                                     " Easy Commenting tool

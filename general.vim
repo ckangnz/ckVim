@@ -42,6 +42,9 @@ hi Comment cterm=NONE
 hi diffAdded ctermfg=142 guifg=#a9b665
 hi diffRemoved ctermfg=167 guifg=#ea6962
 hi WhiteSpaces ctermbg=red guibg=red
+
+hi Search ctermfg=black ctermbg=white guifg=black guibg=white
+hi CurSearch cterm=reverse,bold gui=reverse,bold
 :2match WhiteSpaces /\s\+$/
 
 "----------VISUALS---------

@@ -1,7 +1,8 @@
 so ~/.vim/general.vim                           "General Vim settings
 so ~/.vim/plugins.vim                           "Source the plugins
+runtime macros/sandwich/keymap/surround.vim
+
 filetype plugin indent on
-runtime macros
 :filetype indent on
 
 "---------------THEMES---------------
@@ -56,7 +57,12 @@ let myPaths=[]
 call add(myPaths,['Help (&n)','vsp $HOME/.vim/notes'])
 call add(myPaths,['Notes (&h)','vsp $HOME/.vim/notes/vimhelp.md'])
 call add(myPaths,['-'])
-call add(myPaths,['Vimrc (&v)','vsp $MYVIMRC'])
+if exists('neovide') || has('nvim')
+  call add(myPaths,['Vimrc (&v)','vsp $HOME/.vimrc'])
+  call add(myPaths,['NVim (&e)','vsp $MYVIMRC'])
+else
+  call add(myPaths,['Vimrc (&v)','vsp $MYVIMRC'])
+endif
 call add(myPaths,['General (&g)','vsp $HOME/.vim/general.vim'])
 call add(myPaths,['Plugin (&p)','vsp $HOME/.vim/plugins.vim'])
 call add(myPaths,['-'])
@@ -142,7 +148,6 @@ call add(githubMenu , ['Open pull requests (&p)', 'OpenGithubPullReq'])
 noremap <silent><nowait><leader>go :call quickui#context#open(githubMenu, gitOpt)<cr>
 
 "machakann/vim-sandwich
-runtime macros/sandwich/keymap/surround.vim
 hi OperatorSandwichChange ctermfg=109 ctermbg=237 guifg=#83a598 guibg=#3c3836
 hi OperatorSandwichAdd cterm=bold ctermfg=10 gui=bold guifg=#7fbf00
 hi OperatorSandwichDelete cterm=bold ctermfg=10 gui=bold guifg=#fb4934
@@ -367,28 +372,6 @@ let g:vim_current_word#highlight_current_word = 1
 let g:vim_current_word#highlight_twins = 1
 hi CurrentWord gui=bold,underline cterm=bold,underline
 hi CurrentWordTwins gui=bold cterm=bold
-
-"qxxb/vim-searchhi & inside/vim-search-pulse
-let g:vim_search_pulse_disable_auto_mappings = 1
-let g:vim_search_pulse_duration = 100
-nmap <C-d> <C-d><Plug>Pulse
-nmap <C-u> <C-u><Plug>Pulse
-nmap <C-o> <C-o><Plug>Pulse
-nmap <C-i> <C-i><Plug>Pulse
-nmap gg gg<Plug>Pulse
-nmap G G<Plug>Pulse
-nmap % %<Plug>Pulse
-nmap . .<Plug>Pulse
-nmap n n<Plug>Pulse
-nmap N N<Plug>Pulse
-nmap * *<Plug>Pulse
-nmap # #<Plug>Pulse
-vmap n n<Plug>Pulse
-vmap N N<Plug>Pulse
-vmap * *<Plug>Pulse
-vmap # #<Plug>Pulse
-hi Search ctermfg=black ctermbg=white guifg=black guibg=white
-hi CurSearch cterm=reverse,bold gui=reverse,bold
 
 "MattesGroeger/vim-bookmarks
 hi BookmarkSign ctermbg=NONE ctermfg=red guibg=NONE guifg=red

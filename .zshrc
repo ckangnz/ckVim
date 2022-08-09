@@ -71,6 +71,7 @@ export PATH="$PATH:/Users/chris.kang/.dotnet/tools"
 
 #alias
 alias vim="mvim -v"
+alias neo="neovide --multigrid"
 alias dczsh="docker-compose run --rm web zsh"
 alias dcbash="docker-compose run --rm web bash"
 
