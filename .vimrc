@@ -465,27 +465,6 @@ command! JSON call s:set_json_header()
 command! Anon call s:clean_personal_stuff()
 command! Compression call s:add_compression()
 
-
-"-----------Docker skanehira/docker.vim-------------"
-let dockerMenu = [
-            \ [ 'Images (&i)', ':DockerImages' ],
-            \ [ 'Containers (&c)', ':DockerContainers' ],
-            \ [ 'Image Search (&s)', 'DockerImageSearch' ],
-            \ [ 'Build with Tag (&b)', 'call DockerImageBuildWithTag()' ],
-            \]
-let dockerOpt = {'title': 'Docker Menu'}
-map <silent><nowait><leader>d :call quickui#listbox#open(dockerMenu, dockerOpt)<cr>
-
-function! DockerImageBuildWithTag()
-    call inputsave()
-    let t = input('Enter tag name: ')
-    call inputrestore()
-    let script = ':DockerImageBuild -t ' . t . ' .'
-    if t!=""
-        execute script
-    endif
-endfunction
-
 "-----AUTO-COMMANDS------"
 "Auto sourcing self
 augroup autosourcing

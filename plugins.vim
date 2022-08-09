@@ -67,11 +67,4 @@ Plug 'vim-test/vim-test'                                            " Test files
 Plug 'honza/vim-snippets'                                           " snippets
 Plug 'andrewstuart/vim-kubernetes'                                  " Kubernetes snippets
 
-" Docker
-Plug 'skanehira/docker.vim',
-      \{ 'on':
-      \['DockerImages',
-      \'DockerContainers'
-      \,'DockerImageBuildWithTag'] }                                " Docker
-
 call plug#end()

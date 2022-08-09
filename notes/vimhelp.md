@@ -120,33 +120,3 @@
     c-yk                            for Remove Tag
     c-y/                            toggle comment
     c-ya                            Make anchor tag
-
-### Docker commands
-
-    ,di                             Docker image list
-      /                                 Filter image
-      r                                 Run image
-        -d (detached)
-        -p 1234:80 (expose 1234 to 80)
-        --rm (remove when stopped)
-      R                                 Refresh image
-      t                                 Tag image
-      s                                 Save image to tarball
-      l                                 Load image from tarball
-      <CR>                              Inspect Image
-    ,dc                             Docker container list
-      /                                 Filter container
-      u                                 Start container
-      s                                 Stop container
-      r                                 Restart container
-      R                                 Refresh container
-      K                                 Kill container
-      a                                 Attach container (interactive)
-      m                                 Show Monitor CPU/Mem usage
-      l                                 Monitor container logs
-      ctrl-d                            Delete container
-      ctrl-r                            Rename container
-      p                                 Switch to image popup window
-      c                                 Copy file/folders between container and local file system
-      C                                 Create a new image from container
-      <CR>                              Inspect a container
