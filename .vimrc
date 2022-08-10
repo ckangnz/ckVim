@@ -51,14 +51,15 @@ let g:airline_mode_map = {
             \ }
 
 
-"-------------PLUGINS------------
+"-------------MY PATHS SHORTCUT------------
+
 let myPathsOpts={ "title": "Edit.." }
 let myPaths=[]
 call add(myPaths,['Notes (&n)','vsp $HOME/.vim/notes'])
 call add(myPaths,['Helps (&h)','vsp $HOME/.vim/notes/vimhelp.md'])
 call add(myPaths,['-'])
 
-if exists('neovide') || has('nvim')
+if exists('g:neovide') || has('nvim')
   call add(myPaths,['Vimrc (&v)','vsp $HOME/.vimrc'])
   call add(myPaths,['NVim (&e)','vsp $MYVIMRC'])
 else
@@ -79,6 +80,11 @@ call add(myPaths,['-'])
 call add(myPaths,['/Home (&d)','vsp $HOME/.vim'])
 call add(myPaths,['/Code (&c)','vsp $HOME/code'])
 noremap <nowait><silent><leader>e :call quickui#context#open(myPaths, myPathsOpts)<cr>
+
+nmap <silent><leader>pi :PlugInstall<cr>
+nmap <silent><leader>pu :PlugUpdate<cr>
+
+"-------------PLUGINS------------
 
 "mattn/emmet-vim
 let g:user_emmet_settings = {
@@ -440,7 +446,11 @@ command! OpenJestMenu call OpenJestMenu()
 command! OpenCypressMenu call OpenCypressMenu()
 
 map <silent><nowait><leader>t :OpenJestMenu<cr>
-let test#strategy='asyncrun_background_term'
+if exists('g:neovide') || has('nvim')
+  let test#strategy='neovim'
+else
+  let test#strategy='asyncrun_background_term'
+endif
 let g:test#javascript#runner = 'jest'
 let g:test#javascript#options = '--update-snapshot'
 let g:test#runner_commands= ["Jest","Cypress"]

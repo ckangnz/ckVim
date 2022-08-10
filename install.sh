@@ -35,6 +35,14 @@ echo 'Linking vimrc...'
 ln -s ~/.vim/init.vim ~/.config/nvim/init.vim
 echo 'Completed Linking init.vim for nvim!'
 
+if[ -e ~/.config/nvim/coc-settings.json ]; then
+  echo 'coc-settings.json already exists! Deleting existing coc-settings.json'
+  rm ~/.config/nvim/coc-settings.json
+fi
+echo 'Linking coc-settings...'
+ln -s ~/.vim/coc-settings.json ~/.config/nvim/coc-settings.json
+echo 'Completed Linking coc-settings.json for nvim!'
+
 echo "."
 echo "."
 echo "."
