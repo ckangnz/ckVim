@@ -45,7 +45,6 @@ hi WhiteSpaces ctermbg=red guibg=red
 
 hi Search ctermfg=black ctermbg=white guifg=black guibg=white
 hi CurSearch cterm=reverse,bold gui=reverse,bold
-:2match WhiteSpaces /\s\+$/
 
 "----------VISUALS---------
 set guifont=FiraCode\ Nerd\ Font:h12            "Set font family

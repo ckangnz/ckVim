@@ -497,6 +497,13 @@ augroup autosourcing
     autocmd BufWritePost $MYVIMRC AirlineRefresh
     autocmd BufWritePost $HOME/.vim/general.vim AirlineRefresh
     autocmd BufWritePost $HOME/.vim/plugins.vim AirlineRefresh
+
+    autocmd ColorScheme * highlight WhiteSpaces ctermbg=red guibg=red
+    match WhiteSpaces /\s\+$/
+    autocmd BufWinEnter * match WhiteSpaces /\s\+$/
+    autocmd InsertEnter * match WhiteSpaces /\s\+\%#\@<!$/
+    autocmd InsertLeave * match WhiteSpaces /\s\+$/
+    autocmd BufWinLeave * call clearmatches()
 augroup END
 
 "------------------------------------------------------------------
