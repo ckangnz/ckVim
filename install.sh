@@ -14,7 +14,10 @@ brew_install "watchman"
 brew_install "the_silver_searcher"
 brew_install "ripgrep"
 
+#[Check versions here](https://github.com/isen-ng/homebrew-dotnet-sdk-versions)
 brew_install_cask "dotnet-sdk"
+brew_install_cask "dotnet-sdk6-0-300" "isen-ng/dotnet-sdk-versions"
+
 brew_install_cask "font-fira-code-nerd-font" "homebrew/cask-fonts"
 
 #Symlink vimrc
