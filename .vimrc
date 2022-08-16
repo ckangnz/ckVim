@@ -452,7 +452,7 @@ else
   let test#strategy='asyncrun_background_term'
 endif
 let g:test#javascript#runner = 'jest'
-let g:test#javascript#options = '--update-snapshot'
+let g:test#javascript#options = '--update-snapshot --color=always'
 let g:test#runner_commands= ["Jest","Cypress"]
 
 "nicwest/vim-http
