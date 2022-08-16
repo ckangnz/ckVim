@@ -13,6 +13,7 @@ Plug 'junegunn/goyo.vim'                                            " Silence vi
 Plug 'markonm/traces.vim'                                           " Preview highlights and substitute
 Plug 'mbbill/undotree'                                              " Magic of Undos
 Plug 'miyakogi/conoline.vim'                                        " Highlight current line
+Plug 'TaDaa/vimade'                                                 " Dim inactive window for pair-programming
 
 " Language Specific
 Plug 'briancollins/vim-jst'                                         " .ejs

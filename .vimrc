@@ -225,6 +225,10 @@ function! s:align()
     endif
 endfunction
 
+"TaDaa/vimade
+let g:vimade = {}
+let g:vimade.fadelevel = 0.5
+
 "airblade/vim-rooter
 let g:rooter_silent_chdir = 1
 let g:rooter_patterns = ['.git', 'package.json', '*.sln', '=src']
