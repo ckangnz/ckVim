@@ -334,7 +334,7 @@ augroup omnisharp_commands
     autocmd FileType cs nmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_actions)
     autocmd FileType cs xmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_actions)
     autocmd FileType cs nmap <silent> <buffer> <S-R> <Plug>(omnisharp_rename)
-    autocmd FileType cs nmap <silent> <buffer> <Leader>oR <Plug>(omnisharp_restart_server)
+    autocmd FileType cs nmap <silent> <buffer> <Leader>or <Plug>(omnisharp_restart_server)
     autocmd FileType cs nmap <silent> <buffer> <Leader>os <Plug>(omnisharp_start_server)
     autocmd FileType cs nmap <silent> <buffer> <Leader>oS <Plug>(omnisharp_stop_server)
     autocmd FileType cs nmap <buffer> <Leader>tt :OmniSharpRunTest<CR>
