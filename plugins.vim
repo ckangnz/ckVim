@@ -4,7 +4,6 @@ call plug#begin('~/.vim/plugged')
 
 
 " VIM GUI
-Plug 'github/copilot.vim'
 Plug 'sainnhe/gruvbox-material'
 Plug 'vim-airline/vim-airline'                                      " Vim Airline
 Plug 'skywind3000/vim-quickui'                                      " Context Quick UI
@@ -47,7 +46,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'                                             " Fuzzy find files/content/tags
 
 " Functionality
-Plug 'airblade/vim-rooter'                                          " Delete Hidden Buffer
+Plug 'airblade/vim-rooter'                                          " Find the root of the project automatically
 Plug 'arithran/vim-delete-hidden-buffers'                           " Delete Hidden Buffer
 Plug 'dominikduda/vim_current_word'                                 " Highlight current word
 Plug 'easymotion/vim-easymotion'                                    " Easy Navigation
