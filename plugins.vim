@@ -47,6 +47,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'                                             " Fuzzy find files/content/tags
 
 " Functionality
+Plug 'airblade/vim-rooter'                                          " Delete Hidden Buffer
 Plug 'arithran/vim-delete-hidden-buffers'                           " Delete Hidden Buffer
 Plug 'dominikduda/vim_current_word'                                 " Highlight current word
 Plug 'easymotion/vim-easymotion'                                    " Easy Navigation

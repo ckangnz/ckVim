@@ -225,6 +225,11 @@ function! s:align()
     endif
 endfunction
 
+"airblade/vim-rooter
+let g:rooter_silent_chdir = 1
+let g:rooter_patterns = ['.git', 'package.json', '*.sln', '=src']
+let g:rooter_change_directory_for_non_project_files = 'home'
+
 "neoclide/coc.nvim
 let g:coc_user_config = {}
 let g:coc_global_extensions = [
