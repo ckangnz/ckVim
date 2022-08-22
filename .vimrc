@@ -118,12 +118,12 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1
 nmap F <Plug>(easymotion-overwin-f2)
-hi link EasyMotionTarget WhiteSpaces
-hi link EasyMotionShade  Comment
+hi link EasyMotionTarget Special
+hi link EasyMotionShade Comment
 hi link EasyMotionTarget2First MatchParen
 hi link EasyMotionTarget2Second MatchParen
 hi link EasyMotionMoveHL Search
-hi link EasyMotionIncSearch Search
+hi link EasyMotionIncSearch IncSearch
 
 "tpope/vim-fugitive / idanarye/vim-merginal / junegunn/gv.vim
 nnoremap <silent> <Leader>1 :Git<cr><c-w>T
@@ -166,9 +166,9 @@ hi OperatorSandwichDelete cterm=bold ctermfg=10 gui=bold guifg=#fb4934
 
 let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
 let g:sandwich#recipes += [
-      \   {'buns': ['{\s*', '\s*}'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['{']},
-      \   {'buns': ['\[\s*', '\s*\]'], 'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['[']},
-      \   {'buns': ['(\s*', '\s*)'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['(']},
+      \{'buns': ['{\s*', '\s*}'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['{']},
+      \{'buns': ['\[\s*', '\s*\]'], 'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['[']},
+      \{'buns': ['(\s*', '\s*)'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['(']},
       \ ]
 
 xmap is <Plug>(textobj-sandwich-auto-i)
@@ -502,13 +502,25 @@ augroup autosourcing
     autocmd BufWritePost $HOME/.vim/general.vim AirlineRefresh
     autocmd BufWritePost $HOME/.vim/plugins.vim AirlineRefresh
 
-    autocmd ColorScheme * highlight WhiteSpaces ctermbg=red guibg=red
-    match WhiteSpaces /\s\+$/
-    autocmd BufWinEnter * match WhiteSpaces /\s\+$/
-    autocmd InsertEnter * match WhiteSpaces /\s\+\%#\@<!$/
-    autocmd InsertLeave * match WhiteSpaces /\s\+$/
-    autocmd BufWinLeave * call clearmatches()
+    au BufNewFile,BufRead *.vue,*hbs set filetype=html
+    au BufNewFile,BufRead *.jsx set filetype=javascriptreact
+    au BufNewFile,BufRead *.tsx set filetype=typescriptreact
+    au BufNewFile,BufRead * match TrailingWhiteSpaces /\s\+$/
 augroup END
+
+"HIGHLIGHT OVERRIDE
+hi LineNr ctermbg=0 guibg=bg
+hi vertsplit ctermbg=0 guibg=bg
+hi foldcolumn ctermbg=0 guibg=bg guifg=white
+hi SignColumn guibg=bg
+hi Comment cterm=NONE
+hi diffAdded ctermfg=142 guifg=#a9b665
+hi diffRemoved ctermfg=167 guifg=#ea6962
+
+hi Search ctermfg=black ctermbg=white guifg=black guibg=white
+hi CurSearch cterm=reverse,bold gui=reverse,bold
+
+hi TrailingWhiteSpaces ctermfg=white ctermbg=124
 
 "------------------------------------------------------------------
 "skywind3000/vim-quickui-------------------

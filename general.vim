@@ -33,18 +33,6 @@ set hlsearch                                    "highlight search
 set incsearch                                   "Show preview of search
 set diffopt+=vertical                           "Set split and diff to vertical
 
-"GUI Adjust"
-hi LineNr ctermbg=0 guibg=bg
-hi vertsplit ctermbg=0 guibg=bg
-hi foldcolumn ctermbg=0 guibg=bg guifg=white
-hi SignColumn guibg=bg
-hi Comment cterm=NONE
-hi diffAdded ctermfg=142 guifg=#a9b665
-hi diffRemoved ctermfg=167 guifg=#ea6962
-
-hi Search ctermfg=black ctermbg=white guifg=black guibg=white
-hi CurSearch cterm=reverse,bold gui=reverse,bold
-
 "----------VISUALS---------
 set guifont=FiraCode\ Nerd\ Font:h12            "Set font family
 set linespace=0                                "Set line space
@@ -74,7 +62,7 @@ if has('linebreak')
     set cpo+=n
     let &breakat = " \t;:,])}"
 end
-set list lcs=space:\ ,lead:\ ,trail:·,nbsp:◇,tab:»»,extends:▸,precedes:◂,multispace:····,
+set list lcs=space:\ ,lead:·,trail:·,nbsp:◇,tab:»»,extends:▸,precedes:◂,multispace:····,
 
 "----------MAPPINGS---------
 map ; :
@@ -134,19 +122,13 @@ vnoremap // y/<C-R>"<CR>N
 vnoremap / <Esc>/\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 vnoremap ? <Esc>?\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 
-"-------------SYNTAX HIGHLIGHTING-------------
 "Python Syntax
 let g:python_highlight_all = 1
-au BufNewFile,BufRead *.vue,*hbs set filetype=html
-au BufNewFile,BufRead *.jsx set filetype=javascriptreact
-au BufNewFile,BufRead *.tsx set filetype=typescriptreact
-au BufRead,BufNewFile .py,.pyw match BadWhitespace /\s\+$/
 
 "Show Hilight type pressing F10
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
             \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
             \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
 
 "Folding
 set foldmethod=syntax
