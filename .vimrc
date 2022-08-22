@@ -516,7 +516,23 @@ command! Anon call s:clean_personal_stuff()
 command! Compression call s:add_compression()
 
 "-----AUTO-COMMANDS------"
-"Auto sourcing self
+augroup WhitespaceMatch
+  autocmd!
+  function! s:ToggleWhitespaceMatch(mode)
+    let pattern = (a:mode == 'i') ? '\s\+\%#\@<!$' : '\s\+$'
+    if exists('w:whitespace_match_number')
+      call matchdelete(w:whitespace_match_number)
+      call matchadd('ExtraWhitespace', pattern, 10, w:whitespace_match_number)
+    else
+      " Something went wrong, try to be graceful.
+      let w:whitespace_match_number = matchadd('ExtraWhitespace', pattern)
+    endif
+  endfunction
+
+  autocmd BufWinEnter * let w:whitespace_match_number = matchadd('ExtraWhitespace', '\s\+$')
+  autocmd InsertLeave * call s:ToggleWhitespaceMatch('n')
+augroup END
+
 augroup autosourcing
     autocmd!
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
@@ -527,11 +543,13 @@ augroup autosourcing
     autocmd BufWritePost $HOME/.vim/general.vim AirlineRefresh
     autocmd BufWritePost $HOME/.vim/plugins.vim AirlineRefresh
 
-    au BufNewFile,BufRead * match WhiteSpaces /\s\+$/  
     au BufNewFile,BufRead *.vue,*hbs set filetype=html
     au BufNewFile,BufRead *.jsx set filetype=javascriptreact
     au BufNewFile,BufRead *.tsx set filetype=typescriptreact
 augroup END
+
+highlight ExtraWhitespace ctermbg=red guibg=red
+
 
 "HIGHLIGHT OVERRIDE
 hi LineNr ctermbg=0 guibg=bg
@@ -544,6 +562,3 @@ hi diffRemoved ctermfg=167 guifg=#ea6962
 
 hi Search ctermfg=black ctermbg=white guifg=black guibg=white
 hi CurSearch cterm=reverse,bold gui=reverse,bold
-
-hi WhiteSpaces ctermfg=white ctermbg=124 guifg=white guibg=red
-

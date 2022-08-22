@@ -128,15 +128,12 @@ vnoremap // y/<C-R>"<CR>N
 vnoremap / <Esc>/\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 vnoremap ? <Esc>?\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 
-"Python Syntax
-let g:python_highlight_all = 1
-
 "Show Hilight type pressing F10
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
             \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
             \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-"Folding
+"Custom Folding Styles
 set foldmethod=syntax
 :setlocal foldcolumn=0
 set foldlevelstart=99
@@ -155,6 +152,7 @@ endfunction
 set foldtext=NeatFoldText()
 
 "--------CUSTOM VIM SCRIPT------------
+
 for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '-', '#' ]
     execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
     execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
@@ -185,13 +183,8 @@ nnoremap <Leader>n :call Todo()<CR>
 "Toggle copen and cclose
 autocmd FileType qf if (getwininfo(win_getid())[0].loclist != 1) | wincmd J | endif "Quickfix to be full width on the bottom
 function! ToggleQuickFix()
-    if empty(filter(getwininfo(), 'v:val.quickfix'))
-        copen
-    else
-        cclose
-    endif
+    if empty(filter(getwininfo(), 'v:val.quickfix')) | copen | else | cclose | endif
 endfunction
-
 nnoremap <silent> <Leader>4 :call ToggleQuickFix()<cr>
 
 function! ClearReg()
@@ -201,7 +194,6 @@ function! ClearReg()
     endfor
     unlet regs
 endfunction
-
 
 func GenerateGUID()
     let l:new_uuid=system('uuidgen')[:-2]
