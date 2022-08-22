@@ -60,9 +60,15 @@ if has('linebreak')
     set breakindent
     let &showbreak ='﬌'
     set cpo+=n
-    let &breakat = " \t;:,])}"
+    let &breakat = " ^I!@*-+;:,./?"
 end
-set list lcs=space:\ ,lead:·,trail:·,nbsp:◇,tab:»»,extends:▸,precedes:◂,multispace:····,
+
+"space = single space inbetween
+"lead = spaces in the front
+"trail = spaces in the end
+"nbsp = alt + space
+"tab = ctrl+v+tab
+set list lcs=space:\ ,lead:\ ,trail:·,nbsp:◇,tab:»»,extends:▸,precedes:◂,multispace:····,
 
 "----------MAPPINGS---------
 map ; :
@@ -140,11 +146,11 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 function! NeatFoldText()
     let line = '' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
     let lines_count = v:foldend - v:foldstart + 1
-    let lines_count_text = '|' . printf("%10s", lines_count . ' lines') . ' |'
-    let foldtextstart = strpart('+' . repeat(' ', v:foldlevel*2). line, 0, (winwidth(0)*2)/3)
+    let lines_count_text = '|' . printf(" %10s", lines_count . ' lines' .. ' ◂') . ' |'
+    let foldtextstart = strpart('▸' . repeat(' ', v:foldlevel*2). line, 0, (winwidth(0)*2)/3)
     let foldtextend = lines_count_text
     let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-    return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) . foldtextend
+    return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) .. foldtextend
 endfunction
 set foldtext=NeatFoldText()
 

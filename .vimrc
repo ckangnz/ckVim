@@ -33,7 +33,6 @@ let g:airline#extensions#tabline#close_symbol = '×'
 let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
-
 let g:airline#extensions#coc#enabled = 1
 let g:airline#extensions#coc#show_coc_status = 0
 
@@ -49,7 +48,6 @@ let g:airline_mode_map = {
             \ 'V' : '👀',
             \ '' : '👀',
             \ }
-
 
 "-------------MY PATHS SHORTCUT------------
 
@@ -84,7 +82,54 @@ noremap <nowait><silent><leader>e :call quickui#context#open(myPaths, myPathsOpt
 nmap <silent><leader>pi :PlugInstall<cr>
 nmap <silent><leader>pu :PlugUpdate<cr>
 
+let g:utilOpts = {'title': 'Utility Menu'}
+let g:utilContent = []
+
+call add(g:utilContent, [ 'Minimap Toggle (&m)', 'MinimapToggle' ])
+call add(g:utilContent, [ 'NPM Run (&n)', 'call NpmRun()' ])
+call add(g:utilContent, ['-'])
+
+call add(g:utilContent, [ 'Generate GUID (&i)', 'call GenerateGUID()' ])
+call add(g:utilContent, [ 'Delete all white spaces (&w)', '%s/^$\\|^\s\+//g' ])
+call add(g:utilContent, ['-'])
+
+"-------------------------------------------
+
+"iamcco/markdown-preview.nvim
+let g:mkdp_auto_start = 0
+call add(g:utilContent, [ 'Markdown Preview (&d)', 'MarkdownPreview' ])
+call add(g:utilContent, ['-'])
+
+call add(g:utilContent, [ 'Clear Registers (&x)', 'call ClearReg()' ])
+
+noremap <silent><nowait><leader>m :call quickui#context#open(g:utilContent, g:utilOpts)<cr>
+
 "-------------PLUGINS------------
+
+"skywind3000/vim-quickui-------------------
+let g:quickui_border_style = 2
+let g:quickui_color_scheme = 'gruvbox'
+nnoremap <silent><nowait><leader>b :call quickui#tools#list_buffer('e')<cr>
+
+"skywind3000/asyncrun.vim
+command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+
+"TaDaa/vimade
+let g:vimade = {}
+let g:vimade.fadelevel = 0.5
+
+"airblade/vim-rooter
+let g:rooter_silent_chdir = 1
+let g:rooter_patterns = ['.git', 'package.json', '*.sln']
+let g:rooter_change_directory_for_non_project_files = 'home'
+
+"arithran/vim-delete-hidden-buffers
+nnoremap <Leader>q :DeleteHiddenBuffers<CR>
+
+"mbbill/undotree
+nnoremap <leader>u :UndotreeToggle<cr>
+let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_WindowLayout = 3
 
 "mattn/emmet-vim
 let g:user_emmet_settings = {
@@ -93,91 +138,13 @@ let g:user_emmet_settings = {
                 \  },
                 \}
 
-"arithran/vim-delete-hidden-buffers
-nnoremap <Leader>q :DeleteHiddenBuffers<CR>
-
-"andrewradev/tagalong.vim
-"let g:tagalong_additional_filetypes = []
-let g:tagalong_verbose = 1
-
-"Valloric/MatchTagAlways
-let g:mta_use_matchparen_group = 1
-let g:mta_filetypes = {
-            \ 'html' : 1,
-            \ 'ejs' : 1,
-            \ 'xhtml' : 1,
-            \ 'xml' : 1,
-            \ 'php' : 1,
-            \ 'javascriptreact' : 1,
-            \ 'typescriptreact' : 1,
-            \}
-nnoremap % :MtaJumpToOtherTag<cr>
-
-"easymotion/vim-easymotion
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_use_smartsign_us = 1
-nmap F <Plug>(easymotion-overwin-f2)
-hi link EasyMotionTarget Special
-hi link EasyMotionShade Comment
-hi link EasyMotionTarget2First MatchParen
-hi link EasyMotionTarget2Second MatchParen
-hi link EasyMotionMoveHL Search
-hi link EasyMotionIncSearch IncSearch
-
-"tpope/vim-fugitive / idanarye/vim-merginal / junegunn/gv.vim
-nnoremap <silent> <Leader>1 :Git<cr><c-w>T
-nnoremap <silent> <Leader>2 :GV --all<cr>
-vnoremap <silent> <Leader>2 :GV!<cr>
-nnoremap <silent> <Leader>3 :ToggleMerginal<cr>
-nnoremap <silent> <Leader>gc :Git commit<cr>
-nnoremap <silent> <Leader>gr :Gread<cr>
-nnoremap <silent> <Leader>gw :Gwrite<cr>
-nnoremap <silent> <Leader>gd :Gdiff<cr>
-nnoremap <silent> <Leader>gD :Gdiffsplit!<cr>
-nnoremap <Leader>ge :Gedit<cr>
-nnoremap <silent> <Leader>gb :Git blame<cr>
-nnoremap <silent> <Leader>gp :AsyncRun git -c push.default=current push<cr>
-nnoremap <silent> <Leader>gP :AsyncRun git push -f<cr>
-nnoremap <silent> <Leader>gl :AsyncRun git pull<cr>
-nnoremap <silent><Leader>gfo :AsyncRun git fetch origin
-nnoremap <silent><Leader>gfa :AsyncRun git fetch --all --prune<cr>
-nnoremap <silent> <Leader>gof :Gbrowse<cr>
-
-command! ToggleMerginal execute len(FugitiveHead()) > 0 ? ':MerginalToggle' : 'echoerr "Not in a git repo"'
-if has("autocmd")
-    autocmd BufReadPost fugitive://* set bufhidden=delete
-endif
-
-"tyru/open-browser.vim, tyru/open-browser-github.vim
-let gitOpt = {'title':'GITHUB Menu'}
-let githubMenu = []
-call add(githubMenu , ['Open PR (&r)', 'exec "OpenGithubPullReq #" . FugitiveHead()'])
-call add(githubMenu , ['Open current file (&f)', 'Gbrowse'])
-call add(githubMenu , ['Open project (&g)', 'OpenGithubProect'])
-call add(githubMenu , ['Open issues (&i)', 'OpenGithubIssue'])
-call add(githubMenu , ['Open pull requests (&p)', 'OpenGithubPullReq'])
-noremap <silent><nowait><leader>go :call quickui#context#open(githubMenu, gitOpt)<cr>
-
-"machakann/vim-sandwich
-hi OperatorSandwichChange ctermfg=109 ctermbg=237 guifg=#83a598 guibg=#3c3836
-hi OperatorSandwichAdd cterm=bold ctermfg=10 gui=bold guifg=#7fbf00
-hi OperatorSandwichDelete cterm=bold ctermfg=10 gui=bold guifg=#fb4934
-
-let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
-let g:sandwich#recipes += [
-      \{'buns': ['{\s*', '\s*}'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['{']},
-      \{'buns': ['\[\s*', '\s*\]'], 'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['[']},
-      \{'buns': ['(\s*', '\s*)'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['(']},
-      \ ]
-
-xmap is <Plug>(textobj-sandwich-auto-i)
-xmap as <Plug>(textobj-sandwich-auto-a)
-omap is <Plug>(textobj-sandwich-auto-i)
-omap as <Plug>(textobj-sandwich-auto-a)
-
-"skywind3000/asyncrun.vim
-command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+"gabrielelana/vim-markdown
+let g:markdown_enable_mappings = 1
+let g:markdown_enable_spell_checking = 0
+let g:markdown_enable_conceal = 1
+let g:markdown_enable_folding = 1
+let g:vim_markdown_conceal_code_blocks = 0
+let g:vim_markdown_fenced_languages = ['js=javascript', 'jsx=javascriptreact', 'ts=typescript', 'tsx=typescriptreact', 'sh=bash']
 
 "HerringtonDarkholme/yats.vim
 let g:typescript_conceal_function             = "ƒ"
@@ -225,14 +192,110 @@ function! s:align()
     endif
 endfunction
 
-"TaDaa/vimade
-let g:vimade = {}
-let g:vimade.fadelevel = 0.5
+"MattesGroeger/vim-bookmarks
+let g:bookmark_sign = '♥'
+let g:bookmark_highlight_lines = 1
+let g:bookmark_auto_close = 1
+let g:bookmark_center = 1
 
-"airblade/vim-rooter
-let g:rooter_silent_chdir = 1
-let g:rooter_patterns = ['.git', 'package.json', '*.sln']
-let g:rooter_change_directory_for_non_project_files = 'home'
+let bookmarkMenu = []
+call add(bookmarkMenu, ['Add/Delete bookmark (&m)', 'BookmarkToggle'])
+call add(bookmarkMenu, ['Bookmark Annotate(&i)', 'BookmarkAnnotate'])
+call add(bookmarkMenu, ['Bookmark Show all (&a)', 'BookmarkShowAll'])
+call add(bookmarkMenu, ['-'])
+call add(bookmarkMenu, ['Bookmark Next (&n)', 'BookmarkNext'])
+call add(bookmarkMenu, ['Bookmark Previous (&p)', 'BookmarkPrev'])
+call add(bookmarkMenu, ['-'])
+call add(bookmarkMenu, ['Clear all bookmarks (&x)', 'BookmarkClearAll'])
+let bookmarkOpt={'title':'Bookmarks'}
+noremap <silent><nowait>m :call quickui#context#open(bookmarkMenu, bookmarkOpt)<cr>
+hi BookmarkSign ctermbg=NONE ctermfg=red guibg=NONE guifg=red
+hi BookmarkLine ctermbg=NONE ctermfg=NONE guibg=#343434 guifg=NONE
+
+"dominikduda/vim_current_word
+let g:vim_current_word#highlight_current_word = 1
+let g:vim_current_word#highlight_twins = 1
+hi CurrentWord gui=bold,underline cterm=bold,underline
+hi CurrentWordTwins gui=bold cterm=bold
+
+"andrewradev/tagalong.vim
+"let g:tagalong_additional_filetypes = []
+let g:tagalong_verbose = 1
+
+"Valloric/MatchTagAlways
+let g:mta_use_matchparen_group = 1
+let g:mta_filetypes = {
+            \ 'html' : 1,
+            \ 'ejs' : 1,
+            \ 'xhtml' : 1,
+            \ 'xml' : 1,
+            \ 'php' : 1,
+            \ 'javascriptreact' : 1,
+            \ 'typescriptreact' : 1,
+            \}
+nnoremap % :MtaJumpToOtherTag<cr>
+
+"machakann/vim-sandwich
+let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+let g:sandwich#recipes += [
+      \{'buns': ['{\s*', '\s*}'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['{']},
+      \{'buns': ['\[\s*', '\s*\]'], 'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['[']},
+      \{'buns': ['(\s*', '\s*)'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['(']},
+      \ ]
+
+xmap is <Plug>(textobj-sandwich-auto-i)
+xmap as <Plug>(textobj-sandwich-auto-a)
+omap is <Plug>(textobj-sandwich-auto-i)
+omap as <Plug>(textobj-sandwich-auto-a)
+hi OperatorSandwichChange ctermfg=109 ctermbg=237 guifg=#83a598 guibg=#3c3836
+hi OperatorSandwichAdd cterm=bold ctermfg=10 gui=bold guifg=#7fbf00
+hi OperatorSandwichDelete cterm=bold ctermfg=10 gui=bold guifg=#fb4934
+
+"easymotion/vim-easymotion
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_use_smartsign_us = 1
+nmap F <Plug>(easymotion-overwin-f2)
+hi link EasyMotionTarget Special
+hi link EasyMotionShade Comment
+hi link EasyMotionTarget2First MatchParen
+hi link EasyMotionTarget2Second MatchParen
+hi link EasyMotionMoveHL Search
+hi link EasyMotionIncSearch IncSearch
+
+"tpope/vim-fugitive / idanarye/vim-merginal / junegunn/gv.vim
+nnoremap <silent> <Leader>1 :Git<cr><c-w>T
+nnoremap <silent> <Leader>2 :GV --all<cr>
+vnoremap <silent> <Leader>2 :GV!<cr>
+nnoremap <silent> <Leader>3 :ToggleMerginal<cr>
+nnoremap <silent> <Leader>gc :Git commit<cr>
+nnoremap <silent> <Leader>gr :Gread<cr>
+nnoremap <silent> <Leader>gw :Gwrite<cr>
+nnoremap <silent> <Leader>gd :Gdiff<cr>
+nnoremap <silent> <Leader>gD :Gdiffsplit!<cr>
+nnoremap <Leader>ge :Gedit<cr>
+nnoremap <silent> <Leader>gb :Git blame<cr>
+nnoremap <silent> <Leader>gp :AsyncRun git -c push.default=current push<cr>
+nnoremap <silent> <Leader>gP :AsyncRun git push -f<cr>
+nnoremap <silent> <Leader>gl :AsyncRun git pull<cr>
+nnoremap <silent><Leader>gfo :AsyncRun git fetch origin
+nnoremap <silent><Leader>gfa :AsyncRun git fetch --all --prune<cr>
+nnoremap <silent> <Leader>gof :Gbrowse<cr>
+
+command! ToggleMerginal execute len(FugitiveHead()) > 0 ? ':MerginalToggle' : 'echoerr "Not in a git repo"'
+if has("autocmd")
+    autocmd BufReadPost fugitive://* set bufhidden=delete
+endif
+
+"tyru/open-browser.vim, tyru/open-browser-github.vim
+let gitOpt = {'title':'GITHUB Menu'}
+let githubMenu = []
+call add(githubMenu , ['Open PR (&r)', 'exec "OpenGithubPullReq #" . FugitiveHead()'])
+call add(githubMenu , ['Open current file (&f)', 'Gbrowse'])
+call add(githubMenu , ['Open project (&g)', 'OpenGithubProect'])
+call add(githubMenu , ['Open issues (&i)', 'OpenGithubIssue'])
+call add(githubMenu , ['Open pull requests (&p)', 'OpenGithubPullReq'])
+noremap <silent><nowait><leader>go :call quickui#context#open(githubMenu, gitOpt)<cr>
 
 "neoclide/coc.nvim
 let g:coc_user_config = {}
@@ -388,44 +451,6 @@ autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
-"dominikduda/vim_current_word
-let g:vim_current_word#highlight_current_word = 1
-let g:vim_current_word#highlight_twins = 1
-hi CurrentWord gui=bold,underline cterm=bold,underline
-hi CurrentWordTwins gui=bold cterm=bold
-
-"MattesGroeger/vim-bookmarks
-hi BookmarkSign ctermbg=NONE ctermfg=red guibg=NONE guifg=red
-hi BookmarkLine ctermbg=NONE ctermfg=NONE guibg=#343434 guifg=NONE
-let g:bookmark_sign = '♥'
-let g:bookmark_highlight_lines = 1
-let g:bookmark_auto_close = 1
-let g:bookmark_center = 1
-
-let bookmarkMenu = []
-call add(bookmarkMenu, ['Add/Delete bookmark (&m)', 'BookmarkToggle'])
-call add(bookmarkMenu, ['Bookmark Annotate(&i)', 'BookmarkAnnotate'])
-call add(bookmarkMenu, ['Bookmark Show all (&a)', 'BookmarkShowAll'])
-call add(bookmarkMenu, ['-'])
-call add(bookmarkMenu, ['Bookmark Next (&n)', 'BookmarkNext'])
-call add(bookmarkMenu, ['Bookmark Previous (&p)', 'BookmarkPrev'])
-call add(bookmarkMenu, ['-'])
-call add(bookmarkMenu, ['Clear all bookmarks (&x)', 'BookmarkClearAll'])
-let bookmarkOpt={'title':'Bookmarks'}
-noremap <silent><nowait>m :call quickui#context#open(bookmarkMenu, bookmarkOpt)<cr>
-"
-"mbbill/undotree
-nnoremap <leader>u :UndotreeToggle<cr>
-let g:undotree_SetFocusWhenToggle = 1
-let g:undotree_WindowLayout = 3
-
-"gabrielelana/vim-markdown
-let g:markdown_enable_mappings = 1
-let g:markdown_enable_spell_checking = 0
-let g:markdown_enable_conceal = 1
-let g:markdown_enable_folding = 1
-let g:vim_markdown_conceal_code_blocks = 0
-let g:vim_markdown_fenced_languages = ['js=javascript', 'jsx=javascriptreact', 'ts=typescript', 'tsx=typescriptreact', 'sh=bash']
 
 "--------Testing vim-test/vim-test--------"
 function! OpenJestMenu()
@@ -502,10 +527,10 @@ augroup autosourcing
     autocmd BufWritePost $HOME/.vim/general.vim AirlineRefresh
     autocmd BufWritePost $HOME/.vim/plugins.vim AirlineRefresh
 
+    au BufNewFile,BufRead * match WhiteSpaces /\s\+$/  
     au BufNewFile,BufRead *.vue,*hbs set filetype=html
     au BufNewFile,BufRead *.jsx set filetype=javascriptreact
     au BufNewFile,BufRead *.tsx set filetype=typescriptreact
-    au BufNewFile,BufRead * match TrailingWhiteSpaces /\s\+$/
 augroup END
 
 "HIGHLIGHT OVERRIDE
@@ -520,31 +545,5 @@ hi diffRemoved ctermfg=167 guifg=#ea6962
 hi Search ctermfg=black ctermbg=white guifg=black guibg=white
 hi CurSearch cterm=reverse,bold gui=reverse,bold
 
-hi TrailingWhiteSpaces ctermfg=white ctermbg=124
+hi WhiteSpaces ctermfg=white ctermbg=124 guifg=white guibg=red
 
-"------------------------------------------------------------------
-"skywind3000/vim-quickui-------------------
-let g:quickui_border_style = 2
-let g:quickui_color_scheme = 'gruvbox'
-nnoremap <silent><nowait><leader>b :call quickui#tools#list_buffer('e')<cr>
-
-let g:utilOpts = {'title': 'Utility Menu'}
-let g:utilContent = []
-
-call add(g:utilContent, [ 'Minimap Toggle (&m)', 'MinimapToggle' ])
-call add(g:utilContent, [ 'NPM Run (&n)', 'call NpmRun()' ])
-call add(g:utilContent, ['-'])
-
-call add(g:utilContent, [ 'Generate GUID (&i)', 'call GenerateGUID()' ])
-call add(g:utilContent, [ 'Delete all white spaces (&w)', '%s/^$\\|^\s\+//g' ])
-call add(g:utilContent, ['-'])
-
-"iamcco/markdown-preview.nvim
-let g:mkdp_auto_start = 0
-call add(g:utilContent, [ 'Markdown Preview (&d)', 'MarkdownPreview' ])
-call add(g:utilContent, ['-'])
-
-call add(g:utilContent, [ 'Clear Registers (&x)', 'call ClearReg()' ])
-
-noremap <silent><nowait><leader>m :call quickui#context#open(g:utilContent, g:utilOpts)<cr>
-"------------------------------------------------------------------
