@@ -453,31 +453,45 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
 
 
 "--------Testing vim-test/vim-test--------"
-function! OpenJestMenu()
-  let jestOpt = {'title': 'Jest Test'}
-  let jestMenu = [
-              \ [ 'Test this (&t)'       , 'TestNearest' ]            ,
-              \ [ 'Test file (&f)'       , 'TestFile' ]               ,
-              \ [ 'Test suite (&s)'      , 'TestSuite' ]              ,
-              \ [ 'Test last (&l)'       , 'TestLast' ]               ,
-              \ [ 'Test visit (&v)'      , 'TestVisit' ]              ,
-              \ [ 'Update snapshot (&u)' , 'Jest --update-snapshot' ] ,
-              \ [ 'Cypress(&o)'          , 'OpenCypressMenu' ]        ,
-              \]
-  call quickui#listbox#open(jestMenu, jestOpt)
+function! TestNearestJS(runner, ...)
+  let g:test#javascript#runner = a:runner
+  execute ":TestNearest " .. a:1
+  unlet g:test#javascript#runner
+endfunction
+function! TestLastJS(runner, ...)
+  let g:test#javascript#runner = a:runner
+  execute ":TestLast " .. a:1
+  unlet g:test#javascript#runner
+endfunction
+function! TestFileJS(runner, ...)
+  let g:test#javascript#runner = a:runner
+  execute ":TestFile " .. a:1
+  unlet g:test#javascript#runner
+endfunction
+function! TestSuiteJS(runner, ...)
+  let g:test#javascript#runner = a:runner
+  execute ":TestSuite " .. a:1
+  unlet g:test#javascript#runner
 endfunction
 
-function! OpenCypressMenu()
-  let cypressOpt = {'title': 'CypressTest'}
-  let cypressMenu = [
-              \ [ 'Run Cypress'           , 'Cypress run -C ./*/**/cypress.json' ]                ,
-              \ [ 'Run Cypress file (&f)' , 'Cypress run -C ./*/**/cypress.json --spec \"./%\"' ] ,
-              \]
-  call quickui#listbox#open(cypressMenu, cypressOpt)
+function! OpenTestMenu(title, name, args)
+  let testPopupOpt = {'title': a:title .. ' Test'}
+  let testPopupMenu = [
+        \ [ 'Test this (&t)'  , "call TestNearestJS('" .. a:name .. "', '" .. a:args .. "')" ] ,
+        \ [ 'Test file (&f)'  , "call TestFileJS('" .. a:name .. "', '" .. a:args .. "')" ]    ,
+        \ [ 'Test suite (&s)' , "call TestSuiteJS('" .. a:name .. "', '" .. a:args .. "')" ]   ,
+        \ [ 'Test last (&l)'  , "call TestLastJS('" .. a:name .. "', '" .. a:args .. "')" ]    ,
+        \]
+  if(a:title == 'Jest')
+    call add(testPopupMenu, [ 'Cypress(&o)', "OpenCypressMenu" ])
+    call add(testPopupMenu, [ 'Playwright(&p)', "OpenPlaywrightMenu" ])
+  endif
+  call quickui#listbox#open(testPopupMenu, testPopupOpt)
 endfunction
 
-command! OpenJestMenu call OpenJestMenu()
-command! OpenCypressMenu call OpenCypressMenu()
+command! OpenJestMenu call OpenTestMenu('Jest', 'jest', '--update-snapshot')
+command! OpenCypressMenu call OpenTestMenu('Cypress', 'cypress', '-C ./cypress/cypress.json')
+command! OpenPlaywrightMenu call OpenTestMenu('Playwright', 'jest', '--config ./jest-playwright.config.js')
 
 map <silent><nowait><leader>t :OpenJestMenu<cr>
 if exists('g:neovide') || has('nvim')
@@ -485,9 +499,10 @@ if exists('g:neovide') || has('nvim')
 else
   let test#strategy='asyncrun_background_term'
 endif
-let g:test#javascript#runner = 'jest'
-let g:test#javascript#options = '--update-snapshot --color=always'
-let g:test#runner_commands= ["Jest","Cypress"]
+let g:test#basic#start_normal = 1
+let g:test#neovim#start_normal = 1
+let g:test#echo_command = 0
+let g:test#runner_commands= ["Jest", "Cypress", "Playwright"]
 
 "nicwest/vim-http
 let g:vim_http_clean_before_do=0
