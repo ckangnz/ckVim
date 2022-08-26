@@ -18,11 +18,6 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 POWERLINE_DISABLE_RPROMPT="true"
 COMPLETION_WAITING_DOTS="true"
 
-# lukechilds/zsh-nvm
-export NVM_COMPLETION=true
-export NVM_LAZY_LOAD=true
-export NVM_LAZY=1
-
 #------Source plugins--------
 source $HOME/.vim/plugins.zsh
 #------Source plugins--------
@@ -90,27 +85,7 @@ alias jserv="json-server --watch db.json --port 3004"
 # --------Custom Methods--------
 #
 
-# Auto Load NVMRC
-load-nvmrc() {
-  [[ -a .nvmrc ]] || return
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
+eval "$(fnm env --use-on-cd)"
 
 [ -f ~/.extraAlias.zsh ] && source ~/.extraAlias.zsh
 

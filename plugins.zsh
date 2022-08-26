@@ -15,11 +15,10 @@ zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/kubectl", from:oh-my-zsh
 zplug "plugins/docker", from:oh-my-zsh
 zplug "plugins/docker-compose", from:oh-my-zsh
-zplug "plugins/nvm", from:oh-my-zsh
+zplug "plugins/fnm", from:oh-my-zsh
 
 zplug "zdharma-continuum/fast-syntax-highlighting", defer:2
 
-zplug "lukechilds/zsh-nvm", lazy:1
 
 zplug "romkatv/powerlevel10k", as:theme
 
