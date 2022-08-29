@@ -390,7 +390,7 @@ augroup omnisharp_commands
     autocmd FileType cs nmap <silent> <buffer> gd <Plug>(omnisharp_go_to_definition)
     autocmd FileType cs nmap <silent> <buffer> gu <Plug>(omnisharp_find_usages)
     autocmd FileType cs nmap <silent> <buffer> gi <Plug>(omnisharp_find_implementations)
-    autocmd FileType cs nmap <silent> <buffer> gt <Plug>(omnisharp_type_lookup)
+    autocmd FileType cs nmap <silent> <buffer> gl <Plug>(omnisharp_type_lookup)
     autocmd FileType cs nmap <silent> <buffer> g. <Plug>(omnisharp_documentation)
     autocmd FileType cs nmap <silent> <buffer> gs <Plug>(omnisharp_find_symbol)
     autocmd FileType cs nmap <silent> <buffer> gf <Plug>(omnisharp_fix_usings)
@@ -404,8 +404,22 @@ augroup omnisharp_commands
     autocmd FileType cs nmap <silent> <buffer> <Leader>or <Plug>(omnisharp_restart_server)
     autocmd FileType cs nmap <silent> <buffer> <Leader>os <Plug>(omnisharp_start_server)
     autocmd FileType cs nmap <silent> <buffer> <Leader>oS <Plug>(omnisharp_stop_server)
-    autocmd FileType cs nmap <buffer> <Leader>tt :OmniSharpRunTest<CR>
-    autocmd FileType cs nmap <buffer> <Leader>tf :OmniSharpRunTestsInFile<CR>
+
+    function! OpenOmniSharpRunTest()
+      let testPopupOpt = {'title': 'Omnisharp Test'}
+      let testPopupMenu = [
+            \ [ 'OmniSharpRunTest (&t)', "OmniSharpRunTest"] ,
+            \ [ 'OmniSharpRunTestsInFile (&f)', "OmniSharpRunTestsInFile"] ,
+            \ [ 'DotnetTest (&s)', "DotnetTest --nologo -v=q"] ,
+            \]
+      call quickui#listbox#open(testPopupMenu, testPopupOpt)
+    endfunction
+    command! OpenOmniSharpRunTest call OpenOmniSharpRunTest()
+
+    autocmd FileType cs nmap <silent><buffer><nowait><leader>t :OpenOmniSharpRunTest<cr>
+
+    let g:OmniSharp_selector_ui = 'fzf'
+    let g:OmniSharp_selector_findusages = 'fzf'
 
     function! s:create_dotnet_controller() abort
       let controllerName = input('Controller Name: ')
@@ -502,7 +516,7 @@ endif
 let g:test#basic#start_normal = 1
 let g:test#neovim#start_normal = 1
 let g:test#echo_command = 0
-let g:test#runner_commands= ["Jest", "Cypress", "Playwright"]
+let g:test#runner_commands= ["Jest", "Cypress", "Playwright", "DotnetTest"]
 
 "nicwest/vim-http
 let g:vim_http_clean_before_do=0
