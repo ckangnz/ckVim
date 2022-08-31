@@ -5,6 +5,7 @@ brew_install_cask "postman"
 brew_install_cask "docker"
 brew_install_cask "itsycal"
 brew_install_cask "rectangle"
+brew_install_cask "maccy"
 
 brew_install "kubectl"
 brew_install "helm"
