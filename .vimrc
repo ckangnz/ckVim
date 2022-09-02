@@ -120,7 +120,7 @@ let g:vimade.fadelevel = 0.5
 
 "airblade/vim-rooter
 let g:rooter_silent_chdir = 1
-let g:rooter_patterns = ['.git', 'package.json', '*.sln']
+let g:rooter_patterns = ['.git', 'package.json', '*.sln', 'appsettings.json', '*.csproj']
 let g:rooter_change_directory_for_non_project_files = 'home'
 
 "Asheq/close-buffers.vim
@@ -394,12 +394,13 @@ augroup omnisharp_commands
     autocmd FileType cs nmap <silent> <buffer> g. <Plug>(omnisharp_documentation)
     autocmd FileType cs nmap <silent> <buffer> gs <Plug>(omnisharp_find_symbol)
     autocmd FileType cs nmap <silent> <buffer> gf <Plug>(omnisharp_fix_usings)
-    autocmd FileType cs nmap <silent> <buffer> <C-n> <Plug>(omnisharp_signature_help)
-    autocmd FileType cs imap <silent> <buffer> <C-n> <Plug>(omnisharp_signature_help)
-    autocmd FileType cs nmap <silent> <buffer> g= <Plug>(omnisharp_global_code_check)
+    autocmd FileType cs nmap <silent> <buffer> <leader>ah <Plug>(omnisharp_signature_help)
     autocmd FileType cs nmap <silent> <buffer> <Leader>= <Plug>(omnisharp_code_format)
-    autocmd FileType cs nmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_actions)
-    autocmd FileType cs xmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_actions)
+    autocmd FileType cs nmap <silent> <buffer> g= <Plug>(omnisharp_global_code_check)
+    autocmd FileType cs nmap <silent> <buffer> <Leader>ai <Plug>(omnisharp_fix_usings)
+    autocmd FileType cs xmap <silent> <buffer> <Leader>ai <Plug>(omnisharp_fix_usings)
+    autocmd FileType cs nmap <silent> <buffer> <Leader>ac <Plug>(omnisharp_code_actions)
+    autocmd FileType cs xmap <silent> <buffer> <Leader>ac <Plug>(omnisharp_code_actions)
     autocmd FileType cs nmap <silent> <buffer> <S-R> <Plug>(omnisharp_rename)
     autocmd FileType cs nmap <silent> <buffer> <Leader>or <Plug>(omnisharp_restart_server)
     autocmd FileType cs nmap <silent> <buffer> <Leader>os <Plug>(omnisharp_start_server)
@@ -420,6 +421,13 @@ augroup omnisharp_commands
 
     let g:OmniSharp_selector_ui = 'fzf'
     let g:OmniSharp_selector_findusages = 'fzf'
+    let g:OmniSharp_diagnostic_exclude_paths = [
+    \ 'obj[\\\/]',
+    \ '[Tt]emp[\\\/]',
+    \ '\.nuget[\\\/]',
+    \ '\<AssemblyInfo\.cs\>'
+    \]
+    let g:OmniSharp_diagnostic_listen = 2
 
     function! s:create_dotnet_controller() abort
       let controllerName = input('Controller Name: ')
@@ -561,6 +569,19 @@ augroup WhitespaceMatch
   autocmd BufWinEnter * let w:whitespace_match_number = matchadd('ExtraWhitespace', '\s\+$')
   autocmd InsertLeave * call s:ToggleWhitespaceMatch('n')
 augroup END
+hi ExtraWhitespace ctermbg=red guibg=red
+
+"HIGHLIGHT OVERRIDE
+hi LineNr ctermbg=0 guibg=bg
+hi vertsplit ctermbg=0 guibg=bg
+hi foldcolumn ctermbg=0 guibg=bg guifg=white
+hi SignColumn guibg=bg
+hi Comment cterm=NONE
+hi diffAdded ctermfg=142 guifg=#a9b665
+hi diffRemoved ctermfg=167 guifg=#ea6962
+
+hi Search ctermfg=black ctermbg=white guifg=black guibg=white
+hi CurSearch cterm=reverse,bold gui=reverse,bold
 
 augroup autosourcing
     autocmd!
@@ -577,17 +598,3 @@ augroup autosourcing
     au BufNewFile,BufRead *.tsx set filetype=typescriptreact
 augroup END
 
-highlight ExtraWhitespace ctermbg=red guibg=red
-
-
-"HIGHLIGHT OVERRIDE
-hi LineNr ctermbg=0 guibg=bg
-hi vertsplit ctermbg=0 guibg=bg
-hi foldcolumn ctermbg=0 guibg=bg guifg=white
-hi SignColumn guibg=bg
-hi Comment cterm=NONE
-hi diffAdded ctermfg=142 guifg=#a9b665
-hi diffRemoved ctermfg=167 guifg=#ea6962
-
-hi Search ctermfg=black ctermbg=white guifg=black guibg=white
-hi CurSearch cterm=reverse,bold gui=reverse,bold

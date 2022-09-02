@@ -63,6 +63,8 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 > [For more information](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-6.0)
 
 ```cs
+# Program.cs
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks(); #<-- Add this
@@ -84,45 +86,35 @@ To change the initial launch url, update it in the `launchSettings.json`
 }
 ```
 
-## Adding a Model class
+## Adding a Model class & DB Context
 
-Model classes can go anywhere in the project, but the `Models` folder is used by convention.
+- Model classes can go anywhere in the project, but the `Models` folder is used by convention.
+- The _database context_ is the main class that coordinates Entity Framework functionality for a data model.
+- This class is created by deriving from the `Microsoft.EntityFrameworkCore.DbContext` class.
 
-```cs
-namespace <PROJECTNAME>.<FOLDERNAME>
-{
-  public class <MODELNAME>
-  {
-    public long Id { get; set; }
-    public string? Name { get; set; }
-    public bool IsSomething { get; set; }
-  }
-}
-```
-
-## Add a Database Context
-
-The _database context_ is the main class that coordinates Entity Framework functionality for a data model.
-This class is created by deriving from the `Microsoft.EntityFrameworkCore.DbContext` class.
-
-Run `dotnet add package Microsoft.EntityFrameworkCore.InMemory` to use Entity Framework in the project.
+> Run `dotnet add package Microsoft.EntityFrameworkCore.InMemory` to use Entity Framework in the project.
 
 ```cs
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
 
-namespace <PROJECT>.<FOLDERNAME>
+namespace <PROJECT>.Model
 {
-    public class <DC_NAME> : DbContext
-    # public class TodoContext : DbContext
-    {
-        public <DC_NAME>(DbContextOptions<DC_NAME> options) : base(options)
-        {}
+  public class <MODEL>
+  {
+    public long Id { get; set; }
+    public string? Name { get; set; }
+    public bool IsSomething { get; set; }
+  }
 
-        public DbSet<MODELNAME> <YOUR_DATA>s { get; set; } = null!;
-        // the DbSet name is going to be used as _context.<YOUR_DATA> in the generated controller
+  public class <MODELCONTEXT> : DbContext
+  {
+    public <MODELCONTEXT>(DbContextOptions<<MODELCONTEXT>> options)
+      :base(options)
+    {}
 
-    }
+    public DbSet<MODEL> <MODEL>s { get; set; } = null!;
+  }
 }
 ```
 
