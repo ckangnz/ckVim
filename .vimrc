@@ -123,8 +123,8 @@ let g:rooter_silent_chdir = 1
 let g:rooter_patterns = ['.git', 'package.json', '*.sln']
 let g:rooter_change_directory_for_non_project_files = 'home'
 
-"arithran/vim-delete-hidden-buffers
-nnoremap <Leader>q :DeleteHiddenBuffers<CR>
+"Asheq/close-buffers.vim
+nnoremap <Leader>q :Bdelete menu<CR>
 
 "mbbill/undotree
 nnoremap <leader>u :UndotreeToggle<cr>

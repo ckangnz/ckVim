@@ -48,7 +48,7 @@ Plug 'junegunn/fzf.vim'                                             " Fuzzy find
 
 " Functionality
 Plug 'airblade/vim-rooter'                                          " Find the root of the project automatically
-Plug 'arithran/vim-delete-hidden-buffers'                           " Delete Hidden Buffer
+Plug 'Asheq/close-buffers.vim'                                      " Delete hidden buffers
 Plug 'dominikduda/vim_current_word'                                 " Highlight current word
 Plug 'easymotion/vim-easymotion'                                    " Easy Navigation
 Plug 'godlygeek/tabular'                                            " Text Aligning Tool

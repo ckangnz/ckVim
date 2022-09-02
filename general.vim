@@ -16,7 +16,7 @@ set smartindent                                 "Smart indenting when { is used
 set autoread                                    "Auto refresh when file has been changed
 set ignorecase                                  "Ignores case when searching
 set smartcase                                   "Disables ignorecase when capitals used
-set so=10                                       "Keep cursor to not touch the bottom or top"
+set so=5                                        "Keep cursor to not touch the bottom or top"
 set backspace=indent,eol,start                  "Make backspace as normal
 set signcolumn=yes                              "Show signcolumn
 set noerrorbells visualbell t_vb=               "No error bells
@@ -102,10 +102,10 @@ endfunction
 
 "Terminal commands
 tnoremap <Esc> <C-\><C-n>
-tnoremap <silent><expr> <c-j> len(popup_list()) > 0 ? "<C-J>" : "\<C-W><C-J>"
+tnoremap <silent><expr> <c-j> len(popup_list()) > 0 ? "<C-j>" : "\<C-w><C-j>"
 tnoremap <silent><expr> <c-k> len(popup_list()) > 0 ? "<c-k>" : "\<c-w><c-k>"
-tnoremap <C-H> <C-W><C-H>
-tnoremap <C-L> <C-W><C-L>
+tnoremap <C-h> <C-w><C-h>
+tnoremap <C-l> <C-w><C-l>
 
 ",wf maximise ,wm minimise pane
 ",wt open on a new tab
@@ -201,21 +201,4 @@ func GenerateGUID()
     let l:id= l:nuuid_case == "lower" ? tolower(l:new_uuid) : toupper(l:new_uuid)
     let @"=l:id
     echo "NEW GUID: " . l:id
-endfunction
-
-func NpmSelected(id, result)
-    let cmd = "npm run " . b:ks[a:result - 1]
-    exec "terminal " . cmd
-endfunc
-function! NpmRun()
-    if filereadable("./package.json")
-        let st = readfile("./package.json")
-        let package = json_decode(join(st, " "))
-        if has_key(package, "scripts")
-            let b:ks = keys(package.scripts)
-            call popup_menu(b:ks, #{callback: 'NpmSelected'})
-        endif
-    else
-        echo "No package.json found"
-    endif
 endfunction
