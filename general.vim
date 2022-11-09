@@ -77,13 +77,13 @@ nmap j gj
 nmap k gk
 vmap j gj
 vmap k gk
-nnoremap ∆ :m .+1<CR>==
-nnoremap ˚ :m .-2<CR>==
-inoremap ∆ <Esc>:m .+1<CR>==gi
-inoremap ˚ <Esc>:m .-2<CR>==gi
-vnoremap ∆ :m '>+1<CR>gv=gv
-vnoremap ˚ :m '<-2<CR>gv=gv
-vnoremap <leader>y "+y
+nnoremap <silent> ∆ :m .+1<CR>==
+nnoremap <silent> ˚ :m .-2<CR>==
+inoremap <silent> ∆ <Esc>:m .+1<CR>==gi
+inoremap <silent> ˚ <Esc>:m .-2<CR>==gi
+vnoremap <silent> ∆ :m '>+1<CR>gv=gv
+vnoremap <silent> ˚ :m '<-2<CR>gv=gv
+vnoremap <silent> <leader>y "+y
 
 "Panel Navigation
 nmap <C-J> <C-W><C-J>
