@@ -593,7 +593,8 @@ augroup autosourcing
     autocmd BufWritePost $HOME/.vim/general.vim AirlineRefresh
     autocmd BufWritePost $HOME/.vim/plugins.vim AirlineRefresh
 
-    au BufNewFile,BufRead *.vue,*hbs set filetype=html
+    au BufNewFile,BufRead *.ejs set filetype=js
+    au BufNewFile,BufRead *.vue,*.hbs set filetype=html
     au BufNewFile,BufRead *.jsx set filetype=javascriptreact
     au BufNewFile,BufRead *.tsx set filetype=typescriptreact
 augroup END
