@@ -22,7 +22,7 @@ set signcolumn=yes                              "Show signcolumn
 set noerrorbells visualbell t_vb=               "No error bells
 set autowriteall                                "Automatically writes file
 set complete=.,w,b,u                            "Set autocomplete
-set shortmess=a                                 "Get rid of Please press enter when opening a file"
+set shortmess=atT                               "Get rid of Please press enter when opening a file"
 set backupcopy=yes                              "Overwrite backupto original
 set noswapfile                                  "Dont create swapfiles
 set confirm                                     "Dont prompt when nonsaved quits
