@@ -1,5 +1,5 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["*"],
+  "coc.preferences.formatOnSave": true,
   "list.statusLineSegments": null,
 
   "snippets.extends": {
@@ -15,7 +15,7 @@
   "eslint.enable": true,
   "eslint.autoFixOnSave": true,
   "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
-  "typescript.updateImportsOnFileMove.enable": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
 
   "yaml.hover": true,
   "yaml.validate": true,
