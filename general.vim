@@ -178,7 +178,7 @@ function! Todo()
       endif
     endif
 endfunction
-nnoremap <Leader>n :call Todo()<CR>
+nnoremap <Leader>N :call Todo()<CR>
 
 "Toggle copen and cclose
 autocmd FileType qf if (getwininfo(win_getid())[0].loclist != 1) | wincmd J | endif "Quickfix to be full width on the bottom
