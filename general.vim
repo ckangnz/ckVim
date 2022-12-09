@@ -137,8 +137,10 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 set foldmethod=syntax
 :setlocal foldcolumn=0
 set foldlevelstart=99
+
 "Space to toggle folds
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+
 "Neat Folding
 function! NeatFoldText()
     let line = '' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '

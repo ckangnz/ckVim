@@ -30,8 +30,13 @@
   "prettier.singleQuote": false,
   "prettier.statusItemText": "",
 
-  "omnisharp.trace.server": "information",
-  "omnisharp.debug.server": true,
+  "languageserver": {
+    "csharp": {
+      "command": "csharp-ls",
+      "rootPatterns": ["*.sln", "git"],
+      "filetypes": ["cs", "csharp"]
+    }
+  },
 
   "diagnostic.enableMessage": "always",
   "diagnostic.errorSign": "",

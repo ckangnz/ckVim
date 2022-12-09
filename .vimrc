@@ -310,7 +310,7 @@ let g:coc_global_extensions = [
       \ 'coc-prettier',
       \ 'coc-tsserver',
       \ 'coc-docker',
-      \ 'coc-omnisharp',
+      \ 'coc-csharp-ls',
       \ 'coc-eslint',
       \ 'coc-snippets',
       \ 'coc-kotlin'
@@ -383,51 +383,10 @@ function! s:show_documentation()
   endif
 endfunction
 
-"Omnisharp/omnisharp-vim
-augroup omnisharp_commands
+augroup csharp_commands
     autocmd!
-    autocmd CursorHold *.cs OmniSharpTypeLookup
-    autocmd FileType cs nmap <silent> <buffer> gd <Plug>(omnisharp_go_to_definition)
-    autocmd FileType cs nmap <silent> <buffer> gu <Plug>(omnisharp_find_usages)
-    autocmd FileType cs nmap <silent> <buffer> gi <Plug>(omnisharp_find_implementations)
-    autocmd FileType cs nmap <silent> <buffer> gl <Plug>(omnisharp_type_lookup)
-    autocmd FileType cs nmap <silent> <buffer> g. <Plug>(omnisharp_documentation)
-    autocmd FileType cs nmap <silent> <buffer> gs <Plug>(omnisharp_find_symbol)
-    autocmd FileType cs nmap <silent> <buffer> gf <Plug>(omnisharp_fix_usings)
-    autocmd FileType cs nmap <silent> <buffer> <leader>ah <Plug>(omnisharp_signature_help)
-    autocmd FileType cs nmap <silent> <buffer> <Leader>= <Plug>(omnisharp_code_format)
-    autocmd FileType cs nmap <silent> <buffer> g= <Plug>(omnisharp_global_code_check)
-    autocmd FileType cs nmap <silent> <buffer> <Leader>ai <Plug>(omnisharp_fix_usings)
-    autocmd FileType cs xmap <silent> <buffer> <Leader>ai <Plug>(omnisharp_fix_usings)
-    autocmd FileType cs nmap <silent> <buffer> <Leader>ac <Plug>(omnisharp_code_actions)
-    autocmd FileType cs xmap <silent> <buffer> <Leader>ac <Plug>(omnisharp_code_actions)
-    autocmd FileType cs nmap <silent> <buffer> <S-R> <Plug>(omnisharp_rename)
-    autocmd FileType cs nmap <silent> <buffer> <Leader>or <Plug>(omnisharp_restart_server)
-    autocmd FileType cs nmap <silent> <buffer> <Leader>os <Plug>(omnisharp_start_server)
-    autocmd FileType cs nmap <silent> <buffer> <Leader>oS <Plug>(omnisharp_stop_server)
 
-    function! OpenOmniSharpRunTest()
-      let testPopupOpt = {'title': 'Omnisharp Test'}
-      let testPopupMenu = [
-            \ [ 'OmniSharpRunTest (&t)', "OmniSharpRunTest"] ,
-            \ [ 'OmniSharpRunTestsInFile (&f)', "OmniSharpRunTestsInFile"] ,
-            \ [ 'DotnetTest (&s)', "DotnetTest --nologo -v=q"] ,
-            \]
-      call quickui#listbox#open(testPopupMenu, testPopupOpt)
-    endfunction
-    command! OpenOmniSharpRunTest call OpenOmniSharpRunTest()
-
-    autocmd FileType cs nmap <silent><buffer><nowait><leader>t :OpenOmniSharpRunTest<cr>
-
-    let g:OmniSharp_selector_ui = 'fzf'
-    let g:OmniSharp_selector_findusages = 'fzf'
-    let g:OmniSharp_diagnostic_exclude_paths = [
-    \ 'obj[\\\/]',
-    \ '[Tt]emp[\\\/]',
-    \ '\.nuget[\\\/]',
-    \ '\<AssemblyInfo\.cs\>'
-    \]
-    let g:OmniSharp_diagnostic_listen = 2
+    autocmd FileType cs nmap <silent><buffer><C-b> :AsyncRun dotnet build<cr>
 
     function! s:create_dotnet_controller() abort
       let controllerName = input('Controller Name: ')
@@ -446,7 +405,6 @@ augroup omnisharp_commands
         echo "Cancelled"
       endif
     endfunction
-
     command! CreateController call s:create_dotnet_controller()
 augroup END
 
@@ -514,8 +472,11 @@ endfunction
 command! OpenJestMenu call OpenTestMenu('Jest', 'jest', '--update-snapshot')
 command! OpenCypressMenu call OpenTestMenu('Cypress', 'cypress', '-C ./cypress/cypress.json')
 command! OpenPlaywrightMenu call OpenTestMenu('Playwright', 'jest', '--config ./jest-playwright.config.js')
+command! OpenCSharpTestMenu call OpenTestMenu('XUnit Test', 'xunit', '--nologo -v=q')
 
 map <silent><nowait><leader>t :OpenJestMenu<cr>
+autocmd FileType cs map <silent><nowait><leader>t :OpenCSharpTest<cr>
+
 if exists('g:neovide') || has('nvim')
   let test#strategy='neovim'
 else
