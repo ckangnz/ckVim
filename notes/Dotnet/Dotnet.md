@@ -30,9 +30,18 @@ dotnet new webapi -n {NAME-OF-PROJECT} -f [net6.0 / net5.0/ netcoreapp3.1]
 dotnet build
 dotnet run
 dotnet watch run #Opens browser
+dotnet clean #run this to clean up the .dll
 
 # To run dotnet project using specific Nuget.Config
 dotnet run --project .csproj_PATH --configFile Nuget.Config_PATH
+```
+
+> If your `dotnet run` fails to find the SDK, make sure to have the `global.json` to specify the correct version. [Refer to this documentation](https://learn.microsoft.com/en-us/dotnet/core/versions/selection#the-sdk-uses-the-latest-installed-version)
+
+> If you run in to SSL issue run this command
+
+```sh
+dotnet dev-certs https --trust
 ```
 
 ### Adding healthcheck middleware

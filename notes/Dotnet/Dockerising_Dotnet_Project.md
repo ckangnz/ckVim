@@ -3,7 +3,7 @@
 > Make sure to choose the correct sdk version
 
 ```dockerfile
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /app
 COPY . ./NAME-OF-PROJECT
 WORKDIR /app/NAME-OF-PROJECT
@@ -14,7 +14,7 @@ FROM build AS publish
 WORKDIR /app/NAME-OF-PROJECT
 RUN dotnet publish NAME-OF-PROJECT.csproj --configuration Release --no-restore --output /release
 
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final
 EXPOSE 80
 EXPOSE 443
 WORKDIR /app/NAME-OF-PROJECT

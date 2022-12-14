@@ -513,7 +513,8 @@ command! JSON call s:set_json_header()
 command! Anon call s:clean_personal_stuff()
 command! Compression call s:add_compression()
 
-"-----AUTO-COMMANDS------"
+"HIGHLIGHT OVERRIDE
+
 augroup WhitespaceMatch
   autocmd!
   function! s:ToggleWhitespaceMatch(mode)
@@ -522,7 +523,6 @@ augroup WhitespaceMatch
       call matchdelete(w:whitespace_match_number)
       call matchadd('ExtraWhitespace', pattern, 10, w:whitespace_match_number)
     else
-      " Something went wrong, try to be graceful.
       let w:whitespace_match_number = matchadd('ExtraWhitespace', pattern)
     endif
   endfunction
@@ -532,7 +532,6 @@ augroup WhitespaceMatch
 augroup END
 hi ExtraWhitespace ctermbg=red guibg=red
 
-"HIGHLIGHT OVERRIDE
 hi LineNr ctermbg=0 guibg=bg
 hi vertsplit ctermbg=0 guibg=bg
 hi foldcolumn ctermbg=0 guibg=bg guifg=white
@@ -544,6 +543,7 @@ hi diffRemoved ctermfg=167 guifg=#ea6962
 hi Search ctermfg=black ctermbg=white guifg=black guibg=white
 hi CurSearch cterm=reverse,bold gui=reverse,bold
 
+"-----AUTO-COMMANDS------"
 augroup autosourcing
     autocmd!
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
