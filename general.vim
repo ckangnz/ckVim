@@ -32,6 +32,7 @@ set splitright                                  "Vertical split to right
 set hlsearch                                    "highlight search
 set incsearch                                   "Show preview of search
 set diffopt+=vertical                           "Set split and diff to vertical
+set laststatus=2
 
 "----------VISUALS---------
 set guifont=FiraCode\ Nerd\ Font:h12            "Set font family
