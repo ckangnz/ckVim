@@ -67,6 +67,8 @@ export PATH="$PATH:/Users/chris.kang/.dotnet/tools"
 #alias
 alias vim="mvim -v"
 alias neo="neovide --multigrid"
+alias bu="brew upgrade && brew update --cask"
+alias zu="zplug update"
 alias dczsh="docker-compose run --rm web zsh"
 alias dcbash="docker-compose run --rm web bash"
 function dcupp(){
