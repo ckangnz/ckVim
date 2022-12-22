@@ -102,8 +102,13 @@ endfunction
 
 "Terminal commands
 tnoremap <Esc> <C-\><C-n>
-tnoremap <silent><expr> <c-j> len(popup_list()) > 0 ? "<C-j>" : "\<C-w><C-j>"
-tnoremap <silent><expr> <c-k> len(popup_list()) > 0 ? "<c-k>" : "\<c-w><c-k>"
+if exists('g:neovide') || has('nvim')
+  tnoremap <silent><expr> <c-j> pumvisible() > 0 ? "<c-j>" : "\<c-w><c-j>"
+  tnoremap <silent><expr> <c-k> pumvisible() > 0 ? "<c-k>" : "\<c-w><c-k>"
+else
+  tnoremap <silent><expr> <c-j> len(popup_list()) > 0 ? "<c-j>" : "\<c-w><c-j>"
+  tnoremap <silent><expr> <c-k> len(popup_list()) > 0 ? "<c-k>" : "\<c-w><c-k>"
+endif
 tnoremap <C-h> <C-w><C-h>
 tnoremap <C-l> <C-w><C-l>
 

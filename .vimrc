@@ -366,9 +366,12 @@ vnoremap <silent><expr> <c-k> coc#float#has_scroll() ? coc#float#scroll(0) : "\<
 
 command -nargs=0 Swagger :CocCommand swagger.render
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
-command! -nargs=0 Format : call CocActionAsync('format')
-command! -nargs=? Fold   : call CocActionAsync('fold', <f-args>)
-command! -nargs=0 OR     : call CocActionAsync('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 Format         :call CocActionAsync('format')
+command! -nargs=? Fold           :call CocActionAsync('fold', <f-args>)
+command! -nargs=0 OrganizeImport :call CocActionAsync('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 RenameFile :CocCommand workspace.renameCurrentFile
+command! -nargs=0 CocUndo :CocCommand workspace.undo
+command! -nargs=0 CocRedo :CocCommand workspace.redo
 
 inoremap <silent><expr> <TAB>
   \ coc#pum#visible() ? coc#_select_confirm() :
