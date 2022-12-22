@@ -31,13 +31,14 @@ echo 'Completed Linking vimrc!'
 
 #Symlink init.vim
 if [ -e ~/.config/nvim/init.vim ]; then
-    echo '.vimrc already exists! Deleting existing .vimrc...'
+    echo 'init.vim already exists! Deleting existing init.vim...'
     rm ~/.config/nvim/init.vim
 fi
-echo 'Linking vimrc...'
+echo 'Linking init.vim..'
 ln -s ~/.vim/init.vim ~/.config/nvim/init.vim
 echo 'Completed Linking init.vim for nvim!'
 
+#Symlink coc-settings.json
 if[ -e ~/.config/nvim/coc-settings.json ]; then
   echo 'coc-settings.json already exists! Deleting existing coc-settings.json'
   rm ~/.config/nvim/coc-settings.json
