@@ -40,13 +40,13 @@ let g:asyncrun_open = 0
 let g:airline_section_error = airline#section#create(['%{g:asyncrun_status}'])
 let g:airline_mode_map = {
             \ '__' : '-',
-            \ 'n' : '⚡️',
-            \ 'i' : '✏️',
-            \ 'R' : '💫',
-            \ 'c' : '⚙️',
-            \ 'v' : '👀',
-            \ 'V' : '👀',
-            \ '' : '👀',
+            \ 'n' : '',
+            \ 'i' : '',
+            \ 'R' : '',
+            \ 'c' : '',
+            \ 'v' : '',
+            \ 'V' : '',
+            \ '' : '',
             \ }
 
 "-------------MY PATHS SHORTCUT------------
@@ -297,6 +297,29 @@ call add(githubMenu , ['Open issues (&i)', 'OpenGithubIssue'])
 call add(githubMenu , ['Open pull requests (&p)', 'OpenGithubPullReq'])
 noremap <silent><nowait><leader>go :call quickui#context#open(githubMenu, gitOpt)<cr>
 
+"junegunn/fzf
+set rtp+=~/.fzf
+let $FZF_DEFAULT_OPTS="--layout=reverse --bind ctrl-k:preview-up,ctrl-j:preview-down"
+let $FZF_DEFAULT_COMMAND='rg --files --follow --no-ignore-vcs --hidden -g "!{node_modules/*,.git/*}"'
+let g:fzf_layout={'window':{ 'width': 0.9, 'height': 0.6 }}
+let g:fzf_preview_window = ['right:60%:hidden','?']
+let g:fzf_action = {
+            \ 'ctrl-t': 'tab split',
+            \ 'ctrl-o': 'split',
+            \ 'ctrl-v': 'vsplit' }
+command! Ctrlp execute len(FugitiveHead()) > 0 ? ':GFiles' : ':Files'
+nnoremap <silent> <C-p> :Ctrlp<CR>
+nnoremap <silent> <C-e> :History<CR>
+nnoremap <Leader>f :Rg<space>
+vnoremap <Leader>f y:Rg <c-r>"<cr>
+nnoremap <Leader>F :Rg <c-r><c-w><cr>
+nnoremap <Leader>@ :BCommits<cr>
+
+autocmd! FileType fzf
+autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
 "neoclide/coc.nvim
 let g:coc_user_config = {}
 let g:coc_global_extensions = [
@@ -367,11 +390,35 @@ else
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
 
-augroup mygroup
+augroup cocOverride
   autocmd!
-  autocmd FileType javasccript,javascriptreact,typescript,typescriptreact,json setl formatexpr=CocActionAsync('formatSelected')
-  autocmd FileType markdown let b:coc_suggest_disable = 1
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+
+  "Javascript formatSelected
+  autocmd FileType javasccript,javascriptreact,typescript,typescriptreact,json setl formatexpr=CocActionAsync('formatSelected')
+  "Disable markdown suggestions
+  autocmd FileType markdown let b:coc_suggest_disable = 1
+
+  "C# overrides
+  autocmd FileType cs nmap <silent><buffer><C-b> :AsyncRun dotnet build<cr>
+  function! s:create_dotnet_controller() abort
+    let controllerName = input('Controller Name: ')
+    let modelName = input('Model Name: ')
+    let dbContextName = input('DB Context Name: ')
+    if controllerName != "" && modelName != "" && dbContextName != ""
+      let script = ":!dotnet aspnet-codegenerator controller "
+            \.. "-name " .. controllerName .. "Controller "
+            \.. "-async "
+            \.. "-api "
+            \.. "-m " .. modelName .. " "
+            \.. "-dc " .. dbContextName .. " "
+            \.. "-outDir Controllers"
+      exe script
+    else
+      echo "Cancelled"
+    endif
+  endfunction
+  command! CreateController call s:create_dotnet_controller()
 augroup end
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -382,55 +429,6 @@ function! s:show_documentation()
     call CocActionAsync('doHover')
   endif
 endfunction
-
-augroup csharp_commands
-    autocmd!
-
-    autocmd FileType cs nmap <silent><buffer><C-b> :AsyncRun dotnet build<cr>
-
-    function! s:create_dotnet_controller() abort
-      let controllerName = input('Controller Name: ')
-      let modelName = input('Model Name: ')
-      let dbContextName = input('DB Context Name: ')
-      if controllerName != "" && modelName != "" && dbContextName != ""
-        let script = ":!dotnet aspnet-codegenerator controller "
-              \.. "-name " .. controllerName .. "Controller "
-              \.. "-async "
-              \.. "-api "
-              \.. "-m " .. modelName .. " "
-              \.. "-dc " .. dbContextName .. " "
-              \.. "-outDir Controllers"
-        exe script
-      else
-        echo "Cancelled"
-      endif
-    endfunction
-    command! CreateController call s:create_dotnet_controller()
-augroup END
-
-"junegunn/fzf
-set rtp+=~/.fzf
-let $FZF_DEFAULT_OPTS="--layout=reverse --bind ctrl-k:preview-up,ctrl-j:preview-down"
-let $FZF_DEFAULT_COMMAND='rg --files --follow --no-ignore-vcs --hidden -g "!{node_modules/*,.git/*}"'
-let g:fzf_layout={'window':{ 'width': 0.9, 'height': 0.6 }}
-let g:fzf_preview_window = ['right:60%:hidden','?']
-let g:fzf_action = {
-            \ 'ctrl-t': 'tab split',
-            \ 'ctrl-o': 'split',
-            \ 'ctrl-v': 'vsplit' }
-command! Ctrlp execute len(FugitiveHead()) > 0 ? ':GFiles' : ':Files'
-nnoremap <silent> <C-p> :Ctrlp<CR>
-nnoremap <silent> <C-e> :History<CR>
-nnoremap <Leader>f :Rg<space>
-vnoremap <Leader>f y:Rg <c-r>"<cr>
-nnoremap <Leader>F :Rg <c-r><c-w><cr>
-nnoremap <Leader>@ :BCommits<cr>
-
-autocmd! FileType fzf
-autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
-autocmd  FileType fzf set laststatus=0 noshowmode noruler
-  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-
 
 "--------Testing vim-test/vim-test--------"
 function! TestNearestJS(runner, ...)
@@ -513,7 +511,7 @@ command! JSON call s:set_json_header()
 command! Anon call s:clean_personal_stuff()
 command! Compression call s:add_compression()
 
-"HIGHLIGHT OVERRIDE
+"--------HIGHLIGHT OVERRIDE------
 
 augroup WhitespaceMatch
   autocmd!

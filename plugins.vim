@@ -22,6 +22,7 @@ Plug 'herringtonDarkholme/yats.vim'                                 " .ts
 Plug 'mattn/emmet-vim'                                              " .html
 Plug 'pedrohdz/vim-yaml-folds'                                      " .yaml
 Plug 'udalov/kotlin-vim'                                            " .kotlin
+Plug 'jlcrochet/vim-cs'                                             " .cs
 
 " Git Tool
 Plug 'idanarye/vim-merginal'                                        " Git branch organiser
