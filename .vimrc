@@ -283,9 +283,23 @@ nnoremap <silent><Leader>gfa :AsyncRun git fetch --all --prune<cr>
 nnoremap <silent> <Leader>gof :Gbrowse<cr>
 
 command! ToggleMerginal execute len(FugitiveHead()) > 0 ? ':MerginalToggle' : 'echoerr "Not in a git repo"'
+
+function s:UpdateGitStatusLine() abort
+  if !exists('*FugitiveExtractGitDir')
+    return ''
+  endif
+  let dir = exists('b:git_dir') ? b:git_dir : FugitiveExtractGitDir(resolve(expand('%:p')))
+  if empty(dir)
+    return ''
+  endif
+  let b:git_dir = dir
+endfunction
+
 if has("autocmd")
     autocmd BufReadPost fugitive://* set bufhidden=delete
+    autocmd BufWinEnter,ShellCmdPost,BufWritePost * call s:UpdateGitStatusLine()
 endif
+
 
 "tyru/open-browser.vim, tyru/open-browser-github.vim
 let gitOpt = {'title':'GITHUB Menu'}
