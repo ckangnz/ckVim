@@ -18,17 +18,18 @@ colorscheme gruvbox-material
 let g:airline_theme='gruvbox_material'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#ycm#enabled = 0
-let g:airline_left_sep = ""
-let g:airline_right_sep = ""
+let g:airline_left_sep = "\ue0d2"
+let g:airline_right_sep = ''
 let g:airline_section_y = airline#section#create(["%{coc#status()}%{get(b:,'coc_current_function','')}"])
 let g:airline_section_z = airline#section#create(['%{g:airline_symbols.linenr}%#__accent_bold#%3l/%3L', '%{g:airline_symbols.colnr}%#__accent_bold#%3v'])
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_tabs = 1
 let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#left_sep=''
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#right_alt_sep = '|'
+let g:airline#extensions#tabline#left_sep="\uE0C4"
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
+let airline#extensions#tabline#tabs_label = ''
 let g:airline#extensions#tabline#close_symbol = '×'
 let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
@@ -297,9 +298,8 @@ endfunction
 
 if has("autocmd")
     autocmd BufReadPost fugitive://* set bufhidden=delete
-    autocmd BufWinEnter,ShellCmdPost,BufWritePost * call s:UpdateGitStatusLine()
+    au BufWinEnter,ShellCmdPost,BufWritePost * call s:UpdateGitStatusLine()
 endif
-
 
 "tyru/open-browser.vim, tyru/open-browser-github.vim
 let gitOpt = {'title':'GITHUB Menu'}
@@ -560,14 +560,14 @@ hi CurSearch cterm=reverse,bold gui=reverse,bold
 
 "-----AUTO-COMMANDS------"
 augroup autosourcing
-    autocmd!
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
-    autocmd BufWritePost $HOME/.vim/general.vim source $MYVIMRC
-    autocmd BufWritePost $HOME/.vim/plugins.vim source $MYVIMRC
+    au!
+    au BufWritePost $MYVIMRC source $MYVIMRC
+    au BufWritePost $HOME/.vim/general.vim source $MYVIMRC
+    au BufWritePost $HOME/.vim/plugins.vim source $MYVIMRC
 
-    autocmd BufWritePost $MYVIMRC AirlineRefresh
-    autocmd BufWritePost $HOME/.vim/general.vim AirlineRefresh
-    autocmd BufWritePost $HOME/.vim/plugins.vim AirlineRefresh
+    au BufWritePost $MYVIMRC AirlineRefresh
+    au BufWritePost $HOME/.vim/general.vim AirlineRefresh
+    au BufWritePost $HOME/.vim/plugins.vim AirlineRefresh
 
     au BufNewFile,BufRead *.ejs set filetype=js
     au BufNewFile,BufRead *.vue,*.hbs set filetype=html

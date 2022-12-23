@@ -2,18 +2,8 @@ set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 source ~/.vimrc
 
-augroup autosourcing
-    autocmd!
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
-    autocmd BufWritePost $HOME/.vimrc source $MYVIMRC
-    autocmd BufWritePost $HOME/.vim/general.vim source $MYVIMRC
-    autocmd BufWritePost $HOME/.vim/plugins.vim source $MYVIMRC
-
-    autocmd BufWritePost $MYVIMRC AirlineRefresh
-    autocmd BufWritePost $HOME/.vimrc AirlineRefresh
-    autocmd BufWritePost $HOME/.vim/general.vim AirlineRefresh
-    autocmd BufWritePost $HOME/.vim/plugins.vim AirlineRefresh
-augroup END
+au BufWritePost $HOME/.vimrc source $MYVIMRC
+au BufWritePost $HOME/.vimrc AirlineRefresh
 
 "NEOVIDE SPECIFIC
 if exists("g:neovide")
