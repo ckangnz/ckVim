@@ -362,8 +362,8 @@ nmap <silent><nowait><S-r> <Plug>(coc-rename)
 nmap <silent><nowait><leader><S-r> :CocCommand workspace.renameCurrentFile<cr>
 xmap <nowait><leader>= <Plug>(coc-format-selected)
 nmap <nowait><leader>= <Plug>(coc-format)
-xmap <nowait><leader>ac <Plug>(coc-codeaction-selected)
-nmap <nowait><leader>ac <Plug>(coc-codeaction-selected)
+xmap <nowait><leader>ac <Plug>(coc-codeaction-selected)j
+nmap <nowait><leader>ac <Plug>(coc-codeaction-selected)j
 nmap <nowait><leader>ap <Plug>(coc-diagnostic-prev)
 nmap <nowait><leader>an <Plug>(coc-diagnostic-next)
 nmap <nowait><leader>. <Plug>(coc-codeaction)
