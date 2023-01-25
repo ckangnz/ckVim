@@ -121,7 +121,7 @@ let g:vimade.fadelevel = 0.5
 
 "airblade/vim-rooter
 let g:rooter_silent_chdir = 1
-let g:rooter_patterns = ['.git', 'package.json', '*.sln', 'appsettings.json', '*.csproj']
+let g:rooter_patterns = ['.git', 'package.json', '*.sln', 'appsettings.json']
 let g:rooter_change_directory_for_non_project_files = 'home'
 
 "Asheq/close-buffers.vim
@@ -222,19 +222,6 @@ hi CurrentWordTwins gui=bold cterm=bold
 "andrewradev/tagalong.vim
 "let g:tagalong_additional_filetypes = []
 let g:tagalong_verbose = 1
-
-"Valloric/MatchTagAlways
-let g:mta_use_matchparen_group = 1
-let g:mta_filetypes = {
-            \ 'html' : 1,
-            \ 'ejs' : 1,
-            \ 'xhtml' : 1,
-            \ 'xml' : 1,
-            \ 'php' : 1,
-            \ 'javascriptreact' : 1,
-            \ 'typescriptreact' : 1,
-            \}
-nnoremap % :MtaJumpToOtherTag<cr>
 
 "machakann/vim-sandwich
 let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
