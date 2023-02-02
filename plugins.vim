@@ -23,6 +23,7 @@ Plug 'mattn/emmet-vim'                                              " .html
 Plug 'pedrohdz/vim-yaml-folds'                                      " .yaml
 Plug 'udalov/kotlin-vim'                                            " .kotlin
 Plug 'jlcrochet/vim-cs'                                             " .cs
+Plug 'jxnblk/vim-mdx-js'
 
 " Git Tool
 Plug 'idanarye/vim-merginal'                                        " Git branch organiser
