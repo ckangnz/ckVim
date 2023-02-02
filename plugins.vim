@@ -64,6 +64,10 @@ Plug 'yggdroot/indentLine'                                          " Indentatio
 " Test
 Plug 'vim-test/vim-test'                                            " Test files
 
+"DB
+Plug 'tpope/vim-dadbod'                                             " DB Manager
+Plug 'kristijanhusak/vim-dadbod-ui'                                 " DB Manager UI
+
 " Snippets
 Plug 'honza/vim-snippets'                                           " snippets
 Plug 'andrewstuart/vim-kubernetes'                                  " Kubernetes snippets

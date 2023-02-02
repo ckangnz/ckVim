@@ -337,6 +337,7 @@ let g:coc_global_extensions = [
       \ 'coc-csharp-ls',
       \ 'coc-eslint',
       \ 'coc-snippets',
+      \ 'coc-db',
       \ 'coc-kotlin'
       \]
 
@@ -514,6 +515,13 @@ endfunction
 command! JSON call s:set_json_header()
 command! Anon call s:clean_personal_stuff()
 command! Compression call s:add_compression()
+
+"tpope/vim-dadbod
+"postgres://postgres:mypassword@localhost:5432/my-dev-db
+"mysql://root@localhost/wp_awesome
+"jdbc:sqlserver://localhost:1433;property=value;
+
+nnoremap <silent><leader>db :DBUI<cr>
 
 "--------HIGHLIGHT OVERRIDE------
 
