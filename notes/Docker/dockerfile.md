@@ -1,25 +1,29 @@
 # Use Dockerfile to build the Docker Image!
-* Dockerfile will create an image when we build.
-* An image should contain libraries for app to run properly.
-  * npm install / yarn add / pip install ...
-* Good practice
-  * EXPOSE - port information
-  * ENV - environment variables
-  * VOLUME - data location
-  * LABEL,MAINTAINER, …
-* [ Select your base image ](https://hub.docker.com)
+
+- Dockerfile will create an image when we build.
+- An image should contain libraries for app to run properly.
+  - npm install / yarn add / pip install ...
+- Good practice
+  - EXPOSE - port information
+  - ENV - environment variables
+  - VOLUME - data location
+  - LABEL,MAINTAINER, …
+- [ Select your base image ](https://hub.docker.com)
 
 ## Build Image with dockerfile
 
 ```bash
-Docker build -t name:tag
-Docker build -t demo:1.0.0
-```
+Docker build
+  -t name:tag
+  -f ./Dockerfile .
 
+# Example
+Docker build -t demo:1.0.0 -f ./Dockerfile .
+```
 
 ### Dockerfile
 
-##### Example
+##### Node Example
 
 ```Dockerfile
 FROM node:10.40.0-alpine
@@ -30,7 +34,7 @@ COPY . /usr/src/app
 CMD[ "npm", "Start" ]
 ```
 
-##### Example
+##### Python Example
 
 ```docker
 FROM python:3.6
@@ -60,7 +64,6 @@ COPY . .
 /node_modules
 ...
 ```
-
 
 ## Add user
 
