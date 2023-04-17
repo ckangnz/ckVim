@@ -53,6 +53,7 @@ Plug 'Asheq/close-buffers.vim'                                      " Delete hid
 Plug 'dominikduda/vim_current_word'                                 " Highlight current word
 Plug 'easymotion/vim-easymotion'                                    " Easy Navigation
 Plug 'godlygeek/tabular'                                            " Text Aligning Tool
+Plug 'kkvh/vim-docker-tools'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install'  } " InstantMarkdownPreview
 Plug 'mattesGroeger/vim-bookmarks'                                  " Vim Bookmarks
 Plug 'nicwest/vim-http'                                             " Indentation line
