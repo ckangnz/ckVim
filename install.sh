@@ -5,9 +5,11 @@ echo "LET'S INSTALL CKVIM!!!!!!!"
 brew_install "python3"
 brew_install "node"
 brew_install "fnm"
+
 brew_install "macvim"
 brew_install "nvim"
 brew_install_cask "neovide"
+
 brew_install "cmake"
 brew_install "bat"
 brew_install "watchman"
@@ -16,7 +18,7 @@ brew_install "ripgrep"
 
 #[Check versions here](https://github.com/isen-ng/homebrew-dotnet-sdk-versions)
 brew_install_cask "dotnet-sdk"
-brew_install_cask "dotnet-sdk6-0-300" "isen-ng/dotnet-sdk-versions"
+#brew_install_cask "dotnet-sdk6-0-300" "isen-ng/dotnet-sdk-versions"
 
 brew_install_cask "font-fira-code-nerd-font" "homebrew/cask-fonts"
 

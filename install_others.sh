@@ -7,5 +7,11 @@ brew_install_cask "itsycal"
 brew_install_cask "rectangle"
 brew_install_cask "maccy"
 
+#brew_install_cask "azure-data-studio"
+
 brew_install "kubectl"
 brew_install "helm"
+
+# Ad blocker on Mac!
+# Run `hblock` after installation
+brew_install "hblock"

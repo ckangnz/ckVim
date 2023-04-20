@@ -51,6 +51,7 @@ if [ helm ];then
   source <(helm completion zsh)
 fi
 
+
 # Set PATH
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
@@ -63,6 +64,17 @@ MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
 export PATH="$HOME/.rvm/bin:$PATH"
 export PATH="$PATH:/Users/chris.kang/.dotnet/tools"
+#Use brew Ruby if installed
+#
+if [ -d "/usr/local/opt/ruby/bin" ]; then
+  export PATH=/usr/local/opt/ruby/bin:$PATH
+  export PATH=`gem environment gemdir`/bin:$PATH
+fi
+#Apple silicon version
+#if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
+  #export PATH=/opt/homebrew/opt/ruby/bin:$PATH
+  #export PATH=`gem environment gemdir`/bin:$PATH
+#fi
 
 #alias
 alias vim="mvim -v"
