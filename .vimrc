@@ -405,6 +405,9 @@ augroup cocOverride
   "Disable markdown suggestions
   autocmd FileType markdown let b:coc_suggest_disable = 1
 
+  "Dart overrides
+  autocmd FileType dart nmap<silent><leader>t :OpenDartTestMenu<cr>
+
   "C# overrides
   autocmd FileType cs nmap <silent><buffer><C-b> :AsyncRun dotnet build<cr>
   function! s:create_dotnet_controller() abort
@@ -477,6 +480,7 @@ command! OpenJestMenu call OpenTestMenu('Jest', 'jest', '--update-snapshot')
 command! OpenCypressMenu call OpenTestMenu('Cypress', 'cypress', '-C ./cypress/cypress.json')
 command! OpenPlaywrightMenu call OpenTestMenu('Playwright', 'jest', '--config ./jest-playwright.config.js')
 command! OpenCSharpTestMenu call OpenTestMenu('XUnit Test', 'xunit', '--nologo -v=q')
+command! OpenDartTestMenu call OpenTestMenu('Dart Test', 'fluttertest', '')
 
 map <silent><nowait><leader>t :OpenJestMenu<cr>
 autocmd FileType cs map <silent><nowait><leader>t :OpenCSharpTest<cr>

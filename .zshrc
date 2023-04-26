@@ -64,6 +64,7 @@ MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
 export PATH="$HOME/.rvm/bin:$PATH"
 export PATH="$PATH:/Users/chris.kang/.dotnet/tools"
+export PATH="$PATH":"$HOME/.pub-cache/bin"
 #Use brew Ruby if installed
 #
 if [ -d "/usr/local/opt/ruby/bin" ]; then
