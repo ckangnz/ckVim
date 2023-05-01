@@ -35,8 +35,8 @@ set diffopt+=vertical                           "Set split and diff to vertical
 set laststatus=2
 
 "----------VISUALS---------
-set guifont=FiraCode\ Nerd\ Font:h12            "Set font family
-set linespace=0                                "Set line space
+set guifont=FiraCode\ Nerd\ Font:h12                  "Set font family
+set linespace=0                                 "Set line space
 set wrapmargin=0                                "line number margins
 set textwidth=0                                 "Set text width"
 set nonumber                                    "No line numbers
