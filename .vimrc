@@ -405,6 +405,9 @@ augroup cocOverride
   "Disable markdown suggestions
   autocmd FileType markdown let b:coc_suggest_disable = 1
 
+  "SCSS override
+  autocmd FileType scss setl iskeyword+=@-@
+
   "Dart overrides
   autocmd FileType dart nmap<silent><leader>t :OpenDartTestMenu<cr>
 
