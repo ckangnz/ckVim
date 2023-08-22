@@ -73,7 +73,7 @@ if [ -d "$HOMEBREW_PREFIX/opt/fnm/bin" ]; then
 fi
 # Ruby
 if [ -d "$HOMEBREW_PREFIX/opt/ruby/bin" ]; then
-  export PATH=/usr/local/opt/ruby/bin:$PATH
+  export PATH=$HOMEBREW_PREFIX/opt/ruby/bin:$PATH
   export PATH=`gem environment gemdir`/bin:$PATH
 fi
 #Apple silicon version Ruby
