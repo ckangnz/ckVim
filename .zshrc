@@ -42,44 +42,47 @@ MODE_INDICATOR_SEARCH='%F{13}<%F{5}SEARCH<%f'
 MODE_INDICATOR_VISUAL='%F{12}<%F{4}VISUAL<%f'
 MODE_INDICATOR_VLINE='%F{12}<%F{4}V-LINE<%f'
 
-# Kubectl and helm
-if [ kubectl ];then
-  source <(kubectl completion zsh)
-  complete -F __start_kubectl k
-fi
-if [ helm ];then
-  source <(helm completion zsh)
-fi
-
-# FNM
-if [ fnm ]; then
-  eval "$(fnm env --use-on-cd)"
-fi
-
 # Set PATH
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/home/linuxbrew/.linuxbrew/bin"
+export PATH="$NPM_PACKAGES/bin:$PATH"
+export PATH="$HOME/.rvm/bin:$PATH"
+export PATH="$PATH:/Users/chris.kang/.dotnet/tools"
+export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 NPM_PACKAGES="${HOME}/.npm-packages"
 NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
-PATH="$NPM_PACKAGES/bin:$PATH"
 
 unset MANPATH
 MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
-export PATH="$HOME/.rvm/bin:$PATH"
-export PATH="$PATH:/Users/chris.kang/.dotnet/tools"
-export PATH="$PATH":"$HOME/.pub-cache/bin"
-#Use brew Ruby if installed
-#
-if [ -d "/usr/local/opt/ruby/bin" ]; then
+export HOMEBREW_PREFIX=$(brew --prefix)
+
+# Kubectl
+if [ -d "$HOMEBREW_PREFIX/opt/kubectl/bin" ];then
+  source <(kubectl completion zsh)
+  complete -F __start_kubectl k
+fi
+# Helm
+if [ -d "$HOMEBREW_PREFIX/opt/helm/bin" ];then
+  source <(helm completion zsh)
+fi
+# FNM
+if [ -d "$HOMEBREW_PREFIX/opt/fnm/bin" ]; then
+  export PATH="$PATH:$FNM_MULTISHELL_PATH"
+  eval "$(fnm env --use-on-cd)"
+fi
+# Ruby
+if [ -d "$HOMEBREW_PREFIX/opt/ruby/bin" ]; then
   export PATH=/usr/local/opt/ruby/bin:$PATH
   export PATH=`gem environment gemdir`/bin:$PATH
 fi
-#Apple silicon version
+#Apple silicon version Ruby
 #if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
   #export PATH=/opt/homebrew/opt/ruby/bin:$PATH
   #export PATH=`gem environment gemdir`/bin:$PATH
 #fi
+
+
 
 #alias
 alias vim="vim -v"
