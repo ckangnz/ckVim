@@ -51,6 +51,10 @@ if [ helm ];then
   source <(helm completion zsh)
 fi
 
+# FNM
+if [ fnm ]; then
+  eval "$(fnm env --use-on-cd)"
+fi
 
 # Set PATH
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
@@ -78,7 +82,7 @@ fi
 #fi
 
 #alias
-alias vim="mvim -v"
+alias vim="vim -v"
 alias neo="neovide --multigrid"
 alias bu="brew upgrade && brew update --cask"
 alias zu="zplug update"
@@ -115,8 +119,6 @@ alias jserv="json-server --watch db.json --port 3004"
 #
 # --------Custom Methods--------
 #
-
-eval "$(fnm env --use-on-cd)"
 
 [ -f ~/.extraAlias.zsh ] && source ~/.extraAlias.zsh
 
