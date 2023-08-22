@@ -1,5 +1,5 @@
-if [[ -d "/usr/local/opt/zplug" ]]; then
-    export ZPLUG_HOME=/usr/local/opt/zplug
+if [[ -d "$(brew --prefix)/opt/zplug" ]]; then
+    export ZPLUG_HOME=$(brew --prefix)/opt/zplug
 elif [[ -d "/usr/share/zplug" ]]; then
     export ZPLUG_HOME=/usr/share/zplug
 else
