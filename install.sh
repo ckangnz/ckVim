@@ -6,7 +6,6 @@ brew_install "python3"
 brew_install "node"
 brew_install "fnm"
 
-brew_install "macvim"
 brew_install "nvim"
 brew_install_cask "neovide"
 
