@@ -1,64 +1,171 @@
-# CK Vim Config
+# CK VIM/ZSH
 
-##### _CK Vim uses MacVim, and requires OSX_
+## Pre-requisite
 
-### You must have brew installed
+Clone this project into `~/.vim`
+
+```bash
+git clone https://github.com/chris542/ckVim ~/.vim
+```
+
+# CK-Vim
+
+_CK Vim supports NeoVim(OSX) and Vim(OSX/Linux/WSL)_
+
+## You must have brew installed
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
----
+### On OSX
 
-#### Run this to install everything automatically :)
-
-##### WARNING: This will override your .vimrc file
+> :warning: This will override your .vimrc file
 
 ```bash
-git clone https://github.com/chris542/ckVim ~/.vim
 ~/.vim/install.sh
 ```
 
-## Zsh Setup .zshrc
+### On WSL/Linux
 
-##### WARNING: This will override your .zshrc file
+There is no automatic installation script for Linux yet. Please copy and paste the following snippet to install all of the necessary libraries manually.
 
-##### WARNING: ZPlug requires docker
+```bash
+brew install python3 node fnm vim
+brew install cmake bat watchman the_silver_searcher ripgrep
+```
+
+> :warning: This will override your .vimrc file
+
+```bash
+rm ~/.vimrc
+ln -s ~/.vim/.vimrc ~/.vimrc
+mkdir ~/.config
+mkdir ~/.config/nvim
+ln -s ~/.vim/coc-settings.json ~/.config/nvim/coc-settings.json
+```
+
+### Install Plugins
+
+1. Run vim
+2. Run `:PlugInstall` or `,pi`
+
+---
+
+# CK-ZSH
+
+## For MacOS
 
 ### Install Oh-my-zsh
 
 ```bash
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
-### Install zplug
+### Install Zplug
 
 ```bash
 brew install zplug
-# On Linux/Windows Terminal
-sudo apt-get update -y
-sudo apt-get install -y zplug
 ```
 
-### Link zshrc
+### Link .zshrc
+
+> :warning: This will override your .zshrc file
 
 ```bash
 #Synlink .zshrc
+rm ~/.zshrc
 ln -s ~/.vim/.zshrc ~/.zshrc
+source ~/.zshrc
 ```
 
 ### Install plugins
 
 ```bash
-brew install zplug
+zi
+#or
 zplug install
 ```
 
-#### If you get an error
+## For WSL/Linux
+
+### Pre-requisite
+
+#### Enabling Hyper V
+
+1. Open "Turn Windows features on or off"
+2. Find Hyper-V and enable it (This may require rebooting your comptuer)
+
+#### Font Setup
+
+- Manually download the FiraCode.zip from [here](https://github.com/ryanoasis/nerd-fonts/releases)
+- Configure the Terminal configuration with the font
+
+### Install ZSH
+
+1. Open Terminal app and open WSL terminal
+2. Install ZSH
+
+```bash
+sudo apt install zsh
+```
+
+3. Then run following command to change your default shell to ZSH
+
+```bash
+chsh -s $(which zsh)
+```
+
+### Install Oh-My-Zsh
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+### Install Zplug
+
+```bash
+brew install zplug
+```
+
+### Link .zshrc
+
+> :warning: This will override your .zshrc file
+
+```bash
+#Synlink .zshrc
+rm ~/.zshrc
+ln -s ~/.vim/.zshrc ~/.zshrc
+source ~/.zshrc
+```
+
+### Install plugins
+
+```bash
+zi
+#or
+zplug install
+
+# zi kubectl helm
+```
+
+## Trouble-Shooting
 
 - zsh compinit: insecure directories, run compaudit for list, run :
 
 ```bash
 compaudit | xargs chmod g-w
+```
+
+- If you get a prompt that brew is missing after installation, simply run this command
+
+```bash
+eval "$(/usr/lib/bin/brew shellenv)"
+```
+
+- If you get a prompt that zplug is missing after installation, simply run this command
+
+```bash
+export ZPLUG_HOME=/home/linuxbrew/.linuxbrew/opt/zplug
+source $ZPLUG_HOME/init.zsh
 ```
