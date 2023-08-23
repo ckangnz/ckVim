@@ -1,24 +1,24 @@
-# CK Vim Config
+# CK VIM/ZSH
 
-##### _CK Vim supports NeoVim(OSX) and Vim(OSX/Linux/WSL)_
+## Pre-requisite
 
-### You must have brew installed
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
----
-
-#### Run this to install everything automatically :)
-
-#### Clone this project into `~/.vim`
+Clone this project into `~/.vim`
 
 ```bash
 git clone https://github.com/chris542/ckVim ~/.vim
 ```
 
-##### On OSX
+# CK-Vim
+
+_CK Vim supports NeoVim(OSX) and Vim(OSX/Linux/WSL)_
+
+## You must have brew installed
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+### On OSX
 
 > :warning: This will override your .vimrc file
 
@@ -26,31 +26,46 @@ git clone https://github.com/chris542/ckVim ~/.vim
 ~/.vim/install.sh
 ```
 
-##### On WSL/Linux
+### On WSL/Linux
+
+There is no automatic installation script for Linux yet. Please copy and paste the following snippet to install all of the necessary libraries manually.
 
 ```bash
 brew install python3 node fnm vim
 brew install cmake bat watchman the_silver_searcher ripgrep
+```
 
+> :warning: This will override your .vimrc file
+
+```bash
 rm ~/.vimrc
 ln -s ~/.vim/.vimrc ~/.vimrc
+mkdir ~/.config
+mkdir ~/.config/nvim
 ln -s ~/.vim/coc-settings.json ~/.config/nvim/coc-settings.json
 ```
 
-## OSX Guide to Setup ZSH
+### Install Plugins
 
-### Pre-requisite
+1. Run vim
+2. Run `:PlugInstall` or `,pi`
 
-#### Install zplug
+---
 
-```bash
-brew install zplug
-```
+# CK-ZSH
 
-#### Install Oh-my-zsh
+## For MacOS
+
+### Install Oh-my-zsh
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+### Install Zplug
+
+```bash
+brew install zplug
 ```
 
 ### Link .zshrc
@@ -61,6 +76,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 #Synlink .zshrc
 rm ~/.zshrc
 ln -s ~/.vim/.zshrc ~/.zshrc
+source ~/.zshrc
 ```
 
 ### Install plugins
@@ -71,7 +87,7 @@ zi
 zplug install
 ```
 
-## WSL/Linux Guide to Setup ZSH
+## For WSL/Linux
 
 ### Pre-requisite
 
@@ -85,19 +101,16 @@ zplug install
 - Manually download the FiraCode.zip from [here](https://github.com/ryanoasis/nerd-fonts/releases)
 - Configure the Terminal configuration with the font
 
-### Install ZSH on WSL
+### Install ZSH
 
 1. Open Terminal app and open WSL terminal
 2. Install ZSH
 
 ```bash
 sudo apt install zsh
-
-# Use zsh as default
-chsh -s $(which zsh)
 ```
 
-3. Use ZSH as default on WSL
+3. Then run following command to change your default shell to ZSH
 
 ```bash
 chsh -s $(which zsh)
@@ -123,6 +136,7 @@ brew install zplug
 #Synlink .zshrc
 rm ~/.zshrc
 ln -s ~/.vim/.zshrc ~/.zshrc
+source ~/.zshrc
 ```
 
 ### Install plugins
@@ -141,4 +155,17 @@ zplug install
 
 ```bash
 compaudit | xargs chmod g-w
+```
+
+- If you get a prompt that brew is missing after installation, simply run this command
+
+```bash
+eval "$(/usr/lib/bin/brew shellenv)"
+```
+
+- If you get a prompt that zplug is missing after installation, simply run this command
+
+```bash
+export ZPLUG_HOME=/home/linuxbrew/.linuxbrew/opt/zplug
+source $ZPLUG_HOME/init.zsh
 ```

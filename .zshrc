@@ -18,14 +18,27 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 POWERLINE_DISABLE_RPROMPT="true"
 COMPLETION_WAITING_DOTS="true"
 
-#------Source plugins--------
-source $HOME/.vim/plugins.zsh
-#------Source plugins--------
-
 # oh-my-zsh
 export ZSH=$HOME/.oh-my-zsh
 ZSH_DISABLE_COMPFIX=true
 #source $ZSH/oh-my-zsh.sh
+
+# Set PATH
+export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/home/linuxbrew/.linuxbrew/bin"
+export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="$PATH:$HOME/.dotnet/tools"
+export PATH="$PATH:$HOME/.pub-cache/bin"
+
+NPM_PACKAGES="${HOME}/.npm-packages"
+NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+unset MANPATH
+MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+export PATH="$PATH:$NPM_PACKAGES/bin"
+export HOMEBREW_PREFIX=$(brew --prefix)
+
+#------Source plugins--------
+source $HOME/.vim/plugins.zsh
+#------Source plugins--------
 
 # zsh-users/zsh-syntax
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
@@ -41,21 +54,6 @@ MODE_INDICATOR_REPLACE='%F{9}<%F{1}REPLACE<%f'
 MODE_INDICATOR_SEARCH='%F{13}<%F{5}SEARCH<%f'
 MODE_INDICATOR_VISUAL='%F{12}<%F{4}VISUAL<%f'
 MODE_INDICATOR_VLINE='%F{12}<%F{4}V-LINE<%f'
-
-# Set PATH
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/home/linuxbrew/.linuxbrew/bin"
-export PATH="$NPM_PACKAGES/bin:$PATH"
-export PATH="$HOME/.rvm/bin:$PATH"
-export PATH="$PATH:/Users/chris.kang/.dotnet/tools"
-export PATH="$PATH":"$HOME/.pub-cache/bin"
-
-NPM_PACKAGES="${HOME}/.npm-packages"
-NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
-
-unset MANPATH
-MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
-
-export HOMEBREW_PREFIX=$(brew --prefix)
 
 # Kubectl
 if [ -d "$HOMEBREW_PREFIX/opt/kubectl/bin" ];then
@@ -81,8 +79,6 @@ fi
   #export PATH=/opt/homebrew/opt/ruby/bin:$PATH
   #export PATH=`gem environment gemdir`/bin:$PATH
 #fi
-
-
 
 #alias
 alias vim="vim -v"
