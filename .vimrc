@@ -525,7 +525,7 @@ command! Anon call s:clean_personal_stuff()
 command! Compression call s:add_compression()
 
 "kkvh/vim-docker-tools
-nnoremap <silent><leader>dc :DockerToolsOpen<cr>
+nnoremap <silent><leader>dc :DockerToolsToggle<cr>
 
 "tpope/vim-dadbod
 "postgres://postgres:mypassword@localhost:5432/my-dev-db
