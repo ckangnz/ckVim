@@ -9,6 +9,7 @@ brew_install "fnm"
 brew_install "nvim"
 brew_install_cask "neovide"
 
+brew_install "gh"
 brew_install "cmake"
 brew_install "bat"
 brew_install "watchman"

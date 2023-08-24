@@ -50,19 +50,30 @@
     git remote remove origin                Remove remote origin
     git fetch/pull/push origin              Fetch/Pull/Push remote origin
 
-# SSH Key Gen
+# Setting up authentication
+
+1. Install Github CLI
+
 ```bash
-# List all files in .ssh
-ls -al ~/.ssh
-
-# Generate ssh-key
-ssh-keygen -t rsa -b 4096 -C "email@example.com"
-
-# Copy the id-rsa.pub file in clipboard
-pbcopy < ~/.ssh/id_rsa.pub
-
-# If git keeps asking for a passphrase,
-eval $(ssh-agent) # Check you have started the SSH agent
-ssh-add # This will generate a private key and allow your computer to if your public key is added to Github
-ssh-add -K # This saves your private key to user's keychain so it works even after close/re-open terminal
+brew install gh
 ```
+
+2. Log into github
+
+- -> Settings (Profile->Settings)
+  - -> Developer Settings (Left bottom)
+    - -> Personal Access Tokens
+
+3. Create an access token.
+
+- Make sure repo and admin:org is enabled
+
+4. Copy the token
+
+5. Run github cli to sign in
+
+```bash
+gh auth login
+```
+
+6. Use the token to sign in :)

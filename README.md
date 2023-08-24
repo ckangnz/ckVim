@@ -32,7 +32,7 @@ There is no automatic installation script for Linux yet. Please copy and paste t
 
 ```bash
 brew install python3 node fnm vim
-brew install cmake bat watchman the_silver_searcher ripgrep
+brew install gh cmake bat watchman the_silver_searcher ripgrep
 ```
 
 > :warning: This will override your .vimrc file
