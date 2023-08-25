@@ -1,5 +1,5 @@
-so ~/.vim/general.vim                           "General Vim settings
-so ~/.vim/plugins.vim                           "Source the plugins
+so ~/.vim/extra_vim_config/general.vim                           "General Vim settings
+so ~/.vim/extra_vim_config/plugins.vim                           "Source the plugins
 runtime macros/sandwich/keymap/surround.vim
 
 filetype plugin indent on
@@ -65,12 +65,12 @@ else
   call add(myPaths,['Vimrc (&v)','vsp $MYVIMRC'])
 endif
 
-call add(myPaths,['General (&g)','vsp $HOME/.vim/general.vim'])
-call add(myPaths,['Plugin (&p)','vsp $HOME/.vim/plugins.vim'])
+call add(myPaths,['General (&g)','vsp $HOME/.vim/extra_vim_config/general.vim'])
+call add(myPaths,['Plugin (&p)','vsp $HOME/.vim/extra_vim_config/plugins.vim'])
 call add(myPaths,['-'])
 
 call add(myPaths,['Zshrc (&z)','vsp $HOME/.zshrc'])
-call add(myPaths,['Zsh Plugin (&l)','vsp $HOME/.vim/plugins.zsh'])
+call add(myPaths,['Zsh Plugin (&l)','vsp $HOME/.vim/extra_vim_config/plugins.zsh'])
 call add(myPaths,['-'])
 
 call add(myPaths,['Install.sh (&i)','vsp $HOME/.vim/install.sh'])
@@ -566,13 +566,18 @@ hi CurSearch cterm=reverse,bold gui=reverse,bold
 "-----AUTO-COMMANDS------"
 augroup autosourcing
     au!
+    if exists('g:neovide') || has('nvim')
+      au BufWritePost $HOME/.vimrc source $MYVIMRC
+      au BufWritePost $HOME/.vimrc AirlineRefresh
+    endif
+
     au BufWritePost $MYVIMRC source $MYVIMRC
-    au BufWritePost $HOME/.vim/general.vim source $MYVIMRC
-    au BufWritePost $HOME/.vim/plugins.vim source $MYVIMRC
+    au BufWritePost $HOME/.vim/extra_vim_config/general.vim source $MYVIMRC
+    au BufWritePost $HOME/.vim/extra_vim_config/plugins.vim source $MYVIMRC
 
     au BufWritePost $MYVIMRC AirlineRefresh
-    au BufWritePost $HOME/.vim/general.vim AirlineRefresh
-    au BufWritePost $HOME/.vim/plugins.vim AirlineRefresh
+    au BufWritePost $HOME/.vim/extra_vim_config/general.vim AirlineRefresh
+    au BufWritePost $HOME/.vim/extra_vim_config/plugins.vim AirlineRefresh
 
     au BufNewFile,BufRead *.ejs set filetype=js
     au BufNewFile,BufRead *.vue,*.hbs set filetype=html

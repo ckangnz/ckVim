@@ -37,7 +37,7 @@ if [ -e ~/.config/nvim/init.vim ]; then
     rm ~/.config/nvim/init.vim
 fi
 echo 'Linking init.vim..'
-ln -s ~/.vim/init.vim ~/.config/nvim/init.vim
+ln -s ~/.vim/extra_vim_config/init.vim ~/.config/nvim/init.vim
 echo 'Completed Linking init.vim for nvim!'
 
 #Symlink coc-settings.json
@@ -46,7 +46,7 @@ if[ -e ~/.config/nvim/coc-settings.json ]; then
   rm ~/.config/nvim/coc-settings.json
 fi
 echo 'Linking coc-settings...'
-ln -s ~/.vim/coc-settings.json ~/.config/nvim/coc-settings.json
+ln -s ~/.vim/extra_vim_config/coc-settings.json ~/.config/nvim/coc-settings.json
 echo 'Completed Linking coc-settings.json for nvim!'
 
 echo "."
