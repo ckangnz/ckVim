@@ -1,4 +1,4 @@
-"-------------GENERAL SETTINGS-------------
+"*-*-*-*-*-*-GENERAL SETTINGS-*-*-*-*-*-*
 let mapleader = ','                             "The default leader is '\'
 let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c4fe', '#ff3f80', '#64fcda', '#fefefe', '#b0bec4', '#ff8980', '#b9f6c9', '#ffe47e', '#80d7fe', '#ff80ab', '#a7fdeb', '#fefefe',]
 "black, dark red, dark green, dark yellow, dark blue, dark magenta, dark cyan, light grey, dark grey, red, green, yellow, blue, magenta, cyan, white
@@ -34,7 +34,7 @@ set incsearch                                   "Show preview of search
 set diffopt+=vertical                           "Set split and diff to vertical
 set laststatus=2
 
-"----------VISUALS---------
+"*-*-*-*-*-*-VISUALS-*-*-*-*-*-*
 set guifont=FiraCode\ Nerd\ Font:h12                  "Set font family
 set linespace=0                                 "Set line space
 set wrapmargin=0                                "line number margins
@@ -57,12 +57,13 @@ let &t_8b = "\e[48;2;%lu;%lu;%lum"              "Sets background color (ANSI, tr
 let &t_SI.="\e[5 q"                             "Cursor shape change in different mode
 let &t_SR.="\e[4 q"
 let &t_EI.="\e[1 q"
+
 if has('linebreak')
-    set breakindent
-    let &showbreak ='﬌'
-    set cpo+=n
-    let &breakat = " ^I!@*-+;:,./?"
-end
+  set breakindent
+  let &showbreak ='﬌'
+  set cpo+=n
+  let &breakat = " ^I!@*-+;:,./?"
+endif
 
 "space = single space inbetween
 "lead = spaces in the front
@@ -71,7 +72,7 @@ end
 "tab = ctrl+v+tab
 set list lcs=space:\ ,lead:\ ,trail:·,nbsp:◇,tab:»»,extends:▸,precedes:◂,multispace:····,
 
-"----------MAPPINGS---------
+"*-*-*-*-*-*-NAVIGATION MAPPINGS-*-*-*-*-*-*
 map ; :
 noremap ;; ;
 nmap j gj
@@ -86,7 +87,7 @@ vnoremap <silent> ∆ :m '>+1<CR>gv=gv
 vnoremap <silent> ˚ :m '<-2<CR>gv=gv
 vnoremap <silent> <leader>y "+y
 
-"Panel Navigation
+"*-*-*-*-*-*-PANEL NAVIGATION-*-*-*-*-*-*
 nmap <C-J> <C-W><C-J>
 nmap <C-K> <C-W><C-K>
 nmap <C-H> <C-W><C-H>
@@ -95,24 +96,13 @@ augroup vimrc
   au!
   autocmd FileType netrw call s:RemoveNetrwMap()
 augroup END
-function s:RemoveNetrwMap()
+func s:RemoveNetrwMap()
   if hasmapto('<Plug>NetrwRefresh')
     unmap <buffer> <C-L>
   endif
-endfunction
+endfunc
 
-"Terminal commands
-tnoremap <Esc> <C-\><C-n>
-if exists('g:neovide') || has('nvim')
-  tnoremap <silent><expr> <c-j> pumvisible() > 0 ? "<c-j>" : "\<c-w><c-j>"
-  tnoremap <silent><expr> <c-k> pumvisible() > 0 ? "<c-k>" : "\<c-w><c-k>"
-else
-  tnoremap <silent><expr> <c-j> len(popup_list()) > 0 ? "<c-j>" : "\<c-w><c-j>"
-  tnoremap <silent><expr> <c-k> len(popup_list()) > 0 ? "<c-k>" : "\<c-w><c-k>"
-endif
-tnoremap <C-h> <C-w><C-h>
-tnoremap <C-l> <C-w><C-l>
-
+"*-*-*-*-*-*-PANEL RESIZING-*-*-*-*-*-*
 ",wf maximise ,wm minimise pane
 ",wt open on a new tab
 ",wh to horizontal, wv to vertical
@@ -126,87 +116,93 @@ nnoremap <Leader>wt <C-W>T
 nnoremap <Leader>bp :bp<cr>
 nnoremap <Leader>bn :bn<cr>
 
-"Search overrides
-nmap <silent> <Leader><space> :nohlsearch<cr>
-vnoremap // y/<C-R>"<CR>N
+"*-*-*-*-*-*-TERMINAL COMMANDS-*-*-*-*-*-*
+tnoremap <Esc> <C-\><C-n>
+if exists('g:neovide') || has('nvim')
+  tnoremap <silent><expr> <c-j> pumvisible() > 0 ? "<c-j>" : "\<c-w><c-j>"
+  tnoremap <silent><expr> <c-k> pumvisible() > 0 ? "<c-k>" : "\<c-w><c-k>"
+else
+  tnoremap <silent><expr> <c-j> len(popup_list()) > 0 ? "<c-j>" : "\<c-w><c-j>"
+  tnoremap <silent><expr> <c-k> len(popup_list()) > 0 ? "<c-k>" : "\<c-w><c-k>"
+endif
+tnoremap <C-h> <C-w><C-h>
+tnoremap <C-l> <C-w><C-l>
 
+"*-*-*-*-*-*-FIND WORD OVERRIDES-*-*-*-*-*-*
+"Clear search
+nmap <silent> <Leader><space> :nohlsearch<cr>
+"Find visually selected word
+vnoremap // y/<C-R>"<CR>N
 "Find/ Search within visual block
 vnoremap / <Esc>/\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
 vnoremap ? <Esc>?\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
-
-"Show Hilight type pressing F10
+"Show Highlight type pressing F10
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+      \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+      \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-"Custom Folding Styles
+"*-*-*-*-*-*-CUSTOM FOLD STYLE-*-*-*-*-*-*
 set foldmethod=syntax
 :setlocal foldcolumn=0
 set foldlevelstart=99
-
 "Space to toggle folds
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+"Folded stype
+func! StyliseFold()
+  let line = '' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+  let lines_count = v:foldend - v:foldstart + 1
+  let lines_count_text = '|' . printf(" %10s", lines_count . ' lines' .. ' ◂') . ' |'
+  let foldtextstart = strpart('▸' . repeat(' ', v:foldlevel*2). line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text
+  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+  return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) .. foldtextend
+endfunc
+set foldtext=StyliseFold()
 
-"Neat Folding
-function! NeatFoldText()
-    let line = '' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
-    let lines_count = v:foldend - v:foldstart + 1
-    let lines_count_text = '|' . printf(" %10s", lines_count . ' lines' .. ' ◂') . ' |'
-    let foldtextstart = strpart('▸' . repeat(' ', v:foldlevel*2). line, 0, (winwidth(0)*2)/3)
-    let foldtextend = lines_count_text
-    let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-    return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) .. foldtextend
-endfunction
-set foldtext=NeatFoldText()
 
-"--------CUSTOM VIM SCRIPT------------
-
-for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '-', '#' ]
-    execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
-    execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
-    execute 'xnoremap a' . char . ' :<C-u>normal! F' . char . 'vf' . char . '<CR>'
-    execute 'onoremap a' . char . ' :normal va' . char . '<CR>'
-endfor
+"*-*-*-*-*-*-CUSTOM COMMANDS-*-*-*-*-*-*
 
 "To do notes
-function! Todo()
-    call inputsave()
-    let t = input('Enter todo: ')
-    call inputrestore()
-    if t !=""
-        let fname = "~/.vim/notes/todo.md"
-        let winnum = bufwinnr(fname)
-        if winnum != -1
-          exe winnum . "wincmd w"
-        else
-          exe "60vsp" .  fname
-        endif
-      if len(t) > 0 && t != " "
-        call append(line('$'), '- [ ] ' . t)
-      endif
+func! Todo()
+  call inputsave()
+  let t = input('Enter todo: ')
+  call inputrestore()
+  if t !=""
+    let fname = "~/.vim/notes/todo.md"
+    let winnum = bufwinnr(fname)
+    if winnum != -1
+      exe winnum . "wincmd w"
+    else
+      exe "60vsp" .  fname
     endif
-endfunction
+    if len(t) > 0 && t != " "
+      call append(line('$'), '- [ ] ' . t)
+    endif
+  endif
+endfunc
 nnoremap <Leader>N :call Todo()<CR>
+
+"Generate GUID
+func GenerateGUID()
+  let l:new_uuid=system('uuidgen')[:-2]
+  let l:nuuid_case = "lower"
+  let l:id= l:nuuid_case == "lower" ? tolower(l:new_uuid) : toupper(l:new_uuid)
+  let @"=l:id
+  echo "NEW GUID: " . l:id
+endfunc
 
 "Toggle copen and cclose
 autocmd FileType qf if (getwininfo(win_getid())[0].loclist != 1) | wincmd J | endif "Quickfix to be full width on the bottom
-function! ToggleQuickFix()
-    if empty(filter(getwininfo(), 'v:val.quickfix')) | copen | else | cclose | endif
-endfunction
+func! ToggleQuickFix()
+  if empty(filter(getwininfo(), 'v:val.quickfix')) | copen | else | cclose | endif
+endfunc
 nnoremap <silent> <Leader>4 :call ToggleQuickFix()<cr>
 
-function! ClearReg()
-    let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
-    for r in regs
-        call setreg(r, [])
-    endfor
-    unlet regs
-endfunction
-
-func GenerateGUID()
-    let l:new_uuid=system('uuidgen')[:-2]
-    let l:nuuid_case = "lower"
-    let l:id= l:nuuid_case == "lower" ? tolower(l:new_uuid) : toupper(l:new_uuid)
-    let @"=l:id
-    echo "NEW GUID: " . l:id
-endfunction
+"Clear all registers
+func! ClearReg()
+  let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
+  for r in regs
+    call setreg(r, [])
+  endfor
+  unlet regs
+endfunc
