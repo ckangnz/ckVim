@@ -1,5 +1,6 @@
 so ~/.vim/extra_vim_config/general.vim                           "General Vim settings
 so ~/.vim/extra_vim_config/plugins.vim                           "Source the plugins
+so ~/.vim/extra_vim_config/coc.vim                               "Source the coc settings
 runtime macros/sandwich/keymap/surround.vim
 
 filetype plugin indent on
@@ -65,8 +66,10 @@ else
   call add(myPaths,['Vimrc (&v)','vsp $MYVIMRC'])
 endif
 
+call add(myPaths,['-'])
 call add(myPaths,['General (&g)','vsp $HOME/.vim/extra_vim_config/general.vim'])
 call add(myPaths,['Plugin (&p)','vsp $HOME/.vim/extra_vim_config/plugins.vim'])
+call add(myPaths,['Coc Settings (&c)','vsp $HOME/.vim/extra_vim_config/coc.vim'])
 call add(myPaths,['-'])
 
 call add(myPaths,['Zshrc (&z)','vsp $HOME/.zshrc'])
@@ -77,12 +80,13 @@ call add(myPaths,['Install.sh (&i)','vsp $HOME/.vim/install.sh'])
 call add(myPaths,['-'])
 
 call add(myPaths,['/Home (&d)','vsp $HOME/.vim'])
-call add(myPaths,['/Code (&c)','vsp $HOME/code'])
 noremap <nowait><silent><leader>e :call quickui#context#open(myPaths, myPathsOpts)<cr>
+"-------------------------------------------
 
 nmap <silent><leader>pi :PlugInstall<cr>
 nmap <silent><leader>pu :PlugUpdate<cr>
 
+"-------------MY MENU SHORTCUT------------
 let g:utilOpts = {'title': 'Utility Menu'}
 let g:utilContent = []
 
@@ -93,8 +97,6 @@ call add(g:utilContent, ['-'])
 call add(g:utilContent, [ 'Generate GUID (&i)', 'call GenerateGUID()' ])
 call add(g:utilContent, [ 'Delete all white spaces (&w)', '%s/^$\\|^\s\+//g' ])
 call add(g:utilContent, ['-'])
-
-"-------------------------------------------
 
 "iamcco/markdown-preview.nvim
 let g:mkdp_auto_start = 0
@@ -321,127 +323,6 @@ autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
-"neoclide/coc.nvim
-let g:coc_user_config = {}
-let g:coc_global_extensions = [
-      \ 'coc-vimlsp',
-      \ 'coc-emmet',
-      \ 'coc-css',
-      \ 'coc-html',
-      \ 'coc-json',
-      \ 'coc-yaml',
-      \ 'coc-swagger',
-      \ 'coc-prettier',
-      \ 'coc-tsserver',
-      \ 'coc-docker',
-      \ 'coc-csharp-ls',
-      \ 'coc-eslint',
-      \ 'coc-snippets',
-      \ 'coc-db',
-      \ 'coc-flutter',
-      \ 'coc-kotlin'
-      \]
-
-nmap <silent><nowait>gh <Plug>(coc-diagnostic-info)
-nmap <silent><nowait>gd <Plug>(coc-definition)
-nmap <silent><nowait>gy <Plug>(coc-type-definition)
-nmap <silent><nowait>gi <Plug>(coc-implementation)
-nmap <silent><nowait>gr <Plug>(coc-references)
-nmap <silent><nowait><S-r> <Plug>(coc-rename)
-nmap <silent><nowait><leader><S-r> :CocCommand workspace.renameCurrentFile<cr>
-xmap <nowait><leader>= <Plug>(coc-format-selected)
-nmap <nowait><leader>= <Plug>(coc-format)
-xmap <nowait><leader>ac <Plug>(coc-codeaction-selected)
-nmap <nowait><leader>ac <Plug>(coc-codeaction-selected)
-nmap <nowait><leader>ap <Plug>(coc-diagnostic-prev)
-nmap <nowait><leader>an <Plug>(coc-diagnostic-next)
-nmap <nowait><leader>. <Plug>(coc-codeaction)
-nmap <nowait><leader>. <Plug>(coc-fix-current)
-nnoremap <silent><nowait> gs :<C-u>CocList -I symbols<cr>
-nnoremap <silent><nowait> ? :<C-u>CocList outline<CR>
-"Floating scroll
-nnoremap <silent><expr> <c-j> coc#float#has_scroll() ? coc#float#scroll(1) : "\<c-w><c-j>"
-nnoremap <silent><expr> <c-k> coc#float#has_scroll() ? coc#float#scroll(0) : "\<c-w><c-k>"
-inoremap <silent><expr> <c-j> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<c-w><c-j>"
-inoremap <silent><expr> <c-k> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<c-w><c-k>"
-vnoremap <silent><expr> <c-j> coc#float#has_scroll() ? coc#float#scroll(1) : "\<c-w><c-j>"
-vnoremap <silent><expr> <c-k> coc#float#has_scroll() ? coc#float#scroll(0) : "\<c-w><c-k>"
-
-command -nargs=0 Swagger :CocCommand swagger.render
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-command! -nargs=0 Format         :call CocActionAsync('format')
-command! -nargs=? Fold           :call CocActionAsync('fold', <f-args>)
-command! -nargs=0 OrganizeImport :call CocActionAsync('runCommand', 'editor.action.organizeImport')
-command! -nargs=0 RenameFile :CocCommand workspace.renameCurrentFile
-command! -nargs=0 CocUndo :CocCommand workspace.undo
-command! -nargs=0 CocRedo :CocCommand workspace.redo
-
-inoremap <silent><expr> <TAB>
-  \ coc#pum#visible() ? coc#_select_confirm() :
-  \ coc#expandableOrJumpable() ?
-  \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ coc#refresh()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-let g:coc_snippet_next = '<tab>'
-
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
-
-augroup cocOverride
-  autocmd!
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-
-  "Javascript formatSelected
-  autocmd FileType javasccript,javascriptreact,typescript,typescriptreact,json setl formatexpr=CocActionAsync('formatSelected')
-  "Disable markdown suggestions
-  autocmd FileType markdown let b:coc_suggest_disable = 1
-
-  "SCSS override
-  autocmd FileType scss setl iskeyword+=@-@
-
-  "Dart overrides
-  autocmd FileType dart nmap<silent><leader>t :OpenDartTestMenu<cr>
-
-  "C# overrides
-  autocmd FileType cs nmap <silent><buffer><C-b> :AsyncRun dotnet build<cr>
-  function! s:create_dotnet_controller() abort
-    let controllerName = input('Controller Name: ')
-    let modelName = input('Model Name: ')
-    let dbContextName = input('DB Context Name: ')
-    if controllerName != "" && modelName != "" && dbContextName != ""
-      let script = ":!dotnet aspnet-codegenerator controller "
-            \.. "-name " .. controllerName .. "Controller "
-            \.. "-async "
-            \.. "-api "
-            \.. "-m " .. modelName .. " "
-            \.. "-dc " .. dbContextName .. " "
-            \.. "-outDir Controllers"
-      exe script
-    else
-      echo "Cancelled"
-    endif
-  endfunction
-  command! CreateController call s:create_dotnet_controller()
-augroup end
-
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocActionAsync('doHover')
-  endif
-endfunction
-
 "--------Testing vim-test/vim-test--------"
 function! TestNearestJS(runner, ...)
   let g:test#javascript#runner = a:runner
@@ -486,7 +367,19 @@ command! OpenCSharpTestMenu call OpenTestMenu('XUnit Test', 'xunit', '--nologo -
 command! OpenDartTestMenu call OpenTestMenu('Dart Test', 'fluttertest', '')
 
 map <silent><nowait><leader>t :OpenJestMenu<cr>
-autocmd FileType cs map <silent><nowait><leader>t :OpenCSharpTest<cr>
+
+"--Language Specific Override--
+"CSharp overrides
+autocmd FileType cs map <silent><nowait><leader>t :OpenCSharpTestMenu<cr>
+autocmd FileType cs nmap <silent><buffer><C-b> :AsyncRun dotnet build<cr>
+
+"SCSS override
+autocmd FileType scss setl iskeyword+=@-@
+
+"Dart overrides
+autocmd FileType dart nmap<silent><leader>t :OpenDartTestMenu<cr>
+"-----------------------------
+
 
 if exists('g:neovide') || has('nvim')
   let test#strategy='neovim'
@@ -574,10 +467,12 @@ augroup autosourcing
     au BufWritePost $MYVIMRC source $MYVIMRC
     au BufWritePost $HOME/.vim/extra_vim_config/general.vim source $MYVIMRC
     au BufWritePost $HOME/.vim/extra_vim_config/plugins.vim source $MYVIMRC
+    au BufWritePost $HOME/.vim/extra_vim_config/coc.vim source $MYVIMRC
 
     au BufWritePost $MYVIMRC AirlineRefresh
     au BufWritePost $HOME/.vim/extra_vim_config/general.vim AirlineRefresh
     au BufWritePost $HOME/.vim/extra_vim_config/plugins.vim AirlineRefresh
+    au BufWritePost $HOME/.vim/extra_vim_config/coc.vim AirlineRefresh
 
     au BufNewFile,BufRead *.ejs set filetype=js
     au BufNewFile,BufRead *.vue,*.hbs set filetype=html
