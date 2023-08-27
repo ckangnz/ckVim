@@ -136,6 +136,7 @@ let g:vim_markdown_fenced_languages = ['js=javascript', 'jsx=javascriptreact', '
 "----FADE INACTIVE PANEL: TaDaa/vimade
 let g:vimade = {}
 let g:vimade.fadelevel = 0.5
+let g:vimade.enablefocusfading= 0
 
 "----QUICK-UI: skywind3000/vim-quickui
 let g:quickui_border_style = 2
