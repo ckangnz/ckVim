@@ -24,7 +24,10 @@ ZSH_DISABLE_COMPFIX=true
 #source $ZSH/oh-my-zsh.sh
 
 # Set PATH
-export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/home/linuxbrew/.linuxbrew/bin"
+export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
+export PATH="$PATH:/home/linuxbrew/.linuxbrew/sbin"
+export PATH="$PATH:/usr/local/bin:/usr/bin:/bin"
+export PATH="$PATH:/usr/sbin:/sbin"
 export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:$HOME/.dotnet/tools"
 export PATH="$PATH:$HOME/.pub-cache/bin"
