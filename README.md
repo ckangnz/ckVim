@@ -10,7 +10,7 @@ git clone https://github.com/chris542/ckVim ~/.vim
 
 # CK-Vim
 
-_CK Vim supports NeoVim(OSX) and Vim(OSX/Linux/WSL)_
+_CK Vim supports NeoVim on all linux OS_
 
 ## You must have brew installed
 
@@ -168,4 +168,10 @@ eval "$(/usr/lib/bin/brew shellenv)"
 ```bash
 export ZPLUG_HOME=/home/linuxbrew/.linuxbrew/opt/zplug
 source $ZPLUG_HOME/init.zsh
+```
+
+- If you get python issue on nvim install pynvim
+
+```
+$(which python3) -m pip install pynvim
 ```
