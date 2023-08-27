@@ -12,7 +12,6 @@ Plug 'dstein64/vim-startuptime'                                     " Show :Star
 Plug 'junegunn/goyo.vim'                                            " Silence view
 Plug 'markonm/traces.vim'                                           " Preview highlights and substitute
 Plug 'mbbill/undotree'                                              " Magic of Undos
-Plug 'miyakogi/conoline.vim'                                        " Highlight current line
 Plug 'TaDaa/vimade'                                                 " Dim inactive window for pair-programming
 
 " Language Specific

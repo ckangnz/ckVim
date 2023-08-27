@@ -148,20 +148,7 @@ let g:vim_current_word#highlight_twins = 1
 hi CurrentWord gui=bold,underline cterm=bold,underline
 hi CurrentWordTwins gui=bold cterm=bold
 
-"----HIGHLIGHT CURRENT LINE: miyakogi/conoline.vim
-map <silent> <leader>lp :ConoLineToggle<cr>
-let g:conoline_auto_enable = 1
-let g:conoline_use_colorscheme_default_normal=1
-let g:conoline_use_colorscheme_default_insert=1
-let concealMenu=[]
-call add(concealMenu, ['Toggle TS Conceal(&t)', 'exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"'])
-call add(concealMenu, ['Toggle Indent Lines(&l)', 'IndentLinesToggle'])
-call add(concealMenu, ['Toggle Conoline(&p) ', 'ConoLineToggle'])
-let concealOpt = {'title':'Conceal Menu'}
-noremap <silent><nowait><leader>l :call quickui#listbox#open(concealMenu, concealOpt)<cr>
-
 "----INDENTATION BAR: Yggdroot/indentLine
-map <silent> <Leader>ll :IndentLinesToggle<cr>
 let g:indentLine_enabled = 0
 let g:indentLine_setColors = 1
 let g:indentLine_showFirstIndentLevel = 1
@@ -169,6 +156,12 @@ let g:indentLine_char_list = ['┊','|', '¦', '┆']
 let g:indentLine_defaultGroup = 'SpecialKey'
 let g:indentLine_concealcursor = 'inc'
 let g:indentLine_conceallevel = 2
+
+let concealMenu=[]
+call add(concealMenu, ['Toggle TS Conceal(&t)', 'exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"'])
+call add(concealMenu, ['Toggle Indent Lines(&l)', 'IndentLinesToggle'])
+let concealOpt = {'title':'Conceal Menu'}
+noremap <silent><nowait><leader>l :call quickui#listbox#open(concealMenu, concealOpt)<cr>
 
 
 "*-*-*-*-*-*-FUNCTIONALITY PLUGINS-*-*-*-*-*-*
@@ -467,5 +460,8 @@ augroup autosourcing
   au BufNewFile,BufRead *.vue,*.hbs set filetype=html
   au BufNewFile,BufRead *.jsx set filetype=javascriptreact
   au BufNewFile,BufRead *.tsx set filetype=typescriptreact
+
+  au InsertEnter * setlocal cursorline
+  au VimEnter,InsertLeave * setlocal cursorline
 augroup END
 
