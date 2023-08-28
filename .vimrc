@@ -135,6 +135,9 @@ au FileType markdown noremap<leader>E :MarkdownEditBlock<cr>
 
 "*-*-*-*-*-*-VISUAL PLUGINS-*-*-*-*-*-*
 "----FADE INACTIVE PANEL: TaDaa/vimade
+if !has('python3')
+  let g:vimade_running = v:false
+endif
 let g:vimade = {}
 let g:vimade.fadelevel = 0.5
 
