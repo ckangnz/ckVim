@@ -130,7 +130,7 @@ let g:markdown_enable_conceal = 1
 let g:markdown_enable_folding = 1
 let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_fenced_languages = ['js=javascript', 'jsx=javascriptreact', 'ts=typescript', 'tsx=typescriptreact', 'sh=bash', 'cs=csharp']
-au FileType markdown noremap<leader>E :MarkdownEditCodeBlock<cr>
+au FileType markdown noremap<leader>E :MarkdownEditBlock<cr>
 
 
 "*-*-*-*-*-*-VISUAL PLUGINS-*-*-*-*-*-*
