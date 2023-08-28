@@ -84,7 +84,7 @@ fi
 #fi
 
 #alias
-alias vim="vim -v"
+alias vim="nvim"
 alias neo="neovide --multigrid"
 alias bu="brew upgrade && brew update --cask"
 alias zi="zplug install"

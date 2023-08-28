@@ -10,10 +10,7 @@ brew_install "nvim"
 brew_install_cask "neovide"
 
 brew_install "gh"
-brew_install "cmake"
 brew_install "bat"
-brew_install "watchman"
-brew_install "the_silver_searcher"
 brew_install "ripgrep"
 
 #[Check versions here](https://github.com/isen-ng/homebrew-dotnet-sdk-versions)
@@ -30,6 +27,11 @@ fi
 echo 'Linking vimrc...'
 ln -s ~/.vim/.vimrc ~/.vimrc
 echo 'Completed Linking vimrc!'
+
+if [ ! -d ~/.config/nvim ];then
+  echo 'Creating ~/.config/nvim directory'
+  mkdir ~/.config/nvim
+fi
 
 #Symlink init.vim
 if [ -e ~/.config/nvim/init.vim ]; then
