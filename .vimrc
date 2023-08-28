@@ -278,7 +278,7 @@ hi BookmarkLine ctermbg=NONE ctermfg=NONE guibg=#343434 guifg=NONE
 let gitOpt = {'title':'GITHUB Menu'}
 let githubMenu = []
 call add(githubMenu , ['Open PR (&r)', 'exec "OpenGithubPullReq #" . FugitiveHead()'])
-call add(githubMenu , ['Open current file (&f)', 'Gbrowse'])
+call add(githubMenu , ['Open current file (&f)', 'GBrowse'])
 call add(githubMenu , ['Open project (&g)', 'OpenGithubProect'])
 call add(githubMenu , ['Open issues (&i)', 'OpenGithubIssue'])
 call add(githubMenu , ['Open pull requests (&p)', 'OpenGithubPullReq'])
@@ -301,7 +301,6 @@ nnoremap <silent> <Leader>gP :AsyncRun git push -f<cr>
 nnoremap <silent> <Leader>gl :AsyncRun git pull<cr>
 nnoremap <silent><Leader>gfo :AsyncRun git fetch origin
 nnoremap <silent><Leader>gfa :AsyncRun git fetch --all --prune<cr>
-nnoremap <silent> <Leader>gof :Gbrowse<cr>
 
 func s:UpdateGitStatusLine() abort
   if !exists('*FugitiveExtractGitDir')
