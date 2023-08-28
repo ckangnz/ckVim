@@ -7,6 +7,7 @@ brew_install "node"
 brew_install "fnm"
 
 brew_install "nvim"
+brew_install "vim"
 brew_install_cask "neovide"
 
 brew_install "gh"
@@ -18,6 +19,9 @@ brew_install_cask "dotnet-sdk"
 #brew_install_cask "dotnet-sdk6-0-300" "isen-ng/dotnet-sdk-versions"
 
 brew_install_cask "font-fira-code-nerd-font" "homebrew/cask-fonts"
+
+#Install pynvim for Neovim
+$(which python3) -m pip install pynvim
 
 #Symlink vimrc
 if [ -e ~/.vimrc ]; then
@@ -50,6 +54,7 @@ fi
 echo 'Linking coc-settings...'
 ln -s ~/.vim/extra_vim_config/coc-settings.json ~/.config/nvim/coc-settings.json
 echo 'Completed Linking coc-settings.json for nvim!'
+
 
 echo "."
 echo "."
