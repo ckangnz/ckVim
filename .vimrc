@@ -443,6 +443,7 @@ augroup autosourcing
   au!
   if exists('g:neovide') || has('nvim')
     au BufWritePost $HOME/.vimrc source $MYVIMRC
+    au BufWritePost $HOME/.vimrc source $HOME/.vimrc
     au BufWritePost $HOME/.vimrc AirlineRefresh
   endif
 
