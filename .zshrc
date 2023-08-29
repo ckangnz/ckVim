@@ -64,7 +64,9 @@ fi
 #alias
 alias vim="vim"
 alias neo="neovide --multigrid"
-alias bu="brew upgrade && brew update --cask"
+alias bu="brew upgrade"
+alias buc="brew update --cask"
+alias p10="p10k configure"
 alias zi="zplug install"
 alias zu="zplug update"
 alias dczsh="docker-compose run --rm web zsh"
