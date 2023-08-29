@@ -145,8 +145,15 @@ source ~/.zshrc
 zi
 #or
 zplug install
+```
 
-# zi kubectl helm
+## Powerlevel10k Config
+
+Run following command to configure your powerlevel10k theme.
+Avoid sourcing `~/.p10k.zsh` as it is already imported in `.zshrc`
+
+```bash
+p10k configure
 ```
 
 ## Trouble-Shooting
