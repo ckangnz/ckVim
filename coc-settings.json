@@ -41,7 +41,7 @@
   },
 
   "diagnostic.enableMessage": "always",
-  "diagnostic.errorSign": "",
+  "diagnostic.errorSign": "x",
   "diagnostic.warningSign": "",
 
   "suggest.completionItemKindLabels": {
