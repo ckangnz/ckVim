@@ -160,6 +160,27 @@ noremap <silent><nowait><leader>l :call quickui#listbox#open(concealMenu, concea
 
 
 "*-*-*-*-*-*-FUNCTIONALITY PLUGINS-*-*-*-*-*-*
+"---------AI Toolkit: Exafunction/codeium.vim
+":Codeium Auth
+let g:codeium_disable_bindings = 1
+let g:codeium_manual = v:true
+if has('unix') && has('mac')
+  "Mac
+  imap <script><silent><nowait><expr> ≠ codeium#Accept()
+  imap ‘ <Plug>(codeium-next)
+  imap “ <Plug>(codeium-previous)
+  imap œ <Plug>(codium-dismiss)
+  imap å <Cmd>call codeium#Complete()<CR>
+else
+  "Linux
+  imap <script><silent><nowait><expr> <M-=> codeium#Accept()
+  imap <M-]> <Plug>(codeium-next)
+  imap <M-[> <Plug>(codeium-previous)
+  imap <M-q> <Plug>(codium-dismiss)
+  imap <M-a> <Cmd>call codeium#Complete()<CR>
+endif
+let g:airline_section_y = 'AI:%3{codeium#GetStatusString()}'
+
 "---------ASYNCRUN: skywind3000/asyncrun.vim
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
@@ -404,6 +425,7 @@ augroup WhitespaceMatch
   autocmd BufWinEnter * let w:whitespace_match_number = matchadd('ExtraWhitespace', '\s\+$')
   autocmd InsertLeave * call s:ToggleWhitespaceMatch('n')
 augroup END
+
 hi ExtraWhitespace ctermbg=red guibg=red
 
 hi LineNr ctermbg=0 guibg=bg
@@ -417,11 +439,12 @@ hi diffRemoved ctermfg=167 guifg=#ea6962
 hi Search ctermfg=black ctermbg=white guifg=black guibg=white
 hi CurSearch cterm=reverse,bold gui=reverse,bold
 
+hi CodeiumSuggestion guifg=#928374 ctermfg=245
+
 "*-*-*-*-*-*-AUTO COMMANDS-*-*-*-*-*-*
 augroup autosourcing
   au!
   if exists('g:neovide') || has('nvim')
-    au BufWritePost $HOME/.vimrc source $MYVIMRC
     au BufWritePost $HOME/.vimrc source $HOME/.vimrc
     au BufWritePost $HOME/.vimrc AirlineRefresh
   endif

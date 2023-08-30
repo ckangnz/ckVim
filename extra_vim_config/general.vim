@@ -79,12 +79,21 @@ nmap j gj
 nmap k gk
 vmap j gj
 vmap k gk
-nnoremap <silent> ∆ :m .+1<CR>==
-nnoremap <silent> ˚ :m .-2<CR>==
-inoremap <silent> ∆ <Esc>:m .+1<CR>==gi
-inoremap <silent> ˚ <Esc>:m .-2<CR>==gi
-vnoremap <silent> ∆ :m '>+1<CR>gv=gv
-vnoremap <silent> ˚ :m '<-2<CR>gv=gv
+if has('unix') && has('mac')
+  nnoremap <silent> ∆ :m .+1<CR>==
+  nnoremap <silent> ˚ :m .-2<CR>==
+  inoremap <silent> ∆ <Esc>:m .+1<CR>==gi
+  inoremap <silent> ˚ <Esc>:m .-2<CR>==gi
+  vnoremap <silent> ∆ :m '>+1<CR>gv=gv
+  vnoremap <silent> ˚ :m '<-2<CR>gv=gv
+else
+  nnoremap <silent> <M-j> :m .+1<CR>==
+  nnoremap <silent> <M-k> :m .-2<CR>==
+  inoremap <silent> <M-j>∆ <Esc>:m .+1<CR>==gi
+  inoremap <silent> <M-k>˚ <Esc>:m .-2<CR>==gi
+  vnoremap <silent> <M-j>∆ :m '>+1<CR>gv=gv
+  vnoremap <silent> <M-k>˚ :m '<-2<CR>gv=gv
+endif
 vnoremap <silent> <leader>y "+y
 
 "*-*-*-*-*-*-PANEL NAVIGATION-*-*-*-*-*-*
