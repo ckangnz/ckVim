@@ -129,8 +129,12 @@ let g:typescript_conceal_super                = "Ω"
 if !has('python3')
   let g:vimade_running = v:false
 endif
-let g:vimade = {}
-let g:vimade.fadelevel = 0.5
+
+let g:vimade ={
+      \'fadelevel': 0.5,
+      \'enablesigns':1,
+      \'enablescroll':1,
+      \}
 
 "----QUICK-UI: skywind3000/vim-quickui
 let g:quickui_border_style = 2
