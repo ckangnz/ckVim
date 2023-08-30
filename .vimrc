@@ -67,7 +67,7 @@ else
 endif
 
 call add(myPaths,['-'])
-call add(myPaths,['\~/.vim (&d)','vsp $HOME/.vim'])
+call add(myPaths,[" ~/.vim (&d)",'vsp $HOME/.vim'])
 call add(myPaths,['Readme.md (&r)','vsp $HOME/.vim/README.md'])
 call add(myPaths,['Install.sh (&i)','vsp $HOME/.vim/install.sh'])
 
