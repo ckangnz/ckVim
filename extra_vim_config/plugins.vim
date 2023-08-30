@@ -16,7 +16,6 @@ Plug 'TaDaa/vimade'                                                 " Dim inacti
 
 " Language Specific
 Plug 'briancollins/vim-jst'                                         " .ejs
-Plug 'gabrielelana/vim-markdown'                                    " .md
 Plug 'herringtonDarkholme/yats.vim'                                 " .ts
 Plug 'mattn/emmet-vim'                                              " .html
 Plug 'pedrohdz/vim-yaml-folds'                                      " .yaml
@@ -51,7 +50,6 @@ Plug 'airblade/vim-rooter'                                          " Find the r
 Plug 'Asheq/close-buffers.vim'                                      " Delete hidden buffers
 Plug 'dominikduda/vim_current_word'                                 " Highlight current word
 Plug 'easymotion/vim-easymotion'                                    " Easy Navigation
-Plug 'godlygeek/tabular'                                            " Text Aligning Tool
 Plug 'kkvh/vim-docker-tools'                                        " Docker within vim
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install'  } " InstantMarkdownPreview
 Plug 'mattesGroeger/vim-bookmarks'                                  " Vim Bookmarks

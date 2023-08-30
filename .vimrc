@@ -123,15 +123,6 @@ let g:typescript_conceal_return               = "⇚"
 let g:typescript_conceal_prototype            = "¶"
 let g:typescript_conceal_super                = "Ω"
 
-"----MARKDOWN: gabrielelana/vim-markdown
-let g:markdown_enable_mappings = 0
-let g:markdown_enable_spell_checking = 0
-let g:markdown_enable_conceal = 1
-let g:markdown_enable_folding = 1
-let g:vim_markdown_conceal_code_blocks = 0
-let g:vim_markdown_fenced_languages = ['js=javascript', 'jsx=javascriptreact', 'ts=typescript', 'tsx=typescriptreact', 'sh=bash', 'cs=csharp']
-au FileType markdown noremap<leader>E :MarkdownEditBlock<cr>
-
 
 "*-*-*-*-*-*-VISUAL PLUGINS-*-*-*-*-*-*
 "----FADE INACTIVE PANEL: TaDaa/vimade
@@ -193,21 +184,6 @@ nnoremap <silent><leader>dc :DockerToolsToggle<cr>
 " mysql://root@localhost/wp_awesome
 " jdbc:sqlserver://localhost:1433;property=value;
 nnoremap <silent><leader>db :DBUI<cr>
-
-"---------TABULAR: godlygeek/tabular
-nmap <Leader>T :Tabularize/
-vmap <Leader>T :Tabularize/
-inoremap <silent> <Bar> <Bar><Esc>:call <SID>align()<CR>a
-func! s:align()
-  let p = '^\s*|\s.*\s|\s*$'
-  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-    Tabularize/|/l1
-    normal! 0
-    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
-  endif
-endfunc
 
 "---------HTTP RESTFUL CALLS: nicwest/vim-http
 let g:vim_http_clean_before_do=0
