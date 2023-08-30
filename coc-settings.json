@@ -35,7 +35,7 @@
   "languageserver": {
     "csharp": {
       "command": "csharp-ls",
-      "rootPatterns": ["*.sln", "git"],
+      "rootPatterns": ["*.sln", "*.csproj", "*.fsproj", ".git"],
       "filetypes": ["cs", "csharp"]
     }
   },
