@@ -180,6 +180,22 @@ else
   imap <M-a> <Cmd>call codeium#Complete()<CR>
 endif
 let g:airline_section_y = 'AI:%3{codeium#GetStatusString()}'
+let g:codeium_filetypes = {
+    \ "cs": v:true,
+    \ "vim": v:true,
+    \ "python": v:true,
+    \ "html": v:true,
+    \ "css": v:true,
+    \ "sass": v:true,
+    \ "json": v:true,
+    \ "flutter": v:true,
+    \ "kotlin": v:true,
+    \ "lua": v:true,
+    \ "javascript": v:true,
+    \ "javascriptreact": v:true,
+    \ "typescript": v:true,
+    \ "typescriptreact": v:true,
+    \ }
 
 "---------ASYNCRUN: skywind3000/asyncrun.vim
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
