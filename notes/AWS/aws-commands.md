@@ -1,19 +1,19 @@
 # AWS Tools
 
-#### CloudWatch
-- Logs
-#### S3
-- File storage
-#### Lambda
-- Methods
-#### EC2
-- Deployed resources
-#### RDS
-- DB Instances
-#### Cloud9
-- Virtual IDE
-#### VPC
-- Virtual Private Cloud
+- CloudWatch
+  - Logs
+- S3
+  - File storage
+- Lambda
+  - Methods
+- EC2
+  - Deployed resources
+- RDS
+  - DB Instances
+- Cloud9
+  - Virtual IDE
+- VPC
+  - Virtual Private Cloud
 
 # Configuring profile
 
@@ -25,14 +25,32 @@ aws configure set profile.<MY-PROFILE-ALIAS>.aws_access_key_id <ACCESS-KEY-ID>
 aws configure set profile.<MY-PROFILE-ALIAS>.aws_secret_access_key <SECRET-ACCESS-KEY>
 aws configure set profile.<MY-PROFILE-ALIAS>.region <YOUR-REGION>
 aws configure set profile.<MY-PROFILE-ALIAS>.role_name <ROLE-NAME>
+
+#You could use sso
+aws configure sso
+```
+
+# IAM Policies
+
+```bash
+# Get Policy Arn
+aws iam list-policies --profile <MY-PROFILE-ALIAS>
+
+# Attach Policy Arn
+aws iam attach-role-policy --policy-arn $POLICYARN --role-name $ROLE --profile <MY-PROFILE-ALIAS>
+
+# Get Policy Version
+aws iam get-policy-version --policy-arn $POLICYARN --profile <MY-PROFILE-ALIAS>
 ```
 
 # S3 bucket
 
 ```bash
-# MakeBucket
+# Make Bucket
 aws s3 mb s3://<BUCKET-NAME> --profile <MY-PROFILE-ALIAS>
-# make_bucket : <BUCKET-NAME>
+
+# Remove Bucket
+aws s3 rb s3://<BUCKET-NAME> --profile <MY-PROFILE-ALIAS>
 
 # Upload
 aws s3 cp ./file_name s3://<BUCKET-NAME> --profile <MY-PROFILE-ALIAS>
@@ -56,9 +74,10 @@ aws lambda add-permisison
     --profile <MY-PROFILE-ALIAS>
 ```
 
-
 # Elastic Beanstalk
+
 - Deploy an app to EB environment
+
 ##### You need AWS EB CLI
 
 ```bash
@@ -72,6 +91,7 @@ eb deploy --profile <MY-PROFILE-ALIAS>
 ```
 
 # CloudFormation
+
 - Specify/Deploy/Configure serverless application (API)
 
 ```bash
