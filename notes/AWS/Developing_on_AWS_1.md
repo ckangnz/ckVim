@@ -1,5 +1,7 @@
 # Day 1
 
+![](/notes/AWS/Developing_on_AWS.png)
+
 ## Module1: Building a Web Application on AWS
 
 ### Building a Cloud-Native application
@@ -167,6 +169,10 @@ aws s3 help
 
 - control access to AWS resources
 - access to multiple AWS accounts
+- IAM has these required fields
+  - Action
+  - Effect
+  - Resource
 - Authentication
   - who/what can be accessed
 - Authorization
@@ -237,6 +243,7 @@ aws configure sso # using single-signon
 
 - limited permissions
 - temporary credentials for IAM users
+  - User Federated User Service can gain temporary credentials by assuming a role (e.g. google/facebook)
 - Not stored with requester
 - Non-recyclable
 
@@ -252,6 +259,10 @@ aws configure sso # using single-signon
   - Disaster recovery
 - Bucket needs to be globally unique across Amazon S3
 - All buckets are encryped and private by default
+- Amazon Storage services support these types of storage
+  - File
+  - Block
+  - Object
 
 #### S3 Components
 
@@ -262,7 +273,9 @@ https://notes-bucket.s3.us-west-2.amazonaws.com/awsservice/notes.txt
                     |--| Service code
 ```
 
-#### S3 Event Notifications
+#### Features of Amazon S3
+
+##### Notifications
 
 - can configure S3 Event Notifications to publish events to:
   - Amazon Simple Notification Service (Amazon SNS) topics
@@ -270,12 +283,12 @@ https://notes-bucket.s3.us-west-2.amazonaws.com/awsservice/notes.txt
   - AWS Lambda functions
   - Amazon EventBridge
 
-#### Versioning
+##### Versioning
 
 - Each object has a version ID
 - Object locking is supported
 
-#### Tags
+##### Tags
 
 - Tags are unique key-value pairs that attach to S3 as metadata
 - Use cases:
@@ -285,21 +298,21 @@ https://notes-bucket.s3.us-west-2.amazonaws.com/awsservice/notes.txt
   - Access control
   - Operation support and monitoring
 
-#### S3 bucket policies
+##### S3 bucket policies
 
 - Policy has five key elements
-  - Resource: Amazon Resource Name (ARN) defines the resource to which you allow or deny permissions
-  - Action: Operations allowed or denied for each resource
-  - Effect - Allow or deny indicates whether the policy allows or denies access
-  - Condition: specifies the conditions when the policy is in effect
-  - Principal: Defines who the policy applies to
+  - **Action**: Operations allowed or denied for each resource
+  - **Resource**: Amazon Resource Name (ARN) defines the resource to which you allow or deny permissions
+  - **Effect** - Allow or deny indicates whether the policy allows or denies access
+  - **Condition**: specifies the conditions when the policy is in effect
+  - **Principal**: Defines who the policy applies to
 
-#### Access Points
+##### Access Points
 
 - Unique hostnames and they are attached to buckets
 - is configured with an access policy specific to the use case
 
-### AWS CLI S3 Commands
+#### AWS CLI S3 Commands
 
 | Low-level commands (s3api)          | High-level commands s3)                  |
 | ----------------------------------- | ---------------------------------------- |
@@ -355,7 +368,7 @@ async Task VerifyBucketName(IAmazonS3 s3Client, string bucketName) {
     }
 ```
 
-### Object operations
+#### Object operations
 
 > Best Practices:
 > You can upload or copy objects of up to 5GB in a single PUT operation.
