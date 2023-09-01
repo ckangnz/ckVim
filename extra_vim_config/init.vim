@@ -19,6 +19,8 @@ if exists("g:neovide")
   tmap <D-v> <C-R>+
   vmap <D-c> "+y<CR>
 
+  map <D-s> :w<CR>
+
   "Changing tabs
   map <D-t> :tabedit<cr>
   map <D-[> gT
