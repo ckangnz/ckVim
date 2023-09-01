@@ -1,6 +1,36 @@
 # Day 1
 
-![](/notes/AWS/Developing_on_AWS.png)
+## Overview
+
+```mermaid
+flowchart LR
+USER[End user]
+subgraph AWSCLOUD[AWS Cloud]
+    IAM("AWS Identity and Access Management(IAM)")
+    COG[Amazon Cognito]
+    WEB[("Website hosting (S3)")]
+    MP3[("MP3 hosting (S3)")]
+    APIG{Amazon API Gateway}
+    LL{{Lambda List}}
+    LC{{Lambda Create}}
+    LS{{Lambda Search}}
+    LD{{Lambda Delete}}
+    LDI{{Lambda Dictate}}
+    DB[(DynamoDB)]
+    PO(Amazon Polly)
+    subgraph Observabilitiy
+        ACW[Amazon CloudWatch]
+        AXR[Amazon X-Ray]
+    end
+    SAM{{"AWS Serverless Application Model (AWS SAM)"}}
+end
+
+USER <--- IAM --> WEB & MP3
+                  WEB <-... Application API calls...-> APIG ---> LL <--> DB
+                                                       APIG <--> LC & LS & LD & LDI <--> DB
+                  MP3 --> LDI ---> PO
+USER <---> COG
+```
 
 ## Module1: Building a Web Application on AWS
 
@@ -92,11 +122,27 @@
   - `5xx`: Server Error
 - [AWS Management Console(UI)] / [AWS CLI] / [AWS SDKs] ==> [AWS REST API] ==> other services
 
-| Client                      |     | API          |     | AWS Services   |
-| --------------------------- | --- | ------------ | --- | -------------- |
-| AWS Management Console (UI) |     |              |     |                |
-| AWS CLI                     | ->  | AWS REST API | ->  | Other Services |
-| AWS SDKs                    |     |              |     |                |
+```mermaid
+flowchart LR
+
+subgraph Client;
+AWSMC["AWS Management Console(UI)"]
+AWSCLI[AWS Cli]
+AWSSDK(AWS SDKs)
+end;
+subgraph API;
+REST(AWS REST API)
+end;
+subgraph AWSServices[AWS Services];
+O(Other Services)
+end;
+
+AWSMC ----> REST
+AWSCLI ----> REST
+AWSSDK ----> REST
+REST---> O
+
+```
 
 #### AWS Command line interface (AWS CLI)
 
