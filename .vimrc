@@ -195,6 +195,7 @@ let g:codeium_filetypes = {
     \ "flutter": v:true,
     \ "kotlin": v:true,
     \ "lua": v:true,
+    \ "docker": v:true,
     \ "javascript": v:true,
     \ "javascriptreact": v:true,
     \ "typescript": v:true,
@@ -416,6 +417,10 @@ let g:test#basic#start_normal = 1
 let g:test#neovim#start_normal = 1
 let g:test#echo_command = 0
 let g:test#runner_commands= ["Jest", "Cypress", "Playwright", "DotnetTest"]
+
+"Markdown overrides
+autocmd FileType markdown inoremap <buffer><silent><nowait> <tab> <esc>>>ea
+autocmd FileType markdown inoremap <buffer><silent><nowait> <S-tab> <esc><<ea
 
 "CSharp overrides
 autocmd FileType cs map <silent><nowait><leader>t :OpenCSharpTestMenu<cr>
