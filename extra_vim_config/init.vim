@@ -4,7 +4,10 @@ source $HOME/.vimrc
 
 "NEOVIDE SPECIFIC
 if exists("g:neovide")
-  let g:neovide_transparency=1
+  let g:neovide_transparency=0.0
+  let g:transparency = 0.9
+  let g:neovide_background_color = '#282828'.printf('%x', float2nr(255 * g:transparency))
+
   let g:neovide_floating_blur_amount_x = 2
   let g:neovide_floating_blur_amount_y = 2
   let g:neovide_scroll_animation_length = 0.1
