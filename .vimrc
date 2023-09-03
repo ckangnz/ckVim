@@ -148,17 +148,14 @@ hi CurrentWord gui=bold,underline cterm=bold,underline
 hi CurrentWordTwins gui=bold cterm=bold
 
 "----INDENTATION BAR: Yggdroot/indentLine
-let g:indentLine_enabled = 0
-let g:indentLine_setColors = 1
-let g:indentLine_showFirstIndentLevel = 1
-let g:indentLine_char_list = ['┊','|', '¦', '┆']
-let g:indentLine_defaultGroup = 'SpecialKey'
-let g:indentLine_concealcursor = 'inc'
-let g:indentLine_conceallevel = 2
+let g:indent_guides_auto_colors = 0
+let g:indent_guides_enable_on_vim_startup = 1
+hi IndentGuidesOdd  guibg=#1f1f1f ctermbg=Black
+hi IndentGuidesEven guibg=#1a1a1a ctermbg=LightGrey
 
 let concealMenu=[]
 call add(concealMenu, ['Toggle TS Conceal(&t)', 'exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"'])
-call add(concealMenu, ['Toggle Indent Lines(&l)', 'IndentLinesToggle'])
+call add(concealMenu, ['Toggle Indent Lines(&l)', 'IndentGuidesToggle'])
 let concealOpt = {'title':'Conceal Menu'}
 noremap <silent><nowait><leader>l :call quickui#listbox#open(concealMenu, concealOpt)<cr>
 
