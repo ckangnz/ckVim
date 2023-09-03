@@ -70,6 +70,7 @@ endif
 "trail = spaces in the end
 "nbsp = alt + space
 "tab = ctrl+v+tab
+let g:markdown_recommended_style=0
 set list lcs=space:\ ,lead:\ ,trail:·,nbsp:◇,tab:»»,extends:▸,precedes:◂,multispace:····,
 
 "*-*-*-*-*-*-NAVIGATION MAPPINGS-*-*-*-*-*-*

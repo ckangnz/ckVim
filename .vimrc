@@ -414,8 +414,8 @@ let g:test#echo_command = 0
 let g:test#runner_commands= ["Jest", "Cypress", "Playwright", "DotnetTest"]
 
 "Markdown overrides
-autocmd FileType markdown inoremap <buffer><silent><nowait> <tab> <esc>>>ea
-autocmd FileType markdown inoremap <buffer><silent><nowait> <S-tab> <esc><<ea
+autocmd FileType markdown inoremap <buffer><silent><nowait> <tab> <esc>>>A
+autocmd FileType markdown inoremap <buffer><silent><nowait> <S-tab> <esc><<A
 
 "CSharp overrides
 autocmd FileType cs map <silent><nowait><leader>t :OpenCSharpTestMenu<cr>

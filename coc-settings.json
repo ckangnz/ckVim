@@ -1,5 +1,6 @@
 {
   "coc.preferences.formatOnSave": true,
+  "coc.preferences.enableMarkdown": true,
   "coc-swagger.enabled": true,
 
   "list.statusLineSegments": null,
