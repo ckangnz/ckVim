@@ -116,5 +116,3 @@ function! s:show_documentation()
     call CocActionAsync('doHover')
   endif
 endfunction
-
-

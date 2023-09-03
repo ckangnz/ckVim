@@ -1,7 +1,10 @@
 {
   "coc.preferences.formatOnSave": true,
+  "coc-swagger.enabled": true,
+
   "list.statusLineSegments": null,
 
+  "suggest.snippetsSupport": true,
   "snippets.extends": {
     "html": ["html"],
     "css": ["css"],
@@ -43,6 +46,19 @@
   "diagnostic.enableMessage": "always",
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": "",
+  "diagnostic.infoSign": "",
+  "diagnostic.hintSign": "󱋴",
+
+  "suggest.floatConfig": {
+    "maxWidth": 50,
+    "border": true,
+    "rounded": true,
+    "shadow": false,
+    "winblend": 2,
+    "highlight": "CocFloating",
+    "borderhighlight": "CocFloating"
+  },
+
   "suggest.completionItemKindLabels": {
     "class": "",
     "color": "",
@@ -62,7 +78,7 @@
     "operator": "",
     "property": "",
     "reference": "",
-    "snippet": "",
+    "snippet": "󰁨",
     "struct": "",
     "text": "",
     "typeParameter": "",

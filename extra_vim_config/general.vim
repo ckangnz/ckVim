@@ -153,7 +153,9 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 "*-*-*-*-*-*-CUSTOM FOLD STYLE-*-*-*-*-*-*
 set foldmethod=syntax
 :setlocal foldcolumn=0
+set foldlevel=99
 set foldlevelstart=99
+
 "Space to toggle folds
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 "Folded stype
