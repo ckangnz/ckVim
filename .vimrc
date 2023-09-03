@@ -206,7 +206,7 @@ nnoremap <Leader>q :Bdelete menu<CR>
 "---------VIM-ROOTER: airblade/vim-rooter
 let g:rooter_silent_chdir = 1
 let g:rooter_patterns = ['.git', 'package.json', '*.sln', 'appsettings.json']
-let g:rooter_change_directory_for_non_project_files = 'home'
+let g:rooter_change_directory_for_non_project_files = 'current'
 
 "---------UNDO TREE: mbbill/undotree
 nnoremap <leader>u :UndotreeToggle<cr>
@@ -343,7 +343,7 @@ let g:fzf_layout={'window':{ 'width': 0.9, 'height': 0.6 }}
 let g:fzf_preview_window = ['right:60%:hidden','?']
 let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
-      \ 'ctrl-o': 'split',
+      \ 'ctrl-d': 'split',
       \ 'ctrl-v': 'vsplit' }
 command! Ctrlp execute len(FugitiveHead()) > 0 ? ':GFiles' : ':Files'
 nnoremap <silent> <C-p> :Ctrlp<CR>
