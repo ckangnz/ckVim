@@ -112,14 +112,6 @@ let g:user_emmet_settings = {
 "let g:tagalong_additional_filetypes = []
 let g:tagalong_verbose = 1
 
-"----TYPESCRIPT ALIAS: HerringtonDarkholme/yats.vim
-let g:typescript_conceal_function             = "ƒ"
-let g:typescript_conceal_null                 = "ø"
-let g:typescript_conceal_undefined            = "¿"
-let g:typescript_conceal_this                 = "@"
-let g:typescript_conceal_return               = "⇚"
-let g:typescript_conceal_prototype            = "¶"
-let g:typescript_conceal_super                = "Ω"
 
 
 "*-*-*-*-*-*-VISUAL PLUGINS-*-*-*-*-*-*
@@ -152,9 +144,8 @@ hi IndentGuidesOdd  guibg=#1f1f1f ctermbg=Black
 hi IndentGuidesEven guibg=#1a1a1a ctermbg=LightGrey
 
 let concealMenu=[]
-call add(concealMenu, ['Toggle TS Conceal(&t)', 'exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"'])
-call add(concealMenu, ['Toggle Indent Lines(&l)', 'IndentGuidesToggle'])
 let concealOpt = {'title':'Conceal Menu'}
+call add(concealMenu, ['Toggle Indent Lines(&l)', 'IndentGuidesToggle'])
 noremap <silent><nowait><leader>l :call quickui#listbox#open(concealMenu, concealOpt)<cr>
 
 

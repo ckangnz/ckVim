@@ -4,6 +4,7 @@
   "coc-swagger.enabled": true,
 
   "list.statusLineSegments": null,
+  "Lua.diagnostics.globals": ["vim"],
 
   "suggest.snippetsSupport": true,
   "snippets.extends": {

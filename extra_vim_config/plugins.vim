@@ -15,13 +15,9 @@ Plug 'mbbill/undotree'                                              " Magic of U
 Plug 'TaDaa/vimade'                                                 " Dim inactive window for pair-programming
 
 " Language Specific
-Plug 'briancollins/vim-jst'                                         " .ejs
-Plug 'herringtonDarkholme/yats.vim'                                 " .ts
+Plug 'nvim-treesitter/nvim-treesitter', {'do':':TSUpdate'}
 Plug 'mattn/emmet-vim'                                              " .html
 Plug 'pedrohdz/vim-yaml-folds'                                      " .yaml
-Plug 'udalov/kotlin-vim'                                            " .kotlin
-Plug 'jlcrochet/vim-cs'                                             " .cs
-Plug 'jxnblk/vim-mdx-js'
 
 " Git Tool
 Plug 'idanarye/vim-merginal'                                        " Git branch organiser

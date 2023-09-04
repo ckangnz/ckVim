@@ -37,14 +37,14 @@ if [ ! -d ~/.config/nvim ];then
   mkdir ~/.config/nvim
 fi
 
-#Symlink init.vim
-if [ -e ~/.config/nvim/init.vim ]; then
-    echo 'init.vim already exists! Deleting existing init.vim...'
-    rm ~/.config/nvim/init.vim
+#Symlink init.lua
+if [ -e ~/.config/nvim/init.lua ]; then
+    echo 'init.lua already exists! Deleting existing init.lua...'
+    rm ~/.config/nvim/init.lua
 fi
-echo 'Linking init.vim..'
-ln -s ~/.vim/extra_vim_config/init.vim ~/.config/nvim/init.vim
-echo 'Completed Linking init.vim for nvim!'
+echo 'Linking init.lua..'
+ln -s ~/.vim/extra_vim_config/init.lua ~/.config/nvim/init.lua
+echo 'Completed Linking init.lua for nvim!'
 
 #Symlink coc-settings.json
 if[ -e ~/.config/nvim/coc-settings.json ]; then
