@@ -121,17 +121,6 @@ let g:vim_current_word#highlight_twins = 1
 hi CurrentWord gui=bold,underline cterm=bold,underline
 hi CurrentWordTwins gui=bold cterm=bold
 
-"----INDENTATION BAR: Yggdroot/indentLine
-let g:indent_guides_auto_colors = 0
-let g:indent_guides_enable_on_vim_startup = 1
-hi IndentGuidesOdd  guibg=#1f1f1f ctermbg=Black
-hi IndentGuidesEven guibg=#1a1a1a ctermbg=LightGrey
-
-let concealMenu=[]
-let concealOpt = {'title':'Conceal Menu'}
-call add(concealMenu, ['Toggle Indent Lines(&l)', 'IndentGuidesToggle'])
-noremap <silent><nowait><leader>l :call quickui#listbox#open(concealMenu, concealOpt)<cr>
-
 
 "*-*-*-*-*-*-FUNCTIONALITY PLUGINS-*-*-*-*-*-*
 "---------AI Toolkit: Exafunction/codeium.vim

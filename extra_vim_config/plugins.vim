@@ -48,8 +48,7 @@ Plug 'easymotion/vim-easymotion'                                    " Easy Navig
 Plug 'kkvh/vim-docker-tools'                                        " Docker within vim
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install'  } " InstantMarkdownPreview
 Plug 'mattesGroeger/vim-bookmarks'                                  " Vim Bookmarks
-Plug 'nathanaelkane/vim-indent-guides'                              " Indentation line
-Plug 'nicwest/vim-http'                                             " Indentation line
+Plug 'nicwest/vim-http'                                             " HTTP calls from vim
 Plug 'scrooloose/nerdcommenter'                                     " Easy Commenting tool
 Plug 'skywind3000/asyncrun.vim'                                     " Asyncrun tasks
 Plug 'wesQ3/vim-windowswap'                                         " Split Panel switch
