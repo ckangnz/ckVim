@@ -55,6 +55,10 @@ if [ -d "$HOMEBREW_PREFIX/opt/fnm/bin" ]; then
   export PATH="$PATH:$FNM_MULTISHELL_PATH"
   eval "$(fnm env --use-on-cd)"
 fi
+#Java
+if [ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]; then
+  export PATH=$HOMEBREW_PREFIX/opt/openjdk/bin:$PATH
+fi
 # Ruby
 if [ -d "$HOMEBREW_PREFIX/opt/ruby/bin" ]; then
   export PATH=$HOMEBREW_PREFIX/opt/ruby/bin:$PATH
