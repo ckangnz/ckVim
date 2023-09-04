@@ -471,7 +471,7 @@
 			<key>Blur</key>
 			<true/>
 			<key>Blur Radius</key>
-			<real>19.573718474758678</real>
+			<real>9.7304126029169229</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -945,7 +945,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.50249134728325784</real>
+			<real>0.19939257941424191</real>
 			<key>Unicode Normalization</key>
 			<integer>0</integer>
 			<key>Unicode Version</key>
