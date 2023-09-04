@@ -7,7 +7,7 @@ source $HOME/.vimrc
 vim.cmd([[
 set foldmethod=expr
 set foldexpr='nvim_treesitter#foldexpr()'
-set nofoldenable
+set foldenable
 set foldlevel=99
 set foldlevelstart=99
 ]])

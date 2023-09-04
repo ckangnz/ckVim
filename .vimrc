@@ -162,7 +162,7 @@ let g:codeium_filetypes = {
     \ }
 
 "---------ASYNCRUN: skywind3000/asyncrun.vim
-let g:asyncrun_open = 1
+let g:asyncrun_open = 0
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
 "---------CLOSE BUFFERS: Asheq/close-buffers.vim
@@ -260,8 +260,8 @@ hi BookmarkLine ctermbg=NONE ctermfg=NONE guibg=#343434 guifg=NONE
 let gitOpt = {'title':'GITHUB Menu'}
 let githubMenu = []
 call add(githubMenu , ['Open PR (&r)', 'exec "OpenGithubPullReq #" . FugitiveHead()'])
-call add(githubMenu , ['Open current file (&f)', 'GBrowse'])
-call add(githubMenu , ['Open project (&g)', 'OpenGithubProect'])
+call add(githubMenu , ['Open current file (&f)', 'OpenGithubFile'])
+call add(githubMenu , ['Open project (&g)', 'OpenGithubProject'])
 call add(githubMenu , ['Open issues (&i)', 'OpenGithubIssue'])
 call add(githubMenu , ['Open pull requests (&p)', 'OpenGithubPullReq'])
 noremap <silent><nowait><leader>go :call quickui#context#open(githubMenu, gitOpt)<cr>
