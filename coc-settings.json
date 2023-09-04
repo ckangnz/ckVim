@@ -9,18 +9,8 @@
   "Lua.completion.callSnippet": "Both",
   "Lua.completion.requireSeparator": ".",
 
-  "suggest.snippetsSupport": true,
-  "snippets.extends": {
-    "html": ["html"],
-    "css": ["css"],
-    "javascriptreact": ["javascript"],
-    "typescriptreact": ["javascript", "javascript-jasmine-arrow"],
-    "typescript": ["javascript", "javascript-jasmine-arrow"],
-    "cs": ["cs"],
-    "python": ["django"]
-  },
-
   "eslint.enable": true,
+  "eslint.format.enable": true,
   "eslint.autoFixOnSave": true,
   "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
@@ -36,6 +26,7 @@
   "yaml.format.proseWrap": "never",
   "yaml.format.singleQuote": true,
 
+  "prettier.enable": true,
   "prettier.trailingComma": "all",
   "prettier.singleQuote": false,
   "prettier.statusItemText": "",
@@ -53,6 +44,17 @@
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "󱋴",
+
+  "suggest.snippetsSupport": true,
+  "snippets.extends": {
+    "html": ["html"],
+    "css": ["css"],
+    "javascriptreact": ["javascript"],
+    "typescriptreact": ["javascript", "javascript-jasmine-arrow"],
+    "typescript": ["javascript", "javascript-jasmine-arrow"],
+    "cs": ["cs"],
+    "python": ["django"]
+  },
 
   "suggest.floatConfig": {
     "maxWidth": 50,
