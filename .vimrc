@@ -100,19 +100,6 @@ call add(g:utilContent, [ 'Clear Registers (&x)', 'call ClearReg()' ])
 
 noremap <silent><nowait><leader>m :call quickui#context#open(g:utilContent, g:utilOpts)<cr>
 
-"*-*-*-*-*-*-LANGUAGE PLUGINS-*-*-*-*-*-*
-"----EMMET: mattn/emmet-vim
-let g:user_emmet_settings = {
-      \  'javascript' : {
-      \      'extends' :['jsx','tsx'],
-      \  },
-      \}
-
-"----------HTML TAG PAIRS: andrewradev/tagalong.vim
-"let g:tagalong_additional_filetypes = []
-let g:tagalong_verbose = 1
-
-
 
 "*-*-*-*-*-*-VISUAL PLUGINS-*-*-*-*-*-*
 "----FADE INACTIVE PANEL: TaDaa/vimade

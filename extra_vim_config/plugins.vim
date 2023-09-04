@@ -16,7 +16,6 @@ Plug 'TaDaa/vimade'                                                 " Dim inacti
 
 " Language Specific
 Plug 'nvim-treesitter/nvim-treesitter', {'do':':TSUpdate'}
-Plug 'mattn/emmet-vim'                                              " .html
 Plug 'pedrohdz/vim-yaml-folds'                                      " .yaml
 
 " Git Tool
@@ -29,7 +28,6 @@ Plug 'tyru/open-browser.vim'                                        " Open URL
 Plug 'Exafunction/codeium.vim', {'branch':'main'}                   " AI Coding
 
 " Pairing
-Plug 'andrewRadev/tagalong.vim'                                     " Change tag pairs automatically
 Plug 'jiangmiao/auto-pairs'                                         " Automatic closing ({['']})
 Plug 'machakann/vim-sandwich'                                       " Easy text wrap tool
 Plug 'tmhedberg/matchit'                                            " More functionality to %
