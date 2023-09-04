@@ -21,8 +21,6 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#ycm#enabled = 0
 let g:airline_left_sep = ""
 let g:airline_right_sep = ''
-let g:airline_section_y = airline#section#create(["%{coc#status()}%{get(b:,'coc_current_function','')}"])
-let g:airline_section_z = airline#section#create(['%{g:airline_symbols.linenr}%#__accent_bold#%3l/%3L', '%{g:airline_symbols.colnr}%#__accent_bold#%3v'])
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_tabs = 1
 let g:airline#extensions#tabline#show_splits = 0
@@ -32,11 +30,10 @@ let airline#extensions#tabline#tabs_label = ''
 let g:airline#extensions#tabline#close_symbol = '×'
 let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-
 let g:airline#extensions#coc#enabled = 1
 let g:airline#extensions#coc#show_coc_status = 0
-
-let g:asyncrun_open = 0
+let g:airline_section_y = airline#section#create(["%{coc#status()}%{get(b:,'coc_current_function','')}"])
+let g:airline_section_z = airline#section#create(['%{g:airline_symbols.linenr}%#__accent_bold#%3l/%3L', '%{g:airline_symbols.colnr}%#__accent_bold#%3v'])
 let g:airline_section_error = airline#section#create(['%{g:asyncrun_status}'])
 let g:airline_mode_map = {
       \ '__' : '-',
@@ -176,6 +173,7 @@ let g:codeium_filetypes = {
     \ }
 
 "---------ASYNCRUN: skywind3000/asyncrun.vim
+let g:asyncrun_open = 1
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
 "---------CLOSE BUFFERS: Asheq/close-buffers.vim
@@ -443,7 +441,7 @@ hi CodeiumSuggestion guifg=#928374 ctermfg=245
 augroup autosourcing
   au!
   if exists('g:neovide') || has('nvim')
-    au BufWritePost $HOME/.vimrc source $HOME/.vimrc
+    au BufWritePost $HOME/.vimrc source $MYVIMRC
     au BufWritePost $HOME/.vimrc AirlineRefresh
   endif
 

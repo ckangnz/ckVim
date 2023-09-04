@@ -1,10 +1,16 @@
-vim.api.nvim_command('set runtimepath^=~/.vim runtimepath+=~/.vim/after')
-vim.api.nvim_command('let &packpath = &runtimepath')
-vim.api.nvim_command('source $HOME/.vimrc')
+vim.cmd([[
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+let &packpath = &runtimepath
+source $HOME/.vimrc
+]])
 
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldenable = false
+vim.cmd([[
+set foldmethod=expr
+set foldexpr='nvim_treesitter#foldexpr()'
+set nofoldenable
+set foldlevel=99
+set foldlevelstart=99
+]])
 
 -- TREESITTER
 require 'nvim-treesitter.configs'.setup {
