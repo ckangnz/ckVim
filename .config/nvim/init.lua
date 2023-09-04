@@ -1,4 +1,10 @@
 vim.cmd([[
+setlocal includeexpr=substitute(v:fname,'\\.','/','g')
+setlocal suffixesadd^=.lua
+setlocal suffixesadd^=init.lua
+let &l:path .= ','.stdpath('config').'/lua'
+]])
+vim.cmd([[
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 source $HOME/.vimrc
@@ -13,22 +19,7 @@ set foldlevelstart=99
 ]])
 
 -- TREESITTER
-require 'nvim-treesitter.configs'.setup {
-  highlight = { enable = true },
-  ensure_installed = {
-    'vim', 'vimdoc', 'lua', 'luadoc',
-    'html', 'scss',
-    'python',
-    'c', 'c_sharp',
-    'javascript', 'typescript', 'tsx', 'json',
-    'dockerfile',
-    'regex',
-    'http',
-    'dart',
-    'yaml',
-    'kotlin'
-  }
-}
+require 'plugins.nvim-treesitter'
 
 --NEOVIDE Config
 if vim.g.neovide then

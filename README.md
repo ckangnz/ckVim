@@ -41,8 +41,7 @@ brew install gh bat ripgrep
 rm ~/.vimrc
 ln -s ~/.vim/.vimrc ~/.vimrc
 mkdir ~/.config
-mkdir ~/.config/nvim
-ln -s ~/.vim/coc-settings.json ~/.config/nvim/coc-settings.json
+ln -s ~/.vim/.config/nvim ~/.config/nvim
 ```
 
 ### Install Plugins

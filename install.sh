@@ -32,29 +32,14 @@ echo 'Linking vimrc...'
 ln -s ~/.vim/.vimrc ~/.vimrc
 echo 'Completed Linking vimrc!'
 
-if [ ! -d ~/.config/nvim ];then
-  echo 'Creating ~/.config/nvim directory'
-  mkdir ~/.config/nvim
+#Symlink .config/nvim
+if [ -d ~/.config/nvim ];then
+  echo '.config/nvim already exists! Removing ~/.config/nvim directory'
+  rm -rf ~/.config/nvim
 fi
-
-#Symlink init.lua
-if [ -e ~/.config/nvim/init.lua ]; then
-    echo 'init.lua already exists! Deleting existing init.lua...'
-    rm ~/.config/nvim/init.lua
-fi
-echo 'Linking init.lua..'
-ln -s ~/.vim/extra_vim_config/init.lua ~/.config/nvim/init.lua
-echo 'Completed Linking init.lua for nvim!'
-
-#Symlink coc-settings.json
-if[ -e ~/.config/nvim/coc-settings.json ]; then
-  echo 'coc-settings.json already exists! Deleting existing coc-settings.json'
-  rm ~/.config/nvim/coc-settings.json
-fi
-echo 'Linking coc-settings...'
-ln -s ~/.vim/extra_vim_config/coc-settings.json ~/.config/nvim/coc-settings.json
-echo 'Completed Linking coc-settings.json for nvim!'
-
+echo 'Linking .config/nvim..'
+ln -s ~/.vim/.config/nvim ~/.config/nvim
+echo 'Completed Linking ./config/nvim!'
 
 echo "."
 echo "."
