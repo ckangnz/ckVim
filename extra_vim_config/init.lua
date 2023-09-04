@@ -14,9 +14,7 @@ set foldlevelstart=99
 
 -- TREESITTER
 require 'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-  },
+  highlight = { enable = true },
   ensure_installed = {
     'vim', 'vimdoc', 'lua', 'luadoc',
     'html', 'scss',

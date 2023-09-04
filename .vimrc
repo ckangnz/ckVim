@@ -460,7 +460,7 @@ augroup autosourcing
   au BufNewFile,BufRead *.jsx set filetype=javascriptreact
   au BufNewFile,BufRead *.tsx set filetype=typescriptreact
 
-  au InsertEnter * setlocal cursorline
+  au BufRead,InsertEnter * setlocal cursorline
   au VimEnter,InsertLeave * setlocal cursorline
 augroup END
 
