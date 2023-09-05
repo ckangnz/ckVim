@@ -108,6 +108,7 @@ let g:vimade ={
       \'fadelevel': 0.5,
       \'enablesigns':1,
       \'enablescroll':1,
+      \'enabletreesitter':1
       \}
 
 "----QUICK-UI: skywind3000/vim-quickui
