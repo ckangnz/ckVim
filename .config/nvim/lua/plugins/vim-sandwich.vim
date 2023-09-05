@@ -1,4 +1,5 @@
 "----------SANDWICH: machakann/vim-sandwich
+runtime macros/sandwich/keymap/surround.vim
 let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
 let g:sandwich#recipes += [
       \{'buns': ['{\s*', '\s*}'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['{']},

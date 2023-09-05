@@ -1,11 +1,8 @@
 so ~/.vim/.config/nvim/lua/core/general.vim                           "General Vim settings
 so ~/.vim/.config/nvim/lua/core/plugins.vim                           "Source the plugins
-so ~/.vim/.config/nvim/lua/plugins/coc.vim                               "Source the coc settings
-runtime macros/sandwich/keymap/surround.vim
 
-filetype plugin indent on
-:filetype indent on
-
+"*-*-*-*-*-*-LSP PLUGIN-*-*-*-*-*-*
+so ~/.vim/.config/nvim/lua/plugins/coc.vim
 "*-*-*-*-*-*-VISUAL PLUGINS-*-*-*-*-*-*
 so ~/.vim/.config/nvim/lua/plugins/theme.vim
 so ~/.vim/.config/nvim/lua/plugins/quickui.vim

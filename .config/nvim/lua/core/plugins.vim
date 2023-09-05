@@ -2,7 +2,6 @@ filetype off                                                        " required
 
 call plug#begin('~/.vim/plugged')
 
-
 " VIM GUI
 Plug 'sainnhe/gruvbox-material'
 Plug 'vim-airline/vim-airline'                                      " Vim Airline
@@ -65,3 +64,6 @@ Plug 'honza/vim-snippets'                                           " snippets
 Plug 'andrewstuart/vim-kubernetes'                                  " Kubernetes snippets
 
 call plug#end()
+
+filetype plugin indent on
+:filetype indent on
