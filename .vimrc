@@ -1,59 +1,17 @@
-so ~/.vim/extra_vim_config/general.vim                           "General Vim settings
-so ~/.vim/extra_vim_config/plugins.vim                           "Source the plugins
-so ~/.vim/extra_vim_config/coc.vim                               "Source the coc settings
+so ~/.vim/.config/nvim/lua/core/general.vim                           "General Vim settings
+so ~/.vim/.config/nvim/lua/core/plugins.vim                           "Source the plugins
+so ~/.vim/.config/nvim/lua/plugins/coc.vim                               "Source the coc settings
 runtime macros/sandwich/keymap/surround.vim
 
 filetype plugin indent on
 :filetype indent on
 
 "*-*-*-*-*-*-THEMES-*-*-*-*-*-*
-set background=dark
-let g:gruvbox_material_better_performance = 1
-let g:gruvbox_material_sign_column_background = 'none'
-let g:gruvbox_material_disable_italic_comment = 1
-let g:gruvbox_material_enable_italic = 0
-let g:gruvbox_material_palette = "original"
-let g:gruvbox_material_background = 'hard'
-colorscheme gruvbox-material
-
-let g:airline_theme='gruvbox_material'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#ycm#enabled = 0
-let g:airline_left_sep = ""
-let g:airline_right_sep = ''
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_tabs = 1
-let g:airline#extensions#tabline#show_splits = 0
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#left_sep=""
-let airline#extensions#tabline#tabs_label = ''
-let g:airline#extensions#tabline#close_symbol = '×'
-let g:airline#extensions#tabline#show_close_button = 0
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline#extensions#coc#enabled = 1
-let g:airline#extensions#coc#show_coc_status = 0
-let g:airline_section_y = airline#section#create(["%{coc#status()}%{get(b:,'coc_current_function','')}"])
-let g:airline_section_z = airline#section#create(['%{g:airline_symbols.linenr}%#__accent_bold#%3l/%3L', '%{g:airline_symbols.colnr}%#__accent_bold#%3v'])
-let g:airline_section_error = airline#section#create(['%{g:asyncrun_status}'])
-let g:airline_mode_map = {
-      \ '__' : '-',
-      \ 'n' : '',
-      \ 'i' : '',
-      \ 'R' : '',
-      \ 'c' : '',
-      \ 'v' : '󰸱',
-      \ 'V' : '󰸱',
-      \ '' : '󰸱',
-      \ }
+so ~/.vim/.config/nvim/lua/plugins/theme.vim
 
 "*-*-*-*-*-*-MY PATH MENU-*-*-*-*-*-*
 let myPathsOpts={ "title": "My Paths" }
-
 let myPaths=[]
-call add(myPaths,['Notes (&n)','vsp $HOME/.vim/notes'])
-call add(myPaths,['Helps (&h)','vsp $HOME/.vim/notes/vimhelp.md'])
-call add(myPaths,['-'])
-
 if exists('g:neovide') || has('nvim')
   call add(myPaths,['Vimrc (&v)','vsp $HOME/.vimrc'])
   call add(myPaths,['NVim (&e)','vsp $MYVIMRC'])
@@ -65,18 +23,17 @@ call add(myPaths,['-'])
 call add(myPaths,[" ~/.vim (&d)",'vsp $HOME/.vim'])
 call add(myPaths,['Readme.md (&r)','vsp $HOME/.vim/README.md'])
 call add(myPaths,['Install.sh (&i)','vsp $HOME/.vim/install.sh'])
-
 call add(myPaths,['-'])
-call add(myPaths,['General (&g)','vsp $HOME/.vim/extra_vim_config/general.vim'])
-call add(myPaths,['Plugin (&p)','vsp $HOME/.vim/extra_vim_config/plugins.vim'])
-call add(myPaths,['Coc Settings (&c)','vsp $HOME/.vim/extra_vim_config/coc.vim'])
-
+call add(myPaths,['General (&g)','vsp $HOME/.vim/.config/nvim/lua/core/general.vim'])
+call add(myPaths,['Plugin (&p)','vsp $HOME/.vim/.config/nvim/lua/core/plugins.vim'])
+call add(myPaths,['Plugin Configurations (&c)','vsp $HOME/.vim/.config/nvim/lua/plugins'])
 call add(myPaths,['-'])
 call add(myPaths,['Zshrc (&z)','vsp $HOME/.zshrc'])
 call add(myPaths,['Zsh Plugin (&l)','vsp $HOME/.vim/plugins.zsh'])
-
+call add(myPaths,['-'])
+call add(myPaths,['Notes (&n)','vsp $HOME/.vim/notes'])
+call add(myPaths,['Helps (&h)','vsp $HOME/.vim/notes/vimhelp.md'])
 noremap <nowait><silent><leader>e :call quickui#context#open(myPaths, myPathsOpts)<cr>
-
 nmap <silent><leader>pi :PlugInstall<cr>
 nmap <silent><leader>pu :PlugUpdate<cr>
 
@@ -436,14 +393,10 @@ augroup autosourcing
   endif
 
   au BufWritePost $MYVIMRC source $MYVIMRC
-  au BufWritePost $HOME/.vim/extra_vim_config/general.vim source $MYVIMRC
-  au BufWritePost $HOME/.vim/extra_vim_config/plugins.vim source $MYVIMRC
-  au BufWritePost $HOME/.vim/extra_vim_config/coc.vim source $MYVIMRC
+  au BufWritePost $HOME/.vim/.config/nvim/* source $MYVIMRC
 
   au BufWritePost $MYVIMRC AirlineRefresh
-  au BufWritePost $HOME/.vim/extra_vim_config/general.vim AirlineRefresh
-  au BufWritePost $HOME/.vim/extra_vim_config/plugins.vim AirlineRefresh
-  au BufWritePost $HOME/.vim/extra_vim_config/coc.vim AirlineRefresh
+  au BufWritePost $HOME/.vim/.config/nvim/* AirlineRefresh
 
   au BufNewFile,BufRead *.ejs set filetype=js
   au BufNewFile,BufRead *.vue,*.hbs set filetype=html
@@ -452,5 +405,7 @@ augroup autosourcing
 
   au BufRead,InsertEnter * setlocal cursorline
   au VimEnter,InsertLeave * setlocal cursorline
+
+  au BufRead * setlocal includeexpr=substitute(v:fname,'\\.','/','g')
 augroup END
 
