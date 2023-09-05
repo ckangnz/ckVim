@@ -36,6 +36,8 @@ xmap <nowait><leader>ac <Plug>(coc-codeaction-selected)
 nmap <nowait><leader>ac <Plug>(coc-codeaction-selected)
 nmap <nowait><leader>ap <Plug>(coc-diagnostic-prev)
 nmap <nowait><leader>an <Plug>(coc-diagnostic-next)
+nmap <nowait><leader>r <Plug>(coc-codeaction-refactor)
+xmap <nowait><leader>r <Plug>(coc-codeaction-refactor-selected)
 nmap <nowait><leader>. <Plug>(coc-codeaction)
 nmap <nowait><leader>. <Plug>(coc-fix-current)
 nnoremap <silent><nowait> gs :<C-u>CocList -I symbols<cr>
