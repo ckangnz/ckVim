@@ -173,6 +173,12 @@ set foldtext=StyliseFold()
 
 
 "*-*-*-*-*-*-CUSTOM COMMANDS-*-*-*-*-*-*
+"Markdown overrides
+autocmd FileType markdown inoremap <buffer><silent><nowait> <tab> <esc>>>A
+autocmd FileType markdown inoremap <buffer><silent><nowait> <S-tab> <esc><<A
+
+"SCSS override
+autocmd FileType scss setl iskeyword+=@-@
 
 "To do notes
 func! Todo()
