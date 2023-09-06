@@ -11,7 +11,3 @@ brew_install_cask "maccy"
 
 brew_install "kubectl"
 brew_install "helm"
-
-# Ad blocker on Mac!
-# Run `hblock` after installation
-brew_install "hblock"
