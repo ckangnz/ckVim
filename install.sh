@@ -11,7 +11,6 @@ brew_install "vim"
 brew_install_cask "neovide"
 
 brew_install "gh"
-brew_install "bat"
 brew_install "ripgrep"
 
 #[Check versions here](https://github.com/isen-ng/homebrew-dotnet-sdk-versions)

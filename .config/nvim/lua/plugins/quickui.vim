@@ -1,7 +1,6 @@
 "----QUICK-UI: skywind3000/vim-quickui
 let g:quickui_border_style = 2
 let g:quickui_color_scheme = 'gruvbox'
-nnoremap <silent><nowait><leader>b :call quickui#tools#list_buffer('e')<cr>
 
 "*-*-*-*-*-*-MY PATH MENU-*-*-*-*-*-*
 let myPathsOpts={ "title": "My Paths" }

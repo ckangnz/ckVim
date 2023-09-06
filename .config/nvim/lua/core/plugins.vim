@@ -37,8 +37,8 @@ Plug 'tpope/vim-repeat'                                             " Repeat tpo
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocUpdate'}
 
 " Search Tool
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'                                             " Fuzzy find files/content/tags
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " Functionality
 Plug 'airblade/vim-rooter'                                          " Find the root of the project automatically

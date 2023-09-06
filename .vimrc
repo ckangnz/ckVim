@@ -24,7 +24,7 @@ so ~/.vim/.config/nvim/lua/plugins/vim-sandwich.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-bookmarks.vim
 so ~/.vim/.config/nvim/lua/plugins/open-browser.vim
 so ~/.vim/.config/nvim/lua/plugins/git.vim
-so ~/.vim/.config/nvim/lua/plugins/fzf.vim
+so ~/.vim/.config/nvim/lua/plugins/telescope.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-test.vim
 "*-*-*-*-*-*-HIGHLIGHT OVERRIDE-*-*-*-*-*-*
 so ~/.vim/.config/nvim/lua/core/highlights.vim

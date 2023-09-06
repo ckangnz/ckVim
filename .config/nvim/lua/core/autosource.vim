@@ -16,5 +16,3 @@ augroup autosourcing
 
   au BufRead * setlocal includeexpr=substitute(v:fname,'\\.','/','g')
 augroup END
-
-

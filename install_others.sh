@@ -9,5 +9,6 @@ brew_install_cask "maccy"
 
 #brew_install_cask "azure-data-studio"
 
+brew_install "bat"
 brew_install "kubectl"
 brew_install "helm"

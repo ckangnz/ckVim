@@ -130,8 +130,6 @@ nnoremap <Leader>wm <C-W>=
 nnoremap <Leader>wh <C-W>t<C-W>K
 nnoremap <Leader>wv <C-W>t<C-W>H
 nnoremap <Leader>wt <C-W>T
-nnoremap <Leader>bp :bp<cr>
-nnoremap <Leader>bn :bn<cr>
 
 "*-*-*-*-*-*-TERMINAL COMMANDS-*-*-*-*-*-*
 tnoremap <Esc> <C-\><C-n>
