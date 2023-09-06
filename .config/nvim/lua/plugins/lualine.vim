@@ -66,7 +66,7 @@ require 'lualine'.setup {
       '%{codeium#GetStatusString()}',
     },
     lualine_z = {
-      { '%l/%L:%1v', separator = { left = '', right = '' } }
+      { '%s%l:%v', separator = { left = '', right = '' } }
     }
   },
   inactive_sections = {
@@ -78,7 +78,7 @@ require 'lualine'.setup {
     lualine_x = {},
     lualine_y = {},
     lualine_z = {
-      { '%l/%L:%1v', separator = { left = '', right = '' } }
+      { '%s%l:%v', separator = { left = '', right = '' } }
     }
   },
 
@@ -97,7 +97,7 @@ require 'lualine'.setup {
     lualine_x = {},
     lualine_y = {},
     lualine_z = {
-      { 'fileformat', symbols = { mac = '', unix = ''} },
+      {'filetype', colored = true, icon_only = true},
       {'os.date("%a %d %b |%l:%M%p")', separator = { left = '', right = '' }},
     }
   },
