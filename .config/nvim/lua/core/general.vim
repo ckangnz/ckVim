@@ -76,6 +76,9 @@ endif
 "tab = ctrl+v+tab
 let g:markdown_recommended_style=0
 set list lcs=space:\ ,lead:\ ,trail:·,nbsp:◇,tab:»»,extends:▸,precedes:◂,multispace:····,
+"fillchars to remove ^ in status bar
+"Ctrl + v -> 160 to write:  
+set fillchars=stl: 
 
 "*-*-*-*-*-*-NAVIGATION MAPPINGS-*-*-*-*-*-*
 map ; :

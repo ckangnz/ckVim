@@ -2,14 +2,9 @@ augroup autosourcing
   au!
   if exists('g:neovide') || has('nvim')
     au BufWritePost $HOME/.vimrc source $MYVIMRC
-    au BufWritePost $HOME/.vimrc AirlineRefresh
   endif
-
   au BufWritePost $MYVIMRC source $MYVIMRC
   au BufWritePost $HOME/.vim/.config/nvim/* source $MYVIMRC
-
-  au BufWritePost $MYVIMRC AirlineRefresh
-  au BufWritePost $HOME/.vim/.config/nvim/* AirlineRefresh
 
   au BufNewFile,BufRead *.ejs set filetype=js
   au BufNewFile,BufRead *.vue,*.hbs set filetype=html

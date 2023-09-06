@@ -4,7 +4,8 @@ call plug#begin('~/.vim/plugged')
 
 " VIM GUI
 Plug 'sainnhe/gruvbox-material'
-Plug 'vim-airline/vim-airline'                                      " Vim Airline
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'nvim-tree/nvim-web-devicons'
 Plug 'skywind3000/vim-quickui'                                      " Context Quick UI
 Plug 'tpope/vim-vinegar'                                            " Easy Netrw with '-'
 Plug 'dstein64/vim-startuptime'                                     " Show :StartupTime
