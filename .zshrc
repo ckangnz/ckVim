@@ -42,16 +42,16 @@ fi
 
 #------Source Brew plugins--------
 # Kubectl
-if [ -d "$HOMEBREW_PREFIX/bin/kubectl" ];then
+if [ -e "$HOMEBREW_PREFIX/bin/kubectl" ];then
   source <(kubectl completion zsh)
   complete -F __start_kubectl k
 fi
 # Helm
-if [ -d "$HOMEBREW_PREFIX/bin/helm" ];then
+if [ -e "$HOMEBREW_PREFIX/bin/helm" ];then
   source <(helm completion zsh)
 fi
 # FNM
-if [ -d "$HOMEBREW_PREFIX/opt/fnm/bin" ]; then
+if [ -e "$HOMEBREW_PREFIX/bin/fnm" ]; then
   export PATH="$PATH:$FNM_MULTISHELL_PATH"
   eval "$(fnm env --use-on-cd)"
 fi
