@@ -1,41 +1,42 @@
 if has('nvim')
 lua << EOF
 local colors = {
-  bg     = '#1d2021',
-  red    = '#cc241d',
-  green  = '#98971a',
-  yellow = '#d79921',
-  blue   = '#458588',
-  aqua   = '#8ec07c',
-  grey   = '#504945',
-  purple = '#b16286',
-  fg     = '#fbf1c7',
-  black  = '#282828',
+  bg0    = '#1d2021',
+  bg1    = '#282828',
+  red    = '#ea6962',
+  green  = '#a9b665',
+  yellow = '#d8a657',
+  blue   = '#7daea3',
+  aqua   = '#89b482',
+  grey   = '#7c6f64',
+  purple = '#d3869b',
+  fg1    = '#ddc7a1',
+  fg0    = '#d4be98',
 }
 
 local custom_theme = {
   normal = {
-    a = { fg = colors.black, bg = colors.aqua, gui='bold' },
-    b = { fg = colors.fg, bg = colors.grey },
-    c = { fg = colors.black, bg = colors.bg },
+    a = { fg = colors.bg1, bg = colors.aqua, gui='bold' },
+    b = { fg = colors.fg1, bg = colors.grey },
+    c = { fg = colors.bg1, bg = 'none' },
   },
   insert = {
-    a = { fg = colors.black, bg = colors.yellow, gui='bold'}
+    a = { fg = colors.bg1, bg = colors.yellow, gui='bold'}
   },
   visual = {
-    a = { fg = colors.fg, bg = colors.red , gui='bold'}
+    a = { fg = colors.fg0, bg = colors.red , gui='bold'}
   },
   replace = {
-    a = { fg = colors.fg, bg = colors.purple, gui='bold' }
+    a = { fg = colors.fg0, bg = colors.purple, gui='bold' }
   },
 
   inactive = {
-    a = { fg = colors.grey, bg = colors.black },
-    b = { fg = colors.fg, bg = colors.bg },
-    c = { fg = colors.fg, bg = colors.bg },
-    x = { fg = colors.fg, bg = colors.bg },
-    y = { fg = colors.fg, bg = colors.bg },
-    z = { fg = colors.grey, bg = colors.black },
+    a = { fg = colors.grey, bg = colors.bg1 },
+    b = { fg = colors.fg0, bg = colors.bg0 },
+    c = { fg = colors.fg0, bg = 'none' },
+    x = { fg = colors.fg0, bg = colors.bg0 },
+    y = { fg = colors.fg0, bg = colors.bg0 },
+    z = { fg = colors.grey, bg = colors.bg1 },
   },
 }
 
