@@ -24,7 +24,7 @@ set noerrorbells visualbell t_vb=               "No error bells
 set autowriteall                                "Automatically writes file
 set complete=.,w,b,u                            "Set autocomplete
 set shortmess=atT                               "Get rid of Please press enter when opening a file"
-set updatetime=300                              "Used for the CursorHold updatetime
+set updatetime=500                              "Used for the CursorHold updatetime
 set backupcopy=yes                              "Overwrite backupto original
 set nobackup                                    "Dont create backupfile
 set nowritebackup                               "Dont write backup

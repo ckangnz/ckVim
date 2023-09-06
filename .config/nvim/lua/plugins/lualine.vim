@@ -45,7 +45,7 @@ require 'lualine'.setup {
     theme = custom_theme,
     section_separators = { left = '', right = '' },
     component_separators = '',
-    refresh = { statusline = 300, }
+    refresh = { tabline = 100, statusline = 100, }
   },
   sections = {
     lualine_a = {
@@ -84,12 +84,13 @@ require 'lualine'.setup {
 
   tabline = {
     lualine_a = {
+      { 'diff', symbols = { added = ' ', modified = ' ', removed = ' ' }, diff_color = { added='',modified='',removed=''}},
       { 'tabs',
-        max_length = vim.o.columns/3,
+        max_length= vim.o.columns,
         separator = { left = '', right = '' },
         use_mode_colors = false,
         mode = 2,
-      }
+      },
     },
     lualine_b = {},
     lualine_c = {},
