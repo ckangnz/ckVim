@@ -1,3 +1,5 @@
+if has('nvim')
+lua <<EOF
 require 'nvim-treesitter.configs'.setup {
   highlight = { enable = true },
   ensure_installed = {
@@ -14,3 +16,5 @@ require 'nvim-treesitter.configs'.setup {
     'kotlin'
   }
 }
+EOF
+endif

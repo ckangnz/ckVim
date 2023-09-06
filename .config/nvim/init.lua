@@ -12,9 +12,6 @@ set foldlevel=99
 set foldlevelstart=99
 ]])
 
--- Plugins
-require 'plugins.nvim-treesitter'
-
 --GUI Config
 require 'gui.neovide'
 

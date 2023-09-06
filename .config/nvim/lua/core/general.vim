@@ -6,6 +6,7 @@ let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c
 syntax on                                       "Syntax ON
 set re=0
 set noimd                                       "Revert back to English when on different language
+set noshowmode                                  "Hide --INSER-- at the bottom
 set nocompatible                                "Latest Vim Setting used
 set encoding=utf-8
 set termguicolors
