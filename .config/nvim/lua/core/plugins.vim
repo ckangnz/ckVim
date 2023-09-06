@@ -9,10 +9,10 @@ Plug 'nvim-tree/nvim-web-devicons'
 Plug 'skywind3000/vim-quickui'                                      " Context Quick UI
 Plug 'tpope/vim-vinegar'                                            " Easy Netrw with '-'
 Plug 'dstein64/vim-startuptime'                                     " Show :StartupTime
+Plug 'levouh/tint.nvim'                                             " Dim inactive window
 Plug 'junegunn/goyo.vim'                                            " Silence view
 Plug 'markonm/traces.vim'                                           " Preview highlights and substitute
 Plug 'mbbill/undotree'                                              " Magic of Undos
-Plug 'TaDaa/vimade'                                                 " Dim inactive window for pair-programming
 
 " Language Specific
 Plug 'nvim-treesitter/nvim-treesitter', {'do':':TSUpdate'}

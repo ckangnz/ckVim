@@ -6,9 +6,9 @@ so ~/.vim/.config/nvim/lua/plugins/coc.vim
 so ~/.vim/.config/nvim/lua/plugins/nvim-treesitter.vim
 "*-*-*-*-*-*-VISUAL PLUGINS-*-*-*-*-*-*
 so ~/.vim/.config/nvim/lua/plugins/gruvbox-material.vim
+so ~/.vim/.config/nvim/lua/plugins/tint.vim
 so ~/.vim/.config/nvim/lua/plugins/lualine.vim
 so ~/.vim/.config/nvim/lua/plugins/quickui.vim
-so ~/.vim/.config/nvim/lua/plugins/vimade.vim
 so ~/.vim/.config/nvim/lua/plugins/vim_current_word.vim
 "*-*-*-*-*-*-FUNCTIONALITY PLUGINS-*-*-*-*-*-*
 so ~/.vim/.config/nvim/lua/plugins/codeium.vim

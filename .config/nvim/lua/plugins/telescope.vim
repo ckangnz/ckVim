@@ -1,5 +1,4 @@
 lua << EOF
-
 local telescope = require('telescope')
 telescope.setup {
   defaults = {
@@ -8,10 +7,30 @@ telescope.setup {
   }
 };
 
+function vim.getVisualSelection()
+  vim.cmd('noau normal! "vy"')
+  local text = vim.fn.getreg('v')
+  vim.fn.setreg('v', {})
+
+  text = string.gsub(text, "\n", "")
+  if #text > 0 then
+    return text
+  else
+    return ''
+  end
+end
+
+
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<C-p>', builtin.git_files, {})
+vim.keymap.set('n', '<C-p>', builtin.git_files, {show_untracked})
 vim.keymap.set('n', '<C-e>', builtin.oldfiles, {})
 vim.keymap.set('n', '<leader>f', builtin.live_grep, {})
+vim.keymap.set('v', '<leader>f',
+function()
+  local text = vim.getVisualSelection();
+  builtin.grep_string({search=text})
+end)
+vim.keymap.set('n', '<leader>F', builtin.grep_string, {use_regex})
 vim.keymap.set('n', '<leader>b', builtin.buffers, {})
 vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
 
@@ -35,6 +54,7 @@ local TelescopeColor = {
 
   TelescopePromptTitle = { bg = colors.bg1, fg = colors.fg0 },
   TelescopePromptPrefix = { bg = colors.bg1 },
+  TelescopePromptCounter = { bg = colors.bg1 },
   TelescopePromptNormal = { bg = colors.bg1 },
   TelescopePromptBorder = { bg = colors.bg1, fg = colors.bg1 },
 
