@@ -24,7 +24,7 @@ local custom_theme = {
     a = { fg = colors.bg1, bg = colors.yellow, gui='bold'}
   },
   visual = {
-    a = { fg = colors.fg0, bg = colors.red , gui='bold'}
+    a = { fg = colors.bg1, bg = colors.red , gui='bold'}
   },
   replace = {
     a = { fg = colors.fg0, bg = colors.purple, gui='bold' }
