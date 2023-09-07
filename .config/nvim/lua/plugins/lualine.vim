@@ -65,6 +65,7 @@ require 'lualine'.setup {
     },
     lualine_y = {
       '%{codeium#GetStatusString()}',
+      'g:coc_status',
     },
     lualine_z = {
       { '%s%l:%v', separator = { left = '', right = '' } }
