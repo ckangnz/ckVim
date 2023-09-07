@@ -11,6 +11,7 @@ fi
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zdharma-continuum/fast-syntax-highlighting", defer:2
+zplug "memark/zsh-dotnet-completion", defer:2
 
 zplug "plugins/git", from:oh-my-zsh, defer:3
 zplug "plugins/kubectl", from:oh-my-zsh, defer:3
