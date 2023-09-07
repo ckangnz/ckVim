@@ -28,27 +28,27 @@ hi CodeiumSuggestion guifg=#928374 ctermfg=245
 
 "Transparent Neovim
 if !exists('neovide')
-  hi Normal guibg=none ctermbg=none
+  hi Normal guibg=NONE ctermbg=NONE
 endif
-hi NormalNC guibg=none ctermbg=none
-hi Comment guibg=none ctermbg=none
-hi Constant guibg=none ctermbg=none
-hi Special guibg=none ctermbg=none
-hi Identifier guibg=none ctermbg=none
-hi Statement guibg=none ctermbg=none
-hi PreProc guibg=none ctermbg=none
-hi Type guibg=none ctermbg=none
-hi Underlined guibg=none ctermbg=none
-hi Todo guibg=none ctermbg=none
-hi String guibg=none ctermbg=none
-hi Function guibg=none ctermbg=none
-hi Conditional guibg=none ctermbg=none
-hi Repeat guibg=none ctermbg=none
-hi Operator guibg=none ctermbg=none
-hi Structure guibg=none ctermbg=none
-hi LineNr guibg=none ctermbg=none
-hi NonText guibg=none ctermbg=none
-hi SignColumn guibg=none ctermbg=none
-hi CursorLine guibg=none ctermbg=none
-hi CursorLineNr guibg=none ctermbg=none
-hi EndOfBuffer guibg=none ctermbg=none
+hi NormalNC guibg=NONE ctermbg=NONE
+hi Comment guibg=NONE ctermbg=NONE
+hi Constant guibg=NONE ctermbg=NONE
+hi Special guibg=NONE ctermbg=NONE
+hi Identifier guibg=NONE ctermbg=NONE
+hi Statement guibg=NONE ctermbg=NONE
+hi PreProc guibg=NONE ctermbg=NONE
+hi Type guibg=NONE ctermbg=NONE
+hi Underlined guibg=NONE ctermbg=NONE
+hi Todo guibg=NONE ctermbg=NONE
+hi String guibg=NONE ctermbg=NONE
+hi Function guibg=NONE ctermbg=NONE
+hi Conditional guibg=NONE ctermbg=NONE
+hi Repeat guibg=NONE ctermbg=NONE
+hi Operator guibg=NONE ctermbg=NONE
+hi Structure guibg=NONE ctermbg=NONE
+hi LineNr guibg=NONE ctermbg=NONE
+hi NonText guibg=NONE ctermbg=NONE
+hi SignColumn guibg=NONE ctermbg=NONE
+hi CursorLine guibg=NONE ctermbg=NONE
+hi CursorLineNr guibg=NONE ctermbg=NONE
+hi EndOfBuffer guibg=NONE ctermbg=NONE
