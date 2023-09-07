@@ -34,6 +34,9 @@ There is no automatic installation script for Linux yet. Please copy and paste t
 # You must install essential C Compilers
 sudo apt-get update && sudo apt-get install build-essential
 
+# Install dotnet6 or dotnet7
+sudo apt update && sudo apt install dotnet7
+
 # Brew install other packages
 brew install python3 node fnm nvim vim
 brew install gh bat ripgrep
