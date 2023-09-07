@@ -58,8 +58,4 @@ else
 return
 ```
 
-4. Open Powershell and run the code
-
-````powershell
-Run <your_script_name>.ahk```
-````
+4. Open the .ahk file by clicking right and "Open with..." -> "Autohotkey"
