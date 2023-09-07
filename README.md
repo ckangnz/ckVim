@@ -32,7 +32,7 @@ There is no automatic installation script for Linux yet. Please copy and paste t
 
 ```bash
 brew install python3 node fnm nvim vim
-brew install gh bat ripgrep
+brew install gh bat ripgrep llvm
 ```
 
 > :warning: This will override your .vimrc file

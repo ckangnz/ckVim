@@ -1,3 +1,4 @@
+if has('nvim')
 lua << EOF
 local telescope = require('telescope')
 telescope.setup {
@@ -71,3 +72,4 @@ for hl, col in pairs(TelescopeColor) do
   vim.api.nvim_set_hl(0, hl, col)
 end
 EOF
+endif
