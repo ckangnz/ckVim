@@ -3,12 +3,13 @@ lua << EOF
 local colors = {
   bg0    = '#1d2021',
   bg1    = '#282828',
+  bg3    = '#3c3836',
   red    = '#ea6962',
   green  = '#a9b665',
   yellow = '#d8a657',
   blue   = '#7daea3',
   aqua   = '#89b482',
-  grey   = '#7c6f64',
+  grey1   = '#928374',
   purple = '#d3869b',
   fg1    = '#ddc7a1',
   fg0    = '#d4be98',
@@ -17,7 +18,7 @@ local colors = {
 local custom_theme = {
   normal = {
     a = { fg = colors.bg1, bg = colors.aqua, gui='bold' },
-    b = { fg = colors.fg1, bg = colors.grey },
+    b = { fg = colors.fg1, bg = colors.bg3 },
     c = { fg = colors.bg1, bg = 'none' },
   },
   insert = {
@@ -31,12 +32,12 @@ local custom_theme = {
   },
 
   inactive = {
-    a = { fg = colors.grey, bg = colors.bg1 },
+    a = { fg = colors.grey1, bg = colors.bg1 },
     b = { fg = colors.fg0, bg = colors.bg0 },
     c = { fg = colors.fg0, bg = 'none' },
     x = { fg = colors.fg0, bg = colors.bg0 },
     y = { fg = colors.fg0, bg = colors.bg0 },
-    z = { fg = colors.grey, bg = colors.bg1 },
+    z = { fg = colors.grey1, bg = colors.bg1 },
   },
 }
 

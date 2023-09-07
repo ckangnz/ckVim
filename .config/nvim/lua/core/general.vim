@@ -103,6 +103,10 @@ else
   vnoremap <silent> <M-k>˚ :m '<-2<CR>gv=gv
 endif
 vnoremap <silent> <leader>y "+y
+nmap <silent><C-O> <C-O>zz
+nmap <silent><C-I> <C-I>zz
+nmap <silent><C-D> <C-D>zz
+nmap <silent><C-U> <C-U>zz
 
 "*-*-*-*-*-*-PANEL NAVIGATION-*-*-*-*-*-*
 nmap <C-J> <C-W><C-J>
