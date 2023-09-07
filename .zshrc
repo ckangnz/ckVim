@@ -55,6 +55,10 @@ if [ -e "$HOMEBREW_PREFIX/bin/fnm" ]; then
   export PATH="$PATH:$FNM_MULTISHELL_PATH"
   eval "$(fnm env --use-on-cd)"
 fi
+#Python
+if [ -d "$HOMEBREW_PREFIX/opt/python3/bin" ]; then
+  export PATH=$HOMEBREW_PREFIX/opt/python3/bin:$PATH
+fi
 #Java
 if [ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]; then
   export PATH=$HOMEBREW_PREFIX/opt/openjdk/bin:$PATH

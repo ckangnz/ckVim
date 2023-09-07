@@ -31,8 +31,12 @@ _CK Vim supports NeoVim on all linux OS_
 There is no automatic installation script for Linux yet. Please copy and paste the following snippet to install all of the necessary libraries manually.
 
 ```bash
+# You must install essential C Compilers
+sudo apt-get update && sudo apt-get install build-essential
+
+# Brew install other packages
 brew install python3 node fnm nvim vim
-brew install gh bat ripgrep llvm
+brew install gh bat ripgrep
 ```
 
 > :warning: This will override your .vimrc file

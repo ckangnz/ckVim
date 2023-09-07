@@ -18,3 +18,9 @@ require 'nvim-treesitter.configs'.setup {
 }
 EOF
 endif
+
+if has('unix') && !has('mac')
+lua << EOF
+  require 'nvim-treesitter.install'.compiler = { 'gcc' }
+EOF
+endif
