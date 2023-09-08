@@ -85,7 +85,6 @@ endif
 augroup cocOverride
   autocmd!
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  inoremap <C-P> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
 
   "Javascript formatSelected
   autocmd FileType javasccript,javascriptreact,typescript,typescriptreact,json setl formatexpr=CocActionAsync('formatSelected')
