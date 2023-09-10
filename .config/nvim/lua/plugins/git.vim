@@ -1,6 +1,7 @@
 "--------GIT: tpope/vim-fugitive / idanarye/vim-merginal / junegunn/gv.vim
 nnoremap <silent> <Leader>1 :Git<cr><c-w>T
 nnoremap <silent> <Leader>2 :GV --all<cr>
+nnoremap <silent> <Leader>@ :GV!<cr>
 vnoremap <silent> <Leader>2 :GV!<cr>
 nnoremap <silent> <Leader>3 :execute len(FugitiveHead()) > 0 ? ':MerginalToggle' : 'echoerr "Not in a git repo"'<cr>
 nnoremap <silent> <Leader>gc :Git commit<cr>
