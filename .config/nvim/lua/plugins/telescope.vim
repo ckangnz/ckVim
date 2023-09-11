@@ -1,40 +1,95 @@
 if has('nvim')
 lua << EOF
 local telescope = require('telescope')
+local actions = require('telescope.actions')
+local action_layout = require('telescope.actions.layout')
+local builtin = require('telescope.builtin')
+
+local telescopeConfig = require("telescope.config")
+local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
+
+table.insert(vimgrep_arguments, "--hidden")
+-- I don't want to search in the `.git` directory.
+table.insert(vimgrep_arguments, "--glob")
+table.insert(vimgrep_arguments, "!**/.git/*")
+
+
 telescope.setup {
   defaults = {
     layout_config = { prompt_position = "top" },
     sorting_strategy = "ascending",
+    vimgrep_arguments = vimgrep_arguments,
+    mappings = {
+      i = {
+        ["<esc>"] = actions.close,
+        ["<C-/>"] = action_layout.toggle_preview
+      },
+    },
+  },
+  pickers = {
+    find_files = {
+      -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
+      find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+    },
+  },
+  extensions = {
+    fzf = {
+      fuzzy = true,
+      override_generic_sorter = true,
+      override_file_sorter = true,
+      case_mode = "smart_case"
+    },
   }
 };
+require('telescope').load_extension('fzf')
 
-function vim.getVisualSelection()
+function vim.find_files_or_git_files()
+  local function is_git_repo()
+    vim.fn.system("git rev-parse --is-inside-work-tree")
+    return vim.v.shell_error == 0
+  end
+  local function get_git_root()
+    local dot_git_path = vim.fn.finddir(".git", ".;")
+    return vim.fn.fnamemodify(dot_git_path, ":h")
+  end
+  local opts = { prompt_prefix='🗂️ ' }
+  if is_git_repo() then opts.cwd = get_git_root() end
+  builtin.find_files(opts)
+end
+
+function vim.live_grep_git_root()
+  local function is_git_repo()
+    vim.fn.system("git rev-parse --is-inside-work-tree")
+    return vim.v.shell_error == 0
+  end
+  local function get_git_root()
+    local dot_git_path = vim.fn.finddir(".git", ".;")
+    return vim.fn.fnamemodify(dot_git_path, ":h")
+  end
+  local opts = { prompt_prefix='🔍 ' }
+  if is_git_repo() then opts.cwd = get_git_root() end
+  builtin.live_grep(opts)
+end
+
+function vim.findVisualSelection()
   vim.cmd('noau normal! "vy"')
   local text = vim.fn.getreg('v')
   vim.fn.setreg('v', {})
-
   text = string.gsub(text, "\n", "")
-  if #text > 0 then
-    return text
-  else
-    return ''
-  end
+  local opts = { search=text, prompt_prefix='🔍 ' }
+  builtin.grep_string(opts)
 end
 
-
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<C-p>', builtin.git_files, {show_untracked})
+--Telescope Key Binding --------------------------------------------
+vim.keymap.set('n', '<C-p>', vim.find_files_or_git_files)
 vim.keymap.set('n', '<C-e>', builtin.oldfiles, {})
-vim.keymap.set('n', '<leader>f', builtin.live_grep, {})
-vim.keymap.set('v', '<leader>f',
-function()
-  local text = vim.getVisualSelection();
-  builtin.grep_string({search=text})
-end)
-vim.keymap.set('n', '<leader>F', builtin.grep_string, {use_regex})
+vim.keymap.set('n', '<leader>f', vim.live_grep_git_root)
+vim.keymap.set('v', '<leader>f', vim.findVisualSelection)
+vim.keymap.set('n', '<leader>F', builtin.grep_string, {})
 vim.keymap.set('n', '<leader>b', builtin.buffers, {})
 vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
 
+--Telescope Color Theme --------------------------------------------
 local colors = {
   bg0    = '#1d2021',
   bg1    = '#282828',

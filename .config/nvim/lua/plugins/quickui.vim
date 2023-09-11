@@ -5,6 +5,7 @@ let g:quickui_color_scheme = 'papercol-dark'
 "*-*-*-*-*-*-MY PATH MENU-*-*-*-*-*-*
 let myPathsOpts={ "title": "My Paths" }
 let myPaths=[]
+call add(myPaths,[" ~/code (&d)",'vsp $HOME/code'])
 if exists('g:neovide') || has('nvim')
   call add(myPaths,['Vimrc (&v)','vsp $HOME/.vimrc'])
   call add(myPaths,['NVim (&e)','vsp $MYVIMRC'])
@@ -12,7 +13,6 @@ else
   call add(myPaths,['Vimrc (&v)','vsp $MYVIMRC'])
 endif
 call add(myPaths,['-'])
-call add(myPaths,[" ~/.vim (&d)",'vsp $HOME/.vim'])
 call add(myPaths,['Readme.md (&r)','vsp $HOME/.vim/README.md'])
 call add(myPaths,['Install.sh (&i)','vsp $HOME/.vim/install.sh'])
 call add(myPaths,['-'])

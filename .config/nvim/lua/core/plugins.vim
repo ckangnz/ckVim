@@ -39,6 +39,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocUpdate'}
 " Search Tool
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " Functionality
 Plug 'airblade/vim-rooter'                                          " Find the root of the project automatically
