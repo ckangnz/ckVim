@@ -6,7 +6,15 @@ if vim.fn.has('nvim') then
 
   telescope.setup {
     defaults = {
+      winblend = 0,
       layout_config = { prompt_position = "top" },
+      sorting_strategy = "ascending",
+      mappings = {
+        i = {
+          ["<esc>"] = actions.close,
+          ["<C-/>"] = action_layout.toggle_preview
+        },
+      },
       vimgrep_arguments = {
         "rg",
         "--color=never",
@@ -17,17 +25,8 @@ if vim.fn.has('nvim') then
         "--smart-case",
         "--trim",
         "--hidden",
-        "--glob",
-        "!**/.git/*",
-        "!**/node_module/*",
       },
-      sorting_strategy = "ascending",
-      mappings = {
-        i = {
-          ["<esc>"] = actions.close,
-          ["<C-/>"] = action_layout.toggle_preview
-        },
-      },
+      file_ignore_patterns = { '.git/', 'node_module/', '*.plist' },
       preview = {
         mime_hook = function(filepath, bufnr, opts)
           local is_image = function()
@@ -71,36 +70,34 @@ if vim.fn.has('nvim') then
     return vim.fn.fnamemodify(dot_git_path, ":h")
   end
 
-  function vim.find_files_or_git_files()
-    local opts = { prompt_prefix = '🗂️ ' }
+  local function find_files_or_git_files(opts)
+    opts.hidden = true
     if is_git_repo() then opts.cwd = get_git_root() end
     builtin.find_files(opts)
   end
 
-  function vim.live_grep_git_root()
-    local opts = { prompt_prefix = '🔍 ' }
+  local function live_grep_git_root(opts)
     if is_git_repo() then opts.cwd = get_git_root() end
-    print(opts)
     builtin.live_grep(opts)
   end
 
-  function vim.findVisualSelection()
+  local function findVisualSelection(opts)
     vim.cmd('noau normal! "vy"')
     local text = vim.fn.getreg('v')
     vim.fn.setreg('v', {})
     text = string.gsub(text, "\n", "")
-    local opts = { search = text, prompt_prefix = '🔍 ' }
+    opts.search = text
     builtin.grep_string(opts)
   end
 
   --Telescope Key Binding --------------------------------------------
-  vim.keymap.set('n', '<C-p>', vim.find_files_or_git_files)
-  vim.keymap.set('n', '<C-e>', builtin.oldfiles, {})
-  vim.keymap.set('n', '<leader>f', vim.live_grep_git_root)
-  vim.keymap.set('v', '<leader>f', vim.findVisualSelection)
-  vim.keymap.set('n', '<leader>F', builtin.grep_string, {})
-  vim.keymap.set('n', '<leader>b', builtin.buffers, {})
-  vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
+  vim.keymap.set('n', '<C-p>', function() find_files_or_git_files({ prompt_prefix = '📁 ' }) end)
+  vim.keymap.set('n', '<C-e>', function() builtin.oldfiles({ prompt_prefix = '📂 ' }) end)
+  vim.keymap.set('n', '<leader>f', function() live_grep_git_root({ prompt_prefix = '🔍 ' }) end)
+  vim.keymap.set('v', '<leader>f', function() findVisualSelection({ prompt_prefix = '🔍 ' }) end)
+  vim.keymap.set('n', '<leader>F', function() builtin.grep_string({ prompt_prefix = '🔍 ' }) end)
+  vim.keymap.set('n', '<leader>b', function() builtin.buffers({ prompt_prefix = '📄 ' }) end)
+  vim.keymap.set('n', '<leader>h', function() builtin.help_tags({ prompt_prefix = '❔ ' }) end)
 
   --Telescope Color Theme --------------------------------------------
   local colors = {

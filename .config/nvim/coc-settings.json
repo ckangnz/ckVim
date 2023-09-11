@@ -6,6 +6,7 @@
   "list.statusLineSegments": null,
 
   "lua.enable": true,
+  "Lua.codeLens.enable": true,
   "Lua.diagnostics.globals": ["vim"],
   "Lua.completion.callSnippet": "Both",
   "Lua.completion.requireSeparator": ".",
