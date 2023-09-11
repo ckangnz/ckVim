@@ -39,7 +39,7 @@ sudo apt update && sudo apt install dotnet7
 
 # Brew install other packages
 brew install python3 node fnm nvim vim
-brew install gh bat ripgrep
+brew install gh bat ripgrep catimg
 ```
 
 > :warning: This will override your .vimrc file

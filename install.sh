@@ -12,6 +12,7 @@ brew_install_cask "neovide"
 
 brew_install "gh"
 brew_install "ripgrep"
+brew_install "catimg"
 
 #[Check versions here](https://github.com/isen-ng/homebrew-dotnet-sdk-versions)
 brew_install_cask "dotnet-sdk"
