@@ -12,6 +12,7 @@ set foldlevel=99
 set foldlevelstart=99
 ]])
 
+require 'plugins.telescope'
 --GUI Config
 require 'gui.neovide'
 
