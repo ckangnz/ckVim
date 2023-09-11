@@ -86,7 +86,6 @@ require 'lualine'.setup {
 
   tabline = {
     lualine_a = {
-      { 'diff', symbols = { added = ' ', modified = ' ', removed = ' ' }, diff_color = { added='',modified='',removed=''}},
       { 'tabs',
         max_length= vim.o.columns,
         separator = { left = '', right = '' },
