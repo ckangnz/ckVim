@@ -78,6 +78,7 @@ if vim.fn.has('nvim') then
         'g:coc_status',
       },
       lualine_z = {
+        'g:asyncrun_status',
         { '%s%l:%v', separator = { left = '', right = '' } }
       }
     },
