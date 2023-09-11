@@ -12,7 +12,10 @@ set foldlevel=99
 set foldlevelstart=99
 ]])
 
+require 'plugins.nvim-treesitter'
 require 'plugins.telescope'
+require 'plugins.tint'
+require 'plugins.lualine'
 --GUI Config
 require 'gui.neovide'
 
