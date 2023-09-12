@@ -1,4 +1,6 @@
-# CK VIM/ZSH
+[toc]
+
+# CK-Vim
 
 ## Pre-requisite
 
@@ -8,17 +10,15 @@ Clone this project into `~/.vim`
 git clone https://github.com/chris542/ckVim ~/.vim
 ```
 
-# CK-Vim
+_CK Vim supports NeoVim on all linux environment_
 
-_CK Vim supports NeoVim on all linux OS_
-
-## You must have brew installed
+## :house: Install Homebrew
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-### On OSX
+## :apple: Install CKVim on OSX
 
 > :warning: This will override your .vimrc file
 
@@ -26,7 +26,7 @@ _CK Vim supports NeoVim on all linux OS_
 ~/.vim/install.sh
 ```
 
-### On WSL/Linux
+## :penguin: Install CKVim on WSL/Linux
 
 There is no automatic installation script for Linux yet. Please copy and paste the following snippet to install all of the necessary libraries manually.
 
@@ -51,7 +51,7 @@ mkdir ~/.config
 ln -s ~/.vim/.config/nvim ~/.config/nvim
 ```
 
-### Install Plugins
+## :gear: Install Plugins
 
 1. Run vim
 2. Run `:PlugInstall` or `,pi`
@@ -60,7 +60,7 @@ ln -s ~/.vim/.config/nvim ~/.config/nvim
 
 # CK-ZSH
 
-## For MacOS
+## :apple: For MacOS
 
 ### Install Oh-my-zsh
 
@@ -93,7 +93,7 @@ zi
 zplug install
 ```
 
-## For WSL/Linux
+## :penguin: For WSL/Linux
 
 ### Pre-requisite
 
@@ -153,12 +153,13 @@ zi
 zplug install
 ```
 
-## Powerlevel10k Config
+## Configure your Powerlevel10k
 
 Run following command to configure your powerlevel10k theme.
 Avoid sourcing `~/.p10k.zsh` as it is already imported in `.zshrc`
 
 ```bash
+#alias p10
 p10k configure
 ```
 
@@ -185,6 +186,12 @@ source $ZPLUG_HOME/init.zsh
 
 - If you get python issue on nvim install pynvim
 
-```
+```bash
 $(which python3) -m pip install pynvim
+```
+
+- Update csharp_ls time to time
+
+```bash
+dotnet tool update -g csharp-ls
 ```
