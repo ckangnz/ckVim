@@ -18,9 +18,10 @@
 # Configuring profile
 
 ```bash
+# Set default credential
 aws configure
-# Type in AWS Access Key ID: ....
 
+# OR set profile credential
 aws configure set profile.<MY-PROFILE-ALIAS>.aws_access_key_id <ACCESS-KEY-ID>
 aws configure set profile.<MY-PROFILE-ALIAS>.aws_secret_access_key <SECRET-ACCESS-KEY>
 aws configure set profile.<MY-PROFILE-ALIAS>.region <YOUR-REGION>
@@ -28,6 +29,17 @@ aws configure set profile.<MY-PROFILE-ALIAS>.role_name <ROLE-NAME>
 
 #You could use sso
 aws configure sso
+# SSO session name : NAME YOUR SESSION
+# SSO start URL : https://*.awsapps.com/start#
+
+#Login with sso
+aws sso login --sso-session <NAME OF YOUR SESSION>
+
+# Get your current AccountId / Arn / UserId
+aws sts get-caller-identity
+
+# Get list of your profiles
+aws configure list-profiles
 ```
 
 # IAM Policies
