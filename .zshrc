@@ -1,7 +1,6 @@
 #zmodload zsh/zprof
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
-
 export TERM="xterm-256color"
 
 # Powerlevel10k
@@ -110,7 +109,11 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 ### Fix slowness of pastes
 
 #FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if[ -f ~/.fzf.zsh ] then
+  source ~/.fzf.zsh
+elif [-d "$HOMEBREW_PREFIX/opt/fzf/bin"]
+  $HOMEBREW_PREFIX/opt/fzf/install
+fi
 
 # --------Custom Methods--------
 [ -f ~/.extraAlias.zsh ] && source ~/.extraAlias.zsh
