@@ -36,6 +36,9 @@ echo 'Completed Linking vimrc!'
 if [ -d ~/.config/nvim ];then
   echo '.config/nvim already exists! Removing ~/.config/nvim directory'
   rm -rf ~/.config/nvim
+else
+  [ -d ~/.config ] && mkdir ~/.config
+  mkdir ~/.config/nvim
 fi
 echo 'Linking .config/nvim..'
 ln -s ~/.vim/.config/nvim ~/.config/nvim

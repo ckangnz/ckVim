@@ -38,6 +38,7 @@ sudo apt-get update && sudo apt-get install build-essential
 sudo apt update && sudo apt install dotnet7
 
 # Brew install other packages
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"]
 brew install python3 node fnm nvim vim
 brew install gh bat ripgrep catimg
 ```
@@ -174,7 +175,11 @@ compaudit | xargs chmod g-w
 - If you get a prompt that brew is missing after installation, simply run this command
 
 ```bash
+# For Mac
 eval "$(/usr/lib/bin/brew shellenv)"
+
+# For Linux
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"]
 ```
 
 - If you get a prompt that zplug is missing after installation, simply run this command
@@ -194,4 +199,10 @@ $(which python3) -m pip install pynvim
 
 ```bash
 dotnet tool update -g csharp-ls
+```
+
+- If you get fnm Error 13 permission denied
+
+```bash
+sudo chown -R $(whoami) /run/user/1000/
 ```
