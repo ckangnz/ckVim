@@ -4,18 +4,12 @@ let &packpath = &runtimepath
 source $HOME/.vimrc
 ]])
 
-vim.cmd([[
-set foldmethod=expr
-set foldexpr='nvim_treesitter#foldexpr()'
-set foldenable
-set foldlevel=99
-set foldlevelstart=99
-]])
-
+--Lua Plugins
 require 'plugins.nvim-treesitter'
 require 'plugins.telescope'
 require 'plugins.tint'
 require 'plugins.lualine'
+
 --GUI Config
 require 'gui.neovide'
 

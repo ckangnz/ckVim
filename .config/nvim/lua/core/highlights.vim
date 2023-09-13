@@ -16,8 +16,6 @@ augroup END
 
 hi ExtraWhitespace ctermbg=red guibg=red
 
-hi foldcolumn ctermbg=0 guibg=bg guifg=white
-hi Comment cterm=NONE
 hi diffAdded ctermfg=142 guifg=#a9b665
 hi diffRemoved ctermfg=167 guifg=#ea6962
 
