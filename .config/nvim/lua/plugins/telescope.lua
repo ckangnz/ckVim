@@ -50,15 +50,13 @@ if vim.fn.has('nvim') then
       },
     },
     extensions = {
-      fzf = {
-        fuzzy = true,
-        override_generic_sorter = true,
-        override_file_sorter = true,
-        case_mode = "smart_case"
-      },
+      coc = {
+        theme = 'ivy',
+        prefer_locations = true
+      }
     }
   };
-  require('telescope').load_extension('fzf')
+  require('telescope').load_extension('coc')
 
   local function is_git_repo()
     vim.fn.system("git rev-parse --is-inside-work-tree")
@@ -98,6 +96,10 @@ if vim.fn.has('nvim') then
   vim.keymap.set('n', '<leader>F', function() builtin.grep_string({ prompt_prefix = '🔍 ' }) end)
   vim.keymap.set('n', '<leader>b', function() builtin.buffers({ prompt_prefix = '📄 ' }) end)
   vim.keymap.set('n', '<leader>h', function() builtin.help_tags({ prompt_prefix = '❔ ' }) end)
+
+  vim.keymap.set('n', 'gc', ':Telescope coc commands<cr>', { silent = true, nowait = true })
+  vim.keymap.set('n', 'gr', ':Telescope coc references<cr>', { silent = true, nowait = true })
+  vim.keymap.set('n', 'gs', ':Telescope coc workspace_symbols<cr>', { noremap = true, silent = true, nowait = true })
 
   --Telescope Color Theme --------------------------------------------
   local colors = {

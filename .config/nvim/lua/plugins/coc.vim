@@ -27,7 +27,6 @@ nmap <silent><nowait>gh <Plug>(coc-diagnostic-info)
 nmap <silent><nowait>gd <Plug>(coc-definition)
 nmap <silent><nowait>gy <Plug>(coc-type-definition)
 nmap <silent><nowait>gi <Plug>(coc-implementation)
-nmap <silent><nowait>gr <Plug>(coc-references)
 nmap <silent><nowait><S-r> <Plug>(coc-rename)
 nmap <silent><nowait><leader><S-r> :CocCommand workspace.renameCurrentFile<cr>
 xmap <nowait><leader>= <Plug>(coc-format-selected)
@@ -40,7 +39,6 @@ nmap <nowait><leader>r <Plug>(coc-codeaction-refactor)
 xmap <nowait><leader>r <Plug>(coc-codeaction-refactor-selected)
 nmap <nowait><leader>. <Plug>(coc-codeaction)
 nmap <nowait><leader>. <Plug>(coc-fix-current)
-nnoremap <silent><nowait> gs :<C-u>CocList -I symbols<cr>
 nnoremap <silent><nowait> ? :<C-u>CocList outline<CR>
 
 " Popup menu control (scrolling)
