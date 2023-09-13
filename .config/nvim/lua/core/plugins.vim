@@ -38,8 +38,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Search Tool
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'fannheyward/telescope-coc.nvim'
+Plug 'nvim-telescope/telescope.nvim'                                " Fuzzy finder
+Plug 'fannheyward/telescope-coc.nvim'                               " Coc Extension
+Plug 'tom-anders/telescope-vim-bookmarks.nvim'                      " Bookmarks Extension
 
 " Functionality
 Plug 'airblade/vim-rooter'                                          " Find the root of the project automatically

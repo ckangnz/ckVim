@@ -57,6 +57,7 @@ if vim.fn.has('nvim') then
     }
   };
   require('telescope').load_extension('coc')
+  require('telescope').load_extension('vim_bookmarks')
 
   local function is_git_repo()
     vim.fn.system("git rev-parse --is-inside-work-tree")
