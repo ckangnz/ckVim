@@ -99,8 +99,9 @@ if vim.fn.has('nvim') then
   vim.keymap.set('n', '<leader>h', function() builtin.help_tags({ prompt_prefix = '❔ ' }) end)
 
   vim.keymap.set('n', 'gc', ':Telescope coc commands<cr>', { silent = true, nowait = true })
-  vim.keymap.set('n', 'gr', ':Telescope coc references<cr>', { silent = true, nowait = true })
+  vim.keymap.set('n', 'gr', ':Telescope coc references_used<cr>', { silent = true, nowait = true })
   vim.keymap.set('n', 'gs', ':Telescope coc workspace_symbols<cr>', { noremap = true, silent = true, nowait = true })
+  vim.keymap.set('n', '?', ':Telescope coc document_symbols<cr>', { noremap = true, silent = true, nowait = true })
 
   --Telescope Color Theme --------------------------------------------
   local colors = {

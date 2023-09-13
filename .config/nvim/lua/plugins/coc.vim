@@ -39,7 +39,6 @@ nmap <nowait><leader>r <Plug>(coc-codeaction-refactor)
 xmap <nowait><leader>r <Plug>(coc-codeaction-refactor-selected)
 nmap <nowait><leader>. <Plug>(coc-codeaction)
 nmap <nowait><leader>. <Plug>(coc-fix-current)
-nnoremap <silent><nowait> ? :<C-u>CocList outline<CR>
 
 " Popup menu control (scrolling)
 nnoremap <silent><expr> <c-j> coc#float#has_scroll() ? coc#float#scroll(1) : "\<c-w><c-j>"
