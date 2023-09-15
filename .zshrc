@@ -41,29 +41,29 @@ fi
 
 #------Source Brew plugins--------
 # Kubectl
-if [ -e "$HOMEBREW_PREFIX/bin/kubectl" ];then
+if [[ -e "$HOMEBREW_PREFIX/bin/kubectl" ]];then
   source <(kubectl completion zsh)
   complete -F __start_kubectl k
 fi
 # Helm
-if [ -e "$HOMEBREW_PREFIX/bin/helm" ];then
+if [[ -e "$HOMEBREW_PREFIX/bin/helm" ]];then
   source <(helm completion zsh)
 fi
 # FNM
-if [ -e "$HOMEBREW_PREFIX/bin/fnm" ]; then
+if [[ -e "$HOMEBREW_PREFIX/bin/fnm" ]]; then
   export PATH="$PATH:$FNM_MULTISHELL_PATH"
   eval "$(fnm env --use-on-cd)"
 fi
 #Python
-if [ -d "$HOMEBREW_PREFIX/opt/python3/bin" ]; then
+if [[ -d "$HOMEBREW_PREFIX/opt/python3/bin" ]]; then
   export PATH=$HOMEBREW_PREFIX/opt/python3/bin:$PATH
 fi
 #Java
-if [ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]; then
+if [[ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]]; then
   export PATH=$HOMEBREW_PREFIX/opt/openjdk/bin:$PATH
 fi
 # Ruby
-if [ -d "$HOMEBREW_PREFIX/opt/ruby/bin" ]; then
+if [[ -d "$HOMEBREW_PREFIX/opt/ruby/bin" ]]; then
   export PATH=$HOMEBREW_PREFIX/opt/ruby/bin:$PATH
   export PATH=`gem environment gemdir`/bin:$PATH
 fi
@@ -109,14 +109,14 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 ### Fix slowness of pastes
 
 #FZF
-if[ -f ~/.fzf.zsh ] then
+if [[ -f ~/.fzf.zsh ]]; then
   source ~/.fzf.zsh
-elif [-d "$HOMEBREW_PREFIX/opt/fzf/bin"]
+elif [[-d "$HOMEBREW_PREFIX/opt/fzf/bin"]]; then
   $HOMEBREW_PREFIX/opt/fzf/install
 fi
 
 # --------Custom Methods--------
-[ -f ~/.extraAlias.zsh ] && source ~/.extraAlias.zsh
+[[ -f ~/.extraAlias.zsh ]] && source ~/.extraAlias.zsh
 
 bindkey -e
 #zprof
