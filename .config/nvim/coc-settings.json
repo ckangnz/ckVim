@@ -12,7 +12,6 @@
   "Lua.completion.requireSeparator": ".",
 
   "eslint.enable": true,
-  "eslint.experimental.useFlatConfig": true,
   "eslint.autoFixOnSave": true,
 
   "typescript.format.enable": true,
