@@ -1,5 +1,3 @@
-[toc]
-
 # CK-Vim
 
 ## Pre-requisite
@@ -177,8 +175,10 @@ compaudit | xargs chmod g-w
 ```bash
 # For Mac
 eval "$(/usr/lib/bin/brew shellenv)"
+```
 
-# For Linux
+```bash
+# For WSL
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"]
 ```
 
@@ -201,8 +201,14 @@ $(which python3) -m pip install pynvim
 dotnet tool update -g csharp-ls
 ```
 
-- If you get fnm Error 13 permission denied
+- If you get FNM Error 13 permission denied
 
 ```bash
 sudo chown -R $(whoami) /run/user/1000/
+```
+
+- For WSL windows, install win32yank with choco to yank into clipboard
+
+```Powershell
+choco install win32yank
 ```
