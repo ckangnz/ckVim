@@ -116,13 +116,10 @@ nmap <C-H> <C-W><C-H>
 nmap <C-L> <C-W><C-L>
 augroup vimrc
   au!
-  autocmd FileType netrw call s:RemoveNetrwMap()
+  autocmd FileType netrw noremap <buffer> <c-l> <c-w><c-l>
+  autocmd FileType list noremap <buffer> <c-p> <c-p>
 augroup END
-func s:RemoveNetrwMap()
-  if hasmapto('<Plug>NetrwRefresh')
-    unmap <buffer> <C-L>
-  endif
-endfunc
+
 
 "*-*-*-*-*-*-PANEL RESIZING-*-*-*-*-*-*
 ",wf maximise ,wm minimise pane

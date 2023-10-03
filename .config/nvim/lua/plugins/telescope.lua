@@ -20,6 +20,7 @@ if vim.fn.has('nvim') then
         "rg",
         "--color=never",
         "--no-heading",
+        "--no-ignore-vcs",
         "--with-filename",
         "--line-number",
         "--column",
@@ -27,7 +28,13 @@ if vim.fn.has('nvim') then
         "--trim",
         "--hidden",
       },
-      file_ignore_patterns = { '.git/', 'node_module/', '*.plist' },
+      file_ignore_patterns = {
+        '.git/*',
+        'node_module/*',
+        '*.plist',
+        'plugged/*',
+        'autoload/*'
+      },
       preview = {
         mime_hook = function(filepath, bufnr, opts)
           local is_image = function()
