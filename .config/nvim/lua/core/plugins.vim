@@ -24,8 +24,9 @@ Plug 'markonm/traces.vim'                                           " Preview hi
 Plug 'mbbill/undotree'                                              " Magic of Undos
 
 " Language Specific
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'pedrohdz/vim-yaml-folds'                                      " .yaml
+Plug 'mattn/emmet-vim'                                              "HTML/CSS emmet
+Plug 'nvim-treesitter/nvim-treesitter'                              "Syntax highlight by treesitter
+Plug 'pedrohdz/vim-yaml-folds'                                      "Fold method for .yaml
 
 " Git Tool
 Plug 'idanarye/vim-merginal'                                        " Git branch organiser
@@ -43,7 +44,7 @@ Plug 'tmhedberg/matchit'                                            " More funct
 Plug 'tpope/vim-repeat'                                             " Repeat tpope's plugins
 
 " LSP
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}                     "Language server protocol
 
 " Search Tool
 Plug 'nvim-lua/plenary.nvim'
