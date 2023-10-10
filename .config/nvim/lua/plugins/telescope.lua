@@ -33,7 +33,8 @@ if vim.fn.has('nvim') then
         'node_module/*',
         '*.plist',
         'plugged/*',
-        'autoload/*'
+        'autoload/*',
+        'dist/*'
       },
       preview = {
         mime_hook = function(filepath, bufnr, opts)
