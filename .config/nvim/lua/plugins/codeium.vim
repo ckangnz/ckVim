@@ -17,7 +17,6 @@ else
   imap <M-q> <Plug>(codium-dismiss)
   imap <M-a> <Cmd>call codeium#Complete()<CR>
 endif
-let g:airline_section_y = 'AI:%3{codeium#GetStatusString()}'
 let g:codeium_filetypes = {
     \ "cs": v:true,
     \ "vim": v:true,
