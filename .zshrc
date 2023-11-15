@@ -54,11 +54,11 @@ if [[ -e "$HOMEBREW_PREFIX/bin/fnm" ]]; then
   export PATH="$PATH:$FNM_MULTISHELL_PATH"
   eval "$(fnm env --use-on-cd)"
 fi
-#Python
+# Python
 if [[ -d "$HOMEBREW_PREFIX/opt/python3/bin" ]]; then
   export PATH=$HOMEBREW_PREFIX/opt/python3/bin:$PATH
 fi
-#Java
+# Java
 if [[ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]]; then
   export PATH=$HOMEBREW_PREFIX/opt/openjdk/bin:$PATH
 fi
@@ -66,6 +66,12 @@ fi
 if [[ -d "$HOMEBREW_PREFIX/opt/ruby/bin" ]]; then
   export PATH=$HOMEBREW_PREFIX/opt/ruby/bin:$PATH
   export PATH=`gem environment gemdir`/bin:$PATH
+fi
+# FZF
+if [[ -f ~/.fzf.zsh ]]; then
+  source ~/.fzf.zsh
+elif [[-d "$HOMEBREW_PREFIX/opt/fzf/bin"]]; then
+  $HOMEBREW_PREFIX/opt/fzf/install
 fi
 
 #alias
@@ -108,12 +114,6 @@ zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 ### Fix slowness of pastes
 
-#FZF
-if [[ -f ~/.fzf.zsh ]]; then
-  source ~/.fzf.zsh
-elif [[-d "$HOMEBREW_PREFIX/opt/fzf/bin"]]; then
-  $HOMEBREW_PREFIX/opt/fzf/install
-fi
 
 # --------Custom Methods--------
 [[ -f ~/.extraAlias.zsh ]] && source ~/.extraAlias.zsh

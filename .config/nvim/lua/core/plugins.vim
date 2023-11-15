@@ -59,7 +59,8 @@ Plug 'Asheq/close-buffers.vim'                                      " Delete hid
 Plug 'dominikduda/vim_current_word'                                 " Highlight current word
 Plug 'easymotion/vim-easymotion'                                    " Easy Navigation
 Plug 'kkvh/vim-docker-tools'                                        " Docker within vim
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install'  } " InstantMarkdownPreview
+Plug 'iamcco/markdown-preview.nvim',
+      \{ 'do': 'cd app && npx --yes yarn install'  }                " InstantMarkdownPreview
 Plug 'mattesGroeger/vim-bookmarks'                                  " Vim Bookmarks
 Plug 'nicwest/vim-http'                                             " HTTP calls from vim
 Plug 'scrooloose/nerdcommenter'                                     " Easy Commenting tool

@@ -1,4 +1,4 @@
-export ZPLUG_HOME=$(brew --prefix)/opt/zplug
+export ZPLUG_HOME=$HOMEBREW_PREFIX/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
 if ! zplug check --verbose; then
