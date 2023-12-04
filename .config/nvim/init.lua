@@ -9,6 +9,7 @@ require 'plugins.nvim-treesitter'
 require 'plugins.telescope'
 require 'plugins.tint'
 require 'plugins.lualine'
+require 'plugins.oil'
 
 --GUI Config
 require 'gui.neovide'

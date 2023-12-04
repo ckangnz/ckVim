@@ -16,7 +16,7 @@ Plug 'sainnhe/gruvbox-material'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'skywind3000/vim-quickui'                                      " Context Quick UI
-Plug 'tpope/vim-vinegar'                                            " Easy Netrw with '-'
+Plug 'stevearc/oil.nvim'                                            " Easy Netrw with '-'
 Plug 'dstein64/vim-startuptime'                                     " Show :StartupTime
 Plug 'levouh/tint.nvim'                                             " Dim inactive window
 Plug 'junegunn/goyo.vim'                                            " Silence view
