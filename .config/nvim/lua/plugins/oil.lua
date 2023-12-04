@@ -3,17 +3,16 @@ vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 require("oil").setup({
   default_file_explorer = true,
   columns = {
+    -- See :help oil-columns for a list of all columns
     "icon",
     -- "size",
     -- "permissions",
     -- "mtime",
   },
-  -- Buffer-local options to use for oil buffers
   buf_options = {
     buflisted = false,
     bufhidden = "hide",
   },
-  -- Window-local options to use for oil buffers
   win_options = {
     wrap = false,
     signcolumn = "no",
@@ -32,19 +31,21 @@ require("oil").setup({
     -- See :help oil-actions for a list of all available actions
     ["g?"] = "actions.show_help",
     ["<CR>"] = "actions.select",
-    ["<C-v>"] = "actions.select_vsplit",
-    ["<C-s>"] = "actions.select_split",
-    ["<C-t>"] = "actions.select_tab",
+    ["gv"] = "actions.select_vsplit",
+    ["gd"] = "actions.select_split",
+    ["gt"] = "actions.select_tab",
+    ["gy"] = "actions.copy_entry_path",
+    ["!"] = "actions.open_cmdline",
     ["<C-p>"] = "actions.preview",
     ["<C-c>"] = "actions.close",
     ["<C-r>"] = "actions.refresh",
     ["-"] = "actions.parent",
-    ["_"] = "actions.open_cwd", --Open project root
-    ["`"] = "actions.cd",
-    ["~"] = "actions.tcd",
+    ["~"] = "actions.open_cwd",
+    ["cd"] = "actions.cd",
+    ["tcd"] = "actions.tcd",
     ["gs"] = "actions.change_sort",
     ["gx"] = "actions.open_external",
-    ["g."] = "actions.toggle_hidden",
+    ["gh"] = "actions.toggle_hidden",
   },
   use_default_keymaps = false,
   view_options = {
