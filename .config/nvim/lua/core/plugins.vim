@@ -48,7 +48,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}                     "Language se
 
 " Search Tool
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.3' }            " Fuzzy finder
+Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }            " Fuzzy finder
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }   " FZF Extension
 Plug 'fannheyward/telescope-coc.nvim'                               " Coc Extension
 Plug 'tom-anders/telescope-vim-bookmarks.nvim'                      " Bookmarks Extension
