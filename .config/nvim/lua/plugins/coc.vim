@@ -87,25 +87,6 @@ augroup cocOverride
   autocmd FileType javasccript,javascriptreact,typescript,typescriptreact,json setl formatexpr=CocActionAsync('formatSelected')
   "Disable markdown suggestions
   autocmd FileType markdown let b:coc_suggest_disable = 1
-
-  function! s:create_dotnet_controller() abort
-    let controllerName = input('Controller Name: ')
-    let modelName = input('Model Name: ')
-    let dbContextName = input('DB Context Name: ')
-    if controllerName != "" && modelName != "" && dbContextName != ""
-      let script = ":!dotnet aspnet-codegenerator controller "
-            \.. "-name " .. controllerName .. "Controller "
-            \.. "-async "
-            \.. "-api "
-            \.. "-m " .. modelName .. " "
-            \.. "-dc " .. dbContextName .. " "
-            \.. "-outDir Controllers"
-      exe script
-    else
-      echo "Cancelled"
-    endif
-  endfunction
-  command! CreateController call s:create_dotnet_controller()
 augroup end
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
