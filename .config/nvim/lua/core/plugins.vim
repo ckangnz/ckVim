@@ -11,17 +11,20 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 \| endif
 
 
-" VIM GUI
-Plug 'sainnhe/gruvbox-material'
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'nvim-tree/nvim-web-devicons'
-Plug 'skywind3000/vim-quickui'                                      " Context Quick UI
-Plug 'stevearc/oil.nvim'                                            " Easy Netrw with '-'
+" Essential
 Plug 'dstein64/vim-startuptime'                                     " Show :StartupTime
-Plug 'levouh/tint.nvim'                                             " Dim inactive window
-Plug 'junegunn/goyo.vim'                                            " Silence view
+Plug 'nvim-lua/plenary.nvim'                                        " Essential for nvim plugins
+Plug 'skywind3000/vim-quickui'                                      " Context Quick UI
+Plug 'nvim-tree/nvim-web-devicons'                                  " Devicons
 Plug 'markonm/traces.vim'                                           " Preview highlights and substitute
 Plug 'mbbill/undotree'                                              " Magic of Undos
+Plug 'nvim-lualine/lualine.nvim'                                    " Status line
+Plug 'stevearc/oil.nvim'                                            " Easy Netrw with '-'
+Plug 'levouh/tint.nvim'                                             " Dim inactive window
+Plug 'junegunn/goyo.vim'                                            " Silence view
+
+" VIM GUI
+Plug 'sainnhe/gruvbox-material'                                     " Gruvbox Theme
 
 " Language Specific
 Plug 'mattn/emmet-vim'                                              "HTML/CSS emmet
@@ -47,7 +50,6 @@ Plug 'tpope/vim-repeat'                                             " Repeat tpo
 Plug 'neoclide/coc.nvim', {'branch': 'release'}                     "Language server protocol
 
 " Search Tool
-Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }            " Fuzzy finder
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }   " FZF Extension
 Plug 'fannheyward/telescope-coc.nvim'                               " Coc Extension
