@@ -36,7 +36,7 @@ require("oil").setup({
     ["gt"] = "actions.select_tab",
     ["gy"] = "actions.copy_entry_path",
     ["!"] = "actions.open_cmdline",
-    ["<C-p>"] = "actions.preview",
+    ["<C-/>"] = "actions.preview",
     ["<C-c>"] = "actions.close",
     ["<C-r>"] = "actions.refresh",
     ["-"] = "actions.parent",
