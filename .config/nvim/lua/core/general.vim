@@ -4,13 +4,18 @@ let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c
 "black, dark red, dark green, dark yellow, dark blue, dark magenta, dark cyan, light grey, dark grey, red, green, yellow, blue, magenta, cyan, white
 let g:netrw_keepdir=0
 
-syntax on                                       "Syntax ON
+if !exists('g:syntax_on')
+  syntax on
+  let g:syntax_on = 1
+end
+if !&termguicolors
+  set termguicolors
+endif
 set re=0
 set noimd                                       "Revert back to English when on different language
 set noshowmode                                  "Hide --INSER-- at the bottom
 set nocompatible                                "Latest Vim Setting used
 set encoding=utf-8
-set termguicolors
 set t_CO=256                                    "Number of colours
 set display+=lastline                           "Show long lines"
 set autoindent                                  "Copy indent from previous line
