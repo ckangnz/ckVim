@@ -76,7 +76,7 @@ fi
 
 #alias
 alias vim="vim"
-alias neo="neovide --multigrid"
+alias neo="neovide"
 alias bu="brew upgrade"
 alias buc="brew update --cask"
 alias p10="p10k configure"
