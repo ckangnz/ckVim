@@ -1,4 +1,4 @@
-# CK-Vim
+# CK-NVim
 
 ## Pre-requisite
 
@@ -10,13 +10,13 @@ git clone https://github.com/chris542/ckVim ~/.vim
 
 _CK Vim supports NeoVim on all linux environment_
 
-## :house: Install Homebrew
+### :house: Install Homebrew
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-## :apple: Install CKVim on OSX
+### :apple: CK-NVim on OSX
 
 > :warning: This will override your .vimrc file
 
@@ -24,7 +24,7 @@ _CK Vim supports NeoVim on all linux environment_
 ~/.vim/install.sh
 ```
 
-## :penguin: Install CKVim on WSL/Linux
+### :penguin: CK-NVim on WSL/Linux
 
 There is no automatic installation script for Linux yet. Please copy and paste the following snippet to install all of the necessary libraries manually.
 
@@ -59,21 +59,21 @@ ln -s ~/.vim/.config/nvim ~/.config/nvim
 
 # CK-ZSH
 
-## :apple: For MacOS
+### :apple: MacOS
 
-### Install Oh-my-zsh
+#### Install Zsh
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+brew install zsh
 ```
 
-### Install Zplug
+#### Install Zplug
 
 ```bash
 brew install zplug
 ```
 
-### Link .zshrc
+#### Link .zshrc
 
 > :warning: This will override your .zshrc file
 
@@ -84,7 +84,7 @@ ln -s ~/.vim/.zshrc ~/.zshrc
 source ~/.zshrc
 ```
 
-### Install plugins
+#### Install plugins
 
 ```bash
 zi
@@ -92,27 +92,27 @@ zi
 zplug install
 ```
 
-## :penguin: For WSL/Linux
+### :penguin: For WSL/Linux
 
-### Pre-requisite
+#### Pre-requisite
 
-#### Enabling Hyper V
+##### Enabling Hyper V
 
 1. Open "Turn Windows features on or off"
 2. Find Hyper-V and enable it (This may require rebooting your comptuer)
 
-#### Font Setup
+##### Font Setup
 
 - Manually download the FiraCode.zip from [here](https://github.com/ryanoasis/nerd-fonts/releases)
 - Configure the Terminal configuration with the font
 
-### Install ZSH
+#### Install ZSH
 
 1. Open Terminal app and open WSL terminal
 2. Install ZSH
 
 ```bash
-sudo apt install zsh
+brew install zsh
 ```
 
 3. Then run following command to change your default shell to ZSH
@@ -121,19 +121,13 @@ sudo apt install zsh
 chsh -s $(which zsh)
 ```
 
-### Install Oh-My-Zsh
-
-```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-```
-
-### Install Zplug
+#### Install Zplug
 
 ```bash
 brew install zplug
 ```
 
-### Link .zshrc
+#### Link .zshrc
 
 > :warning: This will override your .zshrc file
 
@@ -144,7 +138,7 @@ ln -s ~/.vim/.zshrc ~/.zshrc
 source ~/.zshrc
 ```
 
-### Install plugins
+#### Install plugins
 
 ```bash
 zi
