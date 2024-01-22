@@ -1,5 +1,7 @@
 #zmodload zsh/zprof
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+autoload -U +X bashcompinit && bashcompinit
+autoload -U +X compinit && compinit
 
 export TERM="xterm-256color"
 
@@ -7,14 +9,6 @@ export TERM="xterm-256color"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 POWERLINE_DISABLE_RPROMPT="true"
-
-# oh-my-zsh
-zstyle ':omz:*' aliases no
-zstyle ':omz:update' mode auto
-zstyle ':omz:update' verbose silent # only errors
-export ZSH=$HOME/.oh-my-zsh
-ZSH_DISABLE_COMPFIX=true
-source $ZSH/oh-my-zsh.sh
 
 # Set PATH
 export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
