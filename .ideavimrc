@@ -1,0 +1,92 @@
+let mapleader = ','                             "The default leader is '\'
+
+set showmode
+set gdefault
+set visualbell
+set ignorecase                                  "Ignores case when searching
+set smartcase                                   "Disables ignorecase when capitals used
+set so=10                                       "Keep cursor to not touch the bottom or top
+set hlsearch                                    "highlight search
+set incsearch                                   "Show preview of search
+set tabstop=4
+
+set ideajoin
+set ideamarks
+set surround
+set commentary
+set argtextobj
+set textobj-entire
+
+map ; :
+noremap ;; ;
+nmap j gj
+nmap k gk
+vmap j gj
+vmap k gk
+
+nmap <C-J> <C-W><C-J>
+nmap <C-K> <C-W><C-K>
+nmap <C-H> <C-W><C-H>
+nmap <C-L> <C-W><C-L>
+
+"Move lines
+nnoremap <silent> ∆ :m .+1<CR>==
+nnoremap <silent> ˚ :m .-2<CR>==
+inoremap <silent> ∆ <Esc>:m .+1<CR>==gi
+inoremap <silent> ˚ <Esc>:m .-2<CR>==gi
+vnoremap <silent> ∆ :m '>+1<CR>gv=gv
+vnoremap <silent> ˚ :m '<-2<CR>gv=gv
+
+"Alias shortcuts
+map <leader>ev :e ~/.ideavimrc<cr>
+map <leader>eV :e ~/.vimrc<cr>
+map <leader>eg :e ~/.vim/general.vim<cr>
+map <leader>ep :e ~/.vim/plugins.vim<cr>
+
+"Distraction free mode
+map <leader><leader> <Action>(ToggleDistractionFreeMode)
+
+"Search using /
+vnoremap // y/<C-R>"<CR>N
+
+map <silent> <Leader><space> :nohlsearch<cr>
+
+"Coding
+map gi <Action>(GotoImplementation)
+map gd <Action>(GotoDeclaration)
+map gs <Action>(GotoSuperMethod)
+map gr <Action>(FindUsages)
+map gh <Action>(ShowErrorDescription)
+map <c-o> <Action>(Back)
+map <c-i> <Action>(Forward)
+map <leader>b <Action>(BuildSolutionAction)
+map <leader>B <Action>(BuildWholeSolutionAction)
+
+"Collapse
+map <space> <Action>(CollapseRegion)
+map <leader>Z <Action>(CollapseAllRegions)
+
+map <S-r> <Action>(RenameElement)
+
+"IntelliJ
+map <leader>R <Action>(RunAnything)
+map <leader>. <Action>(Refactorings.QuickListPopupAction)
+nmap <leader>ac <Action>(ShowIntentionActions)
+nmap <leader>ap <Action>(GotoPreviousError)
+nmap <leader>an <Action>(GotoNextError)
+
+"Find
+map <C-p> <Action>(GotoFile)
+map <C-e> <Action>(RecentFiles)
+map <leader>f <Action>(FindInPath)
+map <leader>F <Action>(FindUsages)
+
+"Hide
+map <leader>q <Action>(HideAllWindows)
+
+"Test"
+map <leader>t <Action>(ActivateUnitTestsToolWindow)
+
+"Reload VIMRC
+map <leader><c-r> <Action>(IdeaVim.ReloadVimRc.reload)
+
