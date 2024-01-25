@@ -1,34 +1,30 @@
 #zmodload zsh/zprof
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-autoload -U +X bashcompinit && bashcompinit
-autoload -U +X compinit && compinit
 
 export TERM="xterm-256color"
 
-# Powerlevel10k
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-POWERLINE_DISABLE_RPROMPT="true"
-
 # Set PATH
-export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
-export PATH="$PATH:/home/linuxbrew/.linuxbrew/sbin"
-export PATH="$PATH:/usr/local/bin:/usr/bin:/bin"
-export PATH="$PATH:/usr/sbin:/sbin"
-export PATH="$PATH:$HOME/.rvm/bin"
-export PATH="$PATH:$HOME/.dotnet/tools"
-export PATH="$PATH:$HOME/.pub-cache/bin"
+PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
+PATH="$PATH:/home/linuxbrew/.linuxbrew/sbin"
+PATH="$PATH:/usr/local/bin:/usr/bin:/bin"
+PATH="$PATH:/usr/sbin:/sbin"
+PATH="$PATH:$HOME/.rvm/bin"
+PATH="$PATH:$HOME/.dotnet/tools"
+PATH="$PATH:$HOME/.pub-cache/bin"
 
 NPM_PACKAGES="${HOME}/.npm-packages"
 NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 unset MANPATH
 MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
-export PATH="$PATH:$NPM_PACKAGES/bin"
+PATH="$PATH:$NPM_PACKAGES/bin"
 
 export HOMEBREW_PREFIX=$(brew --prefix)
 #------Source zplugins--------
+
 if [[ -d "$HOMEBREW_PREFIX/opt/zplug" ]]; then
-  source $HOME/.vim/plugins.zsh
+  ZPLUG_LOADFILE=$HOME/.vim/plugins.zsh
+  export ZPLUG_HOME=$HOMEBREW_PREFIX/opt/zplug
+  source $ZPLUG_HOME/init.zsh
 else
   echo "ZPLUG IS NOT INSTALLED!"
 fi
@@ -45,21 +41,21 @@ if [[ -e "$HOMEBREW_PREFIX/bin/helm" ]];then
 fi
 # FNM
 if [[ -e "$HOMEBREW_PREFIX/bin/fnm" ]]; then
-  export PATH="$PATH:$FNM_MULTISHELL_PATH"
+  PATH="$PATH:$FNM_MULTISHELL_PATH"
   eval "$(fnm env --use-on-cd)"
 fi
 # Python
 if [[ -d "$HOMEBREW_PREFIX/opt/python3/bin" ]]; then
-  export PATH=$HOMEBREW_PREFIX/opt/python3/bin:$PATH
+  PATH=$PATH:$HOMEBREW_PREFIX/opt/python3/bin
 fi
 # Java
 if [[ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]]; then
-  export PATH=$HOMEBREW_PREFIX/opt/openjdk/bin:$PATH
+  PATH=$PATH:$HOMEBREW_PREFIX/opt/openjdk/bin
 fi
 # Ruby
 if [[ -d "$HOMEBREW_PREFIX/opt/ruby/bin" ]]; then
-  export PATH=$HOMEBREW_PREFIX/opt/ruby/bin:$PATH
-  export PATH=`gem environment gemdir`/bin:$PATH
+  PATH=$PATH:$HOMEBREW_PREFIX/opt/ruby/bin
+  PATH=$PATH:`gem environment gemdir`/bin
 fi
 # FZF
 if [[ -f ~/.fzf.zsh ]]; then
@@ -108,9 +104,16 @@ zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 ### Fix slowness of pastes
 
+# Powerlevel10k
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+POWERLINE_DISABLE_RPROMPT="true"
 
 # --------Custom Methods--------
 [[ -f ~/.extraAlias.zsh ]] && source ~/.extraAlias.zsh
+
+# Export PATH
+export PATH
 
 bindkey -e
 #zprof
