@@ -12,15 +12,9 @@ PATH="$PATH:$HOME/.rvm/bin"
 PATH="$PATH:$HOME/.dotnet/tools"
 PATH="$PATH:$HOME/.pub-cache/bin"
 
-NPM_PACKAGES="${HOME}/.npm-packages"
-NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
-unset MANPATH
-MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
-PATH="$PATH:$NPM_PACKAGES/bin"
-
 export HOMEBREW_PREFIX=$(brew --prefix)
-#------Source zplugins--------
 
+#------Source zplugins--------
 if [[ -d "$HOMEBREW_PREFIX/opt/zplug" ]]; then
   ZPLUG_LOADFILE=$HOME/.vim/plugins.zsh
   export ZPLUG_HOME=$HOMEBREW_PREFIX/opt/zplug
@@ -30,32 +24,10 @@ else
 fi
 
 #------Source Brew plugins--------
-# Kubectl
-if [[ -e "$HOMEBREW_PREFIX/bin/kubectl" ]];then
-  source <(kubectl completion zsh)
-  complete -F __start_kubectl k
-fi
-# Helm
-if [[ -e "$HOMEBREW_PREFIX/bin/helm" ]];then
-  source <(helm completion zsh)
-fi
-# FNM
+## FNM
 if [[ -e "$HOMEBREW_PREFIX/bin/fnm" ]]; then
-  PATH="$PATH:$FNM_MULTISHELL_PATH"
+  PATH="$FNM_MULTISHELL_PATH":$PATH
   eval "$(fnm env --use-on-cd)"
-fi
-# Python
-if [[ -d "$HOMEBREW_PREFIX/opt/python3/bin" ]]; then
-  PATH=$PATH:$HOMEBREW_PREFIX/opt/python3/bin
-fi
-# Java
-if [[ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]]; then
-  PATH=$PATH:$HOMEBREW_PREFIX/opt/openjdk/bin
-fi
-# Ruby
-if [[ -d "$HOMEBREW_PREFIX/opt/ruby/bin" ]]; then
-  PATH=$PATH:$HOMEBREW_PREFIX/opt/ruby/bin
-  PATH=$PATH:`gem environment gemdir`/bin
 fi
 # FZF
 if [[ -f ~/.fzf.zsh ]]; then
