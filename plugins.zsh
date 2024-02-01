@@ -5,7 +5,6 @@ zplug "zsh-users/zsh-autosuggestions", defer:2
 zplug "lib/completion", from:oh-my-zsh, defer:3
 zplug "plugins/git", from:oh-my-zsh, defer:3
 zplug "plugins/kubectl", from:oh-my-zsh, defer:3
-zplug "plugins/docker", from:oh-my-zsh, defer:3
 zplug "plugins/docker-compose", from:oh-my-zsh, defer:3
 
 zplug "zsh-users/zsh-syntax-highlighting", defer:3

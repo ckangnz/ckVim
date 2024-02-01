@@ -37,6 +37,7 @@ elif [[-d "$HOMEBREW_PREFIX/opt/fzf/bin"]]; then
 fi
 
 #alias
+alias ..="cd .."
 alias vim="vim"
 alias neo="neovide"
 alias bu="brew upgrade"
