@@ -2,6 +2,8 @@
 
 echo "LET'S INSTALL CKVIM!!!!!!!"
 
+brew_install "zsh"
+
 brew_install "python3"
 brew_install "node"
 brew_install "fnm"
@@ -11,6 +13,7 @@ brew_install "vim"
 brew_install_cask "neovide"
 
 brew_install "gh"
+brew_install "bat"
 brew_install "ripgrep"
 brew_install "catimg"
 brew_install "fzf"

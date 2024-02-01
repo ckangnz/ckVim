@@ -37,7 +37,9 @@ sudo apt update && sudo apt install dotnet7
 
 # Brew install other packages
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"]
-brew install python3 node fnm nvim vim
+brew install zsh
+brew install python3 node fnm
+brew install nvim vim
 brew install gh bat ripgrep catimg fzf
 ```
 
@@ -52,7 +54,7 @@ ln -s ~/.vim/.config/nvim ~/.config/nvim
 
 ## :gear: Install Plugins
 
-1. Run vim
+1. Run NeoVim
 2. Run `:PlugInstall` or `,pi`
 
 ---
@@ -61,10 +63,13 @@ ln -s ~/.vim/.config/nvim ~/.config/nvim
 
 ### :apple: MacOS
 
-#### Install Zsh
+#### Install Zsh if not installed
 
 ```bash
 brew install zsh
+
+# Set zsh as default
+chsh -s $(which zsh)
 ```
 
 #### Install Zplug
@@ -106,7 +111,7 @@ zplug install
 - Manually download the FiraCode.zip from [here](https://github.com/ryanoasis/nerd-fonts/releases)
 - Configure the Terminal configuration with the font
 
-#### Install ZSH
+#### Install ZSH if not installed
 
 1. Open Terminal app and open WSL terminal
 2. Install ZSH
