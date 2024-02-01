@@ -72,10 +72,12 @@ brew install zsh
 chsh -s $(which zsh)
 ```
 
-#### Install Zplug
+#### Install Zap (Zsh Plugin Manager)
+
+> :warning: This will create a new .zshrc and back up your old one.
 
 ```bash
-brew install zplug
+zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
 ```
 
 #### Link .zshrc
@@ -84,17 +86,9 @@ brew install zplug
 
 ```bash
 #Synlink .zshrc
-rm ~/.zshrc
-ln -s ~/.vim/.zshrc ~/.zshrc
-source ~/.zshrc
-```
-
-#### Install plugins
-
-```bash
-zi
-#or
-zplug install
+rm $HOME/.zshrc
+ln -s $HOME/.vim/.zshrc $HOME/.zshrc
+source $HOME/.zshrc
 ```
 
 ### :penguin: For WSL/Linux
@@ -126,10 +120,12 @@ brew install zsh
 chsh -s $(which zsh)
 ```
 
-#### Install Zplug
+#### Install Zap (Zsh Plugin Manager)
+
+> :warning: This will create a new .zshrc and back up your old one.
 
 ```bash
-brew install zplug
+zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
 ```
 
 #### Link .zshrc
@@ -138,17 +134,9 @@ brew install zplug
 
 ```bash
 #Synlink .zshrc
-rm ~/.zshrc
-ln -s ~/.vim/.zshrc ~/.zshrc
-source ~/.zshrc
-```
-
-#### Install plugins
-
-```bash
-zi
-#or
-zplug install
+rm $HOME/.zshrc
+ln -s $HOME/.vim/.zshrc $HOME/.zshrc
+source $HOME/.zshrc
 ```
 
 ## Configure your Powerlevel10k

@@ -1,23 +1,20 @@
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+# Powerlevel 10k Theme
+plug "romkatv/powerlevel10k"
 
-zplug "zsh-users/zsh-autosuggestions", defer:2
+# Essentials
+plug "zsh-users/zsh-autosuggestions"
+plug "zap-zsh/supercharge"
 
-zplug "lib/completion", from:oh-my-zsh, defer:3
-zplug "plugins/git", from:oh-my-zsh, defer:3
-zplug "plugins/kubectl", from:oh-my-zsh, defer:3
-zplug "plugins/docker-compose", from:oh-my-zsh, defer:3
+# Helpers
+plug "wintermi/zsh-fnm"
+plug "Aloxaf/fzf-tab"
 
-zplug "zsh-users/zsh-syntax-highlighting", defer:3
-zplug "memark/zsh-dotnet-completion", defer:3
+# Aliases
+plug "chivalryq/git-alias"
+plug "chrishrb/zsh-kubectl"
 
-zplug "romkatv/powerlevel10k", as:theme, depth:1
+# Alias suggestions
+plug "MichaelAquilina/zsh-you-should-use"
 
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-
-# Then, source plugins and add commands to $PATH
-zplug load
+# Syntax Highlighting (must be the last plugin)
+plug "zsh-users/zsh-syntax-highlighting"
