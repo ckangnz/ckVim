@@ -73,6 +73,11 @@ function dcdnp(){
   done
   eval "docker compose${profiles} down"
 }
+function speedTest(){
+  for i in $(seq $@); do
+    /usr/bin/time zsh -lic exit
+  done
+}
 
 # Powerlevel10k
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
