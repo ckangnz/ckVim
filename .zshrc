@@ -10,12 +10,19 @@ PATH="$PATH:$HOME/.pub-cache/bin"
 #------Source Zap--------
 if [[ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ]]; then
   source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
+  source $HOME/.vim/plugins.zsh
 else
-  echo "Install ZAP!"
+  echo "----OOPS: You need to install ZAP!------"
+  echo ""
+  echo "Please copy this below:"
+  echo ""
   echo "zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1"
-  echo "Then symlink: rm .zshrc && ln -s $HOME/.vim/.zshrc $HOME/.zshrc"
+  echo ""
+  echo "Please copy this below:"
+  echo ""
+  echo "rm .zshrc && ln -s $HOME/.vim/.zshrc $HOME/.zshrc"
+  echo ""
 fi
-source $HOME/.vim/plugins.zsh
 
 #------Source Brew plugins--------
 export HOMEBREW_PREFIX=$(brew --prefix)
