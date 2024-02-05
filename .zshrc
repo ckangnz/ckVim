@@ -39,16 +39,6 @@ if [[ -f ~/.fzf.zsh ]]; then
 elif [[-d "$HOMEBREW_PREFIX/opt/fzf/bin"]]; then
   $HOMEBREW_PREFIX/opt/fzf/install
 fi
-#Dotnet
-if [[ -e "$HOMEBREW_PREFIX/bin/dotnet" ]]; then
-  _dotnet_completion() {
-    local -a completions=("${(@f)$(dotnet complete "${words}")}")
-    reply=( "${(ps:\n:)completions}" )
-    _files
-  }
-  compdef _dotnet_completion dotnet
-fi
-
 
 #alias
 alias vim="vim"

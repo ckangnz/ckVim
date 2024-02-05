@@ -8,6 +8,7 @@ plug "zap-zsh/supercharge"
 # Helpers
 plug "wintermi/zsh-fnm"
 plug "Aloxaf/fzf-tab"
+plug "memark/zsh-dotnet-completion"
 
 # Aliases
 plug "chivalryq/git-alias"
