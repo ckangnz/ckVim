@@ -169,13 +169,6 @@ eval "$(/usr/lib/bin/brew shellenv)"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"]
 ```
 
-- If you get a prompt that zplug is missing after installation, simply run this command
-
-```bash
-export ZPLUG_HOME=/home/linuxbrew/.linuxbrew/opt/zplug
-source $ZPLUG_HOME/init.zsh
-```
-
 - If you get python issue on nvim install pynvim
 
 ```bash
@@ -198,4 +191,15 @@ sudo chown -R $(whoami) /run/user/1000/
 
 ```Powershell
 choco install win32yank
+```
+
+- For WSL windows, when you get `no such file or directory: /usr/share/zsh/vendor-completions/_docker` error, run:
+
+```bash
+# Remove symlink
+sudo rm -rf /usr/share/zsh/vendor-completions/_docker
+#copy over wsl completions
+sudo cp /mnt/wsl/docker-desktop/cli-tools/usr/share/zsh/vendor-completions/_docker /usr/share/zsh/vendor-completions/
+#make it non-writable
+sudo chattr +i /usr/share/zsh/vendor-completions/_docker
 ```
