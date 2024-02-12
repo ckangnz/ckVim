@@ -1,3 +1,4 @@
+" List of all actions: https://gist.github.com/zchee/9c78f91cc5ad771c1f5d
 let mapleader = ','                             "The default leader is '\'
 
 set showmode
@@ -37,11 +38,14 @@ inoremap <silent> ˚ <Esc>:m .-2<CR>==gi
 vnoremap <silent> ∆ :m '>+1<CR>gv=gv
 vnoremap <silent> ˚ :m '<-2<CR>gv=gv
 
+"Copy to clipboard
+vnoremap <silent> <leader>y "+y
+
 "Alias shortcuts
 map <leader>ev :e ~/.ideavimrc<cr>
 map <leader>eV :e ~/.vimrc<cr>
-map <leader>eg :e ~/.vim/general.vim<cr>
-map <leader>ep :e ~/.vim/plugins.vim<cr>
+map <leader>eg :e ~/.config/nvim/lua/core/general.vim<cr>
+map <leader>ep :e ~/.config/nvim/lua/core/plugins.vim<cr>
 
 "Distraction free mode
 map <leader><leader> <Action>(ToggleDistractionFreeMode)
@@ -49,6 +53,7 @@ map <leader><leader> <Action>(ToggleDistractionFreeMode)
 "Search using /
 vnoremap // y/<C-R>"<CR>N
 
+map <silent> <leader>c<space> <Action>(CommentByLineComment)
 map <silent> <Leader><space> :nohlsearch<cr>
 
 "Coding
@@ -89,4 +94,3 @@ map <leader>t <Action>(ActivateUnitTestsToolWindow)
 
 "Reload VIMRC
 map <leader><c-r> <Action>(IdeaVim.ReloadVimRc.reload)
-
