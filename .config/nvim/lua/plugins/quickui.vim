@@ -25,7 +25,7 @@ call add(myPaths,['Zsh Plugin (&l)','vsp $HOME/.vim/plugins.zsh'])
 call add(myPaths,['-'])
 call add(myPaths,['Notes (&n)','vsp $HOME/.vim/notes'])
 call add(myPaths,['Helps (&h)','vsp $HOME/.vim/notes/vimhelp.md'])
-noremap <nowait><silent><leader>e :call quickui#context#open(myPaths, myPathsOpts)<cr>
+nnoremap <nowait><silent><leader>e :call quickui#context#open(myPaths, myPathsOpts)<cr>
 nmap <silent><leader>pi :PlugInstall<cr>
 nmap <silent><leader>pu :PlugUpdate<cr>
 
@@ -42,4 +42,4 @@ call add(g:utilContent, ['-'])
 
 call add(g:utilContent, [ 'Clear Registers (&x)', 'call ClearReg()' ])
 
-noremap <silent><nowait><leader>m :call quickui#context#open(g:utilContent, g:utilOpts)<cr>
+nnoremap <silent><nowait><leader>m :call quickui#context#open(g:utilContent, g:utilOpts)<cr>
