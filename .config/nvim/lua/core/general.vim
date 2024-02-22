@@ -121,7 +121,12 @@ nmap <C-H> <C-W><C-H>
 nmap <C-L> <C-W><C-L>
 augroup vimrc
   au!
-  autocmd FileType netrw noremap <buffer> <c-l> <c-w><c-l>
+
+  "Tab movements
+  noremap <c-t> :tabedit<cr>
+  noremap g[ gT
+  noremap g] gt
+
   autocmd FileType list noremap <buffer> <c-p> <c-p>
 augroup END
 
