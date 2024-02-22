@@ -8,7 +8,7 @@ let myPaths=[]
 call add(myPaths,[" ~/code (&d)",'vsp $HOME/code'])
 if exists('g:neovide') || has('nvim')
   call add(myPaths,['Vimrc (&v)','vsp $HOME/.vimrc'])
-  call add(myPaths,['NVim (&e)','vsp $MYVIMRC'])
+  call add(myPaths,['NVim (&b)','vsp $MYVIMRC'])
 else
   call add(myPaths,['Vimrc (&v)','vsp $MYVIMRC'])
 endif
