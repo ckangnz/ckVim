@@ -4,6 +4,8 @@ let &packpath = &runtimepath
 source $HOME/.vimrc
 ]])
 
+require 'core.myTheme'
+
 --Lua Plugins
 require 'plugins.nvim-treesitter'
 require 'plugins.telescope'

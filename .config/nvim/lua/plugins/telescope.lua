@@ -121,23 +121,9 @@ if vim.fn.has('nvim') then
   vim.keymap.set('n', '?', ':Telescope coc document_symbols<cr>', { noremap = true, silent = true, nowait = true })
 
   --Telescope Color Theme --------------------------------------------
-  local colors = {
-    bg0    = '#1d2021',
-    bg1    = '#282828',
-    red    = '#ea6962',
-    green  = '#a9b665',
-    yellow = '#d8a657',
-    blue   = '#7daea3',
-    aqua   = '#89b482',
-    grey   = '#7c6f64',
-    purple = '#d3869b',
-    fg1    = '#ddc7a1',
-    fg0    = '#d4be98',
-  }
-
   local TelescopeColor = {
     TelescopeMatching = { bold = true, underline = true },
-    TelescopeSelection = { fg = colors.bg1, bg = colors.green, bold = true },
+    TelescopeSelection = { fg = colors.bg1, bg = colors.aqua, bold = true },
 
     TelescopePromptTitle = { bg = colors.bg1, fg = colors.fg0 },
     TelescopePromptPrefix = { bg = colors.bg1 },
