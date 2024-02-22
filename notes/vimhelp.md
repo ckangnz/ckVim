@@ -1,24 +1,22 @@
-### Vinegar(Netrw) File Management Tips
+### Oil.nvim Tips
 
-    F1                              help
-    I                               info box at the top
-    v                               open on right pane
-    o                               open on below pane
-    i                               toggle different folder structure view
-    r                               reorder
-    s                               change structure
-    x                               open in finder
-    %                               create a file
-    d                               create a folder
-    <Shift> + R                     rename
-    D                               delete file
-    mt                              mark a directory
-    mf                              mark a file
-    mU                              unmark all marked files
-    cmc / cmm                       copy/Move file
-    gh                              toggle hidden files
-    . / !                           action in CLI
-    ~                               go to Root
+    g?                              help
+    -                               Navigate to the parent path
+    ~                               to the current working directory
+    cd                              :cd to the current oil directory
+    tcd                             :tcd to the current oil directory
+    gt                              Open in a new tab
+    gd                              Open in a horizontal split
+    gv                              Open  in a vertical split
+    gx                              Open in an external program
+    gh                              Toggle hidden files and directories
+    gs                              Change the sort order
+    !                               Open vim cmdline with current entry as an argument
+    gy                              Yank the filepath of current entry to a register
+    <C-/>                           Open  in a preview window, or close the preview window if already open
+    <C-c>                           Close oil and restore original buffer
+    <C-r>                           Refresh current directory list
+    <CR>                            Open
     :Explore/Sexplore/Vexplore      to Explore in Netrw without Vinegar
 
 ### General Normal Mode
@@ -34,12 +32,12 @@
     :vsp / :sp                      split view vertical/horizontal
     ctrl + a / x                    increments number
     ctrl x + ctrl + f               insert directory path
-    ,q                              delete hidden buffers
+    ,q                              delete hidden buffers (Asheq/close-buffers.vim)
 
 ### Panes / Buffers
 
     ctrl+hjkl                       move cursors from buffer to buffer
-    ,ww                             swap buffer
+    ,ww                             swap buffer (wesQ3/vim-windowswap)
     ,wf                             maximize pane
     ,wm                             minimize pane
     ,wh                             change to horizontal split
