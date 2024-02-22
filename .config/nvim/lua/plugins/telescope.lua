@@ -136,7 +136,7 @@ if vim.fn.has('nvim') then
   }
 
   local TelescopeColor = {
-    TelescopeMatching = { fg = colors.red },
+    TelescopeMatching = { bold = true, underline = true },
     TelescopeSelection = { fg = colors.bg1, bg = colors.green, bold = true },
 
     TelescopePromptTitle = { bg = colors.bg1, fg = colors.fg0 },
