@@ -9,6 +9,7 @@ if has('unix') && has('mac')
   imap “ <Plug>(codeium-previous)
   imap œ <Plug>(codium-dismiss)
   imap å <Cmd>call codeium#Complete()<CR>
+  command! -nargs=0 OpenCodeiumChat :call codeium#Chat()
 else
   "Linux
   imap <script><silent><nowait><expr> <M-=> codeium#Accept()
