@@ -41,7 +41,7 @@ command! OpenPlaywrightMenu call OpenTestMenu('Playwright', 'jest', '--config ./
 command! OpenCSharpTestMenu call OpenTestMenu('XUnit Test', 'xunit', '--nologo -v=q')
 command! OpenDartTestMenu call OpenTestMenu('Dart Test', 'fluttertest', '')
 
-map <silent><nowait><leader>t :OpenJestMenu<cr>
+autocmd FileType js nmap <silent><nowait><buffer><leader>t :OpenJestMenu<cr>
 
 if exists('g:neovide') || has('nvim')
   let test#strategy='neovim'
@@ -54,8 +54,8 @@ let g:test#echo_command = 0
 let g:test#runner_commands= ["Jest", "Cypress", "Playwright", "DotnetTest"]
 
 "CSharp overrides
-autocmd FileType cs map <silent><nowait><leader>t :OpenCSharpTestMenu<cr>
-autocmd FileType cs nmap <silent><buffer><C-b> :AsyncRun dotnet build<cr>
+autocmd FileType cs nmap <silent><nowait><buffer><leader>t :OpenCSharpTestMenu<cr>
+autocmd FileType cs nmap <silent><nowait><buffer><C-b> :AsyncRun dotnet build<cr>
 
 "Dart overrides
-autocmd FileType dart nmap<silent><leader>t :OpenDartTestMenu<cr>
+autocmd FileType dart nmap<silent><nowait><buffer><leader>t :OpenDartTestMenu<cr>
