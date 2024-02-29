@@ -32,12 +32,14 @@ nmap <silent><leader>pu :PlugUpdate<cr>
 "*-*-*-*-*-*-MY UTILITY MENU-*-*-*-*-*-*
 let g:utilOpts = {'title': 'Utility Menu'}
 let g:utilContent = []
+
 call add(g:utilContent, [ 'Generate GUID (&i)', 'call GenerateGUID()' ])
 call add(g:utilContent, [ 'Delete all white spaces (&w)', '%s/^$\\|^\s\+//g' ])
 call add(g:utilContent, ['-'])
 "----MARKDOWN PREVIEW: iamcco/markdown-preview.nvim
 let g:mkdp_auto_start = 0
 call add(g:utilContent, [ 'Markdown Preview (&d)', 'MarkdownPreview' ])
+call add(g:utilContent, [ 'Yaml Schema (&y)', 'CocCommand yaml.selectSchema' ])
 call add(g:utilContent, ['-'])
 
 call add(g:utilContent, [ 'Clear Registers (&x)', 'call ClearReg()' ])
