@@ -123,21 +123,21 @@ if vim.fn.has('nvim') then
   --Telescope Color Theme --------------------------------------------
   local TelescopeColor = {
     TelescopeMatching = { bold = true, underline = true },
-    TelescopeSelection = { fg = colors.bg1, bg = colors.aqua, bold = true },
+    TelescopeSelection = { fg = Colors.bg1, bg = Colors.aqua, bold = true },
 
-    TelescopePromptTitle = { bg = colors.bg1, fg = colors.fg0 },
-    TelescopePromptPrefix = { bg = colors.bg1 },
-    TelescopePromptCounter = { bg = colors.bg1 },
-    TelescopePromptNormal = { bg = colors.bg1 },
-    TelescopePromptBorder = { bg = colors.bg1, fg = colors.bg1 },
+    TelescopePromptTitle = { bg = Colors.bg1, fg = Colors.fg0 },
+    TelescopePromptPrefix = { bg = Colors.bg1 },
+    TelescopePromptCounter = { bg = Colors.bg1 },
+    TelescopePromptNormal = { bg = Colors.bg1 },
+    TelescopePromptBorder = { bg = Colors.bg1, fg = Colors.bg1 },
 
-    TelescopeResultsTitle = { fg = colors.bg1 },
-    TelescopeResultsNormal = { bg = colors.bg0 },
-    TelescopeResultsBorder = { bg = colors.bg1, fg = colors.bg1 },
+    TelescopeResultsTitle = { fg = Colors.bg1 },
+    TelescopeResultsNormal = { bg = Colors.bg0 },
+    TelescopeResultsBorder = { bg = Colors.bg1, fg = Colors.bg1 },
 
-    TelescopePreviewTitle = { bg = colors.bg1, fg = colors.bg1 },
-    TelescopePreviewNormal = { bg = colors.bg0 },
-    TelescopePreviewBorder = { bg = colors.bg1, fg = colors.bg1 },
+    TelescopePreviewTitle = { bg = Colors.bg1, fg = Colors.bg1 },
+    TelescopePreviewNormal = { bg = Colors.bg0 },
+    TelescopePreviewBorder = { bg = Colors.bg1, fg = Colors.bg1 },
   }
 
   for hl, col in pairs(TelescopeColor) do

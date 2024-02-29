@@ -1,27 +1,27 @@
 if vim.fn.has('nvim') then
   local custom_theme = {
     normal = {
-      a = { fg = colors.bg1, bg = colors.aqua, gui = 'bold' },
-      b = { fg = colors.fg1, bg = colors.bg3 },
-      c = { fg = colors.bg1, bg = 'none' },
+      a = { fg = Colors.bg1, bg = Colors.aqua, gui = 'bold' },
+      b = { fg = Colors.fg1, bg = Colors.bg3 },
+      c = { fg = Colors.bg1, bg = 'none' },
     },
     insert = {
-      a = { fg = colors.bg1, bg = colors.yellow, gui = 'bold' }
+      a = { fg = Colors.bg1, bg = Colors.yellow, gui = 'bold' }
     },
     visual = {
-      a = { fg = colors.bg1, bg = colors.red, gui = 'bold' }
+      a = { fg = Colors.bg1, bg = Colors.red, gui = 'bold' }
     },
     replace = {
-      a = { fg = colors.fg0, bg = colors.purple, gui = 'bold' }
+      a = { fg = Colors.fg0, bg = Colors.purple, gui = 'bold' }
     },
 
     inactive = {
-      a = { fg = colors.grey1, bg = colors.bg1 },
-      b = { fg = colors.fg0, bg = colors.bg0 },
-      c = { fg = colors.fg0, bg = 'none' },
-      x = { fg = colors.fg0, bg = colors.bg0 },
-      y = { fg = colors.fg0, bg = colors.bg0 },
-      z = { fg = colors.grey1, bg = colors.bg1 },
+      a = { fg = Colors.grey1, bg = Colors.bg1 },
+      b = { fg = Colors.fg0, bg = Colors.bg0 },
+      c = { fg = Colors.fg0, bg = 'none' },
+      x = { fg = Colors.fg0, bg = Colors.bg0 },
+      y = { fg = Colors.fg0, bg = Colors.bg0 },
+      z = { fg = Colors.grey1, bg = Colors.bg1 },
     },
   }
 
