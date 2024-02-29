@@ -10,6 +10,8 @@ augroup autosourcing
   au BufNewFile,BufRead *.vue,*.hbs set filetype=html
   au BufNewFile,BufRead *.jsx set filetype=javascriptreact
   au BufNewFile,BufRead *.tsx set filetype=typescriptreact
+  au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
+  au BufRead,BufNewFile *.{yaml,yml} set filetype=yaml
 
   au BufRead,InsertEnter * setlocal cursorline
   au VimEnter,InsertLeave * setlocal cursorline
