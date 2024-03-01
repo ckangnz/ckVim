@@ -2,6 +2,9 @@
 ":Codeium Auth
 let g:codeium_disable_bindings = 1
 let g:codeium_manual = v:true
+
+command! -nargs=0 OpenCodeiumChat :call codeium#Chat()
+
 if has('unix') && has('mac')
   "Mac
   imap <script><silent><nowait><expr> ≠ codeium#Accept()
@@ -9,7 +12,6 @@ if has('unix') && has('mac')
   imap “ <Plug>(codeium-previous)
   imap œ <Plug>(codium-dismiss)
   imap å <Cmd>call codeium#Complete()<CR>
-  command! -nargs=0 OpenCodeiumChat :call codeium#Chat()
 else
   "Linux
   imap <script><silent><nowait><expr> <M-=> codeium#Accept()
