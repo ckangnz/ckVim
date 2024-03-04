@@ -41,7 +41,7 @@ command! OpenPlaywrightMenu call OpenTestMenu('Playwright', 'jest', '--config ./
 command! OpenCSharpTestMenu call OpenTestMenu('XUnit Test', 'xunit', '--nologo -v=q')
 command! OpenDartTestMenu call OpenTestMenu('Dart Test', 'fluttertest', '')
 
-autocmd FileType js nmap <silent><nowait><buffer><leader>t :OpenJestMenu<cr>
+autocmd FileType javasccript,javascriptreact,typescript,typescriptreact nmap <silent><nowait><buffer><leader>t :OpenJestMenu<cr>
 
 if exists('g:neovide') || has('nvim')
   let test#strategy='neovim'
