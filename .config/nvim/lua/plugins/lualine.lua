@@ -95,7 +95,7 @@ if vim.fn.has('nvim') then
       lualine_x = {},
       lualine_y = {},
       lualine_z = {
-        { 'filetype', colored = true, icon_only = true },
+        { 'filetype', colored = true, icon_only = false },
         { 'os.date("%a %d %b |%l:%M%p")', separator = { left = '', right = '' } },
       }
     },
