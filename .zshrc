@@ -49,6 +49,8 @@ alias buc="brew update --cask"
 
 alias p10="p10k configure"
 
+alias gas="gh auth switch"
+
 alias zl="zap list"
 alias zu="zap update"
 alias zc="zap clean"
