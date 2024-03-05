@@ -2,18 +2,20 @@
 
 ## Pre-requisite
 
-Clone this project into `~/.vim`
-
-```bash
-git clone https://github.com/chris542/ckVim ~/.vim
-```
-
-_CK Vim supports NeoVim on all linux environment_
-
 ### :house: Install Homebrew
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+## Installing CK-NVIM
+
+Clone this project into `~/.vim`
+
+> _CK Vim supports NeoVim on all linux environment_
+
+```bash
+git clone https://github.com/chris542/ckVim ~/.vim
 ```
 
 ### :apple: CK-NVim on OSX
@@ -40,7 +42,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"]
 brew install zsh
 brew install python3 node fnm
 brew install nvim vim
-brew install gh bat ripgrep catimg fzf
+brew install gh bat ripgrep catimg fzf lsd
 ```
 
 > :warning: This will override your .vimrc file
@@ -52,48 +54,16 @@ mkdir ~/.config
 ln -s ~/.vim/.config/nvim ~/.config/nvim
 ```
 
-## :gear: Install Plugins
+### :gear: Install Plugins
 
 1. Run NeoVim
 2. Run `:PlugInstall` or `,pi`
 
 ---
 
-# CK-ZSH
+# CK-ZSH ⚡️
 
-### :apple: MacOS
-
-#### Install Zsh if not installed
-
-```bash
-brew install zsh
-
-# Set zsh as default
-chsh -s $(which zsh)
-```
-
-#### Install Zap (Zsh Plugin Manager)
-
-> :warning: This will create a new .zshrc and back up your old one.
-
-```bash
-zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
-```
-
-#### Link .zshrc
-
-> :warning: This will override your .zshrc file
-
-```bash
-#Synlink .zshrc
-rm $HOME/.zshrc
-ln -s $HOME/.vim/.zshrc $HOME/.zshrc
-source $HOME/.zshrc
-```
-
-### :penguin: For WSL/Linux
-
-#### Pre-requisite
+#### Pre-requisite (only :penguin: For WSL/Linux)
 
 ##### Enabling Hyper V
 
@@ -105,22 +75,16 @@ source $HOME/.zshrc
 - Manually download the FiraCode.zip from [here](https://github.com/ryanoasis/nerd-fonts/releases)
 - Configure the Terminal configuration with the font
 
-#### Install ZSH if not installed
-
-1. Open Terminal app and open WSL terminal
-2. Install ZSH
+### Install Zsh if not installed
 
 ```bash
 brew install zsh
-```
 
-3. Then run following command to change your default shell to ZSH
-
-```bash
+# Set zsh as default
 chsh -s $(which zsh)
 ```
 
-#### Install Zap (Zsh Plugin Manager)
+### Install Zap (Zsh Plugin Manager)
 
 > :warning: This will create a new .zshrc and back up your old one.
 
@@ -128,16 +92,18 @@ chsh -s $(which zsh)
 zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
 ```
 
-#### Link .zshrc
+### Link .zshrc
 
 > :warning: This will override your .zshrc file
 
 ```bash
-#Synlink .zshrc
+#Symlink .zshrc
 rm $HOME/.zshrc
 ln -s $HOME/.vim/.zshrc $HOME/.zshrc
 source $HOME/.zshrc
 ```
+
+Now you can restart your terminal!
 
 ## Configure your Powerlevel10k
 

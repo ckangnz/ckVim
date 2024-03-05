@@ -17,6 +17,7 @@ brew_install "bat"
 brew_install "ripgrep"
 brew_install "catimg"
 brew_install "fzf"
+brew_install "lsd"
 
 #[Check versions here](https://github.com/isen-ng/homebrew-dotnet-sdk-versions)
 brew_install_cask "dotnet-sdk"

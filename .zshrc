@@ -40,6 +40,13 @@ elif [[-d "$HOMEBREW_PREFIX/opt/fzf/bin"]]; then
   $HOMEBREW_PREFIX/opt/fzf/install
 fi
 
+#lsd
+if [[ -d "$HOMEBREW_PREFIX/opt/lsd/bin" ]]; then
+  alias ls="lsd"
+  alias la="lsd -la"
+  alias lt="lsd --tree"
+fi
+
 #alias
 alias vim="vim"
 alias neo="neovide"
