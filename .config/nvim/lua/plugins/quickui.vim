@@ -22,6 +22,7 @@ call add(myPaths,['Plugin Configurations (&c)','vsp $HOME/.vim/.config/nvim/lua/
 call add(myPaths,['-'])
 call add(myPaths,['Zshrc (&z)','vsp $HOME/.zshrc'])
 call add(myPaths,['Zsh Plugin (&l)','vsp $HOME/.vim/plugins.zsh'])
+call add(myPaths,['Extra aliases (&a)','vsp $HOME/.extraAlias.zsh'])
 call add(myPaths,['-'])
 call add(myPaths,['Notes (&n)','vsp $HOME/.vim/notes'])
 call add(myPaths,['Helps (&h)','vsp $HOME/.vim/notes/vimhelp.md'])
