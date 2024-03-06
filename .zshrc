@@ -42,8 +42,8 @@ fi
 
 #lsd
 if [[ -d "$HOMEBREW_PREFIX/opt/lsd/bin" ]]; then
-  alias ls="lsd"
-  alias la="lsd -la"
+  alias ls="lsd --group-directories-first"
+  alias la="lsd -la --group-directories-first"
   alias lt="lsd --tree"
 fi
 
