@@ -80,14 +80,14 @@ jobs:
         uses: actions/configure-pages@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
 
       - name: Install, test and build
         run: |
-          yarn install
+          yarn
           yarn test
           yarn build
 
