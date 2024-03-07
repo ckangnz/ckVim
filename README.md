@@ -153,6 +153,12 @@ dotnet tool update -g csharp-ls
 sudo chown -R $(whoami) /run/user/1000/
 ```
 
+- If you get "Cannot request projects v2, missing scope 'read:project'" message, it means the gh credential does not have read:project auth. Run this command:
+
+```bash
+gh auth refresh -s read:project
+```
+
 - For WSL windows, install win32yank with choco to yank into clipboard
 
 ```Powershell
