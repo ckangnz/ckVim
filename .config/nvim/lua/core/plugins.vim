@@ -42,7 +42,7 @@ Plug 'pwntester/octo.nvim'
 Plug 'Exafunction/codeium.vim', {'branch':'main'}                   " AI Coding
 
 " Pairing
-Plug 'jiangmiao/auto-pairs'                                         " Automatic closing ({['']})
+Plug 'windwp/nvim-autopairs'                                         " Automatic closing ({['']})
 Plug 'machakann/vim-sandwich'                                       " Easy text wrap tool
 Plug 'tmhedberg/matchit'                                            " More functionality to %
 Plug 'tpope/vim-repeat'                                             " Repeat tpope's plugins

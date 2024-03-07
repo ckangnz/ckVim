@@ -12,6 +12,8 @@ require 'plugins.telescope'
 require 'plugins.tint'
 require 'plugins.lualine'
 require 'plugins.oil'
+require 'plugins.autopairs'
+
 require 'plugins.octo'
 
 --GUI Config
