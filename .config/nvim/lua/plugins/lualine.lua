@@ -39,13 +39,20 @@ if vim.fn.has('nvim') then
           fmt = function() return '󰙱K' end,
           icons_enabled = true,
           draw_empty = true,
-          separator = { left = '' }
+          separator = { left = '' },
         },
-        { 'branch', icons_enabled = true }
+        {
+          'branch',
+          icons_enabled = true,
+          separator = { right = '' },
+        }
       },
       lualine_b = {
         { 'filetype', colored = true, icon_only = true },
-        'filename',
+        {
+          'filename',
+          separator = { right = '' },
+        },
       },
       lualine_c = {
         { 'diff', symbols = { added = ' ', modified = ' ', removed = ' ' } }
@@ -59,12 +66,12 @@ if vim.fn.has('nvim') then
         }
       },
       lualine_y = {
-        { '%{codeium#GetStatusString()}', separator = { left = '', right = '' } },
-        { 'g:coc_status', separator = { left = '', right = '' } },
+        { '%{codeium#GetStatusString()}', separator = { left = '' } },
+        { 'g:coc_status', separator = { right = '' } },
       },
       lualine_z = {
-        { 'g:asyncrun_status', separator = { left = '', right = '' } },
-        { '%s%l:%v', separator = { left = '', right = '' } }
+        { 'g:asyncrun_status', separator = { left = '' } },
+        { '%s%l:%v', separator = { right = '' } }
       }
     },
     inactive_sections = {
@@ -76,35 +83,64 @@ if vim.fn.has('nvim') then
       lualine_x = {},
       lualine_y = {},
       lualine_z = {
-        { '%s%l:%v', separator = { left = '', right = '' } }
+        {
+          '%s%l:%v',
+          separator = { left = '', right = '' }
+        }
       }
     },
 
     tabline = {
       lualine_a = {
         {
-          'windows',
-          show_modified_status = true,
-          mode = 0,
+          'tabs',
           max_length = vim.o.columns,
+          separator = { left = '' },
+          use_mode_colors = false,
+          mode = 1,
+          show_modified_status = false,
+          ---@diagnostic disable-next-line: unused-local
+          fmt = function(name, context)
+            return ' ' .. context.tabnr
+          end
+
+        },
+      },
+      lualine_b = {
+        {
+          'windows',
+          mode = 0,
+          max_length = vim.o.columns * 2 / 3,
+          use_mode_colors = true,
           separator = { left = '', right = '' },
+          show_modified_status = true,
+          symbols = {
+            modified = ' ●', -- Text to show when the buffer is modified
+            alternate_file = '#', -- Text to show to identify the alternate file
+          },
+          filetype_names = {
+            TelescopePrompt = '',
+            GV = '',
+            qf = '󰁨',
+            oil = ''
+          },
         }
       },
-      lualine_b = {},
       lualine_c = {},
       lualine_x = {},
       lualine_y = {
         {
-          'tabs',
-          max_length = vim.o.columns,
-          separator = { left = '', right = '' },
-          use_mode_colors = false,
-          mode = 1,
-        },
+          'filetype',
+          colored = true,
+          icon_only = false,
+          separator = { left = '', },
+        }
       },
       lualine_z = {
-        { 'filetype', colored = true, icon_only = false },
-        { 'os.date("%a %d %b |%l:%M%p")', separator = { left = '', right = '' } },
+        {
+          'os.date("%a %d %b |%l:%M%p")',
+          separator = { left = '', right = '' }
+        },
       }
     },
     winbar = {}
