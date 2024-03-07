@@ -7,18 +7,16 @@ command! -nargs=0 OpenCodeiumChat :call codeium#Chat()
 
 if has('unix') && has('mac')
   "Mac
-  imap <script><silent><nowait><expr> ≠ codeium#Accept()
-  imap ‘ <Plug>(codeium-next)
-  imap “ <Plug>(codeium-previous)
-  imap œ <Plug>(codium-dismiss)
-  imap å <Cmd>call codeium#Complete()<CR>
+  imap <script><silent><nowait><expr> <C-g> codeium#Accept()
+  imap ‘ <cmd>call codeium#CycleCompletions(1)<cr>
+  imap “ <cmd>call codeium#CycleCompletions(-1)<cr>
+  imap <C-a> <Cmd>call codeium#Complete()<CR>
 else
   "Linux
-  imap <script><silent><nowait><expr> <M-=> codeium#Accept()
-  imap <M-]> <Plug>(codeium-next)
-  imap <M-[> <Plug>(codeium-previous)
-  imap <M-q> <Plug>(codium-dismiss)
-  imap <M-a> <Cmd>call codeium#Complete()<CR>
+  imap <script><silent><nowait><expr> <C-g> codeium#Accept()
+  imap <M-n> <cmd>call codeium#CycleCompletions(1)<cr>
+  imap <M-p> <cmd>call codeium#CycleCompletions(-1)<cr>
+  imap <C-a> <Cmd>call codeium#Complete()<CR>
 endif
 let g:codeium_filetypes = {
     \ "cs": v:true,

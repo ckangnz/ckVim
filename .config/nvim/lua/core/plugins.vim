@@ -22,6 +22,7 @@ Plug 'nvim-lualine/lualine.nvim'                                    " Status lin
 Plug 'stevearc/oil.nvim'                                            " Easy Netrw with '-'
 Plug 'levouh/tint.nvim'                                             " Dim inactive window
 Plug 'junegunn/goyo.vim'                                            " Silence view
+Plug 'Exafunction/codeium.vim', {'branch':'main'}                   " AI Coding
 
 " VIM GUI
 Plug 'sainnhe/gruvbox-material'                                     " Gruvbox Theme
@@ -39,7 +40,6 @@ Plug 'tpope/vim-rhubarb'                                            " Github on 
 Plug 'tyru/open-browser-github.vim'                                 " Open Github URL
 Plug 'tyru/open-browser.vim'                                        " Open URL
 Plug 'pwntester/octo.nvim'
-Plug 'Exafunction/codeium.vim', {'branch':'main'}                   " AI Coding
 
 " Pairing
 Plug 'windwp/nvim-autopairs'                                         " Automatic closing ({['']})
