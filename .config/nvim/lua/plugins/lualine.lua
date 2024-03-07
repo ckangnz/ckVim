@@ -28,7 +28,7 @@ if vim.fn.has('nvim') then
   require 'lualine'.setup {
     options = {
       theme = custom_theme,
-      section_separators = { left = '', right = '' },
+      section_separators = { left = '', right = '' },
       component_separators = '',
       refresh = { tabline = 100, statusline = 100, }
     },
@@ -59,11 +59,11 @@ if vim.fn.has('nvim') then
         }
       },
       lualine_y = {
-        '%{codeium#GetStatusString()}',
-        'g:coc_status',
+        { '%{codeium#GetStatusString()}', separator = { left = '', right = '' } },
+        { 'g:coc_status', separator = { left = '', right = '' } },
       },
       lualine_z = {
-        'g:asyncrun_status',
+        { 'g:asyncrun_status', separator = { left = '', right = '' } },
         { '%s%l:%v', separator = { left = '', right = '' } }
       }
     },
@@ -83,17 +83,25 @@ if vim.fn.has('nvim') then
     tabline = {
       lualine_a = {
         {
-          'tabs',
+          'windows',
+          show_modified_status = true,
+          mode = 0,
           max_length = vim.o.columns,
           separator = { left = '', right = '' },
-          use_mode_colors = false,
-          mode = 2,
-        },
+        }
       },
       lualine_b = {},
       lualine_c = {},
       lualine_x = {},
-      lualine_y = {},
+      lualine_y = {
+        {
+          'tabs',
+          max_length = vim.o.columns,
+          separator = { left = '', right = '' },
+          use_mode_colors = false,
+          mode = 1,
+        },
+      },
       lualine_z = {
         { 'filetype', colored = true, icon_only = false },
         { 'os.date("%a %d %b |%l:%M%p")', separator = { left = '', right = '' } },
