@@ -9,7 +9,7 @@ nnoremap <silent> <Leader>gr :Gread<cr>
 nnoremap <silent> <Leader>gw :Gwrite<cr>
 nnoremap <silent> <Leader>gd :Gdiff<cr>
 nnoremap <silent> <Leader>gD :Gdiffsplit!<cr>
-nnoremap <Leader>ge :Gedit<cr>
+nnoremap <silent> <Leader>ge :Gedit<cr>
 nnoremap <silent> <Leader>gb :Git blame<cr>
 nnoremap <silent> <Leader>gp :AsyncRun git -c push.default=current push<cr>
 nnoremap <silent> <Leader>gP :AsyncRun git push -f<cr>
