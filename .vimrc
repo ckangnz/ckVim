@@ -19,6 +19,7 @@ so ~/.vim/.config/nvim/lua/plugins/vim-http.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-easymotion.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-sandwich.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-bookmarks.vim
+so ~/.vim/.config/nvim/lua/plugins/vim-windowswap.vim
 so ~/.vim/.config/nvim/lua/plugins/open-browser.vim
 so ~/.vim/.config/nvim/lua/plugins/git.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-test.vim
