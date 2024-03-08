@@ -29,7 +29,7 @@ if vim.fn.has('nvim') then
         "--hidden",
       },
       file_ignore_patterns = {
-        '.git/*',
+        '.git/+',
         'node_module/*',
         '*.plist',
         'plugged/*',
