@@ -4,15 +4,23 @@ if vim.fn.has('nvim') then
       a = { fg = Colors.bg1, bg = Colors.aqua, gui = 'bold' },
       b = { fg = Colors.fg1, bg = Colors.bg3 },
       c = { fg = Colors.bg1, bg = 'none' },
+      x = { fg = Colors.fg1 }
     },
     insert = {
-      a = { fg = Colors.bg1, bg = Colors.yellow, gui = 'bold' }
+      a = { fg = Colors.bg1, bg = Colors.yellow, gui = 'bold' },
+      b = { fg = Colors.fg1, bg = Colors.bg3 },
     },
     visual = {
-      a = { fg = Colors.bg1, bg = Colors.red, gui = 'bold' }
+      a = { fg = Colors.bg1, bg = Colors.red, gui = 'bold' },
+      b = { fg = Colors.fg1, bg = Colors.bg3 },
     },
     replace = {
-      a = { fg = Colors.fg0, bg = Colors.purple, gui = 'bold' }
+      a = { fg = Colors.fg0, bg = Colors.purple, gui = 'bold' },
+      b = { fg = Colors.fg1, bg = Colors.bg3 },
+    },
+    command = {
+      a = { fg = Colors.bg3, bg = Colors.cyan, gui = 'bold' },
+      b = { fg = Colors.fg1, bg = Colors.bg3 },
     },
 
     inactive = {
@@ -93,48 +101,56 @@ if vim.fn.has('nvim') then
     tabline = {
       lualine_a = {
         {
-          'tabs',
-          max_length = vim.o.columns,
-          separator = { left = '' },
-          use_mode_colors = false,
-          mode = 1,
-          show_modified_status = false,
-          ---@diagnostic disable-next-line: unused-local
-          fmt = function(name, context)
-            return ' ' .. context.tabnr
-          end
-
-        },
-      },
-      lualine_b = {
-        {
           'windows',
           mode = 0,
           max_length = vim.o.columns * 2 / 3,
+          show_filename_only = true,
+          show_modified_status = true,
           use_mode_colors = true,
           separator = { left = '', right = '' },
-          show_modified_status = true,
+          section_separators = { left = '', right = '' },
           symbols = {
             modified = ' ●', -- Text to show when the buffer is modified
             alternate_file = '#', -- Text to show to identify the alternate file
           },
+          disabled_buftypes = { 'quickfix', 'prompt' }, -- Hide a window if its buffer's type is disabled
           filetype_names = {
-            TelescopePrompt = '',
-            GV = '',
-            qf = '󰁨',
-            oil = ''
+            TelescopePrompt = '🔍',
+            GV = ' GV',
+            qf = '󰁨 quickfix',
+            oil = '📂 Files',
+            fugitive = '',
+            merginal = ' Branches',
+            octo = ' Pull Request',
+            octo_panel = ' PR Review'
           },
         }
       },
+      lualine_b = {
+      },
       lualine_c = {},
-      lualine_x = {},
-      lualine_y = {
+      lualine_x = {
         {
           'filetype',
           colored = true,
           icon_only = false,
           separator = { left = '', },
         }
+      },
+      lualine_y = {
+        {
+          'tabs',
+          max_length = vim.o.columns,
+          separator = { left = '', right = '' },
+          use_mode_colors = true,
+          mode = 1,
+          show_modified_status = false,
+          ---@diagnostic disable-next-line: unused-local
+          fmt = function(name, context)
+            return '󰓩  ' .. context.tabnr
+          end
+
+        },
       },
       lualine_z = {
         {

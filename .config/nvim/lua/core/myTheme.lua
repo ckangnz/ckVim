@@ -3,6 +3,7 @@ Colors = {
   bg1    = '#282828',
   bg3    = '#3c3836',
   red    = '#ea6962',
+  cyan   = '#a7fdeb',
   green  = '#a9b665',
   yellow = '#d8a657',
   blue   = '#7daea3',
