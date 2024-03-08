@@ -24,12 +24,12 @@ if vim.fn.has('nvim') then
     },
 
     inactive = {
-      a = { fg = Colors.grey1, bg = Colors.bg1 },
-      b = { fg = Colors.fg0, bg = Colors.bg0 },
+      a = { fg = Colors.fg0, bg = Colors.bg1 },
+      b = { fg = Colors.fg0, bg = Colors.bg1 },
       c = { fg = Colors.fg0, bg = 'none' },
-      x = { fg = Colors.fg0, bg = Colors.bg0 },
+      x = { fg = Colors.fg0, bg = 'none' },
       y = { fg = Colors.fg0, bg = Colors.bg0 },
-      z = { fg = Colors.grey1, bg = Colors.bg1 },
+      z = { fg = Colors.fg0, bg = Colors.bg1 },
     },
   }
 
@@ -83,10 +83,10 @@ if vim.fn.has('nvim') then
       }
     },
     inactive_sections = {
-      lualine_a = {
+      lualine_a = {},
+      lualine_b = {
         { 'filename', separator = { left = '', right = '' } }
       },
-      lualine_b = {},
       lualine_c = {},
       lualine_x = {},
       lualine_y = {},
@@ -113,7 +113,7 @@ if vim.fn.has('nvim') then
             modified = ' ●', -- Text to show when the buffer is modified
             alternate_file = '#', -- Text to show to identify the alternate file
           },
-          disabled_buftypes = { 'quickfix', 'prompt' }, -- Hide a window if its buffer's type is disabled
+          disabled_buftypes = { 'quickfix', 'prompt', 'nofile' },
           filetype_names = {
             TelescopePrompt = '🔍',
             GV = ' GV',

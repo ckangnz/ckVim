@@ -8,8 +8,8 @@ command! -nargs=0 OpenCodeiumChat :call codeium#Chat()
 if has('unix') && has('mac')
   "Mac
   imap <script><silent><nowait><expr> <C-g> codeium#Accept()
-  imap ‘ <cmd>call codeium#CycleCompletions(1)<cr>
-  imap “ <cmd>call codeium#CycleCompletions(-1)<cr>
+  imap ˜ <cmd>call codeium#CycleCompletions(1)<cr>
+  imap π <cmd>call codeium#CycleCompletions(-1)<cr>
   imap <C-a> <Cmd>call codeium#Complete()<CR>
 else
   "Linux
