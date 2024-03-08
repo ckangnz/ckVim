@@ -6,7 +6,7 @@ if vim.fn.has('nvim') then
     default_merge_method = "squash",
     picker = "telescope",
     default_to_projects_v2 = true,
-    ui = { use_signcolumn = false },
+    ui = { use_signcolumn = true },
     issues = {
       order_by = {
         field = "CREATED_AT", -- either COMMENTS, CREATED_AT or UPDATED_AT
@@ -24,6 +24,15 @@ if vim.fn.has('nvim') then
       size = 10,
       use_icons = true
     },
+    comment_icon = "▎", -- comment marker
+    outdated_icon = "󰅒 ", -- outdated indicator
+    resolved_icon = " ", -- resolved indicator
+    reaction_viewer_hint_icon = " ", -- marker for user reactions
+    user_icon = " ", -- user icon
+    timeline_marker = " ", -- timeline marker
+    timeline_indent = "2", -- timeline indentation
+    right_bubble_delimiter = "", -- bubble delimiter
+    left_bubble_delimiter = "", -- bubble delimiter
   })
 
   vim.keymap.set("n", "<leader>O", "<cmd>Octo<cr>", { silent = true })
