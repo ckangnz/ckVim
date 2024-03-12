@@ -14,18 +14,18 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 " Essential
 Plug 'dstein64/vim-startuptime'                                     " Show :StartupTime
 Plug 'nvim-lua/plenary.nvim'                                        " Essential for nvim plugins
-Plug 'skywind3000/vim-quickui'                                      " Context Quick UI
-Plug 'nvim-tree/nvim-web-devicons'                                  " Devicons
 Plug 'markonm/traces.vim'                                           " Preview highlights and substitute
 Plug 'mbbill/undotree'                                              " Magic of Undos
-Plug 'nvim-lualine/lualine.nvim'                                    " Status line
 Plug 'stevearc/oil.nvim'                                            " Easy Netrw with '-'
-Plug 'levouh/tint.nvim'                                             " Dim inactive window
 Plug 'junegunn/goyo.vim'                                            " Silence view
 Plug 'Exafunction/codeium.vim', {'branch':'main'}                   " AI Coding
 
 " VIM GUI
+Plug 'levouh/tint.nvim'                                             " Dim inactive window
+Plug 'nvim-lualine/lualine.nvim'                                    " Status line
+Plug 'nvim-tree/nvim-web-devicons'                                  " Devicons
 Plug 'sainnhe/gruvbox-material'                                     " Gruvbox Theme
+Plug 'skywind3000/vim-quickui'                                      " Context Quick UI
 
 " Language Specific
 Plug 'mattn/emmet-vim'                                              "HTML/CSS emmet
@@ -42,10 +42,10 @@ Plug 'tyru/open-browser.vim'                                        " Open URL
 Plug 'pwntester/octo.nvim'
 
 " Pairing
-Plug 'windwp/nvim-autopairs'                                         " Automatic closing ({['']})
 Plug 'machakann/vim-sandwich'                                       " Easy text wrap tool
 Plug 'tmhedberg/matchit'                                            " More functionality to %
 Plug 'tpope/vim-repeat'                                             " Repeat tpope's plugins
+Plug 'windwp/nvim-autopairs'                                         " Automatic closing ({['']})
 
 " LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}                     "Language server protocol
