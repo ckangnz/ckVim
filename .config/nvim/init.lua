@@ -11,6 +11,7 @@ require 'plugins.nvim-treesitter'
 require 'plugins.telescope'
 require 'plugins.tint'
 require 'plugins.lualine'
+require 'plugins.todo-comments'
 require 'plugins.oil'
 require 'plugins.autopairs'
 

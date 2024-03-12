@@ -61,6 +61,7 @@ Plug 'airblade/vim-rooter'                                          " Find the r
 Plug 'Asheq/close-buffers.vim'                                      " Delete hidden buffers
 Plug 'dominikduda/vim_current_word'                                 " Highlight current word
 Plug 'easymotion/vim-easymotion'                                    " Easy Navigation
+Plug 'folke/todo-comments.nvim'                                    " Highlight Todo comments
 Plug 'kkvh/vim-docker-tools'                                        " Docker within vim
 Plug 'iamcco/markdown-preview.nvim',
       \{ 'do': 'cd app && npx --yes yarn install'  }                " InstantMarkdownPreview
