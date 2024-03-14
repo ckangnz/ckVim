@@ -58,6 +58,14 @@ if vim.fn.has('nvim') then
         end
       },
     },
+    pickers = {
+      find_files = { prompt_prefix = '📁 ' },
+      oldfiles = { prompt_prefix = '📁 ' },
+      buffers = { prompt_prefix = '📄 ' },
+      live_grep = { prompt_prefix = '🔍 ' },
+      grep_string = { prompt_prefix = '🔍 ', use_regex = true },
+      help_tags = { prompt_prefix = '❔ ' },
+    },
     extensions = {
       fzf = {
         fuzzy = true,
@@ -85,40 +93,53 @@ if vim.fn.has('nvim') then
     return vim.fn.fnamemodify(dot_git_path, ":h")
   end
 
-  local function find_files_or_git_files(opts)
-    opts.hidden = true
+  local function find_files_or_git_files()
+    local opts = { hidden = true }
     if is_git_repo() then opts.cwd = get_git_root() end
     builtin.find_files(opts)
   end
 
-  local function live_grep_git_root(opts)
+  local function live_grep_git_root()
+    local opts = {}
     if is_git_repo() then opts.cwd = get_git_root() end
     builtin.live_grep(opts)
   end
 
-  local function findVisualSelection(opts)
+  local function findVisualSelection()
     vim.cmd('noau normal! "vy"')
     local text = vim.fn.getreg('v')
     vim.fn.setreg('v', {})
     text = string.gsub(text, "\n", "")
-    opts.search = text
-    builtin.grep_string(opts)
+    builtin.grep_string({ search = text })
   end
 
   --Telescope Key Binding --------------------------------------------
-  vim.keymap.set('n', '<C-p>', function() find_files_or_git_files({ prompt_prefix = '📁 ' }) end)
-  vim.keymap.set('n', '<C-e>', function() builtin.oldfiles({ prompt_prefix = '📂 ' }) end)
-  vim.keymap.set('n', '<leader>f', function() live_grep_git_root({ prompt_prefix = '🔍 ' }) end)
-  vim.keymap.set('v', '<leader>f', function() findVisualSelection({ prompt_prefix = '🔍 ' }) end)
-  vim.keymap.set('n', '<leader>F', function() builtin.grep_string({ prompt_prefix = '🔍 ' }) end)
-  vim.keymap.set('n', '<leader>b', function() builtin.buffers({ prompt_prefix = '📄 ' }) end)
-  vim.keymap.set('n', '<leader>h', function() builtin.help_tags({ prompt_prefix = '❔ ' }) end)
+  vim.keymap.set('n', '<C-p>', function() find_files_or_git_files() end, { noremap = true, silent = true, nowait = true })
+  vim.keymap.set('n', '<C-e>', ':lua require("telescope.builtin").oldfiles{}<cr>',
+    { noremap = true, silent = true, nowait = true })
 
-  vim.keymap.set('n', 'gc', ':Telescope coc commands<cr>', { silent = true, nowait = true })
-  vim.keymap.set('n', 'gr', ':Telescope coc references_used path_display={"shorten","smart"}<cr>',
+  vim.keymap.set('n', '<leader>f', function() live_grep_git_root() end, { noremap = true, silent = true, nowait = true })
+  vim.keymap.set('v', '<leader>f', function() findVisualSelection() end, { noremap = true, silent = true, nowait = true })
+  vim.keymap.set('n', '<leader>F', ':lua require("telescope.builtin").grep_string{}<cr>',
+    { noremap = true, silent = true, nowait = true }
+  )
+
+  vim.keymap.set('n', '<leader>b', ':lua require("telescope.builtin").buffers{}<cr>',
+    { noremap = true, silent = true, nowait = true })
+
+  vim.keymap.set('n', '<leader>h', ':lua require("telescope.builtin").help_tags{}<cr>',
+    { noremap = true, silent = true, nowait = true })
+
+  vim.keymap.set('n', 'gc', ':lua require("telescope").load_extension("coc").commands{prompt_prefix="⭐️ "}<cr>',
     { silent = true, nowait = true })
-  vim.keymap.set('n', 'gs', ':Telescope coc workspace_symbols<cr>', { noremap = true, silent = true, nowait = true })
-  vim.keymap.set('n', '?', ':Telescope coc document_symbols<cr>', { noremap = true, silent = true, nowait = true })
+  vim.keymap.set('n', 'gr',
+    ':lua require("telescope").load_extension("coc").references_used{prompt_prefix="🔗 ", path_display={"shorten","smart"}}<cr>',
+    { silent = true, nowait = true })
+  vim.keymap.set('n', 'gs',
+    ':lua require("telescope").load_extension("coc").workspace_symbols{prompt_prefix="#️⃣  "}<cr>',
+    { noremap = true, silent = true, nowait = true })
+  vim.keymap.set('n', '?', ':lua require("telescope.builtin").current_buffer_fuzzy_find{prompt_prefix="🔍 "}<cr>',
+    { noremap = true, silent = true, nowait = true })
 
   --Telescope Color Theme --------------------------------------------
   local TelescopeColor = {
