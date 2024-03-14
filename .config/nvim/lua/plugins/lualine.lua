@@ -1,35 +1,31 @@
 if vim.fn.has('nvim') then
   local custom_theme = {
     normal = {
-      a = { fg = Colors.bg1, bg = Colors.aqua, gui = 'bold' },
-      b = { fg = Colors.fg1, bg = Colors.bg3 },
-      c = { fg = Colors.bg1, bg = 'none' },
-      x = { fg = Colors.fg1 }
+      a = { fg = Colors.black, bg = Colors.main_theme, gui = 'bold' },
+      b = { fg = Colors.light_grey, bg = Colors.light_black },
+      c = { fg = Colors.black, bg = 'none' },
+      x = { fg = Colors.light_grey }
     },
     insert = {
-      a = { fg = Colors.bg1, bg = Colors.yellow, gui = 'bold' },
-      b = { fg = Colors.fg1, bg = Colors.bg3 },
+      a = { fg = Colors.black, bg = Colors.brown, gui = 'bold' },
+      b = { fg = Colors.light_grey, bg = Colors.light_black },
     },
     visual = {
-      a = { fg = Colors.bg1, bg = Colors.red, gui = 'bold' },
-      b = { fg = Colors.fg1, bg = Colors.bg3 },
-    },
-    replace = {
-      a = { fg = Colors.fg0, bg = Colors.purple, gui = 'bold' },
-      b = { fg = Colors.fg1, bg = Colors.bg3 },
+      a = { fg = Colors.black, bg = Colors.dark_magenta, gui = 'bold' },
+      b = { fg = Colors.light_grey, bg = Colors.light_black },
     },
     command = {
-      a = { fg = Colors.bg3, bg = Colors.cyan, gui = 'bold' },
-      b = { fg = Colors.fg1, bg = Colors.bg3 },
+      a = { fg = Colors.black, bg = Colors.dark_blue, gui = 'bold' },
+      b = { fg = Colors.light_grey, bg = Colors.light_black },
     },
 
     inactive = {
-      a = { fg = Colors.fg0, bg = Colors.bg1 },
-      b = { fg = Colors.fg0, bg = Colors.bg1 },
-      c = { fg = Colors.fg0, bg = 'none' },
-      x = { fg = Colors.fg0, bg = 'none' },
-      y = { fg = Colors.fg0, bg = Colors.bg0 },
-      z = { fg = Colors.fg0, bg = Colors.bg1 },
+      a = { fg = 'none', bg = Colors.dark_black },
+      b = { fg = Colors.white, bg = Colors.black },
+      c = { fg = 'none', bg = 'none' },
+      x = { fg = 'none', bg = 'none' },
+      y = { fg = 'none', bg = Colors.dark_black },
+      z = { fg = Colors.white, bg = Colors.black },
     },
   }
 
@@ -53,14 +49,11 @@ if vim.fn.has('nvim') then
           'branch',
           icons_enabled = true,
           separator = { right = '' },
-        }
+        },
       },
       lualine_b = {
         { 'filetype', colored = true, icon_only = true },
-        {
-          'filename',
-          separator = { right = '' },
-        },
+        { 'filename', separator = { right = '' }, },
       },
       lualine_c = {
         { 'diff', symbols = { added = ' ', modified = ' ', removed = ' ' } }
@@ -69,8 +62,8 @@ if vim.fn.has('nvim') then
         {
           'diagnostics',
           always_visible = false,
-          sources = { 'coc' },
-          symbols = { error = ' ', warn = ' ', info = ' ', hint = '󱋴 ' }
+          sources = { 'nvim_diagnostic', 'coc' },
+          symbols = { error = ' ', warn = ' ', info = ' ', hint = '󱋴 ' },
         }
       },
       lualine_y = {
