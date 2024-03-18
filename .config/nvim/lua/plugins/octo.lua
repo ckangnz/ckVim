@@ -33,9 +33,11 @@ if vim.fn.has('nvim') then
     timeline_indent = "2", -- timeline indentation
     right_bubble_delimiter = "", -- bubble delimiter
     left_bubble_delimiter = "", -- bubble delimiter
+    mappings_disable_default = false
   })
 
-  vim.keymap.set("n", "<leader>O", "<cmd>Octo<cr>", { silent = true })
+  vim.keymap.set("n", "<leader>O", "<cmd>Octo<cr>", { noremap = true, silent = true, buffer = true })
+  vim.keymap.set("v", "<leader>O", "<cmd>Octo<cr>", { noremap = true, silent = true, buffer = true })
 
   vim.api.nvim_create_autocmd("FileType", {
     pattern = "octo",
