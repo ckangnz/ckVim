@@ -169,7 +169,7 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
       \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 "*-*-*-*-*-*-CUSTOM FOLD STYLE-*-*-*-*-*-*
-set foldmethod=syntax
+" set foldmethod=syntax
 :setlocal foldcolumn=0
 set foldlevel=99
 set foldlevelstart=99
@@ -187,7 +187,6 @@ func! StyliseFold()
   return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) .. foldtextend
 endfunc
 set foldtext=StyliseFold()
-
 
 "*-*-*-*-*-*-CUSTOM COMMANDS-*-*-*-*-*-*
 "Markdown overrides
