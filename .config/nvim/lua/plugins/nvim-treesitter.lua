@@ -15,6 +15,8 @@ if vim.fn.has('nvim') then
       'dockerfile',
       'regex',
       'http',
+      'hcl',
+      'terraform',
       'dart',
       'yaml',
       'kotlin'

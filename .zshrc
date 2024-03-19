@@ -39,6 +39,10 @@ if [[ -f ~/.fzf.zsh ]]; then
 elif [[-d "$HOMEBREW_PREFIX/opt/fzf/bin"]]; then
   $HOMEBREW_PREFIX/opt/fzf/install
 fi
+# Terraform
+if [[ -f "$HOMEBREW_PREFIX/bin/terraform" ]];then
+  complete -o nospace -C /usr/local/bin/terraform terraform
+fi
 
 #lsd
 if [[ -d "$HOMEBREW_PREFIX/opt/lsd/bin" ]]; then
@@ -101,3 +105,4 @@ bindkey -e
 # Load and initialise completion system
 autoload -Uz compinit
 compinit
+
