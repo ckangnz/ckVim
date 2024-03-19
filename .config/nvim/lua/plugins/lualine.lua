@@ -137,6 +137,10 @@ if vim.fn.has('nvim') then
           separator = { left = '', right = '' },
           use_mode_colors = true,
           mode = 1,
+          tabs_color = {
+            active = 'lualine_a_insert',
+            inactive = 'lualine_a_inactive',
+          },
           show_modified_status = false,
           ---@diagnostic disable-next-line: unused-local
           fmt = function(name, context)
