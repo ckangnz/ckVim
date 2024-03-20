@@ -3,8 +3,11 @@ brew_install(){
         echo "Detected ${1} is already installed!"
     else
         echo "Installing ${1}..."
-        brew install $1
-        echo "${1} is installed!"
+        if [ "$2" ]; then
+            echo "Brew tapping to ${2}..."
+            brew tap $2
+        fi
+        brew install $1 && echo "${1} is installed!"
     fi
 }
 brew_install_cask(){
@@ -16,7 +19,7 @@ brew_install_cask(){
             echo "Brew tapping to ${2}..."
             brew tap $2
         fi
-        brew install $1 && echo '$1 is installed!'
+        brew install --cask $1 && echo '$1 is installed!'
     fi
 }
 npm_install(){

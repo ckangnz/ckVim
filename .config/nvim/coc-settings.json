@@ -36,6 +36,13 @@
       "command": "csharp-ls",
       "rootPatterns": ["*.sln", ".git"],
       "filetypes": ["cs", "csharp"]
+    },
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": ["terraform", "tf"],
+      "initializationOptions": {},
+      "settings": {}
     }
   },
 
