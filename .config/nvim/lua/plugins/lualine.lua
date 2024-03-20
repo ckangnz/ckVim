@@ -3,28 +3,30 @@ if vim.fn.has('nvim') then
     normal = {
       a = { fg = Colors.black, bg = Colors.main_theme, gui = 'bold' },
       b = { fg = Colors.light_grey, bg = Colors.light_black },
-      c = { fg = Colors.black, bg = 'none' },
-      x = { fg = Colors.light_grey }
+      c = { fg = Colors.light_grey, bg = nil },
     },
     insert = {
       a = { fg = Colors.black, bg = Colors.brown, gui = 'bold' },
       b = { fg = Colors.light_grey, bg = Colors.light_black },
+      c = { fg = Colors.light_grey, bg = nil },
     },
     visual = {
       a = { fg = Colors.black, bg = Colors.dark_magenta, gui = 'bold' },
       b = { fg = Colors.light_grey, bg = Colors.light_black },
+      c = { fg = Colors.light_grey, bg = nil },
     },
     command = {
       a = { fg = Colors.black, bg = Colors.dark_blue, gui = 'bold' },
       b = { fg = Colors.light_grey, bg = Colors.light_black },
+      c = { fg = Colors.light_grey, bg = nil },
     },
 
     inactive = {
-      a = { fg = 'none', bg = Colors.dark_black },
+      a = { fg = nil, bg = Colors.dark_black },
       b = { fg = Colors.white, bg = Colors.black },
-      c = { fg = 'none', bg = 'none' },
-      x = { fg = 'none', bg = 'none' },
-      y = { fg = 'none', bg = Colors.dark_black },
+      c = { fg = nil, bg = nil },
+      x = { fg = nil, bg = nil },
+      y = { fg = nil, bg = Colors.dark_black },
       z = { fg = Colors.white, bg = Colors.black },
     },
   }
