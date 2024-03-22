@@ -9,9 +9,7 @@ augroup WhitespaceMatch
       let w:whitespace_match_number = matchadd('ExtraWhitespace', pattern)
     endif
   endfunc
-
-  autocmd BufWinEnter * let w:whitespace_match_number = matchadd('ExtraWhitespace', '\s\+$')
-  autocmd InsertLeave * call s:ToggleWhitespaceMatch('n')
+  autocmd BufWinEnter,InsertLeave * call s:ToggleWhitespaceMatch('n')
 augroup END
 
 hi ExtraWhitespace ctermbg=red guibg=red

@@ -1,6 +1,5 @@
-# Load and initialise completion system
-autoload -Uz compinit
-compinit
+autoload -U +X bashcompinit && bashcompinit
+autoload -U +X compinit && compinit
 
 # Set PATH
 PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
@@ -105,4 +104,3 @@ POWERLINE_DISABLE_RPROMPT="true"
 [[ -f ~/.extraAlias.zsh ]] && source ~/.extraAlias.zsh
 
 bindkey -e
-

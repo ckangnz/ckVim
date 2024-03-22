@@ -7,15 +7,17 @@ if vim.fn.has('nvim') then
     picker = "telescope",
     default_to_projects_v2 = true,
     ui = { use_signcolumn = true },
-    comment_icon = "▎", -- comment marker
-    outdated_icon = "󰅒 ", -- outdated indicator
-    resolved_icon = " ", -- resolved indicator
+    comment_icon = "💬 ", -- comment marker
+    outdated_icon = "⌛️ ", -- outdated indicator
+    resolved_icon = "✅ ", -- resolved indicator
     reaction_viewer_hint_icon = " ", -- marker for user reactions
     user_icon = " ", -- user icon
-    timeline_marker = " ", -- timeline marker
-    timeline_indent = "8", -- timeline indentation
+    timeline_marker = "", -- timeline marker
+    timeline_indent = "2", -- timeline indentation
+    snippet_context_lines = 4, -- number or lines around commented lines
     right_bubble_delimiter = "", -- bubble delimiter
     left_bubble_delimiter = "", -- bubble delimiter
+    timeout = 5000,
     issues = {
       order_by = {
         field = "CREATED_AT", -- either COMMENTS, CREATED_AT or UPDATED_AT
@@ -66,34 +68,34 @@ if vim.fn.has('nvim') then
       review_thread = {
         next_comment = { lhs = "]c", desc = "Go to next comment" },
         prev_comment = { lhs = "[c", desc = "Go to previous comment" },
-        select_next_entry = { lhs = "]q", desc = "move to previous changed file" },
-        select_prev_entry = { lhs = "[q", desc = "move to next changed file" },
-        select_first_entry = { lhs = "[Q", desc = "move to first changed file" },
-        select_last_entry = { lhs = "]Q", desc = "move to last changed file" },
+        select_next_entry = { lhs = "]q", desc = "Move to previous changed file" },
+        select_prev_entry = { lhs = "[q", desc = "Move to next changed file" },
+        select_first_entry = { lhs = "[Q", desc = "Move to first changed file" },
+        select_last_entry = { lhs = "]Q", desc = "Move to last changed file" },
         close_review_tab = { lhs = "gq", desc = "Close review tab" },
       },
       review_diff = { --Diff split view on review
-        add_review_suggestion = { lhs = "S", desc = "add a new review suggestion" },
+        add_review_suggestion = { lhs = "<leader>s", desc = "Add a new review suggestion" },
         focus_files = { lhs = "<leader>b", desc = "Move focus to changed file panel" },
-        toggle_files = { lhs = "<leader>B", desc = "hide/show changed files panel" },
-        next_thread = { lhs = "]t", desc = "move to next thread" },
-        prev_thread = { lhs = "[t", desc = "move to previous thread" },
-        select_next_entry = { lhs = "]q", desc = "move to previous changed file" },
-        select_prev_entry = { lhs = "[q", desc = "move to next changed file" },
-        select_first_entry = { lhs = "[Q", desc = "move to first changed file" },
-        select_last_entry = { lhs = "]Q", desc = "move to last changed file" },
+        toggle_files = { lhs = "<leader>B", desc = "Hide/show changed files panel" },
+        next_thread = { lhs = "]t", desc = "Move to next thread" },
+        prev_thread = { lhs = "[t", desc = "Move to previous thread" },
+        select_next_entry = { lhs = "]q", desc = "Move to previous changed file" },
+        select_prev_entry = { lhs = "[q", desc = "Move to next changed file" },
+        select_first_entry = { lhs = "[Q", desc = "Move to first changed file" },
+        select_last_entry = { lhs = "]Q", desc = "Move to last changed file" },
         close_review_tab = { lhs = "gq", desc = "Close review tab" },
-        toggle_viewed = { lhs = "g<space>", desc = "toggle viewer viewed state" },
+        toggle_viewed = { lhs = "g<space>", desc = "Toggle viewer viewed state" },
       },
       file_panel = { --Diff split file view on review
         focus_files = { lhs = "<leader>b", desc = "Move focus to changed file panel" },
-        toggle_files = { lhs = "<leader>B", desc = "hide/show changed files panel" },
+        toggle_files = { lhs = "<leader>B", desc = "Hide/show changed files panel" },
         refresh_files = { lhs = "<C-r>", desc = "Refresh changed files panel" },
         next_entry = { lhs = "j", desc = "Move to next changed file" },
         prev_entry = { lhs = "k", desc = "Move to previous changed file" },
         select_entry = { lhs = "<cr>", desc = "Show selected changed file diffs" },
         close_review_tab = { lhs = "gq", desc = "Close review tab" },
-        toggle_viewed = { lhs = "g<space>", desc = "toggle viewer viewed state" },
+        toggle_viewed = { lhs = "g<space>", desc = "Toggle viewer viewed state" },
       },
       submit_win = { --Submitting review popup
         approve_review = { lhs = "<C-a>", desc = "Approve review" },
@@ -113,18 +115,17 @@ if vim.fn.has('nvim') then
       vim.keymap.set("i", "@", "@<C-x><C-o>", { silent = true, buffer = true })
       vim.keymap.set("i", "#", "#<C-x><C-o>", { silent = true, buffer = true })
 
-      vim.keymap.set("n", "gd", "<cmd>Octo pr changes<cr>", { noremap = true, silent = true, buffer = true })
-      vim.keymap.set("n", "gc", "<cmd>Octo pr commits<cr>", { noremap = true, silent = true, buffer = true })
+      vim.keymap.set("n", "<leader>gd", "<cmd>Octo pr changes<cr>", { noremap = true, silent = true, buffer = true })
+      vim.keymap.set("n", "<leader>gc", "<cmd>Octo pr commits<cr>", { noremap = true, silent = true, buffer = true })
 
-      vim.keymap.set("n", "r", "<cmd>Octo<cr>review", { noremap = true, silent = true, buffer = true })
-      vim.keymap.set("n", "a", "<cmd>Octo<cr>assignee", { noremap = true, silent = true, buffer = true })
-      vim.keymap.set("n", "R", "<cmd>Octo<cr>reaction", { noremap = true, silent = true, buffer = true })
-      vim.keymap.set("n", "L", "<cmd>Octo<cr>label", { noremap = true, silent = true, buffer = true })
+      vim.keymap.set("n", "<leader>r", "<cmd>Octo<cr>review", { noremap = true, silent = true, buffer = true })
+      vim.keymap.set("n", "<leader>a", "<cmd>Octo<cr>assignee",
+        { noremap = true, nowait = true, silent = true, buffer = true })
+      vim.keymap.set("n", "<leader>R", "<cmd>Octo<cr>reaction", { noremap = true, silent = true, buffer = true })
+      vim.keymap.set("n", "<leader>l", "<cmd>Octo<cr>label", { noremap = true, silent = true, buffer = true })
 
-      vim.keymap.set("n", "m", "<cmd>Octo<cr>label", { noremap = true, silent = true, buffer = true })
-
-      vim.keymap.set("n", "C", "<cmd>Octo<cr>comment", { noremap = true, silent = true, buffer = true })
-      vim.keymap.set("v", "C", "<cmd>Octo<cr>comment", { noremap = true, silent = true, buffer = true })
+      vim.keymap.set("n", "<leader>C", "<cmd>Octo<cr>comment", { noremap = true, silent = true, buffer = true })
+      vim.keymap.set("v", "<leader>C", "<cmd>Octo<cr>comment", { noremap = true, silent = true, buffer = true })
     end
   })
 end
