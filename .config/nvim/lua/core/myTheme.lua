@@ -4,7 +4,7 @@ Colors = {
   dark_black   = '#1d2021',
   black        = '#282828',
   light_black  = '#3c3836',
-  light_grey   = '#fefefe',
+  light_grey   = '#9c9c9c',
 
   bluish_black = '#546d79',
   dark_red     = '#ff5151',

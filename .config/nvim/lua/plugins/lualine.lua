@@ -140,8 +140,8 @@ if vim.fn.has('nvim') then
           use_mode_colors = true,
           mode = 1,
           tabs_color = {
-            active = 'lualine_a_insert',
-            inactive = 'lualine_a_inactive',
+            active = { fg = Colors.white, bg = Colors.bluish_black, gui = 'bold' },
+            inactive = { fg = Colors.light_grey, bg = Colors.light_black, gui = 'bold' },
           },
           show_modified_status = false,
           fmt = function(name, context)
