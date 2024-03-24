@@ -144,9 +144,8 @@ if vim.fn.has('nvim') then
             inactive = 'lualine_a_inactive',
           },
           show_modified_status = false,
-          ---@diagnostic disable-next-line: unused-local
           fmt = function(name, context)
-            return '󰓩  ' .. context.tabnr
+            return '󰓩  ' .. name .. ' ' .. context.tabnr
           end
 
         },
