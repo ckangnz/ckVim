@@ -16,8 +16,8 @@ if vim.g.neovide then
   vim.keymap.set('', '<D-s>', ':w<CR>')       --save
 
   vim.keymap.set('', '<D-t>', ':tabedit<cr>') --new tab
-  vim.keymap.set('', '<D-[>', 'gT')           --previous tab
-  vim.keymap.set('', '<D-]>', 'gt')           --next tab
+  vim.keymap.set('', '<D-{>', 'gT')           --previous tab
+  vim.keymap.set('', '<D-}>', 'gt')           --next tab
 
   vim.keymap.set('', '<D-w>', ':wq<cr>')      --close buffer
   vim.keymap.set('', '<D-q>', ':wqa<cr>')     --close everything
