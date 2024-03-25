@@ -2,38 +2,39 @@ if vim.fn.has('nvim') then
   local custom_theme = {
     normal = {
       a = { fg = Colors.black, bg = Colors.main_theme, gui = 'bold' },
-      b = { fg = Colors.light_grey, bg = Colors.light_black },
+      b = { fg = Colors.white, bg = Colors.light_black },
       c = { fg = Colors.light_grey, bg = nil },
     },
     insert = {
       a = { fg = Colors.black, bg = Colors.brown, gui = 'bold' },
-      b = { fg = Colors.light_grey, bg = Colors.light_black },
+      b = { fg = Colors.white, bg = Colors.light_black },
       c = { fg = Colors.light_grey, bg = nil },
     },
     visual = {
       a = { fg = Colors.black, bg = Colors.dark_magenta, gui = 'bold' },
-      b = { fg = Colors.light_grey, bg = Colors.light_black },
+      b = { fg = Colors.white, bg = Colors.light_black },
       c = { fg = Colors.light_grey, bg = nil },
     },
     command = {
       a = { fg = Colors.black, bg = Colors.dark_blue, gui = 'bold' },
-      b = { fg = Colors.light_grey, bg = Colors.light_black },
+      b = { fg = Colors.white, bg = Colors.light_black },
       c = { fg = Colors.light_grey, bg = nil },
     },
 
     inactive = {
       a = { fg = nil, bg = Colors.dark_black },
-      b = { fg = Colors.white, bg = Colors.black },
+      b = { fg = Colors.light_grey, bg = Colors.black },
       c = { fg = nil, bg = nil },
       x = { fg = nil, bg = nil },
       y = { fg = nil, bg = Colors.dark_black },
-      z = { fg = Colors.white, bg = Colors.black },
+      z = { fg = Colors.light_grey, bg = Colors.black },
     },
   }
 
   require 'lualine'.setup {
     options = {
       theme = custom_theme,
+      separator = { left = '', right = '' },
       section_separators = { left = '', right = '' },
       component_separators = '',
       refresh = { tabline = 100, statusline = 100, }
@@ -45,20 +46,18 @@ if vim.fn.has('nvim') then
           fmt = function() return '󰙱K' end,
           icons_enabled = true,
           draw_empty = true,
-          separator = { left = '' },
         },
-        {
-          'branch',
-          icons_enabled = true,
-          separator = { right = '' },
-        },
+        { 'branch', icons_enabled = true },
       },
       lualine_b = {
-        { 'filetype', colored = true, icon_only = true },
-        { 'filename', separator = { right = '' }, },
+        { 'filename', },
       },
       lualine_c = {
-        { 'diff', symbols = { added = ' ', modified = ' ', removed = ' ' } }
+        {
+          'diff',
+          symbols = { added = ' ', modified = ' ', removed = ' ' },
+          separator = { left = "", right = "" }
+        }
       },
       lualine_x = {
         {
@@ -66,31 +65,31 @@ if vim.fn.has('nvim') then
           always_visible = false,
           sources = { 'nvim_diagnostic', 'coc' },
           symbols = { error = ' ', warn = ' ', info = ' ', hint = '󱋴 ' },
-        }
+          separator = { left = "", right = "" }
+        },
+        {
+          'filetype',
+          colored = true,
+          icon_only = false,
+          separator = { left = "", right = "" }
+        },
       },
       lualine_y = {
-        { '%{codeium#GetStatusString()}', separator = { left = '' } },
-        { 'g:coc_status', separator = { right = '' } },
+        { '%{codeium#GetStatusString()}', fmt = function(t) return '󰚩 ' .. t end },
+        { 'g:coc_status' },
       },
       lualine_z = {
-        { 'g:asyncrun_status', separator = { left = '' } },
-        { '%s%l:%v', separator = { right = '' } }
+        { 'g:asyncrun_status' },
+        { '%s%l:%v' }
       }
     },
     inactive_sections = {
       lualine_a = {},
-      lualine_b = {
-        { 'filename', separator = { left = '', right = '' } }
-      },
+      lualine_b = { { 'filename' } },
       lualine_c = {},
       lualine_x = {},
       lualine_y = {},
-      lualine_z = {
-        {
-          '%s%l:%v',
-          separator = { left = '', right = '' }
-        }
-      }
+      lualine_z = { { '%s%l:%v' } }
     },
 
     tabline = {
@@ -102,7 +101,6 @@ if vim.fn.has('nvim') then
           show_filename_only = true,
           show_modified_status = true,
           use_mode_colors = true,
-          separator = { left = '', right = '' },
           section_separators = { left = '', right = '' },
           symbols = {
             modified = ' ●', -- Text to show when the buffer is modified
@@ -110,33 +108,27 @@ if vim.fn.has('nvim') then
           },
           disabled_buftypes = { 'quickfix', 'prompt', 'nofile' },
           filetype_names = {
-            TelescopePrompt = '🔍',
+            [''] = '📄 New file',
+            TelescopePrompt = '🔍Telescope',
+            fugitive = '',
+            merginal = ' Branches',
             GV = ' GV',
             qf = '󰁨 quickfix',
             oil = '📂 Files',
-            fugitive = '',
-            merginal = ' Branches',
             octo = ' Pull Request',
-            octo_panel = ' PR Review'
+            octo_panel = ' PR Review',
+            ['vim-plug'] = "🧩 Vim Plug"
           },
         }
       },
       lualine_b = {
       },
       lualine_c = {},
-      lualine_x = {
-        {
-          'filetype',
-          colored = true,
-          icon_only = false,
-          separator = { left = '', },
-        }
-      },
+      lualine_x = {},
       lualine_y = {
         {
           'tabs',
           max_length = vim.o.columns,
-          separator = { left = '', right = '' },
           use_mode_colors = true,
           mode = 1,
           tabs_color = {
@@ -145,16 +137,35 @@ if vim.fn.has('nvim') then
           },
           show_modified_status = false,
           fmt = function(name, context)
-            return '󰓩  ' .. name .. ' ' .. context.tabnr
+            if vim.bo.filetype == 'TelescopePrompt' then
+              return '🔍Searching...'
+            elseif vim.startswith(name, 'fugitive:') then
+              return ''
+            elseif vim.startswith(name, 'Merginal:branchlist') then
+              return ' Branches'
+            elseif vim.endswith(name, '--graph --all') then
+              return ' GV'
+            elseif vim.bo.filetype == 'qf' then
+              return '󰁨 quickfix'
+            elseif vim.bo.filetype == 'oil' then
+              return '📂 Files'
+            elseif vim.bo.filetype == 'octo' then
+              return ' Pull Request'
+            elseif vim.bo.filetype == 'octo_panel' then
+              return ' PR Review'
+            elseif vim.bo.filetype == 'vim-plug' then
+              return '🧩 Vim Plug'
+            elseif name == '[No Name]' then
+              return '📄 New file'
+            elseif name == vim.fn.expand('%:t') then
+              return '󰓩  ' .. context.tabnr
+            end
+            return '󰓩  ' .. name
           end
-
         },
       },
       lualine_z = {
-        {
-          'os.date("%a %d %b |%l:%M%p")',
-          separator = { left = '', right = '' }
-        },
+        { 'os.date("%a %d %b |%l:%M%p")' },
       }
     },
     winbar = {}
