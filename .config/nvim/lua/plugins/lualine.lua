@@ -140,11 +140,13 @@ if vim.fn.has('nvim') then
             if vim.bo.filetype == 'TelescopePrompt' then
               return '🔍Searching...'
             elseif vim.startswith(name, 'fugitive:') then
-              return ''
+              return ' Compare'
             elseif vim.startswith(name, 'Merginal:branchlist') then
               return ' Branches'
             elseif vim.endswith(name, '--graph --all') then
               return ' GV'
+            elseif vim.startswith(name, 'COMMIT_EDITMSG') then
+              return '󰜘 Commit Message'
             elseif vim.bo.filetype == 'qf' then
               return '󰁨 quickfix'
             elseif vim.bo.filetype == 'oil' then
@@ -157,10 +159,11 @@ if vim.fn.has('nvim') then
               return '🧩 Vim Plug'
             elseif name == '[No Name]' then
               return '📄 New file'
-            elseif name == vim.fn.expand('%:t') then
+            elseif vim.fn.fnamemodify(name, ':e') == '' then
+              return '󰓩  ' .. name
+            else
               return '󰓩  ' .. context.tabnr
             end
-            return '󰓩  ' .. name
           end
         },
       },
