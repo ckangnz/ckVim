@@ -4,6 +4,17 @@ if vim.fn.has('nvim') then
   local action_layout = require('telescope.actions.layout')
   local builtin = require('telescope.builtin')
 
+  local select_one_or_multi = function(prompt_bufnr)
+    local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
+    local multi = picker:get_multi_selection()
+    if not vim.tbl_isempty(multi) then
+      require("telescope.actions").send_selected_to_qflist(prompt_bufnr)
+      require("telescope.actions").open_qflist()
+    else
+      require('telescope.actions').select_default(prompt_bufnr)
+    end
+  end
+
   telescope.setup {
     defaults = {
       winblend = 0,
@@ -13,7 +24,8 @@ if vim.fn.has('nvim') then
       mappings = {
         i = {
           ["<esc>"] = actions.close,
-          ["<C-/>"] = action_layout.toggle_preview
+          ["<C-/>"] = action_layout.toggle_preview,
+          ["<CR>"] = select_one_or_multi,
         },
       },
       vimgrep_arguments = {

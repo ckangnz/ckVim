@@ -137,25 +137,27 @@ if vim.fn.has('nvim') then
           },
           show_modified_status = false,
           fmt = function(name, context)
-            if vim.bo.filetype == 'TelescopePrompt' then
+            -- if current filetype is 'TelescopePrompt' and context.tabnr matches the active tab number
+            local isCurrentTab = context.tabnr == vim.api.nvim_tabpage_get_number(0)
+            if vim.bo.filetype == 'TelescopePrompt' and isCurrentTab then
               return '🔍Searching...'
             elseif vim.startswith(name, 'fugitive:') then
-              return ' Compare'
-            elseif vim.startswith(name, 'Merginal:branchlist') then
+              return ''
+            elseif vim.bo.filetype == 'merginal' and isCurrentTab then
               return ' Branches'
             elseif vim.endswith(name, '--graph --all') then
               return ' GV'
             elseif vim.startswith(name, 'COMMIT_EDITMSG') then
               return '󰜘 Commit Message'
-            elseif vim.bo.filetype == 'qf' then
+            elseif vim.bo.filetype == 'qf' and isCurrentTab then
               return '󰁨 quickfix'
-            elseif vim.bo.filetype == 'oil' then
+            elseif vim.bo.filetype == 'oil' and isCurrentTab then
               return '📂 Files'
-            elseif vim.bo.filetype == 'octo' then
+            elseif vim.bo.filetype == 'octo' and isCurrentTab then
               return ' Pull Request'
-            elseif vim.bo.filetype == 'octo_panel' then
+            elseif vim.bo.filetype == 'octo_panel' and isCurrentTab then
               return ' PR Review'
-            elseif vim.bo.filetype == 'vim-plug' then
+            elseif vim.bo.filetype == 'vim-plug' and isCurrentTab then
               return '🧩 Vim Plug'
             elseif name == '[No Name]' then
               return '📄 New file'
