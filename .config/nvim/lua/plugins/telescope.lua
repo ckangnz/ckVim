@@ -90,12 +90,18 @@ if vim.fn.has('nvim') then
         prefer_locations = true
       },
       project = {
-        display_type = "minimal",
+        display_type = "full",
         hidden_files = true,
-        order_by = "asc",
+        order_by = "desc",
         prompt_prefix = "🗂️ ",
+        theme = 'ivy',
         search_by = "title",
-        theme = "dropdown",
+        on_project_selected = function(prompt_bufnr)
+          local project_actions = require("telescope._extensions.project.actions")
+          local selected_title = project_actions.get_selected_title(prompt_bufnr)
+          vim.cmd.LualineRenameTab { selected_title }
+          project_actions.find_project_files(prompt_bufnr, true)
+        end
       }
     }
   };
