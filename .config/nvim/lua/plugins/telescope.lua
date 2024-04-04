@@ -3,15 +3,15 @@ if vim.fn.has('nvim') then
   local actions = require('telescope.actions')
   local action_layout = require('telescope.actions.layout')
   local builtin = require('telescope.builtin')
+  local state = require('telescope.actions.state')
 
   local select_one_or_multi = function(prompt_bufnr)
-    local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
-    local multi = picker:get_multi_selection()
+    local multi = state.get_current_picker(prompt_bufnr):get_multi_selection()
     if not vim.tbl_isempty(multi) then
-      require("telescope.actions").send_selected_to_qflist(prompt_bufnr)
-      require("telescope.actions").open_qflist()
+      actions.send_selected_to_qflist(prompt_bufnr)
+      actions.open_qflist()
     else
-      require('telescope.actions').select_default(prompt_bufnr)
+      actions.select_default(prompt_bufnr)
     end
   end
 
@@ -89,11 +89,20 @@ if vim.fn.has('nvim') then
         theme = 'ivy',
         prefer_locations = true
       },
+      project = {
+        display_type = "minimal",
+        hidden_files = true,
+        order_by = "asc",
+        prompt_prefix = "🗂️ ",
+        search_by = "title",
+        theme = "dropdown",
+      }
     }
   };
   require('telescope').load_extension('fzf')
   require('telescope').load_extension('coc')
   require('telescope').load_extension('vim_bookmarks')
+  require('telescope').load_extension('project')
 
   local function is_git_repo()
     vim.fn.system("git rev-parse --is-inside-work-tree")
@@ -127,31 +136,35 @@ if vim.fn.has('nvim') then
 
   --Telescope Key Binding --------------------------------------------
   vim.keymap.set('n', '<C-p>', function() find_files_or_git_files() end, { noremap = true, silent = true, nowait = true })
-  vim.keymap.set('n', '<C-e>', ':lua require("telescope.builtin").oldfiles{}<cr>',
+  vim.keymap.set('n', '<C-e>', builtin.oldfiles,
     { noremap = true, silent = true, nowait = true })
 
   vim.keymap.set('n', '<leader>f', function() live_grep_git_root() end, { noremap = true, silent = true, nowait = true })
   vim.keymap.set('v', '<leader>f', function() findVisualSelection() end, { noremap = true, silent = true, nowait = true })
-  vim.keymap.set('n', '<leader>F', ':lua require("telescope.builtin").grep_string{}<cr>',
+  vim.keymap.set('n', '<leader>F', builtin.grep_string,
     { noremap = true, silent = true, nowait = true }
   )
 
-  vim.keymap.set('n', '<leader>b', ':lua require("telescope.builtin").buffers{}<cr>',
+  vim.keymap.set('n', '<leader>b', builtin.buffers, { noremap = true, silent = true, nowait = true })
+
+  vim.keymap.set('n', '<leader>h', builtin.help_tags, { noremap = true, silent = true, nowait = true })
+
+  vim.keymap.set('n', '?', function() builtin.current_buffer_fuzzy_find({ prompt_prefix = "🔍 " }) end,
     { noremap = true, silent = true, nowait = true })
 
-  vim.keymap.set('n', '<leader>h', ':lua require("telescope.builtin").help_tags{}<cr>',
+  -- Telescope COC
+  vim.keymap.set('n', 'gc', function() telescope.extensions.coc.commands({ prompt_prefix = "⭐️ " }) end,
+    { silent = true, nowait = true })
+  vim.keymap.set('n', 'gr', function()
+      telescope.extensions.coc.references_used({ prompt_prefix = "🔗 ", path_display = { "shorten", "smart" } })
+    end,
+    { silent = true, nowait = true })
+  vim.keymap.set('n', 'gs', function() telescope.extensions.coc.workspace_symbols({ prompt_prefix = "#️⃣  " }) end,
     { noremap = true, silent = true, nowait = true })
 
-  vim.keymap.set('n', 'gc', ':lua require("telescope").load_extension("coc").commands{prompt_prefix="⭐️ "}<cr>',
-    { silent = true, nowait = true })
-  vim.keymap.set('n', 'gr',
-    ':lua require("telescope").load_extension("coc").references_used{prompt_prefix="🔗 ", path_display={"shorten","smart"}}<cr>',
-    { silent = true, nowait = true })
-  vim.keymap.set('n', 'gs',
-    ':lua require("telescope").load_extension("coc").workspace_symbols{prompt_prefix="#️⃣  "}<cr>',
-    { noremap = true, silent = true, nowait = true })
-  vim.keymap.set('n', '?', ':lua require("telescope.builtin").current_buffer_fuzzy_find{prompt_prefix="🔍 "}<cr>',
-    { noremap = true, silent = true, nowait = true })
+
+  vim.keymap.set('n', '<C-=>', telescope.extensions.project.project, { noremap = true, silent = true })
+
 
   --Telescope Color Theme --------------------------------------------
   local TelescopeColor = {
