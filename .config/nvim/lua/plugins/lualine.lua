@@ -175,4 +175,15 @@ if vim.fn.has('nvim') then
     },
     winbar = {}
   }
+
+  local function renameTab()
+    local tabName = vim.fn.input("New Tab name: ")
+    if tabName == "" then
+      print(' ')
+      return
+    end
+    vim.cmd.LualineRenameTab { tabName }
+  end
+
+  vim.keymap.set('n', '<leader>T', renameTab, { nowait = true, noremap = true, silent = true })
 end
