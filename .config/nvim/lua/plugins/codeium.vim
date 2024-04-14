@@ -5,19 +5,11 @@ let g:codeium_manual = v:true
 
 command! -nargs=0 OpenCodeiumChat :call codeium#Chat()
 
-if has('unix') && has('mac')
-  "Mac
-  imap <script><silent><nowait><expr> <C-g> codeium#Accept()
-  imap ˜ <cmd>call codeium#CycleCompletions(1)<cr>
-  imap π <cmd>call codeium#CycleCompletions(-1)<cr>
-  imap <C-a> <Cmd>call codeium#Complete()<CR>
-else
-  "Linux
-  imap <script><silent><nowait><expr> <C-g> codeium#Accept()
-  imap <M-n> <cmd>call codeium#CycleCompletions(1)<cr>
-  imap <M-p> <cmd>call codeium#CycleCompletions(-1)<cr>
-  imap <C-a> <Cmd>call codeium#Complete()<CR>
-endif
+imap <script><silent><nowait><expr> <C-;> codeium#Accept()
+imap <C-.> <cmd>call codeium#CycleOrComplete()<cr>
+imap <C-,> <cmd>call codeium#CycleCompletions(-1)<cr>
+imap <C-i> <Cmd>call codeium#Complete()<CR>
+
 let g:codeium_filetypes = {
     \ "cs": v:true,
     \ "vim": v:true,
