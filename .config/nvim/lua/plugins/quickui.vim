@@ -39,7 +39,7 @@ call add(g:utilContent, [ 'Delete all white spaces (&w)', '%s/^$\\|^\s\+//g' ])
 call add(g:utilContent, ['-'])
 "----MARKDOWN PREVIEW: iamcco/markdown-preview.nvim
 let g:mkdp_auto_start = 0
-call add(g:utilContent, [ 'Markdown Preview (&d)', 'MarkdownPreview' ])
+call add(g:utilContent, [ 'Markdown Preview (&d)', 'MarkdownPreviewToggle' ])
 call add(g:utilContent, [ 'Yaml Schema (&y)', 'CocCommand yaml.selectSchema' ])
 call add(g:utilContent, ['-'])
 
