@@ -77,3 +77,38 @@ gh auth login
 ```
 
 6. Use the token to sign in :)
+
+# Setting up SSH
+
+1. Generate key
+
+```bash
+ssh-keygen -t ed25519 -C "email@email.com"
+
+# Give a name to the key file
+Enter file in which to save the key (/Users/chris.kang/.ssh/id_ed25519): /Users/chris.kang/.ssh/my_custom_key
+```
+
+2. Start the ssh-agent in the background
+
+```bash
+eval "$(ssh-agent -s)"
+> Agent pid *****
+```
+
+3. Create `~/.ssh/config` if it doesn't exist
+
+4. Update `~/.ssh/config`
+
+```
+Host github.com
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/my_custom_key
+```
+
+5. Add SSH private key to the ssh-agent and store your passphrase in the keychain
+
+```bash
+ssh-add --apple-use-keychain ~/.ssh/my_custom_key
+```
