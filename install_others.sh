@@ -6,6 +6,7 @@ brew_install_cask "docker"
 brew_install_cask "itsycal"
 brew_install_cask "rectangle"
 brew_install_cask "maccy"
+brew_install_cask "hiddenbar"
 
 #brew_install_cask "azure-data-studio"
 #brew_install_cask "session-manager-plugin"

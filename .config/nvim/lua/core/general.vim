@@ -3,6 +3,9 @@ let mapleader = ','                             "The default leader is '\'
 let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c4fe', '#ff3f80', '#64fcda', '#fefefe', '#b0bec4', '#ff8980', '#b9f6c9', '#ffe47e', '#80d7fe', '#ff80ab', '#a7fdeb', '#fefefe',]
 "black, dark red, dark green, brown, dark blue, dark magenta, dark cyan, light grey, dark grey, red, green, yellow, blue, magenta, cyan, white
 let g:netrw_keepdir=0
+let g:loaded_ruby_provider = 0
+let g:loaded_perl_provider = 0
+let g:python3_host_prog="/usr/bin/python3"
 
 if !exists('g:syntax_on')
   syntax on

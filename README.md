@@ -128,9 +128,10 @@ compaudit | xargs chmod g-w
 ```bash
 # For Mac
 eval "$(/usr/lib/bin/brew shellenv)"
-```
 
-```bash
+# For Mac ARM
+echo 'eval $(/opt/homebrew/bin/brew shellenv)' >> $HOME/.zprofile
+
 # For WSL
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"]
 ```

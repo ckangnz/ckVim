@@ -25,9 +25,6 @@ brew_install_cask "dotnet-sdk"
 
 brew_install_cask "font-fira-code-nerd-font" "homebrew/cask-fonts"
 
-#Install pynvim for Neovim
-$(which python3) -m pip install pynvim
-
 #Symlink vimrc
 if [ -e ~/.vimrc ]; then
     echo '.vimrc already exists! Deleting existing .vimrc...'
@@ -46,7 +43,7 @@ else
   mkdir ~/.config/nvim
 fi
 echo 'Linking .config/nvim..'
-ln -s ~/.vim/.config/nvim ~/.config/nvim
+ln -s ~/.vim/.config/nvim ~/.config
 echo 'Completed Linking ./config/nvim!'
 
 echo "."
