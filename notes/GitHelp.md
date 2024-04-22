@@ -83,7 +83,11 @@ gh auth login
 1. Generate key
 
 ```bash
+# Github
 ssh-keygen -t ed25519 -C "email@email.com"
+
+# Azure
+ssh-keygen -t rsa -C "email@email.com"
 
 # Give a name to the key file
 Enter file in which to save the key (/Users/chris.kang/.ssh/id_ed25519): /Users/chris.kang/.ssh/my_custom_key
@@ -111,4 +115,11 @@ Host github.com
 
 ```bash
 ssh-add --apple-use-keychain ~/.ssh/my_custom_key
+```
+
+6. Test connection
+
+```
+ssh -T git@github.com
+ssh -T git@ssh.dev.azure.com
 ```
