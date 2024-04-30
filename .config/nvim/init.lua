@@ -14,6 +14,7 @@ require 'plugins.lualine'
 require 'plugins.todo-comments'
 require 'plugins.oil'
 require 'plugins.autopairs'
+require 'plugins.github-preview'
 
 require 'plugins.octo'
 

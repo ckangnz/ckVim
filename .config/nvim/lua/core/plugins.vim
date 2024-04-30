@@ -62,10 +62,9 @@ Plug 'airblade/vim-rooter'                                          " Find the r
 Plug 'Asheq/close-buffers.vim'                                      " Delete hidden buffers
 Plug 'dominikduda/vim_current_word'                                 " Highlight current word
 Plug 'easymotion/vim-easymotion'                                    " Easy Navigation
-Plug 'folke/todo-comments.nvim'                                    " Highlight Todo comments
+Plug 'folke/todo-comments.nvim'                                     " Highlight Todo comments
 Plug 'kkvh/vim-docker-tools'                                        " Docker within vim
-Plug 'iamcco/markdown-preview.nvim',
-      \{ 'do': 'cd app && npx --yes yarn install'  }                " InstantMarkdownPreview
+Plug 'wallpants/github-preview.nvim'                                " Markdown preview in Github style
 Plug 'mattesGroeger/vim-bookmarks'                                  " Vim Bookmarks
 Plug 'nicwest/vim-http'                                             " HTTP calls from vim
 Plug 'scrooloose/nerdcommenter'                                     " Easy Commenting tool

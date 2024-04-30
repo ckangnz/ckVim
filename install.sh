@@ -6,6 +6,7 @@ brew_install "zsh"
 
 brew_install "python3"
 brew_install "node"
+brew_install "oven-sh/bun/bun"
 brew_install "fnm"
 
 brew_install "nvim"

@@ -61,11 +61,6 @@ if vim.fn.has('nvim') then
         { "name", "asc" },
       },
     },
-    git = {
-      add = true,
-      mv = true,
-      rm = true,
-    },
     float = {
       padding = 2,
       max_width = 0,
