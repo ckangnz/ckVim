@@ -55,10 +55,12 @@ if vim.fn.has('nvim') then
         reload = { lhs = "<C-r>", desc = "Reload issue" },
         open_in_browser = { lhs = "<C-b>", desc = "Open in browser" },
         copy_url = { lhs = "<C-y>", desc = "Copy url to system clipboard" },
+        add_comment = { lhs = "<leader>C", desc = "Add comment" },
         next_comment = { lhs = "]c", desc = "Go to next comment" },
         prev_comment = { lhs = "[c", desc = "Go to previous comment" },
       },
       pull_requests = {
+        add_comment = { lhs = "<leader>C", desc = "Add comment" },
         reload = { lhs = "<C-r>", desc = "Reload issue" },
         open_in_browser = { lhs = "<C-b>", desc = "Open in browser" },
         copy_url = { lhs = "<C-y>", desc = "Copy url to system clipboard" },
@@ -66,6 +68,7 @@ if vim.fn.has('nvim') then
         prev_comment = { lhs = "[c", desc = "Go to previous comment" },
       },
       review_thread = {
+        add_comment = { lhs = "<leader>C", desc = "Add comment" },
         next_comment = { lhs = "]c", desc = "Go to next comment" },
         prev_comment = { lhs = "[c", desc = "Go to previous comment" },
         select_next_entry = { lhs = "]q", desc = "Move to previous changed file" },
@@ -75,6 +78,7 @@ if vim.fn.has('nvim') then
         close_review_tab = { lhs = "gq", desc = "Close review tab" },
       },
       review_diff = { --Diff split view on review
+        add_comment = { lhs = "<leader>C", desc = "Add comment" },
         add_review_suggestion = { lhs = "<leader>s", desc = "Add a new review suggestion" },
         focus_files = { lhs = "<leader>b", desc = "Move focus to changed file panel" },
         toggle_files = { lhs = "<leader>B", desc = "Hide/show changed files panel" },
