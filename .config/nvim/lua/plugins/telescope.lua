@@ -46,6 +46,8 @@ if vim.fn.has('nvim') then
         '*.plist',
         'plugged/*',
         'autoload/*',
+        'esm/*',
+        'cjs/*',
         'dist/*'
       },
       preview = {
