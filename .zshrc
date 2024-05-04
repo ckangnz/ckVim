@@ -29,6 +29,7 @@ fi
 
 #------Source Brew plugins--------
 export HOMEBREW_PREFIX=$(brew --prefix)
+export HOMEBREW_NO_AUTO_UPDATE=1
 # FNM
 if [[ -e "$HOMEBREW_PREFIX/bin/fnm" ]]; then
   PATH="$FNM_MULTISHELL_PATH":$PATH

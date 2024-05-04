@@ -5,7 +5,7 @@ if vim.fn.has('nvim') then
     single_file = false,
     theme = {
       name = "system",
-      high_contrast = true,
+      high_contrast = false,
     },
     details_tags_open = true,
     cursor_line = {
