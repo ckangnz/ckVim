@@ -99,5 +99,6 @@
     "unit": "",
     "value": "",
     "variable": ""
-  }
+  },
+  "snippets.ultisnips.pythonPrompt": false
 }

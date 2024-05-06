@@ -5,7 +5,11 @@ let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c
 let g:netrw_keepdir=0
 let g:loaded_ruby_provider = 0
 let g:loaded_perl_provider = 0
-let g:python3_host_prog="/usr/bin/python3"
+if has('unix') && has('mac')
+  let g:python3_host_prog="/usr/bin/python3"
+else
+  let g:python3_host_prog="/home/linuxbrew/.linuxbrew/bin"
+endif
 
 if !exists('g:syntax_on')
   syntax on
