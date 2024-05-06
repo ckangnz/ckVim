@@ -17,7 +17,6 @@ Plug 'nvim-lua/plenary.nvim'                                        " Essential 
 Plug 'markonm/traces.vim'                                           " Preview highlights and substitute
 Plug 'mbbill/undotree'                                              " Magic of Undos
 Plug 'stevearc/oil.nvim'                                            " Easy Netrw with '-'
-Plug 'junegunn/goyo.vim'                                            " Silence view
 Plug 'Exafunction/codeium.vim', {'branch':'main'}                   " AI Coding
 
 " VIM GUI
