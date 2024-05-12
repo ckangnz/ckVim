@@ -171,7 +171,7 @@ if vim.fn.has('nvim') then
     { noremap = true, silent = true, nowait = true })
 
 
-  vim.keymap.set('n', '<C-=>', telescope.extensions.project.project, { noremap = true, silent = true })
+  vim.keymap.set('n', '<leader>0', telescope.extensions.project.project, { noremap = true, silent = true })
 
 
   --Telescope Color Theme --------------------------------------------
