@@ -9,9 +9,7 @@ if vim.fn.has('nvim') then
     },
     details_tags_open = true,
     cursor_line = {
-      disable = false,
-      color = "#89b482",
-      opacity = 0.3,
+      disable = true,
     },
     scroll = {
       disable = false,
