@@ -153,6 +153,9 @@ if vim.fn.has('nvim') then
     { noremap = true, silent = true, nowait = true }
   )
 
+  vim.keymap.set('n', '"', builtin.registers, { noremap = true, silent = true, nowait = true })
+  vim.keymap.set('i', '<C-R>', builtin.registers, { noremap = true, silent = true, nowait = true })
+
   vim.keymap.set('n', '<leader>b', builtin.buffers, { noremap = true, silent = true, nowait = true })
 
   vim.keymap.set('n', '<leader>h', builtin.help_tags, { noremap = true, silent = true, nowait = true })
@@ -171,6 +174,7 @@ if vim.fn.has('nvim') then
     { noremap = true, silent = true, nowait = true })
 
 
+  -- Telescope Project
   vim.keymap.set('n', '<leader>0', telescope.extensions.project.project, { noremap = true, silent = true })
 
 
