@@ -20,7 +20,7 @@ func! TestThisSuite(runner, ...)
   unlet g:test#javascript#runner
 endfunc
 
-func! OpenTestMenu(title, name, args)
+func! PopupTestMenu(title, name, args)
   let testPopupOpt = {'title': a:title .. ' Test'}
   let testPopupMenu = [
         \ [ 'Test this (&t)'  , "call TestNearestTest('" .. a:name .. "', '" .. a:args .. "')" ] ,
@@ -29,19 +29,19 @@ func! OpenTestMenu(title, name, args)
         \ [ 'Test last (&l)'  , "call TestLastRan('" .. a:name .. "', '" .. a:args .. "')" ]    ,
         \]
   if(a:title == 'Jest')
-    call add(testPopupMenu, [ 'Cypress(&o)', "OpenCypressMenu" ])
-    call add(testPopupMenu, [ 'Playwright(&p)', "OpenPlaywrightMenu" ])
+    call add(testPopupMenu, [ 'Cypress(&o)', "PopupCypressMenu" ])
+    call add(testPopupMenu, [ 'Playwright(&p)', "PopupPlaywrightMenu" ])
   endif
   call quickui#listbox#open(testPopupMenu, testPopupOpt)
 endfunc
 
-command! OpenJestMenu call OpenTestMenu('Jest', 'jest', '--update-snapshot')
-command! OpenCypressMenu call OpenTestMenu('Cypress', 'cypress', '-C ./cypress/cypress.json')
-command! OpenPlaywrightMenu call OpenTestMenu('Playwright', 'jest', '--config ./jest-playwright.config.js')
-command! OpenCSharpTestMenu call OpenTestMenu('XUnit Test', 'xunit', '--nologo -v=q')
-command! OpenDartTestMenu call OpenTestMenu('Dart Test', 'fluttertest', '')
+command! PopupJestMenu call PopupTestMenu('Jest', 'jest', '--update-snapshot')
+command! PopupCypressMenu call PopupTestMenu('Cypress', 'cypress', '-C ./cypress/cypress.json')
+command! PopupPlaywrightMenu call PopupTestMenu('Playwright', 'jest', '--config ./jest-playwright.config.js')
+command! PopupCSharpTestMenu call PopupTestMenu('XUnit Test', 'xunit', '--nologo -v=q')
+command! PopupDartTestMenu call PopupTestMenu('Dart Test', 'fluttertest', '')
 
-autocmd FileType javasccript,javascriptreact,typescript,typescriptreact nmap <silent><nowait><buffer><leader>t :OpenJestMenu<cr>
+autocmd FileType javasccript,javascriptreact,typescript,typescriptreact nmap <silent><nowait><buffer><leader>t :PopupJestMenu<cr>
 
 if exists('g:neovide') || has('nvim')
   let test#strategy='neovim'
@@ -54,8 +54,8 @@ let g:test#echo_command = 0
 let g:test#runner_commands= ["Jest", "Cypress", "Playwright", "DotnetTest"]
 
 "CSharp overrides
-autocmd FileType cs nmap <silent><nowait><buffer><leader>t :OpenCSharpTestMenu<cr>
+autocmd FileType cs nmap <silent><nowait><buffer><leader>t :PopupCSharpTestMenu<cr>
 autocmd FileType cs nmap <silent><nowait><buffer><C-b> :AsyncRun dotnet build<cr>
 
 "Dart overrides
-autocmd FileType dart nmap<silent><nowait><buffer><leader>t :OpenDartTestMenu<cr>
+autocmd FileType dart nmap<silent><nowait><buffer><leader>t :PopupDartTestMenu<cr>
