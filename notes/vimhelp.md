@@ -85,7 +85,7 @@
     ,ci                             comment invert
     ,cs                             sexy commenting
 
-### Vim Fugitive + Merginal + GV
+### Vim Fugitive + GV
 
     ,1                              Gstatus
         cc                              commit
@@ -93,8 +93,14 @@
         ce                              commit --amend-noedit
     ,2                              GV -all(Show all log history)
     ,@                              GV!(Show log of current file)
-    ,3                              Merginal (Show branches)
-        ?                               Help to see more...
+    ,3                              Telescope git_branches (Show branches)
+        <cr>                        Checkout branch
+        <C-t>                       Track branch
+        <C-r>                       Rebase branch
+        <C-a>                       Add branch
+        <C-s>                       Switch branch
+        <C-d>                       Delete branch
+        <C-y>                       Merge branch
     ,gp                             Push
     ,gP                             Push Force
     ,gl                             Pull

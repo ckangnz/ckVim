@@ -32,7 +32,6 @@ Plug 'nvim-treesitter/nvim-treesitter'                              "Syntax high
 Plug 'pedrohdz/vim-yaml-folds'                                      "Fold method for .yaml
 
 " Git Tool
-Plug 'idanarye/vim-merginal'                                        " Git branch organiser
 Plug 'junegunn/gv.vim'                                              " Git commit history browser
 Plug 'tpope/vim-fugitive'                                           " Git on Vim
 Plug 'tpope/vim-rhubarb'                                            " Github on Vim
@@ -50,7 +49,7 @@ Plug 'windwp/nvim-autopairs'                                         " Automatic
 Plug 'neoclide/coc.nvim', {'branch': 'release'}                     "Language server protocol
 
 " Search Tool
-Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }         " Fuzzy finder
+Plug 'nvim-telescope/telescope.nvim', { 'branch': 'master' }         " Fuzzy finder
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }   " FZF Extension
 Plug 'nvim-telescope/telescope-project.nvim'                        " Project management
 Plug 'fannheyward/telescope-coc.nvim'                               " Coc Extension
