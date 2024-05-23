@@ -23,9 +23,13 @@ if vim.fn.has('nvim') then
       sorting_strategy = "ascending",
       mappings = {
         i = {
-          ["<esc>"] = actions.close,
-          ["<C-/>"] = action_layout.toggle_preview,
+          ["<esc>"] = 'close',
           ["<CR>"] = select_one_or_multi,
+          ["<C-j>"] = 'preview_scrolling_down',
+          ["<C-k>"] = 'preview_scrolling_up',
+          ["<C-h>"] = 'preview_scrolling_left',
+          ["<C-l>"] = 'preview_scrolling_right',
+          ["<C-/>"] = 'which_key',
         },
       },
       vimgrep_arguments = {
