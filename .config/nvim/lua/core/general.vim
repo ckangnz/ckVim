@@ -77,7 +77,7 @@ let &t_EI.="\e[1 q"
 
 if has('linebreak')
   set breakindent
-  let &showbreak ='﬌'
+  let &showbreak ='󱞩 '
   set cpo+=n
   let &breakat = " ^I!@*-+;:,./?"
 endif
