@@ -12,7 +12,6 @@ plug "memark/zsh-dotnet-completion"
 
 # Aliases
 plug "chivalryq/git-alias"
-plug "chrishrb/zsh-kubectl"
 
 # Alias suggestions
 plug "MichaelAquilina/zsh-you-should-use"

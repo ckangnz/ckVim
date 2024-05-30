@@ -49,6 +49,11 @@ fi
 if [[ -f "$HOMEBREW_PREFIX/bin/terraform" ]];then
   complete -o nospace -C /usr/local/bin/terraform terraform
 fi
+# Kubectl
+if [[ -f "$HOMEBREW_PREFIX/bin/kubectl" ]];then
+  alias k=kubectl
+  source <(kubectl completion zsh)
+fi
 
 #lsd
 if [[ -d "$HOMEBREW_PREFIX/opt/lsd/bin" ]]; then
