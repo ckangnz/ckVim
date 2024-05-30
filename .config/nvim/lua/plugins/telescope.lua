@@ -57,7 +57,7 @@ if vim.fn.has('nvim') then
       preview = {
         mime_hook = function(filepath, bufnr, opts)
           local is_image = function()
-            local image_extensions = { 'png', 'jpg' }
+            local image_extensions = { 'png', 'jpg', 'jpeg' }
             local split_path = vim.split(filepath:lower(), '.', { plain = true })
             local extension = split_path[#split_path]
             return vim.tbl_contains(image_extensions, extension)
