@@ -45,9 +45,13 @@ if [[ -f ~/.fzf.zsh ]]; then
 elif [[ -d "$HOMEBREW_PREFIX/opt/fzf/bin" ]]; then
   $HOMEBREW_PREFIX/opt/fzf/install
 fi
+# AwsCli
+if [[ -f "$HOMEBREW_PREFIX/bin/aws_completer" ]];then
+  complete -C "$HOMEBREW_PREFIX/bin/aws_completer" aws
+fi
 # Terraform
 if [[ -f "$HOMEBREW_PREFIX/bin/terraform" ]];then
-  complete -o nospace -C /usr/local/bin/terraform terraform
+  complete -o nospace -C "$HOMEBREW_PREFIX/bin/terraform" terraform
 fi
 # Kubectl
 if [[ -f "$HOMEBREW_PREFIX/bin/kubectl" ]];then
