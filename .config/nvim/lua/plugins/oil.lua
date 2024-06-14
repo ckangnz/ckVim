@@ -1,6 +1,7 @@
 if vim.fn.has('nvim') then
   vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
+  local detail = false
   require("oil").setup({
     default_file_explorer = true,
     columns = {
@@ -47,6 +48,18 @@ if vim.fn.has('nvim') then
       ["gs"] = "actions.change_sort",
       ["gx"] = "actions.open_external",
       ["gh"] = "actions.toggle_hidden",
+      ["?"] = {
+        desc = "Toggle file detail view",
+        callback = function()
+          detail = not detail
+          if detail then
+            require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
+          else
+            require("oil").set_columns({ "icon" })
+          end
+        end,
+      },
+
     },
     use_default_keymaps = false,
     view_options = {
