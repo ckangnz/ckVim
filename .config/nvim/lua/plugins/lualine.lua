@@ -37,7 +37,8 @@ if vim.fn.has('nvim') then
       separator = { left = '', right = '' },
       section_separators = { left = '', right = '' },
       component_separators = '',
-      refresh = { tabline = 100, statusline = 100, }
+      refresh = { tabline = 100, statusline = 100, },
+      globalstatus = true,
     },
     sections = {
       lualine_a = {
