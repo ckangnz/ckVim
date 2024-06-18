@@ -34,7 +34,11 @@ export HOMEBREW_NO_INSTALL_CLEAUP=0
 export HOMEBREW_NO_ENV_HINTS=1
 # FNM
 if [[ -e "$HOMEBREW_PREFIX/bin/fnm" ]]; then
-  PATH="$FNM_MULTISHELL_PATH":$PATH
+  PATH="$FNM_MULTISHELL_PATH:$PATH"
+fi
+# Java
+if [[ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]]; then
+  PATH="$HOMEBREW_PREFIX/opt/openjdk/bin:$PATH"
 fi
 # FZF
 if [[ -f ~/.fzf.zsh ]]; then
@@ -58,7 +62,6 @@ if [[ -f "$HOMEBREW_PREFIX/bin/kubectl" ]];then
   alias k=kubectl
   source <(kubectl completion zsh)
 fi
-
 #lsd
 if [[ -d "$HOMEBREW_PREFIX/opt/lsd/bin" ]]; then
   alias ls="lsd --group-directories-first"
