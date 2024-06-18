@@ -49,7 +49,8 @@ Plug 'windwp/nvim-autopairs'                                         " Automatic
 Plug 'neoclide/coc.nvim', {'branch': 'release'}                     "Language server protocol
 
 " Search Tool
-Plug 'nvim-telescope/telescope.nvim', { 'branch': 'master' }         " Fuzzy finder
+Plug 'nvim-pack/nvim-spectre'                                       " Find and replace all
+Plug 'nvim-telescope/telescope.nvim', { 'branch': 'master' }        " Fuzzy finder
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }   " FZF Extension
 Plug 'nvim-telescope/telescope-project.nvim'                        " Project management
 Plug 'fannheyward/telescope-coc.nvim'                               " Coc Extension

@@ -9,6 +9,7 @@ require 'core.myTheme'
 --Lua Plugins
 require 'plugins.nvim-treesitter'
 require 'plugins.telescope'
+require 'plugins.nvim-spectre'
 require 'plugins.tint'
 require 'plugins.lualine'
 require 'plugins.todo-comments'

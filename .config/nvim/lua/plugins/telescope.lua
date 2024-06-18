@@ -162,7 +162,7 @@ if vim.fn.has('nvim') then
 
   vim.keymap.set('n', '<leader>b', builtin.buffers, { noremap = true, silent = true, nowait = true })
 
-  vim.keymap.set('n', '<leader>h', builtin.help_tags, { noremap = true, silent = true, nowait = true })
+  vim.keymap.set('n', 'gh', builtin.help_tags, { noremap = true, silent = true, nowait = true })
 
   vim.keymap.set('n', '?', function() builtin.current_buffer_fuzzy_find({ prompt_prefix = "🔍 " }) end,
     { noremap = true, silent = true, nowait = true })
