@@ -74,7 +74,7 @@ alias vim="vim"
 alias neo="neovide"
 
 alias bu="brew upgrade"
-alias buc="brew update --cask"
+alias buc="brew upgrade --cask"
 
 alias p10="p10k configure"
 
