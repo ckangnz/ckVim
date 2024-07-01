@@ -70,9 +70,9 @@ if [[ -d "$HOMEBREW_PREFIX/opt/lsd/bin" ]]; then
 fi
 
 #alias
-alias vim="vim"
-alias neo="neovide"
+alias neo="neovide --fork"
 
+alias bud="brew update"
 alias bu="brew upgrade"
 alias buc="brew upgrade --cask"
 
