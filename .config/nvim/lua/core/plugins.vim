@@ -37,7 +37,6 @@ Plug 'tpope/vim-fugitive'                                           " Git on Vim
 Plug 'tpope/vim-rhubarb'                                            " Github on Vim
 Plug 'tyru/open-browser-github.vim'                                 " Open Github URL
 Plug 'tyru/open-browser.vim'                                        " Open URL
-Plug 'pwntester/octo.nvim'
 
 " Pairing
 Plug 'machakann/vim-sandwich'                                       " Easy text wrap tool

@@ -16,8 +16,6 @@ require 'plugins.oil'
 require 'plugins.autopairs'
 require 'plugins.github-preview'
 
-require 'plugins.octo'
-
 --GUI Config
 require 'gui.neovide'
 
