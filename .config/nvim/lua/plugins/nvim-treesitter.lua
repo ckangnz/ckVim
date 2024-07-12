@@ -12,18 +12,15 @@ if vim.fn.has('nvim') then
     highlight = { enable = true },
     ensure_installed = {
       'vim', 'vimdoc', 'lua', 'luadoc', 'markdown', 'markdown_inline',
-      'html', 'scss',
-      'python',
-      'c', 'c_sharp',
+      'html', 'scss', 'dart',
+      'java', 'python', 'c', 'c_sharp', 'kotlin',
       'javascript', 'typescript', 'tsx', 'json',
       'dockerfile',
       'regex',
       'http',
       'hcl',
       'terraform',
-      'dart',
       'yaml',
-      'kotlin'
     }
   }
 end

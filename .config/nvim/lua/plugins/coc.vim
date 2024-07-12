@@ -15,6 +15,7 @@ let g:coc_global_extensions = [
       \ 'coc-tsserver',
       \ 'coc-docker',
       \ 'coc-csharp-ls',
+      \ 'coc-java',
       \ 'coc-eslint',
       \ 'coc-snippets',
       \ 'coc-db',
