@@ -12,3 +12,9 @@ let g:ctrlsf_fold_result = 0
 nmap <leader>h <Plug>CtrlSFPrompt
 vmap <leader>h <Plug>CtrlSFVwordExec
 nmap <leader>H <Plug>CtrlSFCwordPath
+
+let g:ctrlsf_mapping = {
+      \ "open": "o",
+      \ "next": "n",
+      \ "prev": "p",
+      \ }
