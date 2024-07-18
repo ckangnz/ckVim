@@ -69,11 +69,20 @@ set tabstop=2                                   "Default tabs
 set expandtab                                   "Use space as a tab
 set softtabstop=2                               "Width applied by tab
 set shiftwidth=2                                "Width of tab in normal mode
+
 let &t_8f = "\e[38;2;%lu;%lu;%lum"              "Sets foreground color (ANSI, true-color mode)
 let &t_8b = "\e[48;2;%lu;%lu;%lum"              "Sets background color (ANSI, true-color mode)
-let &t_SI.="\e[5 q"                             "Cursor shape change in different mode
-let &t_SR.="\e[4 q"
-let &t_EI.="\e[1 q"
+
+"Cursor shapes
+"1: blinking,
+"2: blinking block(default),
+"3: Blinking underline,
+"4: Steady underline,
+"5: Blinking bar(xterm),
+"6: Steady bar(xterm)
+let &t_SI.="\e[5 q"                             "Cursor shape in insert mode
+let &t_SR.="\e[4 q"                             "Cursor shape in replace mode
+let &t_EI.="\e[1 q"                             "Cursor shape in normal mode
 
 if has('linebreak')
   set breakindent
@@ -94,86 +103,106 @@ set list lcs=space:\ ,lead:\ ,trail:·,nbsp:◇,tab:»»,extends:▸,precedes:�
 set fillchars=stl: 
 
 "*-*-*-*-*-*-NAVIGATION MAPPINGS-*-*-*-*-*-*
-map ; :
-noremap ;; ;
-nmap j gj
-nmap k gk
-vmap j gj
-vmap k gk
-if has('unix') && has('mac')
-  nnoremap <silent> ∆ :m .+1<CR>==
-  nnoremap <silent> ˚ :m .-2<CR>==
-  inoremap <silent> ∆ <Esc>:m .+1<CR>==gi
-  inoremap <silent> ˚ <Esc>:m .-2<CR>==gi
-  vnoremap <silent> ∆ :m '>+1<CR>gv=gv
-  vnoremap <silent> ˚ :m '<-2<CR>gv=gv
-else
-  nnoremap <silent> <M-j> :m .+1<CR>==
-  nnoremap <silent> <M-k> :m .-2<CR>==
-  inoremap <silent> <M-j>∆ <Esc>:m .+1<CR>==gi
-  inoremap <silent> <M-k>˚ <Esc>:m .-2<CR>==gi
-  vnoremap <silent> <M-j>∆ :m '>+1<CR>gv=gv
-  vnoremap <silent> <M-k>˚ :m '<-2<CR>gv=gv
-endif
-vnoremap <silent> <leader>y "+y
-nmap <silent><C-O> <C-O>zz
-nmap <silent><C-I> <C-I>zz
-nmap <silent><C-D> <C-D>zz
-nmap <silent><C-U> <C-U>zz
 
-"*-*-*-*-*-*-PANEL NAVIGATION-*-*-*-*-*-*
-nmap <C-J> <C-W><C-J>
-nmap <C-K> <C-W><C-K>
-nmap <C-H> <C-W><C-H>
-nmap <C-L> <C-W><C-L>
 augroup vimrc
   au!
+  "IMPORTANT MAPPER
+  map ; :
+  noremap ;; ;
+
+  "Generic Mapping
+  nmap j gj
+  nmap k gk
+  vmap j gj
+  vmap k gk
+
+  if has('unix') && has('mac')
+    nnoremap <silent> ∆ :m .+1<CR>==
+    nnoremap <silent> ˚ :m .-2<CR>==
+    inoremap <silent> ∆ <Esc>:m .+1<CR>==gi
+    inoremap <silent> ˚ <Esc>:m .-2<CR>==gi
+    vnoremap <silent> ∆ :m '>+1<CR>gv=gv
+    vnoremap <silent> ˚ :m '<-2<CR>gv=gv
+  else
+    nnoremap <silent> <M-j> :m .+1<CR>==
+    nnoremap <silent> <M-k> :m .-2<CR>==
+    inoremap <silent> <M-j>∆ <Esc>:m .+1<CR>==gi
+    inoremap <silent> <M-k>˚ <Esc>:m .-2<CR>==gi
+    vnoremap <silent> <M-j>∆ :m '>+1<CR>gv=gv
+    vnoremap <silent> <M-k>˚ :m '<-2<CR>gv=gv
+  endif
+  nmap <silent><C-O> <C-O>zz
+  nmap <silent><C-I> <C-I>zz
+  nmap <silent><C-D> <C-D>zz
+  nmap <silent><C-U> <C-U>zz
+
+  "Copy to clipboard
+  vnoremap <silent> <leader>y "+y
+
+  "Panel navigation
+  nmap <C-J> <C-W><C-J>
+  nmap <C-K> <C-W><C-K>
+  nmap <C-H> <C-W><C-H>
+  nmap <C-L> <C-W><C-L>
 
   "Tab movements
   noremap <c-t> :tabedit<cr>
   noremap g[ gT
   noremap g] gt
 
+  "Panel Resizing
+  ",wf maximise ,wm minimise pane
+  ",wt open on a new tab
+  ",wh to horizontal, wv to vertical
+  ",ww -> ,ww to change pane
+  ",bp ,bn change panes
+  nnoremap <Leader>wf <C-W>\|
+  nnoremap <Leader>wm <C-W>=
+  nnoremap <Leader>wh <C-W>t<C-W>K
+  nnoremap <Leader>wv <C-W>t<C-W>H
+  nnoremap <Leader>wt <C-W>T
+
   autocmd FileType list noremap <buffer> <c-p> <c-p>
+
+  "Terminal mappers
+  tnoremap <Esc> <C-\><C-n>
+  if exists('g:neovide') || has('nvim')
+    tnoremap <silent><expr> <c-j> pumvisible() > 0 ? "<c-j>" : "\<c-w><c-j>"
+    tnoremap <silent><expr> <c-k> pumvisible() > 0 ? "<c-k>" : "\<c-w><c-k>"
+  else
+    tnoremap <silent><expr> <c-j> len(popup_list()) > 0 ? "<c-j>" : "\<c-w><c-j>"
+    tnoremap <silent><expr> <c-k> len(popup_list()) > 0 ? "<c-k>" : "\<c-w><c-k>"
+  endif
+  tnoremap <C-h> <C-w><C-h>
+  tnoremap <C-l> <C-w><C-l>
+
+  "Clear search
+  nmap <silent> <Leader><space> :nohlsearch<cr>
+  "Find visually selected word
+  vnoremap // y/<C-R>"<CR>N
+  "Find/ Search within visual block
+  vnoremap / <Esc>/\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
+  vnoremap ? <Esc>?\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
+  "Show Highlight type pressing F10
+  map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+        \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+        \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+  "Markdown overrides
+  autocmd FileType markdown inoremap <buffer><silent><nowait> <tab> <esc>>>A
+  autocmd FileType markdown inoremap <buffer><silent><nowait> <S-tab> <esc><<A
+
+  "SCSS override
+  autocmd FileType scss setl iskeyword+=@-@
+  "
+  "Toggle copen and cclose
+  autocmd FileType qf if (getwininfo(win_getid())[0].loclist != 1) | wincmd J | endif "Quickfix to be full width on the bottom
+  func! ToggleQuickFix()
+    if empty(filter(getwininfo(), 'v:val.quickfix')) | copen | else | cclose | endif
+  endfunc
+  nnoremap <silent> <Leader>4 :call ToggleQuickFix()<cr>
+
 augroup END
-
-
-"*-*-*-*-*-*-PANEL RESIZING-*-*-*-*-*-*
-",wf maximise ,wm minimise pane
-",wt open on a new tab
-",wh to horizontal, wv to vertical
-",ww -> ,ww to change pane
-",bp ,bn change panes
-nnoremap <Leader>wf <C-W>\|
-nnoremap <Leader>wm <C-W>=
-nnoremap <Leader>wh <C-W>t<C-W>K
-nnoremap <Leader>wv <C-W>t<C-W>H
-nnoremap <Leader>wt <C-W>T
-
-"*-*-*-*-*-*-TERMINAL COMMANDS-*-*-*-*-*-*
-tnoremap <Esc> <C-\><C-n>
-if exists('g:neovide') || has('nvim')
-  tnoremap <silent><expr> <c-j> pumvisible() > 0 ? "<c-j>" : "\<c-w><c-j>"
-  tnoremap <silent><expr> <c-k> pumvisible() > 0 ? "<c-k>" : "\<c-w><c-k>"
-else
-  tnoremap <silent><expr> <c-j> len(popup_list()) > 0 ? "<c-j>" : "\<c-w><c-j>"
-  tnoremap <silent><expr> <c-k> len(popup_list()) > 0 ? "<c-k>" : "\<c-w><c-k>"
-endif
-tnoremap <C-h> <C-w><C-h>
-tnoremap <C-l> <C-w><C-l>
-
-"*-*-*-*-*-*-FIND WORD OVERRIDES-*-*-*-*-*-*
-"Clear search
-nmap <silent> <Leader><space> :nohlsearch<cr>
-"Find visually selected word
-vnoremap // y/<C-R>"<CR>N
-"Find/ Search within visual block
-vnoremap / <Esc>/\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
-vnoremap ? <Esc>?\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
-"Show Highlight type pressing F10
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-      \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-      \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 "*-*-*-*-*-*-CUSTOM FOLD STYLE-*-*-*-*-*-*
 " set foldmethod=syntax
@@ -195,15 +224,7 @@ func! StyliseFold()
 endfunc
 set foldtext=StyliseFold()
 
-"*-*-*-*-*-*-CUSTOM COMMANDS-*-*-*-*-*-*
-"Markdown overrides
-autocmd FileType markdown inoremap <buffer><silent><nowait> <tab> <esc>>>A
-autocmd FileType markdown inoremap <buffer><silent><nowait> <S-tab> <esc><<A
-
-"SCSS override
-autocmd FileType scss setl iskeyword+=@-@
-
-"To do notes
+"--------TODO METHOD-------
 func! Todo()
   call inputsave()
   let t = input('Enter todo: ')
@@ -223,7 +244,7 @@ func! Todo()
 endfunc
 nnoremap <Leader>N :call Todo()<CR>
 
-"Generate GUID
+"--------GUID GENERATOR-------
 func GenerateGUID()
   let l:new_uuid=system('uuidgen')[:-2]
   let l:nuuid_case = "lower"
@@ -232,14 +253,7 @@ func GenerateGUID()
   echo "NEW GUID: " . l:id
 endfunc
 
-"Toggle copen and cclose
-autocmd FileType qf if (getwininfo(win_getid())[0].loclist != 1) | wincmd J | endif "Quickfix to be full width on the bottom
-func! ToggleQuickFix()
-  if empty(filter(getwininfo(), 'v:val.quickfix')) | copen | else | cclose | endif
-endfunc
-nnoremap <silent> <Leader>4 :call ToggleQuickFix()<cr>
-
-"Clear all registers
+"--------CLEAER REGISTERS-----
 func! ClearReg()
   let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
   for r in regs
