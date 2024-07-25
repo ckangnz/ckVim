@@ -11,7 +11,6 @@ brew_install "fnm"
 
 brew_install "nvim"
 brew_install "vim"
-brew_install_cask "neovide"
 
 brew_install "gh"
 brew_install "bat"
@@ -19,6 +18,12 @@ brew_install "ripgrep"
 brew_install "catimg"
 brew_install "fzf"
 brew_install "lsd"
+
+brew_install "awscli"
+brew_install "kubectl"
+brew_install "helm"
+brew_install "hashicorp/tap/terraform"
+brew_install "hashicorp/tap/terraform-ls"
 
 #[Check versions here](https://github.com/isen-ng/homebrew-dotnet-sdk-versions)
 brew_install_cask "dotnet-sdk"

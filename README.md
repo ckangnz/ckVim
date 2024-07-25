@@ -1,8 +1,7 @@
 # CK-NVim
 
-## Pre-requisite
-
-### :house: Install Homebrew
+> [!IMPORTANT]
+> You need to install Homebrew
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -10,25 +9,7 @@
 
 ## Installing CK-NVIM
 
-Clone this project into `~/.vim`
-
-> _CK Vim supports NeoVim on all linux environment_
-
-```bash
-git clone https://github.com/chris542/ckVim ~/.vim
-```
-
-### :apple: CK-NVim on OSX
-
-> :warning: This will override your .vimrc file
-
-```bash
-~/.vim/install.sh
-```
-
-### :penguin: CK-NVim on WSL/Linux
-
-There is no automatic installation script for Linux yet. Please copy and paste the following snippet to install all of the necessary libraries manually.
+> [!NOTE] Pre-requisite for :penguin: Linux (WSL)
 
 ```bash
 # You must install essential C Compilers
@@ -36,44 +17,45 @@ sudo apt-get update && sudo apt-get install build-essential
 
 # Install dotnet6 or dotnet7
 sudo apt update && sudo apt install dotnet7
-
-# Brew install other packages
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"]
-brew install zsh
-brew install python3 node fnm
-brew install nvim vim
-brew install gh bat ripgrep catimg fzf lsd
 ```
 
-> :warning: This will override your .vimrc file
+### 1. Clone this project into `~/.vim`
 
 ```bash
-rm ~/.vimrc
-ln -s ~/.vim/.vimrc ~/.vimrc
-mkdir ~/.config
-ln -s ~/.vim/.config/nvim ~/.config/nvim
+git clone https://github.com/chris542/ckVim ~/.vim
 ```
 
-### :gear: Install Plugins
+### 2. Install dependencies
 
-1. Run NeoVim
-2. Run `:PlugInstall` or `,pi`
+> [!WARNING] This will override your .vimrc file
+
+```bash
+. ~/.vim/install.sh
+```
+
+### 3. Install extra software on MacOS
+
+```bash
+. ~/.vim/install_others.sh
+```
 
 ---
 
 # CK-ZSH ⚡️
 
-#### Pre-requisite (only :penguin: For WSL/Linux)
-
-##### Enabling Hyper V
-
-1. Open "Turn Windows features on or off"
-2. Find Hyper-V and enable it (This may require rebooting your comptuer)
-
-##### Font Setup
-
-- Manually download the FiraCode.zip from [here](https://github.com/ryanoasis/nerd-fonts/releases)
-- Configure the Terminal configuration with the font
+> [!NOTE]
+>
+> #### Pre-requisite (only :penguin: For WSL/Linux)
+>
+> ##### Enabling Hyper V
+>
+> 1. Open "Turn Windows features on or off"
+> 2. Find Hyper-V and enable it (This may require rebooting your comptuer)
+>
+> ##### Font Setup
+>
+> - Manually download the FiraCode.zip from [here](https://github.com/ryanoasis/nerd-fonts/releases)
+> - Configure the Terminal configuration with the font
 
 ### Install Zsh if not installed
 
@@ -86,7 +68,7 @@ chsh -s $(which zsh)
 
 ### Install Zap (Zsh Plugin Manager)
 
-> :warning: This will create a new .zshrc and back up your old one.
+> [!WARNING] This will create a new `.zshrc` and back up your old one.
 
 ```bash
 zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
@@ -94,10 +76,9 @@ zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) 
 
 ### Link .zshrc
 
-> :warning: This will override your .zshrc file
+> [!WARNING] This will override your .zshrc file
 
 ```bash
-#Symlink .zshrc
 rm $HOME/.zshrc
 ln -s $HOME/.vim/.zshrc $HOME/.zshrc
 source $HOME/.zshrc

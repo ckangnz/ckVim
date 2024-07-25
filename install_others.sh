@@ -1,5 +1,6 @@
 . ./install_methods.sh --source-only
 
+brew_install_cask "neovide"
 brew_install_cask "iterm2"
 brew_install_cask "postman"
 brew_install_cask "docker"
@@ -11,10 +12,3 @@ brew_install_cask "hiddenbar"
 #brew_install_cask "azure-data-studio"
 #brew_install_cask "session-manager-plugin"
 #brew_install_cask "microsoft-remote-desktop"
-
-brew_install "bat"
-brew_install "awscli"
-brew_install "kubectl"
-brew_install "helm"
-brew_install "hashicorp/tap/terraform"
-brew_install "hashicorp/tap/terraform-ls"
