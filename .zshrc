@@ -38,6 +38,7 @@ if [[ -e "$HOMEBREW_PREFIX/bin/fnm" ]]; then
 fi
 # Java
 if [[ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]]; then
+  local JDK_HOME=$HOMEBREW_PREFIX/opt/openjdk
   PATH="$HOMEBREW_PREFIX/opt/openjdk/bin:$PATH"
 fi
 # FZF
