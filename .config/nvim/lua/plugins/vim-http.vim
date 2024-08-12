@@ -16,7 +16,6 @@ func! s:add_compression() abort
   call http#set_header('Accept-Encoding', 'deflate, gzip')
   let g:vim_http_additional_curl_args = '--compressed'
 endfunc
-command! JSON call s:set_json_header()
-command! Anon call s:clean_personal_stuff()
-command! Compression call s:add_compression()
-
+command! HttpJson call s:set_json_header()
+command! HttpAnon call s:clean_personal_stuff()
+command! HttpCompression call s:add_compression()
