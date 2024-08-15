@@ -1,6 +1,7 @@
 {
   "coc.preferences.formatOnSave": true,
   "coc.preferences.enableMarkdown": true,
+  "inlayHint.enable": false,
   "coc-swagger.enabled": true,
 
   "list.statusLineSegments": null,

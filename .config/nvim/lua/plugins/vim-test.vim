@@ -11,7 +11,7 @@ func! PopupTestMenu()
 endfunc
 command! PopupTestMenu call PopupTestMenu()
 
-nmap <silent><nowait><buffer><leader>t :PopupTestMenu<cr>
+autocmd FileType * nmap <silent><nowait><buffer><leader>t :PopupTestMenu<cr>
 
 if exists('g:neovide') || has('nvim')
   let test#strategy='neovim'
@@ -19,6 +19,7 @@ else
   let test#strategy='asyncrun_background_term'
 endif
 
+let g:test#preserve_screen = 1
 let g:test#basic#start_normal = 1
 let g:test#neovim#start_normal = 1
 let g:test#echo_command = 0
@@ -31,8 +32,7 @@ let test#javascript#playwright#options='--config ./jest-playwright.config.js'
 
 "CSharp Configs
 let test#csharp#runner = 'dotnettest'
-let test#csharp#dotnettest#options = '--nologo -v=q -l:"console;verbosity=normal"'
+let test#csharp#dotnettest#options = '--nologo -v=q -l:"console;verbosity=minimal;consoleloggerparameters=ErrorsOnly" '
 
 "CSharp overrides
-autocmd FileType cs nmap <silent><nowait><buffer><leader>t :PopupTestMenu<cr>
 autocmd FileType cs nmap <silent><nowait><buffer><C-b> :AsyncRun dotnet build<cr>
