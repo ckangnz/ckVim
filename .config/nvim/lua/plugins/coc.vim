@@ -61,6 +61,8 @@ command! -nargs=0 CocRedo :CocCommand workspace.redo
 
 let g:coc_snippet_next = '<tab>'
 inoremap <silent><expr> <TAB>
+  \ codeium#GetStatusString() =~# '^\d\+/\d\+$' && !coc#pum#has_item_selected()?
+  \ codeium#Accept():
   \ coc#pum#visible()?
   \ coc#_select_confirm() :
   \ coc#expandableOrJumpable() ?
