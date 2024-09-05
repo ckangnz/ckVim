@@ -16,5 +16,5 @@ nmap <leader>H <Plug>CtrlSFCwordPath
 let g:ctrlsf_mapping = {
       \ "open": "o",
       \ "next": "n",
-      \ "prev": "p",
+      \ "prev": "N",
       \ }
