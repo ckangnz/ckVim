@@ -2,6 +2,16 @@ augroup WhitespaceMatch
   autocmd!
   func! s:ToggleWhitespaceMatch(mode)
     let pattern = (a:mode == 'i') ? '\s\+\%#\@<!$' : '\s\+$'
+
+    let excluded_filetypes = ['ctrlsf', 'help']
+    if index(excluded_filetypes, &filetype) >= 0
+      if exists('w:whitespace_match_number')
+        call matchdelete(w:whitespace_match_number)
+        unlet w:whitespace_match_number
+      endif
+      return
+    endif
+
     if exists('w:whitespace_match_number')
       call matchdelete(w:whitespace_match_number)
       call matchadd('ExtraWhitespace', pattern, 10, w:whitespace_match_number)
@@ -9,10 +19,13 @@ augroup WhitespaceMatch
       let w:whitespace_match_number = matchadd('ExtraWhitespace', pattern)
     endif
   endfunc
+
   autocmd BufWinEnter,InsertLeave * call s:ToggleWhitespaceMatch('n')
 augroup END
 
+" Define the highlight group for extra whitespace
 hi ExtraWhitespace ctermbg=red guibg=red
+
 
 hi diffAdded ctermfg=142 guifg=#a9b665
 hi diffRemoved ctermfg=167 guifg=#ea6962
