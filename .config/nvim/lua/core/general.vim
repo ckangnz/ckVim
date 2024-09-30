@@ -138,6 +138,8 @@ augroup vimrc
 
   "Copy to clipboard
   vnoremap <silent> <leader>y "+y
+  "Paste last yanked
+  vnoremap <silent> <leader>p "0p
 
   "Panel navigation
   nmap <C-J> <C-W><C-J>
