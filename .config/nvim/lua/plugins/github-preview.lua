@@ -4,7 +4,7 @@ if vim.fn.has('nvim') then
     port = 6041,
     single_file = false,
     theme = {
-      name = "system",
+      name = "dark",
       high_contrast = false,
     },
     details_tags_open = true,
