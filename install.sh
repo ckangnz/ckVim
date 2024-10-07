@@ -22,7 +22,7 @@ brew_install "lsd"
 brew_install "awscli"
 brew_install "kubectl"
 brew_install "helm"
-brew_install "hashicorp/tap/terraform"
+brew_install "tfenv" #terraform with version control
 brew_install "hashicorp/tap/terraform-ls"
 
 #[Check versions here](https://github.com/isen-ng/homebrew-dotnet-sdk-versions)
