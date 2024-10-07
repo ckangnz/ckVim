@@ -51,7 +51,7 @@ if vim.fn.has('nvim') then
         { 'branch', icons_enabled = true },
       },
       lualine_b = {
-        { 'filename', },
+        { 'filename', path = 1 },
       },
       lualine_c = {
         {
