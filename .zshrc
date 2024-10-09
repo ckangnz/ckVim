@@ -85,10 +85,10 @@ alias zl="zap list"
 alias zu="zap update"
 alias zc="zap clean"
 
-alias dcup="docker-compose up"
-alias dcdn="docker-compose down"
-alias dczsh="docker-compose run --rm web zsh"
-alias dcbash="docker-compose run --rm web bash"
+alias dcup="docker compose up"
+alias dcdn="docker compose down"
+alias dczsh="docker compose run --rm web zsh"
+alias dcbash="docker compose run --rm web bash"
 function dcupp(){
   profiles=''
   for profile in "$@"
