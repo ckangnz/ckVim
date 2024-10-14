@@ -13,6 +13,7 @@ let g:coc_global_extensions = [
       \ 'coc-swagger',
       \ 'coc-prettier',
       \ 'coc-tsserver',
+      \ 'coc-sonarlint',
       \ 'coc-docker',
       \ 'coc-csharp-ls',
       \ 'coc-java',
