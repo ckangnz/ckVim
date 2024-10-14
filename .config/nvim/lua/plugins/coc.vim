@@ -5,6 +5,7 @@ let g:coc_user_config = {}
 let g:coc_global_extensions = [
       \ 'coc-vimlsp',
       \ 'coc-lua',
+      \ 'coc-sh',
       \ 'coc-emmet',
       \ 'coc-css',
       \ 'coc-html',
