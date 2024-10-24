@@ -20,6 +20,7 @@ call add(myPaths,['General (&g)','vsp $HOME/.vim/.config/nvim/lua/core/general.v
 call add(myPaths,['Plugin (&p)','vsp $HOME/.vim/.config/nvim/lua/core/plugins.vim'])
 call add(myPaths,['Plugin Configurations (&c)','vsp $HOME/.vim/.config/nvim/lua/plugins'])
 call add(myPaths,['-'])
+call add(myPaths,['Tmux (&t)','e $HOME/.config/tmux/tmux.conf'])
 call add(myPaths,['Zshrc (&z)','vsp $HOME/.zshrc'])
 call add(myPaths,['Zsh Plugin (&l)','vsp $HOME/.vim/plugins.zsh'])
 call add(myPaths,['Extra aliases (&a)','vsp $HOME/.extraAlias.zsh'])

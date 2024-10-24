@@ -11,6 +11,7 @@ brew_install "fnm"
 
 brew_install "nvim"
 brew_install "vim"
+brew_install "tmux"
 
 brew_install "gh"
 brew_install "bat"
@@ -41,16 +42,26 @@ ln -s ~/.vim/.vimrc ~/.vimrc
 echo 'Completed Linking vimrc!'
 
 #Symlink .config/nvim
+if [ -d ~/.config/tmux ];then
+  echo '.config/tmux already exists! Removing ~/.config/tmux directory'
+  rm -rf ~/.config/tmux
+else
+  [ -d ~/.config ] && mkdir ~/.config
+  echo 'Linking .config/tmux..'
+  ln -s ~/.vim/.config/tmux ~/.config/tmux
+  echo 'Completed Linking ./config/nvim!'
+fi
+
+#Symlink .config/nvim
 if [ -d ~/.config/nvim ];then
   echo '.config/nvim already exists! Removing ~/.config/nvim directory'
   rm -rf ~/.config/nvim
 else
   [ -d ~/.config ] && mkdir ~/.config
-  mkdir ~/.config/nvim
+  echo 'Linking .config/nvim..'
+  ln -s ~/.vim/.config/nvim ~/.config/nvim
+  echo 'Completed Linking ./config/nvim!'
 fi
-echo 'Linking .config/nvim..'
-ln -s ~/.vim/.config/nvim ~/.config
-echo 'Completed Linking ./config/nvim!'
 
 echo "."
 echo "."

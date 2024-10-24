@@ -2,6 +2,7 @@
 /autoload/plug.vim
 /notes/Personal_notes
 /notes/todo.md
+/.config/tmux/plugins
 /view/
 .DS_Store
 .netrwhist
