@@ -85,6 +85,8 @@ alias zl="zap list"
 alias zu="zap update"
 alias zc="zap clean"
 
+alias tr="tmux source ~/.config/tmux/tmux.conf"
+
 alias dcup="docker compose up"
 alias dcdn="docker compose down"
 alias dczsh="docker compose run --rm web zsh"
