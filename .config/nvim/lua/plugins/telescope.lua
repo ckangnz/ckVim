@@ -104,8 +104,8 @@ if vim.fn.has('nvim') then
         search_by = "title",
         on_project_selected = function(prompt_bufnr)
           local project_actions = require("telescope._extensions.project.actions")
-          local selected_title = project_actions.get_selected_title(prompt_bufnr)
-          vim.cmd.LualineRenameTab { selected_title }
+          -- local selected_title = project_actions.get_selected_title(prompt_bufnr)
+          -- vim.cmd.LualineRenameTab { selected_title }
           project_actions.find_project_files(prompt_bufnr, true)
         end
       }
