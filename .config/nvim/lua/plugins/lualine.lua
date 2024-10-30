@@ -35,7 +35,8 @@ if vim.fn.has('nvim') then
     options = {
       theme = custom_theme,
       separator = { left = '', right = '' },
-      section_separators = { left = '', right = '' },
+      -- section_separators = { left = '', right = '' },
+      section_separators = { left = '', right = '' },
       component_separators = '',
       refresh = { tabline = 100, statusline = 100, },
       globalstatus = true,
@@ -96,6 +97,36 @@ if vim.fn.has('nvim') then
     tabline = {
       lualine_a = {
         {
+          'tabs',
+          separator = { left = '', right = '' },
+          max_length = vim.o.columns,
+          use_mode_colors = true,
+          mode = 1,
+          tabs_color = {
+            active = { fg = Colors.white, bg = Colors.bluish_black, gui = 'bold' },
+            inactive = { fg = Colors.light_grey, bg = Colors.light_black, gui = 'bold' },
+          },
+          show_modified_status = false,
+          fmt = function(name, context)
+            local isCurrentTab = context.tabnr == vim.api.nvim_tabpage_get_number(0)
+            local cwd = vim.fn.getcwd();
+            local home = os.getenv("HOME")
+
+            if cwd:sub(1, #home) == home then
+              cwd = "~" .. cwd:sub(#home + 1)
+            end
+            -- Truncate the path to a maximum length (32 characters in this example)
+            local last_dir = cwd:match("([^/]+)$")
+
+
+            if isCurrentTab then
+              return '  ' .. "/" .. last_dir
+            else
+              return '  ' .. context.tabnr
+            end
+          end
+        },
+        {
           'windows',
           mode = 0,
           max_length = vim.o.columns * 2 / 3,
@@ -122,56 +153,12 @@ if vim.fn.has('nvim') then
           },
         }
       },
-      lualine_b = {
-      },
+      lualine_b = {},
       lualine_c = {},
       lualine_x = {},
-      lualine_y = {
-        {
-          'tabs',
-          max_length = vim.o.columns,
-          use_mode_colors = true,
-          mode = 1,
-          tabs_color = {
-            active = { fg = Colors.white, bg = Colors.bluish_black, gui = 'bold' },
-            inactive = { fg = Colors.light_grey, bg = Colors.light_black, gui = 'bold' },
-          },
-          show_modified_status = false,
-          fmt = function(name, context)
-            -- if current filetype is 'TelescopePrompt' and context.tabnr matches the active tab number
-            local isCurrentTab = context.tabnr == vim.api.nvim_tabpage_get_number(0)
-            if vim.bo.filetype == 'TelescopePrompt' and isCurrentTab then
-              return '🔍Searching...'
-            elseif vim.startswith(name, 'fugitive:') then
-              return ''
-            elseif vim.bo.filetype == 'merginal' and isCurrentTab then
-              return ' Branches'
-            elseif vim.endswith(name, '--graph --all') then
-              return ' GV'
-            elseif vim.startswith(name, 'COMMIT_EDITMSG') then
-              return '󰜘 Commit Message'
-            elseif vim.bo.filetype == 'qf' and isCurrentTab then
-              return '󰁨 quickfix'
-            elseif vim.bo.filetype == 'oil' and isCurrentTab then
-              return '📂 Files'
-            elseif vim.bo.filetype == 'octo' and isCurrentTab then
-              return ' Pull Request'
-            elseif vim.bo.filetype == 'octo_panel' and isCurrentTab then
-              return ' PR Review'
-            elseif vim.bo.filetype == 'vim-plug' and isCurrentTab then
-              return '🧩 Vim Plug'
-            elseif name == '[No Name]' then
-              return '📄 New file'
-            elseif vim.fn.fnamemodify(name, ':e') == '' then
-              return '󰓩  ' .. name
-            else
-              return '󰓩  ' .. context.tabnr
-            end
-          end
-        },
-      },
+      lualine_y = {},
       lualine_z = {
-        { 'os.date("%a %d %b |%l:%M%p")' },
+        -- { 'os.date("%a %d %b |%l:%M%p")' },
       }
     },
     winbar = {}
