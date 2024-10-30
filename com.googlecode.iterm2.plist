@@ -6,6 +6,8 @@
 	<false/>
 	<key>AllowClipboardAccess</key>
 	<true/>
+	<key>AlternateMouseScroll</key>
+	<true/>
 	<key>AutoCommandHistory</key>
 	<true/>
 	<key>BadgeFont</key>
@@ -988,6 +990,8 @@
 	<false/>
 	<key>OpenNoWindowsAtStartup</key>
 	<true/>
+	<key>OpenTmuxWindowsIn</key>
+	<integer>0</integer>
 	<key>PMPrintingExpandedStateForPrint2</key>
 	<false/>
 	<key>PointerActions</key>
@@ -1051,11 +1055,17 @@
 	<integer>4</integer>
 	<key>TerminalVMargin</key>
 	<integer>5</integer>
+	<key>TmuxSyncClipboard</key>
+	<true/>
+	<key>TmuxUnpauseAutomatically</key>
+	<true/>
 	<key>UnderlineCursorHeight</key>
 	<real>2</real>
 	<key>UseBorder</key>
 	<false/>
 	<key>UseLionStyleFullscreen</key>
+	<false/>
+	<key>UseTmuxStatusBar</key>
 	<false/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
