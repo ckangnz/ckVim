@@ -97,36 +97,6 @@ if vim.fn.has('nvim') then
     tabline = {
       lualine_a = {
         {
-          'tabs',
-          separator = { left = '', right = '' },
-          max_length = vim.o.columns,
-          use_mode_colors = true,
-          mode = 1,
-          tabs_color = {
-            active = { fg = Colors.white, bg = Colors.bluish_black, gui = 'bold' },
-            inactive = { fg = Colors.light_grey, bg = Colors.light_black, gui = 'bold' },
-          },
-          show_modified_status = false,
-          fmt = function(name, context)
-            local isCurrentTab = context.tabnr == vim.api.nvim_tabpage_get_number(0)
-            local cwd = vim.fn.getcwd();
-            local home = os.getenv("HOME")
-
-            if cwd:sub(1, #home) == home then
-              cwd = "~" .. cwd:sub(#home + 1)
-            end
-            -- Truncate the path to a maximum length (32 characters in this example)
-            local last_dir = cwd:match("([^/]+)$")
-
-
-            if isCurrentTab then
-              return '  ' .. "/" .. last_dir
-            else
-              return '  ' .. context.tabnr
-            end
-          end
-        },
-        {
           'windows',
           mode = 0,
           max_length = vim.o.columns * 2 / 3,
@@ -159,6 +129,21 @@ if vim.fn.has('nvim') then
       lualine_y = {},
       lualine_z = {
         -- { 'os.date("%a %d %b |%l:%M%p")' },
+        {
+          'tabs',
+          separator = { left = '', right = '' },
+          max_length = vim.o.columns,
+          use_mode_colors = true,
+          mode = 1,
+          tabs_color = {
+            active = { fg = Colors.white, bg = Colors.bluish_black, gui = 'bold' },
+            inactive = { fg = Colors.light_grey, bg = Colors.light_black, gui = 'bold' },
+          },
+          show_modified_status = false,
+          fmt = function(name, context)
+            return '󰓩  ' .. context.tabnr
+          end
+        },
       }
     },
     winbar = {}
