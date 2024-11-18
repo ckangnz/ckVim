@@ -47,6 +47,8 @@
     }
   },
 
+  "java.compile.nullAnalysis.mode": "automatic",
+
   "diagnostic.enableMessage": "always",
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": "",
