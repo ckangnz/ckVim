@@ -1,7 +1,6 @@
 if vim.fn.has('nvim') then
   local telescope = require('telescope')
   local actions = require('telescope.actions')
-  local action_layout = require('telescope.actions.layout')
   local builtin = require('telescope.builtin')
   local state = require('telescope.actions.state')
 
@@ -45,7 +44,7 @@ if vim.fn.has('nvim') then
         "--hidden",
       },
       file_ignore_patterns = {
-        '.git/+',
+        '.git/*',
         'node_module/*',
         '*.plist',
         'plugged/*',
