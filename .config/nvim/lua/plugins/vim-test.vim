@@ -26,6 +26,7 @@ let g:test#echo_command = 0
 let g:test#runner_commands= ["Jest", "Cypress", "Playwright", "DotnetTest", "Xunit", "FlutterTest"]
 
 "Javascript Configs
+let test#javascript#runner='jest' "Change this if you want to test in different runner
 let test#javascript#jest#options='--update-snapshot'
 let test#javascript#cypress#options='--config ./cypress/cypress.json'
 let test#javascript#playwright#options='--config ./jest-playwright.config.js'
