@@ -25,6 +25,7 @@ Plug 'nvim-lualine/lualine.nvim'                                    " Status lin
 Plug 'nvim-tree/nvim-web-devicons'                                  " Devicons
 Plug 'sainnhe/gruvbox-material'                                     " Gruvbox Theme
 Plug 'skywind3000/vim-quickui'                                      " Context Quick UI
+Plug 'sphamba/smear-cursor.nvim'                                    " Smooth cursor
 
 " Language Specific
 Plug 'mattn/emmet-vim'                                              "HTML/CSS emmet
