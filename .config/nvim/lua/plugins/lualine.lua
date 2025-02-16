@@ -52,7 +52,10 @@ if vim.fn.has('nvim') then
         { 'branch', icons_enabled = true },
       },
       lualine_b = {
-        { 'filename', path = 1 },
+        { 'filename',
+          file_status = false,
+          path = 1,
+        },
       },
       lualine_c = {
         {
@@ -96,6 +99,11 @@ if vim.fn.has('nvim') then
 
     tabline = {
       lualine_a = {
+        { '%{fnamemodify(getcwd(0, 0), ":t")}/',
+          separator = { left = '', right = '' },
+          fmt = function(t) return ' ' .. t end },
+      },
+      lualine_b = {
         {
           'windows',
           mode = 0,
@@ -123,7 +131,6 @@ if vim.fn.has('nvim') then
           },
         }
       },
-      lualine_b = {},
       lualine_c = {},
       lualine_x = {},
       lualine_y = {},
