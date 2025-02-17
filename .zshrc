@@ -80,6 +80,7 @@ alias buc="brew upgrade --cask"
 alias p10="p10k configure"
 
 alias gas="gh auth switch"
+alias gcan='git commit --amend --no-edit'
 
 alias zl="zap list"
 alias zu="zap update"
