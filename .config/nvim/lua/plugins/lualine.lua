@@ -99,9 +99,16 @@ if vim.fn.has('nvim') then
 
     tabline = {
       lualine_a = {
-        { '%{fnamemodify(getcwd(0, 0), ":t")}/',
+        {
+          '%{fnamemodify(getcwd(0, 0), ":t")}',
           separator = { left = '', right = '' },
-          fmt = function(t) return ' ' .. t end },
+          fmt = function(t)
+            local current_buffer = vim.fn.bufname(vim.fn.bufnr())
+            if current_buffer:match('oil:///') then
+              t = vim.fn.fnamemodify(current_buffer, ":h:t")
+            end
+            return ' ' .. t .. '/'
+          end },
       },
       lualine_b = {
         {
