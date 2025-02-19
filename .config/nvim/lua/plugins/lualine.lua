@@ -126,8 +126,8 @@ if vim.fn.has('nvim') then
           disabled_buftypes = { 'quickfix', 'prompt', 'nofile' },
           filetype_names = {
             [''] = '📄 New file',
-            TelescopePrompt = '🔍Telescope',
-            fugitive = '',
+            TelescopePrompt = '🔍 Telescope',
+            fugitive = ' ',
             merginal = ' Branches',
             GV = ' GV',
             qf = '󰁨 quickfix',
