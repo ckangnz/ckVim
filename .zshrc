@@ -1,14 +1,22 @@
 autoload -U +X bashcompinit && bashcompinit
-autoload -U +X compinit && compinit
+autoload -U +X compinit && compinit -C
 
 # Set PATH
-PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
-PATH="$PATH:/home/linuxbrew/.linuxbrew/sbin"
-PATH="$PATH:/usr/local/bin:/usr/bin:/bin"
-PATH="$PATH:/usr/sbin:/sbin"
-PATH="$PATH:$HOME/.rvm/bin"
-PATH="$PATH:$HOME/.dotnet/tools"
-PATH="$PATH:$HOME/.pub-cache/bin"
+typeset -U path
+path=(
+  $HOME/.pub-cache/bin
+  $HOME/.dotnet/tools
+  $HOME/.rvm/bin
+  /home/linuxbrew/.linuxbrew/bin
+  /home/linuxbrew/.linuxbrew/sbin
+  /usr/local/bin
+  /usr/bin
+  /bin
+  /usr/sbin
+  /sbin
+  $path
+)
+export PATH
 
 #------Source Zap--------
 if [[ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ]]; then
@@ -28,10 +36,11 @@ else
 fi
 
 #------Source Brew plugins--------
-export HOMEBREW_PREFIX=$(brew --prefix)
+export HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-$(brew --prefix)}
 export HOMEBREW_NO_AUTO_UPDATE=1
-export HOMEBREW_NO_INSTALL_CLEAUP=0
+export HOMEBREW_NO_INSTALL_CLEANUP=0
 export HOMEBREW_NO_ENV_HINTS=1
+
 # FNM
 if [[ -e "$HOMEBREW_PREFIX/bin/fnm" ]]; then
   PATH="$FNM_MULTISHELL_PATH:$PATH"
@@ -43,12 +52,17 @@ if [[ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]]; then
 fi
 # FZF
 if [[ -f ~/.fzf.zsh ]]; then
-  local FZF_HOME=$HOMEBREW_PREFIX/opt/fzf
+  FZF_HOME="$HOMEBREW_PREFIX/opt/fzf"
   source ~/.fzf.zsh
-  [ -f $FZF_HOME/shell/completion.zsh ] && source $FZF_HOME/shell/completion.zsh
-  [ -f $FZF_HOME/shell/key-bindings.zsh ] && source $FZF_HOME/shell/key-bindings.zsh
+  [[ -f "$FZF_HOME/shell/completion.zsh" ]] && source "$FZF_HOME/shell/completion.zsh"
+  [[ -f "$FZF_HOME/shell/key-bindings.zsh" ]] && source "$FZF_HOME/shell/key-bindings.zsh"
 elif [[ -d "$HOMEBREW_PREFIX/opt/fzf/bin" ]]; then
-  $HOMEBREW_PREFIX/opt/fzf/install
+  "$HOMEBREW_PREFIX/opt/fzf/install"
+fi
+# Docker
+if [[ -d "$HOME/.docker/completions" ]]; then
+  fpath+=("$HOME/.docker/completions")
+  compinit
 fi
 # AwsCli
 if [[ -f "$HOMEBREW_PREFIX/bin/aws_completer" ]];then
@@ -93,24 +107,16 @@ alias dcup="docker compose up"
 alias dcdn="docker compose down"
 alias dczsh="docker compose run --rm web zsh"
 alias dcbash="docker compose run --rm web bash"
-function dcupp(){
-  profiles=''
-  for profile in "$@"
-  do
-    profiles="${profiles} --profile ${profile}"
-  done
-  eval "docker compose${profiles} up"
+
+function dcupp() {
+  docker compose $(printf " --profile %s" "$@") up
 }
-function dcdnp(){
-  profiles=''
-  for profile in "$@"
-  do
-    profiles="${profiles} --profile ${profile}"
-  done
-  eval "docker compose${profiles} down"
+function dcdnp() {
+  docker compose $(printf " --profile %s" "$@") down
 }
-function speedTest(){
-  for i in $(seq $@); do
+
+function speedTest() {
+  for ((i = 1; i <= $1; i++)); do
     /usr/bin/time zsh -lic exit
   done
 }
@@ -123,4 +129,9 @@ POWERLINE_DISABLE_RPROMPT="true"
 # --------Custom Methods--------
 [[ -f ~/.extraAlias.zsh ]] && source ~/.extraAlias.zsh
 
-bindkey -e
+# -------- ZSH VIM Mode
+bindkey -v
+
+bindkey -M viins '^P' up-line-or-history
+bindkey -M viins '^N' down-line-or-history
+bindkey -M viins '^E' end-of-line
