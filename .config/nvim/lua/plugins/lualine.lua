@@ -101,6 +101,8 @@ if vim.fn.has('nvim') then
       lualine_a = {
         {
           '%{fnamemodify(getcwd(0, 0), ":t")}',
+          -- use_mode_colors = true,
+          color = { gui = 'bold', fg = Colors.dark_black, bg = Colors.white },
           separator = { left = '', right = '' },
           fmt = function(t)
             local current_buffer = vim.fn.bufname(vim.fn.bufnr())
@@ -117,8 +119,11 @@ if vim.fn.has('nvim') then
           max_length = vim.o.columns * 2 / 3,
           show_filename_only = true,
           show_modified_status = true,
-          use_mode_colors = true,
           section_separators = { left = '', right = '' },
+          windows_color = {
+            active = { fg = Colors.white, bg = Colors.bluish_black },
+            inactive = { fg = Colors.light_grey, bg = Colors.light_black },
+          },
           symbols = {
             modified = ' ●', -- Text to show when the buffer is modified
             alternate_file = '#', -- Text to show to identify the alternate file
