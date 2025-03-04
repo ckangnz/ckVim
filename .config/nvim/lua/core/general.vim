@@ -96,8 +96,15 @@ endif
 "trail = spaces in the end
 "nbsp = alt + space
 "tab = ctrl+v+tab
+"extends/preceds = edge of phrase when set nowrap
 let g:markdown_recommended_style=0
-set list lcs=space:\ ,lead:\ ,trail:·,nbsp:◇,tab:»»,extends:▸,precedes:◂,multispace:····,
+set list lcs=
+      \space:\ ,
+      \tab:»»,
+      \lead:·,trail:·,
+      \nbsp:◇,
+      \extends:▸,precedes:◂,
+      \multispace:····,
 "fillchars to remove ^ in status bar
 "Ctrl + v -> 160 to write:  
 set fillchars=stl: 
