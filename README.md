@@ -15,8 +15,8 @@
 # You must install essential C Compilers
 sudo apt-get update && sudo apt-get install build-essential
 
-# Install dotnet6 or dotnet7
-sudo apt update && sudo apt install dotnet7
+# Install dotnet8
+sudo apt update && sudo apt install dotnet8
 ```
 
 ### 1. Clone this project into `~/.vim`
