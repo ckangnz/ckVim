@@ -100,8 +100,8 @@ alias zl="zap list"
 alias zu="zap update"
 alias zc="zap clean"
 
-alias tr="tmux source ~/.config/tmux/tmux.conf"
-alias ta="tmux attach"
+alias tR="tmux source ~/.config/tmux/tmux.conf"
+alias tA="tmux attach"
 
 alias dcup="docker compose up"
 alias dcdn="docker compose down"
