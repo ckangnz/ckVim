@@ -38,7 +38,7 @@ fi
 #------Source Brew plugins--------
 export HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-$(brew --prefix)}
 export HOMEBREW_NO_AUTO_UPDATE=1
-export HOMEBREW_NO_INSTALL_CLEANUP=0
+export HOMEBREW_NO_INSTALL_CLEANUP=
 export HOMEBREW_NO_ENV_HINTS=1
 
 # FNM
