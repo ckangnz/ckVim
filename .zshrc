@@ -1,5 +1,6 @@
 autoload -U +X bashcompinit && bashcompinit
-autoload -U +X compinit && compinit -C
+autoload -U +X compinit
+compinit -C -d ~/.zcompdump &>/dev/null
 
 # Set PATH
 typeset -U path
@@ -48,7 +49,7 @@ fi
 # Java
 if [[ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]]; then
   local JDK_HOME=$HOMEBREW_PREFIX/opt/openjdk
-  PATH="$HOMEBREW_PREFIX/opt/openjdk/bin:$PATH"
+  PATH="$JDK_HOME/bin:$PATH"
 fi
 # FZF
 if [[ -f ~/.fzf.zsh ]]; then
@@ -62,7 +63,6 @@ fi
 # Docker
 if [[ -d "$HOME/.docker/completions" ]]; then
   fpath+=("$HOME/.docker/completions")
-  compinit
 fi
 # AwsCli
 if [[ -f "$HOMEBREW_PREFIX/bin/aws_completer" ]];then
@@ -116,7 +116,8 @@ function dcdnp() {
 }
 
 function speedTest() {
-  for ((i = 1; i <= $1; i++)); do
+  local count=${1:-1}  # Default to 1 if no argument is given
+  for ((i = 1; i <= count; i++)); do
     /usr/bin/time zsh -lic exit
   done
 }
