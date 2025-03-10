@@ -115,6 +115,13 @@ function dcdnp() {
   docker compose $(printf " --profile %s" "$@") down
 }
 
+# Makefile autocompletion
+function _make_targets() {
+  [[ -f Makefile ]] || return
+  compadd $(awk -F: '/^[a-zA-Z0-9_-]+:/ {print $1}' Makefile)
+}
+compdef _make_targets make
+
 function speedTest() {
   local count=${1:-1}  # Default to 1 if no argument is given
   for ((i = 1; i <= count; i++)); do
@@ -128,6 +135,7 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 POWERLINE_DISABLE_RPROMPT="true"
 
 # --------Custom Methods--------
+
 [[ -f ~/.extraAlias.zsh ]] && source ~/.extraAlias.zsh
 
 # -------- ZSH VIM Mode
