@@ -87,8 +87,8 @@ fi
 #alias
 alias neo="neovide --fork"
 
-alias bud="brew update"
-alias bu="brew upgrade"
+alias bu="brew update"
+alias bup="brew upgrade"
 alias buc="brew upgrade --cask"
 
 alias p10="p10k configure"
