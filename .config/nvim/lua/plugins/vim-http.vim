@@ -1,3 +1,6 @@
+"---------HTTP RESTFUL CALLS: jecxjo/rest-client.vim
+au BufRead,BufNewFile *.http,*.rest set filetype=http
+
 "---------HTTP RESTFUL CALLS: nicwest/vim-http
 let g:vim_http_clean_before_do=0
 let g:vim_http_split_vertically=1
