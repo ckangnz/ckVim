@@ -15,6 +15,7 @@ require 'plugins.todo-comments'
 require 'plugins.oil'
 require 'plugins.autopairs'
 require 'plugins.smear-cursor'
+require 'plugins.render-markdown'
 require 'plugins.github-preview'
 
 --GUI Config

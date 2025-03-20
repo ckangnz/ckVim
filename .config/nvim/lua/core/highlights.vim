@@ -26,10 +26,6 @@ augroup END
 " Define the highlight group for extra whitespace
 hi ExtraWhitespace ctermbg=red guibg=red
 
-
-hi diffAdded ctermfg=142 guifg=#a9b665
-hi diffRemoved ctermfg=167 guifg=#ea6962
-
 hi Search ctermfg=black ctermbg=white guifg=black guibg=white
 hi CurSearch cterm=reverse,bold gui=reverse,bold
 
