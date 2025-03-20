@@ -63,7 +63,7 @@ Plug 'dominikduda/vim_current_word'                                 " Highlight 
 Plug 'easymotion/vim-easymotion'                                    " Easy Navigation
 Plug 'folke/todo-comments.nvim'                                     " Highlight Todo comments
 Plug 'kkvh/vim-docker-tools'                                        " Docker within vim
-Plug 'wallpants/github-preview.nvim'                                " Markdown preview in Github style
+Plug 'wallpants/github-preview.nvim', { 'do': 'bun install' }       " Markdown preview in Github style
 Plug 'mattesGroeger/vim-bookmarks'                                  " Vim Bookmarks
 Plug 'nicwest/vim-http'                                             " HTTP calls from vim
 Plug 'scrooloose/nerdcommenter'                                     " Easy Commenting tool
