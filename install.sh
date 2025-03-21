@@ -42,7 +42,7 @@ echo 'Linking vimrc...'
 ln -s ~/.vim/.vimrc ~/.vimrc
 echo 'Completed Linking vimrc!'
 
-#Symlink .config/nvim
+#Symlink .config/tmux
 if [ -d ~/.config/tmux ];then
   echo '.config/tmux already exists! Removing ~/.config/tmux directory'
   rm -rf ~/.config/tmux
