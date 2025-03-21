@@ -19,6 +19,7 @@ brew_install "ripgrep"
 brew_install "catimg"
 brew_install "fzf"
 brew_install "lsd"
+brew_install "ctop" #docker tui
 
 brew_install "awscli"
 brew_install "kubectl"
