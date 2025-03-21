@@ -622,7 +622,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>FiraCodeNF-Reg 12</string>
+			<string>FiraCodeNF-Ret 12</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<true/>
 			<key>Open Toolbelt</key>
@@ -694,7 +694,7 @@
 			<key>Use Tab Color</key>
 			<false/>
 			<key>Vertical Spacing</key>
-			<real>1</real>
+			<real>1.25</real>
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
@@ -761,7 +761,7 @@
 	<key>SoundForEsc</key>
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
-	<real>0.47999937034958629</real>
+	<real>0.44905005632519596</real>
 	<key>StretchTabsToFillBar</key>
 	<false/>
 	<key>SuppressRestartAnnouncement</key>
@@ -772,8 +772,10 @@
 	<integer>5</integer>
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>4</integer>
+	<key>TerminalMargin</key>
+	<integer>10</integer>
 	<key>TerminalVMargin</key>
-	<integer>5</integer>
+	<integer>10</integer>
 	<key>TmuxSyncClipboard</key>
 	<true/>
 	<key>TmuxUnpauseAutomatically</key>
@@ -782,10 +784,12 @@
 	<real>2</real>
 	<key>UseBorder</key>
 	<false/>
+	<key>UseExperimentalFontMetrics</key>
+	<false/>
 	<key>UseLionStyleFullscreen</key>
 	<false/>
 	<key>UseTmuxStatusBar</key>
-	<false/>
+	<true/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>WordCharacters</key>
