@@ -14,8 +14,6 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 " Essential
 Plug 'dstein64/vim-startuptime'                                     " Show :StartupTime
 Plug 'nvim-lua/plenary.nvim'                                        " Essential for nvim plugins
-Plug 'markonm/traces.vim'                                           " Preview highlights and substitute
-Plug 'mbbill/undotree'                                              " Magic of Undos
 Plug 'stevearc/oil.nvim'                                            " Easy Netrw with '-'
 Plug 'Exafunction/codeium.vim', {'branch':'main'}                   " AI Coding
 
@@ -57,24 +55,26 @@ Plug 'fannheyward/telescope-coc.nvim'                               " Coc Extens
 Plug 'tom-anders/telescope-vim-bookmarks.nvim'                      " Bookmarks Extension
 
 " Functionality
-Plug 'airblade/vim-rooter'                                          " Find the root of the project automatically
 Plug 'Asheq/close-buffers.vim'                                      " Delete hidden buffers
+Plug 'MeanderingProgrammer/render-markdown.nvim'                    " Markdown renderer
+Plug 'airblade/vim-rooter'                                          " Find the root of the project automatically
 Plug 'dominikduda/vim_current_word'                                 " Highlight current word
 Plug 'easymotion/vim-easymotion'                                    " Easy Navigation
 Plug 'folke/todo-comments.nvim'                                     " Highlight Todo comments
 Plug 'kkvh/vim-docker-tools'                                        " Docker within vim
-Plug 'MeanderingProgrammer/render-markdown.nvim'                    " Markdown renderer
-Plug 'wallpants/github-preview.nvim', { 'do': 'bun install' }       " Markdown preview in Github style
+Plug 'markonm/traces.vim'                                           " Preview highlights and substitute
 Plug 'mattesGroeger/vim-bookmarks'                                  " Vim Bookmarks
+Plug 'mbbill/undotree'                                              " Magic of Undos
 Plug 'nicwest/vim-http'                                             " HTTP calls from vim
 Plug 'scrooloose/nerdcommenter'                                     " Easy Commenting tool
 Plug 'skywind3000/asyncrun.vim'                                     " Asyncrun tasks
+Plug 'wallpants/github-preview.nvim', { 'do': 'bun install' }       " Markdown preview in Github style
 Plug 'wesQ3/vim-windowswap'                                         " Split Panel switch
 
 " Test
 Plug 'vim-test/vim-test'                                            " Test files
 
-"DB
+" DB
 Plug 'tpope/vim-dadbod'                                             " DB Manager
 Plug 'kristijanhusak/vim-dadbod-ui'                                 " DB Manager UI
 
