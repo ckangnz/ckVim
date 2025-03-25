@@ -1,8 +1,9 @@
-vim.cmd([[
-set runtimepath^=~/.vim runtimepath+=~/.vim/after
-let &packpath = &runtimepath
-source $HOME/.vimrc
-]])
+-- Ensure paths are expanded correctly
+local home_dir = vim.fn.expand("$HOME")
+local vim_dir = home_dir .. "/.vim"
+vim.opt.runtimepath:prepend(vim_dir)
+vim.opt.packpath = vim.opt.runtimepath:get()
+vim.cmd("source " .. home_dir .. "/.vimrc")
 
 require 'core.myTheme'
 
@@ -21,11 +22,9 @@ require 'plugins.github-preview'
 --GUI Config
 require 'gui.neovide'
 
-vim.cmd([[
-augroup LuaPath
-  au!
-  au BufRead,BufEnter * setlocal suffixesadd^=.lua
-  au BufRead,BufEnter * setlocal suffixesadd^=init.lua
-  au BufRead * let &l:path .= ','.stdpath('config').'/lua'
-augroup END
-]])
+vim.api.nvim_create_autocmd({ "BufRead", "BufEnter" }, {
+  pattern = "*",
+  callback = function()
+    vim.opt.suffixesadd:prepend(".lua")
+  end,
+})
