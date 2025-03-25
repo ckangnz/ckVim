@@ -11,28 +11,16 @@
       "keys": "alt+c"
     },
     {
-      "command": "clearAllMarks",
-      "id": "User.clearAllMarks"
-    },
-    {
-      "command": {
-        "action": "adjustFontSize",
-        "delta": -1
-      },
-      "id": "User.adjustFontSize.E2698FAA",
-      "keys": "alt+minus"
-    },
-    {
-      "command": {
-        "action": "newTab"
-      },
-      "id": "User.newTab.5DEADB41",
-      "keys": "alt+t"
-    },
-    {
       "command": "resetFontSize",
       "id": "User.resetFontSize",
       "keys": "alt+0"
+    },
+    {
+      "command": {
+        "action": "commandPalette"
+      },
+      "id": "User.commandPalette.D3F0B923",
+      "keys": "alt+shift+p"
     },
     {
       "command": {
@@ -44,10 +32,22 @@
     },
     {
       "command": {
-        "action": "commandPalette"
+        "action": "newTab"
       },
-      "id": "User.commandPalette.D3F0B923",
-      "keys": "alt+shift+p"
+      "id": "User.newTab.5DEADB41",
+      "keys": "alt+t"
+    },
+    {
+      "command": {
+        "action": "adjustFontSize",
+        "delta": -1
+      },
+      "id": "User.adjustFontSize.E2698FAA",
+      "keys": "alt+minus"
+    },
+    {
+      "command": "clearAllMarks",
+      "id": "User.clearAllMarks"
     },
     {
       "command": {
@@ -220,17 +220,25 @@
       "keys": "ctrl+alt+left"
     },
     {
+      "command": "unbound",
+      "keys": "alt+k"
+    },
+    {
+      "command": "unbound",
+      "keys": "alt+l"
+    },
+    {
+      "command": "closeWindow",
+      "id": "User.closeWindow",
+      "keys": "alt+q"
+    },
+    {
       "command": {
         "action": "splitPane",
         "split": "down"
       },
       "id": "User.splitPane.D5151347",
       "keys": "alt+shift+d"
-    },
-    {
-      "command": "closeWindow",
-      "id": "User.closeWindow",
-      "keys": "alt+q"
     },
     {
       "command": {
@@ -245,15 +253,7 @@
         "action": "clearBuffer",
         "clear": "all"
       },
-      "id": "User.clearBuffer.87C324ED",
-      "keys": "alt+k"
-    },
-    {
-      "command": {
-        "action": "clearBuffer",
-        "clear": "all"
-      },
-      "keys": "alt+l"
+      "id": "User.clearBuffer.87C324ED"
     },
     {
       "command": "closePane",
