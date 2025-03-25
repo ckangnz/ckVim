@@ -1,10 +1,17 @@
 augroup autosourcing
   au!
-  if exists('g:neovide') || has('nvim')
-    au BufWritePost $HOME/.vimrc source $MYVIMRC
+  let b:auto_source_in_progress = get(b:, 'auto_source_in_progress', 0)
+  if !b:auto_source_in_progress
+    let b:auto_source_in_progress = 1
+
+    " Source .vimrc and Nvim config files when they are written
+    if has('nvim') || exists('g:neovide')
+      au BufWritePost {expand('$HOME')}/.vimrc source {expand('$MYVIMRC')}
+    endif
+    au BufWritePost {expand('$MYVIMRC')} source {expand('$MYVIMRC')}
+    au BufWritePost {expand('$HOME')}/.vim/.config/nvim/* source {expand('$MYVIMRC')}
+
   endif
-  au BufWritePost $MYVIMRC source $MYVIMRC
-  au BufWritePost $HOME/.vim/.config/nvim/* source $MYVIMRC
 
   au BufNewFile,BufRead *.ejs set filetype=js
   au BufNewFile,BufRead *.vue,*.hbs set filetype=html
