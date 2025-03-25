@@ -1,68 +1,66 @@
+#!/bin/bash
+
+# Load install methods
 . ./install_methods.sh --source-only
 
-echo "LET'S INSTALL CKVIM!!!!!!!"
+echo "LET'S INSTALL CKNVIM!!!!!!!"
+echo ""
 
-brew_install "zsh"
+# Ensure ~/.config exists
+[ -d ~/.config ] || mkdir -p ~/.config
 
-brew_install "python3"
-brew_install "node"
-brew_install "oven-sh/bun/bun"
-brew_install "fnm"
+# Install Homebrew packages
+packages=(
+  "zsh"
 
-brew_install "nvim"
-brew_install "vim"
-brew_install "tmux"
+  "python3"
+  "node"
+  "oven-sh/bun/bun"
+  "fnm"
 
-brew_install "gh"
-brew_install "bat"
-brew_install "ripgrep"
-brew_install "catimg"
-brew_install "fzf"
-brew_install "lsd"
-brew_install "ctop" #docker tui
+  "nvim"
+  "vim"
+  "tmux"
 
-brew_install "awscli"
-brew_install "kubectl"
-brew_install "helm"
-brew_install "tfenv" #terraform with version control
-brew_install "hashicorp/tap/terraform-ls"
+  "gh"
+  "bat"
+  "ripgrep"
+  "catimg"
+  "fzf"
+  "lsd"
+  "ctop"  # Docker TUI
 
-#[Check versions here](https://github.com/isen-ng/homebrew-dotnet-sdk-versions)
-brew_install_cask "dotnet-sdk"
-#brew_install_cask "dotnet-sdk6-0-300" "isen-ng/dotnet-sdk-versions"
+  "awscli"
+  "kubectl"
+  "helm"
+  "tfenv" # Terraform with version control
+  "hashicorp/tap/terraform-ls"
+)
+echo "Installing brew packages..."
+for package in "${packages[@]}"; do
+  brew_install "$package"
+done
+echo ""
+echo ""
 
-brew_install_cask "font-fira-code-nerd-font" "homebrew/cask-fonts"
+# Install Homebrew cask packages
+cask_packages=(
+  "dotnet-sdk"
+  "font-fira-code-nerd-font:homebrew/cask-fonts"
+)
+echo "Installing brew cask packages..."
+for cask in "${cask_packages[@]}"; do
+  brew_install_cask "$cask"
+done
+echo ""
+echo ""
 
-#Symlink vimrc
-if [ -e ~/.vimrc ]; then
-    echo '.vimrc already exists! Deleting existing .vimrc...'
-    rm ~/.vimrc
-fi
-echo 'Linking vimrc...'
-ln -s ~/.vim/.vimrc ~/.vimrc
-echo 'Completed Linking vimrc!'
-
-#Symlink .config/tmux
-if [ -d ~/.config/tmux ];then
-  echo '.config/tmux already exists! Removing ~/.config/tmux directory'
-  rm -rf ~/.config/tmux
-else
-  [ -d ~/.config ] && mkdir ~/.config
-  echo 'Linking .config/tmux..'
-  ln -s ~/.vim/.config/tmux ~/.config/tmux
-  echo 'Completed Linking ./config/nvim!'
-fi
-
-#Symlink .config/nvim
-if [ -d ~/.config/nvim ];then
-  echo '.config/nvim already exists! Removing ~/.config/nvim directory'
-  rm -rf ~/.config/nvim
-else
-  [ -d ~/.config ] && mkdir ~/.config
-  echo 'Linking .config/nvim..'
-  ln -s ~/.vim/.config/nvim ~/.config/nvim
-  echo 'Completed Linking ./config/nvim!'
-fi
+echo "Symlinking files..."
+create_symlink ~/.vim/.vimrc ~/.vimrc
+create_symlink ~/.vim/.config/tmux ~/.config/tmux
+create_symlink ~/.vim/.config/nvim ~/.config/nvim
+echo ""
+echo ""
 
 echo "."
 echo "."
