@@ -1,28 +1,39 @@
 "*-*-*-*-*-*-GENERAL SETTINGS-*-*-*-*-*-*
 let mapleader = ','                             "The default leader is '\'
-let g:terminal_ansi_colors = [ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c4fe', '#ff3f80', '#64fcda', '#fefefe', '#b0bec4', '#ff8980', '#b9f6c9', '#ffe47e', '#80d7fe', '#ff80ab', '#a7fdeb', '#fefefe',]
-"black, dark red, dark green, brown, dark blue, dark magenta, dark cyan, light grey, dark grey, red, green, yellow, blue, magenta, cyan, white
-let g:netrw_keepdir=0
+
+" Terminal color settings (ensure true-color support)
+if &termguicolors
+  let &t_8f = "\e[38;2;%lu;%lu;%lum"             " Foreground color
+  let &t_8b = "\e[48;2;%lu;%lu;%lum"             " Background color
+endif
+
+let g:terminal_ansi_colors = [
+  \ '#546d79', '#ff5151', '#69f0ad', '#ffd73f', '#40c4fe', '#ff3f80', '#64fcda', '#fefefe',
+  \ '#b0bec4', '#ff8980', '#b9f6c9', '#ffe47e', '#80d7fe', '#ff80ab', '#a7fdeb', '#fefefe'
+  \] " ANSI colors for terminal
+
+let g:netrw_keepdir = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_perl_provider = 0
-if has('unix') && has('mac')
+let s:is_mac = has('unix') && has('mac')
+
+if s:is_mac
   let g:python3_host_prog="/usr/bin/python3"
 else
   let g:python3_host_prog="/home/linuxbrew/.linuxbrew/bin"
 endif
 
-if !exists('g:syntax_on')
+if !exists('&syntax') || !&syntax
   syntax on
-  let g:syntax_on = 1
-end
-if !&termguicolors
-  set termguicolors
 endif
+
+" Set encoding and other defaults
 set re=0
 set noimd                                       "Revert back to English when on different language
 set noshowmode                                  "Hide --INSER-- at the bottom
 set nocompatible                                "Latest Vim Setting used
 set encoding=utf-8
+set termguicolors
 set t_CO=256                                    "Number of colours
 set display+=lastline                           "Show long lines"
 set autoindent                                  "Copy indent from previous line
@@ -51,6 +62,7 @@ set incsearch                                   "Show preview of search
 set diffopt+=vertical                           "Set split and diff to vertical
 set laststatus=2
 
+
 "*-*-*-*-*-*-VISUALS-*-*-*-*-*-*
 set guifont=FiraCode\ Nerd\ Font:h12                  "Set font family
 set linespace=0                                 "Set line space
@@ -69,9 +81,6 @@ set tabstop=2                                   "Default tabs
 set expandtab                                   "Use space as a tab
 set softtabstop=2                               "Width applied by tab
 set shiftwidth=2                                "Width of tab in normal mode
-
-let &t_8f = "\e[38;2;%lu;%lu;%lum"              "Sets foreground color (ANSI, true-color mode)
-let &t_8b = "\e[48;2;%lu;%lu;%lum"              "Sets background color (ANSI, true-color mode)
 
 "Cursor shapes
 "1: blinking,
@@ -123,7 +132,7 @@ augroup vimrc
   vmap j gj
   vmap k gk
 
-  if has('unix') && has('mac')
+  if s:is_mac
     nnoremap <silent> ∆ :m .+1<CR>==
     nnoremap <silent> ˚ :m .-2<CR>==
     inoremap <silent> ∆ <Esc>:m .+1<CR>==gi
