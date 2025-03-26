@@ -1,11 +1,9 @@
 require('render-markdown').setup({
+  enabled = true,
+  render_modes = { 'n', 'i', 'v', 'V', 'c', 't' },
+  latex = { enabled = false },
   heading = {
-    -- Turn on / off heading icon & background rendering.
-    enabled = true,
-    -- Additional modes to render headings.
-    render_modes = false,
-    -- Turn on / off any sign column related rendering.
-    sign = false,
+    sign = true,
     signs = { '󰫎 ' },
     icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
     position = 'overlay', -- Determines how icons fill the available space. right|inline|overlay
@@ -22,8 +20,6 @@ require('render-markdown').setup({
     backgrounds = { 'DiffAdd', 'DiffAdd', 'DiffAdd', 'DiffAdd', 'DiffAdd', 'DiffAdd', },
   },
   code = {
-    enabled = true,
-    render_modes = false,
     sign = false,
     style = 'full',
     position = 'left',
