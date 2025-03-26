@@ -5,28 +5,29 @@ let g:quickui_color_scheme = 'papercol-dark'
 "*-*-*-*-*-*-MY PATH MENU-*-*-*-*-*-*
 let myPathsOpts={ "title": "My Paths" }
 let myPaths=[]
+call add(myPaths,[" ~/.vim (&e)",'vsp $HOME/.vim'])
 call add(myPaths,[" ~/code (&d)",'vsp $HOME/code'])
 if exists('g:neovide') || has('nvim')
-  call add(myPaths,['Vimrc (&v)','vsp $HOME/.vimrc'])
-  call add(myPaths,['NVim (&b)','vsp $MYVIMRC'])
+  call add(myPaths,['.vimrc (&v)','vsp $HOME/.vimrc'])
+  call add(myPaths,['init.lua (&b)','vsp $MYVIMRC'])
 else
-  call add(myPaths,['Vimrc (&v)','vsp $MYVIMRC'])
+  call add(myPaths,['.vimrc (&v)','vsp $MYVIMRC'])
 endif
 call add(myPaths,['-'])
-call add(myPaths,['Readme.md (&r)','vsp $HOME/.vim/README.md'])
-call add(myPaths,['Install.sh (&i)','vsp $HOME/.vim/install.sh'])
+call add(myPaths,['readme.md (&r)','vsp $HOME/.vim/README.md'])
+call add(myPaths,['install.sh (&i)','vsp $HOME/.vim/install.sh'])
 call add(myPaths,['-'])
-call add(myPaths,['General (&g)','vsp $HOME/.vim/.config/nvim/lua/core/general.vim'])
-call add(myPaths,['Plugin (&p)','vsp $HOME/.vim/.config/nvim/lua/core/plugins.vim'])
-call add(myPaths,['Plugin Configurations (&c)','vsp $HOME/.vim/.config/nvim/lua/plugins'])
+call add(myPaths,['general.vim (&g)','vsp $HOME/.vim/.config/nvim/lua/core/general.vim'])
+call add(myPaths,['plugins.vim (&p)','vsp $HOME/.vim/.config/nvim/lua/core/plugins.vim'])
+call add(myPaths,['/plugins (&c)','vsp $HOME/.vim/.config/nvim/lua/plugins'])
 call add(myPaths,['-'])
-call add(myPaths,['Tmux (&t)','e $HOME/.config/tmux/tmux.conf'])
-call add(myPaths,['Zshrc (&z)','vsp $HOME/.zshrc'])
-call add(myPaths,['Zsh Plugin (&l)','vsp $HOME/.vim/plugins.zsh'])
-call add(myPaths,['Extra aliases (&a)','vsp $HOME/.extraAlias.zsh'])
+call add(myPaths,['.tmux.conf (&t)','e $HOME/.config/tmux/tmux.conf'])
+call add(myPaths,['.zshrc (&z)','vsp $HOME/.zshrc'])
+call add(myPaths,['plugins.zsh (&l)','vsp $HOME/.vim/plugins.zsh'])
+call add(myPaths,['.extraAlias.zsh (&a)','vsp $HOME/.extraAlias.zsh'])
 call add(myPaths,['-'])
-call add(myPaths,['Notes (&n)','vsp $HOME/.vim/notes'])
-call add(myPaths,['Helps (&h)','vsp $HOME/.vim/notes/vimhelp.md'])
+call add(myPaths,['/notes (&n)','vsp $HOME/.vim/notes'])
+call add(myPaths,['vimhelp.md (&h)','vsp $HOME/.vim/notes/vimhelp.md'])
 nnoremap <nowait><silent><leader>e :call quickui#context#open(myPaths, myPathsOpts)<cr>
 nmap <silent><leader>pi :PlugInstall<cr>
 nmap <silent><leader>pu :PlugUpdate<cr>
