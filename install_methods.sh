@@ -16,39 +16,42 @@ case "${unameOut}" in
 esac
 
 brew_install() {
-    if brew ls "$1" &> /dev/null; then
-        echo -e "${GREEN}FOUND:${RESET} ${1} is already installed!"
+  local packages=("$@")
+  for package in "${packages[@]}"; do
+    if brew ls "$package" &> /dev/null; then
+      echo -e "${GREEN}FOUND:${RESET} ${package} is already installed!"
     else
-        echo -e "${CYAN}INSTALL:${RESET} ${1}..."
-        if [ "$2" ]; then
-            echo -e "${CYAN}TAP:${RESET} Brew tapping to ${2}..."
-            brew tap "$2"
-        fi
-        brew install "$1"
-        echo -e "${GREEN}DONE:${RESET} ${1} is installed!"
+      echo -e "${CYAN}INSTALL:${RESET} ${package}..."
+      brew install "$package"
+      echo -e "${GREEN}DONE:${RESET} ${package} is installed!"
     fi
+  done
 }
 
 brew_install_cask() {
-  if [[ ${machine} != Mac ]]; then
-    echo -e "${YELLOW}WARNING:${RESET} Cask is not supported on ${machine}. Couldn't install $1."
-    return
-  fi
-
-  IFS=":" read -r cask_name tap <<< "$1"
-
-  if brew list --cask | grep -q "^${cask_name}$"; then
-    echo -e "${GREEN}FOUND:${RESET} ${cask_name} is already installed!"
-  else
-    echo -e "${CYAN}INSTALL:${RESET} ${cask_name}..."
-    if [[ -n "$tap" ]]; then
-      echo -e "${CYAN}TAP:${RESET} Brew tapping into ${tap}..."
-      brew tap "$tap"
+    if [[ ${machine} != Mac ]]; then
+        echo -e "${YELLOW}WARNING:${RESET} Cask is not supported on ${machine}. Skipping installation."
+        return
     fi
-    brew install --cask "$cask_name"
-    echo -e "${GREEN}DONE:${RESET} ${cask_name} is installed!"
-  fi
+
+    local cask_packages=("$@")
+    for cask in "${cask_packages[@]}"; do
+        IFS=":" read -r cask_name tap <<< "$cask"
+
+        if brew list --cask | grep -q "^${cask_name}$"; then
+            echo -e "${GREEN}FOUND:${RESET} ${cask_name} is already installed!"
+        else
+            echo -e "${CYAN}INSTALL:${RESET} ${cask_name}..."
+            if [[ -n "$tap" ]]; then
+                echo -e "${CYAN}TAP:${RESET} Brew tapping into ${tap}..."
+                brew tap "$tap"
+            fi
+            brew install --cask "$cask_name"
+            echo -e "${GREEN}DONE:${RESET} ${cask_name} is installed!"
+        fi
+    done
 }
+
 
 create_symlink() {
   local target=$1

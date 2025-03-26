@@ -16,6 +16,4 @@ cask_packages=(
   #"session-manager-plugin"
   #"microsoft-remote-desktop"
 )
-for cask in "${cask_packages[@]}"; do
-  brew_install_cask "$cask"
-done
+brew_install_cask "${cask_packages[@]}"

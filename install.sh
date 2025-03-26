@@ -38,9 +38,8 @@ packages=(
   "hashicorp/tap/terraform-ls"
 )
 echo "Installing brew packages..."
-for package in "${packages[@]}"; do
-  brew_install "$package"
-done
+brew_install "${packages[@]}"
+
 echo ""
 echo ""
 
@@ -50,9 +49,7 @@ cask_packages=(
   "font-fira-code-nerd-font:homebrew/cask-fonts"
 )
 echo "Installing brew cask packages..."
-for cask in "${cask_packages[@]}"; do
-  brew_install_cask "$cask"
-done
+brew_install_cask "${cask_packages[@]}"
 echo ""
 echo ""
 
