@@ -15,7 +15,7 @@ else
 endif
 call add(myPaths,['-'])
 call add(myPaths,['readme.md (&r)','vsp $HOME/.vim/README.md'])
-call add(myPaths,['install.sh (&i)','vsp $HOME/.vim/install.sh'])
+call add(myPaths,['install_vim.sh (&i)','vsp $HOME/.vim/install_vim.sh'])
 call add(myPaths,['-'])
 call add(myPaths,['general.vim (&g)','vsp $HOME/.vim/.config/nvim/lua/core/general.vim'])
 call add(myPaths,['plugins.vim (&p)','vsp $HOME/.vim/.config/nvim/lua/core/plugins.vim'])

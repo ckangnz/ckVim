@@ -1,15 +1,34 @@
-# CK-NVim
+# Installation
 
-> [!IMPORTANT]
-> You need to install Homebrew
+## Install Homebrew
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-## Installing CK-NVIM
+Then source it depending on your environment.
 
-> [!NOTE] Pre-requisite for :penguin: Linux (WSL)
+```bash
+# For Mac
+eval "$(/usr/lib/bin/brew shellenv)"
+
+# For Mac ARM
+echo 'eval $(/opt/homebrew/bin/brew shellenv)' >> $HOME/.zprofile
+
+# For WSL
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+```
+
+## Clone this project into `~/.vim`
+
+```bash
+git clone https://github.com/chris542/ckVim ~/.vim
+```
+
+# Installing CK-NVIM  / 
+
+> [!NOTE]
+> Pre-requisite for :penguin: Linux (WSL)
 
 ```bash
 # You must install essential C Compilers
@@ -19,69 +38,40 @@ sudo apt-get update && sudo apt-get install build-essential
 sudo apt update && sudo apt install dotnet8
 ```
 
-### 1. Clone this project into `~/.vim`
+## Run the script
+
+> [!WARNING]
+> This will override your .vimrc file
 
 ```bash
-git clone https://github.com/chris542/ckVim ~/.vim
-```
-
-### 2. Install dependencies
-
-> [!WARNING] This will override your .vimrc file
-
-```bash
-. ~/.vim/install.sh
-```
-
-### 3. Install extra software on MacOS
-
-```bash
-. ~/.vim/install_others.sh
+. ~/.vim/install_vim.sh
 ```
 
 ---
 
-# CK-ZSH ⚡️
+# Installing CK-ZSH ⚡️
 
 > [!NOTE]
 >
-> #### Pre-requisite (only :penguin: For WSL/Linux)
+> Pre-requisite (only :penguin: For WSL/Linux)
 >
-> ##### Enabling Hyper V
+> Enabling Hyper V
 >
 > 1. Open "Turn Windows features on or off"
-> 2. Find Hyper-V and enable it (This may require rebooting your comptuer)
+> 2. Find Hyper-V and enable it (This may require rebooting your computer)
 >
-> ##### Font Setup
+> Font Setup
 >
 > - Manually download the FiraCode.zip from [here](https://github.com/ryanoasis/nerd-fonts/releases)
 > - Configure the Terminal configuration with the font
 
-### Install Zsh if not installed
+## Run the script
+
+> [!WARNING]
+> This will override your .zshrc file
 
 ```bash
-brew install zsh
-
-# Set zsh as default
-chsh -s $(which zsh)
-```
-
-### Install Zap (Zsh Plugin Manager)
-
-> [!WARNING] This will create a new `.zshrc` and back up your old one.
-
-```bash
-zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
-```
-
-### Link .zshrc
-
-> [!WARNING] This will override your .zshrc file
-
-```bash
-rm $HOME/.zshrc
-ln -s $HOME/.vim/.zshrc $HOME/.zshrc
-source $HOME/.zshrc
+. ~/.vim/install_zsh.sh
 ```
 
 Now you can restart your terminal!
@@ -96,25 +86,24 @@ Avoid sourcing `~/.p10k.zsh` as it is already imported in `.zshrc`
 p10k configure
 ```
 
-## Trouble-Shooting
+---
+
+# Setting up the working environment
+
+## Install extra software on MacOS
+
+```bash
+. ~/.vim/install_others.sh
+```
+
+---
+
+# Trouble-Shooting
 
 - zsh compinit: insecure directories, run compaudit for list, run :
 
 ```bash
 compaudit | xargs chmod g-w
-```
-
-- If you get a prompt that brew is missing after installation, simply run this command
-
-```bash
-# For Mac
-eval "$(/usr/lib/bin/brew shellenv)"
-
-# For Mac ARM
-echo 'eval $(/opt/homebrew/bin/brew shellenv)' >> $HOME/.zprofile
-
-# For WSL
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"]
 ```
 
 - If you get python issue on nvim install pynvim

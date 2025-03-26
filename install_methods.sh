@@ -52,12 +52,11 @@ brew_install_cask() {
     done
 }
 
-
 create_symlink() {
   local target=$1
   local link_name=$2
 
-  echo -e "${CYAN}Symlinking${RESET} $target to $link_name ..."
+  echo -e "${CYAN}Symlinking${RESET} ${YELLOW}$target${RESET} to ${YELLOW}$link_name${RESET} ..."
 
   if [ -e "$link_name" ]; then
     echo -e "${YELLOW}FOUND:${RESET}$link_name already exists!"
@@ -67,5 +66,6 @@ create_symlink() {
 
   ln -s "$target" "$link_name"
   echo -e "${GREEN}Linked${RESET} $link_name successfully!"
+  echo ""
 }
 

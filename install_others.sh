@@ -1,7 +1,23 @@
 # Load install methods
 . ./install_methods.sh --source-only
 
-# Define optional cask packages (name:tap)
+# Install Homebrew packages
+packages=(
+  "ducker"
+  "awscli"
+  "kubectl"
+  "k9s"
+  "helm"
+  "tfenv" # Terraform with version control
+  "hashicorp/tap/terraform-ls"
+)
+echo "Installing brew packages..."
+brew_install "${packages[@]}"
+
+echo ""
+echo ""
+
+# Install Homebrew cask packages
 cask_packages=(
   "neovide"
   "iterm2"

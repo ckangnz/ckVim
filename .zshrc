@@ -60,6 +60,21 @@ if [[ -f ~/.fzf.zsh ]]; then
 elif [[ -d "$HOMEBREW_PREFIX/opt/fzf/bin" ]]; then
   "$HOMEBREW_PREFIX/opt/fzf/install"
 fi
+#lsd
+if [[ -d "$HOMEBREW_PREFIX/opt/lsd/bin" ]]; then
+  alias ls="lsd --group-directories-first"
+  alias la="lsd -la --group-directories-first"
+  alias lt="lsd --tree"
+fi
+
+# --Completions--
+# bun
+[ -s "/Users/chris.kang/.bun/_bun" ] && source "/Users/chris.kang/.bun/_bun"
+# Kubectl
+if [[ -f "$HOMEBREW_PREFIX/bin/kubectl" ]];then
+  alias k=kubectl
+  source <(kubectl completion zsh)
+fi
 # Docker
 if [[ -d "$HOME/.docker/completions" ]]; then
   fpath+=("$HOME/.docker/completions")
@@ -72,17 +87,7 @@ fi
 if [[ -f "$HOMEBREW_PREFIX/bin/terraform" ]];then
   complete -o nospace -C "$HOMEBREW_PREFIX/bin/terraform" terraform
 fi
-# Kubectl
-if [[ -f "$HOMEBREW_PREFIX/bin/kubectl" ]];then
-  alias k=kubectl
-  source <(kubectl completion zsh)
-fi
-#lsd
-if [[ -d "$HOMEBREW_PREFIX/opt/lsd/bin" ]]; then
-  alias ls="lsd --group-directories-first"
-  alias la="lsd -la --group-directories-first"
-  alias lt="lsd --tree"
-fi
+# --END Completions--
 
 #alias
 alias neo="neovide --fork"
