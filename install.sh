@@ -28,10 +28,11 @@ packages=(
   "catimg"
   "fzf"
   "lsd"
-  "ctop"  # Docker TUI
 
+  "ducker"
   "awscli"
   "kubectl"
+  "k9s"
   "helm"
   "tfenv" # Terraform with version control
   "hashicorp/tap/terraform-ls"
