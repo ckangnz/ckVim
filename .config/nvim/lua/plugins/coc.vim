@@ -15,7 +15,7 @@ let g:coc_global_extensions = [
       \ 'coc-prettier',
       \ 'coc-tsserver',
       \ 'coc-docker',
-      \ 'coc-csharp-ls',
+      \ '@yaegassy/coc-csharp-ls',
       \ 'coc-java',
       \ 'coc-eslint',
       \ 'coc-snippets',
