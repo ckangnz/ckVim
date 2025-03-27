@@ -100,20 +100,6 @@ if vim.fn.has('nvim') then
     tabline = {
       lualine_a = {
         {
-          '%{fnamemodify(getcwd(0, 0), ":t")}',
-          -- use_mode_colors = true,
-          color = { gui = 'bold', fg = Colors.dark_black, bg = Colors.white },
-          separator = { left = '', right = '' },
-          fmt = function(t)
-            local current_buffer = vim.fn.bufname(vim.fn.bufnr())
-            if current_buffer:match('oil:///') then
-              t = vim.fn.fnamemodify(current_buffer, ":h:t")
-            end
-            return ' ' .. t .. '/'
-          end },
-      },
-      lualine_b = {
-        {
           'windows',
           mode = 0,
           max_length = vim.o.columns * 2 / 3,
@@ -143,6 +129,7 @@ if vim.fn.has('nvim') then
           },
         }
       },
+      lualine_b = {},
       lualine_c = {},
       lualine_x = {},
       lualine_y = {},
@@ -150,17 +137,22 @@ if vim.fn.has('nvim') then
         -- { 'os.date("%a %d %b |%l:%M%p")' },
         {
           'tabs',
-          separator = { left = '', right = '' },
+          separator = { left = '', right = '' },
           max_length = vim.o.columns,
-          use_mode_colors = true,
+          use_mode_colors = false,
+          show_modified_status = false,
           mode = 1,
           tabs_color = {
-            active = { fg = Colors.white, bg = Colors.bluish_black, gui = 'bold' },
+            active = { fg = Colors.dark_black, bg = Colors.white, gui = 'bold' },
             inactive = { fg = Colors.light_grey, bg = Colors.light_black, gui = 'bold' },
           },
-          show_modified_status = false,
           fmt = function(name, context)
-            return '󰓩  ' .. context.tabnr
+            local t = vim.fn.fnamemodify(vim.fn.getcwd(0, 0), ":t")
+            local current_buffer = vim.fn.bufname(vim.fn.bufnr())
+            if current_buffer:match('oil:///') then
+              t = vim.fn.fnamemodify(current_buffer, ":h:t")
+            end
+            return '  ' .. t
           end
         },
       }
