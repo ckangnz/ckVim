@@ -19,7 +19,11 @@ dotnet --version
 dotnet --list-sdks
 
 # Create projects with different versions
-dotnet new webapi -n {NAME-OF-PROJECT} -f [net6.0 / net5.0/ netcoreapp3.1]
+dotnet new webapi
+  -n {NAME-OF-PROJECT} #name
+  -o # location to plate the generated output
+  -f {net7.0|net8.0} #framework
+  -controllers #use controllers
 ```
 
 ## Commands
