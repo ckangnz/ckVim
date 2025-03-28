@@ -11,16 +11,28 @@
       "keys": "alt+c"
     },
     {
-      "command": "resetFontSize",
-      "id": "User.resetFontSize",
-      "keys": "alt+0"
+      "command": "clearAllMarks",
+      "id": "User.clearAllMarks"
     },
     {
       "command": {
-        "action": "commandPalette"
+        "action": "adjustFontSize",
+        "delta": -1
       },
-      "id": "User.commandPalette.D3F0B923",
-      "keys": "alt+shift+p"
+      "id": "User.adjustFontSize.E2698FAA",
+      "keys": "alt+minus"
+    },
+    {
+      "command": {
+        "action": "newTab"
+      },
+      "id": "User.newTab.5DEADB41",
+      "keys": "alt+t"
+    },
+    {
+      "command": "resetFontSize",
+      "id": "User.resetFontSize",
+      "keys": "alt+0"
     },
     {
       "command": {
@@ -32,22 +44,10 @@
     },
     {
       "command": {
-        "action": "newTab"
+        "action": "commandPalette"
       },
-      "id": "User.newTab.5DEADB41",
-      "keys": "alt+t"
-    },
-    {
-      "command": {
-        "action": "adjustFontSize",
-        "delta": -1
-      },
-      "id": "User.adjustFontSize.E2698FAA",
-      "keys": "alt+minus"
-    },
-    {
-      "command": "clearAllMarks",
-      "id": "User.clearAllMarks"
+      "id": "User.commandPalette.D3F0B923",
+      "keys": "alt+shift+p"
     },
     {
       "command": {
@@ -228,17 +228,17 @@
       "keys": "alt+l"
     },
     {
-      "command": "closeWindow",
-      "id": "User.closeWindow",
-      "keys": "alt+q"
-    },
-    {
       "command": {
         "action": "splitPane",
         "split": "down"
       },
       "id": "User.splitPane.D5151347",
       "keys": "alt+shift+d"
+    },
+    {
+      "command": "closeWindow",
+      "id": "User.closeWindow",
+      "keys": "alt+q"
     },
     {
       "command": {
@@ -348,7 +348,7 @@
         "name": "Command Prompt"
       },
       {
-        "adjustIndistinguishableColors": "indexed",
+        "adjustIndistinguishableColors": "never",
         "altGrAliasing": true,
         "antialiasingMode": "grayscale",
         "colorScheme": {
@@ -358,7 +358,9 @@
         "elevate": false,
         "experimental.retroTerminalEffect": false,
         "font": {
+          "builtinGlyphs": true,
           "cellHeight": "1.5",
+          "colorGlyphs": true,
           "face": "FiraCode Nerd Font",
           "size": 10,
           "weight": "normal"
