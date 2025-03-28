@@ -82,3 +82,9 @@ Plug 'kristijanhusak/vim-dadbod-ui'                                 " DB Manager
 Plug 'andrewstuart/vim-kubernetes'                                  " Kubernetes snippets
 
 call plug#end()
+
+nmap <silent><leader>pp :PlugUpgrade<cr>
+nmap <silent><leader>pi :PlugInstall<cr>
+nmap <silent><leader>pu :PlugUpdate<cr>
+nmap <silent><leader>pd :PlugDiff<cr>
+nmap <silent><leader>pc :PlugClean<cr>
