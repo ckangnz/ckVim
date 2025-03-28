@@ -79,7 +79,6 @@ Plug 'tpope/vim-dadbod'                                             " DB Manager
 Plug 'kristijanhusak/vim-dadbod-ui'                                 " DB Manager UI
 
 " Snippets
-Plug 'honza/vim-snippets'                                           " snippets
 Plug 'andrewstuart/vim-kubernetes'                                  " Kubernetes snippets
 
 call plug#end()

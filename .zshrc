@@ -102,7 +102,7 @@ alias gas="gh auth switch"
 alias gcan='git commit --amend --no-edit'
 
 alias zl="zap list"
-alias zu="zap update"
+alias zu="zap update all"
 alias zc="zap clean"
 
 alias tR="tmux source ~/.config/tmux/tmux.conf"
