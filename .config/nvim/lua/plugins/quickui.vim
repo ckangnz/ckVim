@@ -28,7 +28,7 @@ call add(myPaths,['.extraAlias.zsh (&a)','vsp $HOME/.extraAlias.zsh'])
 call add(myPaths,['-'])
 call add(myPaths,['/notes (&n)','vsp $HOME/.vim/notes'])
 call add(myPaths,['vimhelp.md (&h)','vsp $HOME/.vim/notes/vimhelp.md'])
-nnoremap <nowait><silent><leader>e :call quickui#listbox#open(myPaths, myPathsOpts)<cr>
+nnoremap <nowait><silent><leader>e :call quickui#context#open(myPaths, myPathsOpts)<cr>
 
 "*-*-*-*-*-*-MY UTILITY MENU-*-*-*-*-*-*
 let g:utilOpts = {'title': 'Utility Menu'}
