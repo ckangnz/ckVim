@@ -21,6 +21,8 @@ packages=(
   "ripgrep"
   "catimg"
   "fzf"
+
+  "font-fira-code-nerd-font"
 )
 echo "Installing brew packages..."
 brew_install "${packages[@]}"
@@ -30,7 +32,6 @@ echo ""
 # Install Homebrew cask packages
 cask_packages=(
   "dotnet-sdk"
-  "font-fira-code-nerd-font:homebrew/cask-fonts"
 )
 echo "Installing brew cask packages..."
 brew_install_cask "${cask_packages[@]}"

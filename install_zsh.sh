@@ -24,6 +24,8 @@ packages=(
   "ripgrep"
   "fzf"
   "lsd"
+
+  "font-fira-code-nerd-font"
 )
 echo "Installing brew packages..."
 brew_install "${packages[@]}"
