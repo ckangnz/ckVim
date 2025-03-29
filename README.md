@@ -122,7 +122,13 @@ p10k configure
 compaudit | xargs chmod g-w
 ```
 
-- If you get python issue on nvim install pynvim
+- If you get node issue, install neovim via npm
+
+```bash
+npm install -g neovim
+```
+
+- If you get python issue, install pynvim via pip
 
 ```bash
 $(which python3) -m pip install pynvim
@@ -146,10 +152,16 @@ sudo chown -R $(whoami) /run/user/1000/
 gh auth refresh -s read:project
 ```
 
-- For WSL windows, install win32yank with choco to yank into clipboard
+- WSL Clipboards
 
 ```Powershell
 choco install win32yank
+```
+
+- Linux Clipboards
+
+```bash
+sudo pacman -S xsel
 ```
 
 - For WSL windows, when you get `no such file or directory: /usr/share/zsh/vendor-completions/_docker` error, run:
