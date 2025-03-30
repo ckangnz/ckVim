@@ -38,7 +38,7 @@ call add(g:utilContent, [ 'Generate GUID (&i)', 'call GenerateGUID()' ])
 call add(g:utilContent, [ 'Delete all white spaces (&w)', '%s/^$\\|^\s\+//g' ])
 call add(g:utilContent, ['-'])
 call add(g:utilContent, [ 'Render Markdown toggle (&r)', 'RenderMarkdown toggle' ])
-call add(g:utilContent, [ 'Github Markdown Preview (&d)', 'GithubPreviewToggle' ])
+call add(g:utilContent, [ 'Vivify (Markdown Renderer) (&d)', 'Vivify' ])
 call add(g:utilContent, [ 'Yaml Schema (&y)', 'CocCommand yaml.selectSchema' ])
 call add(g:utilContent, ['-'])
 

@@ -61,6 +61,7 @@ Plug 'airblade/vim-rooter'                                          " Find the r
 Plug 'dominikduda/vim_current_word'                                 " Highlight current word
 Plug 'easymotion/vim-easymotion'                                    " Easy Navigation
 Plug 'folke/todo-comments.nvim'                                     " Highlight Todo comments
+Plug 'jannis-baum/vivify.vim'                                       " Markdown Previewer
 Plug 'kkvh/vim-docker-tools'                                        " Docker within vim
 Plug 'markonm/traces.vim'                                           " Preview highlights and substitute
 Plug 'mattesGroeger/vim-bookmarks'                                  " Vim Bookmarks
@@ -68,7 +69,6 @@ Plug 'mbbill/undotree'                                              " Magic of U
 Plug 'nicwest/vim-http'                                             " HTTP calls from vim
 Plug 'scrooloose/nerdcommenter'                                     " Easy Commenting tool
 Plug 'skywind3000/asyncrun.vim'                                     " Asyncrun tasks
-Plug 'wallpants/github-preview.nvim', { 'do': 'bun install' }       " Markdown preview in Github style
 Plug 'wesQ3/vim-windowswap'                                         " Split Panel switch
 
 " Test

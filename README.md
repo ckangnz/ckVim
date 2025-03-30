@@ -25,7 +25,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 git clone https://github.com/chris542/ckVim ~/.vim
 ```
 
-# Installing CK-NVIM  / 
+# Installing CK-NVIM
 
 > [!NOTE]
 > Pre-requisite for :penguin: Linux (WSL)

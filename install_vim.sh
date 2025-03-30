@@ -13,7 +13,6 @@ echo ""
 packages=(
   "python3"
   "node"
-  "oven-sh/bun/bun"
 
   "nvim"
   "vim"
@@ -22,6 +21,7 @@ packages=(
   "catimg"
   "fzf"
 
+  "jannis-baum/tap/vivify"
 )
 echo "Installing brew packages..."
 brew_install "${packages[@]}"

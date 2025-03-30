@@ -16,7 +16,6 @@ packages=(
 
   "python3"
   "node"
-  "oven-sh/bun/bun"
   "fnm"
 
   "gh"
@@ -24,6 +23,8 @@ packages=(
   "ripgrep"
   "fzf"
   "lsd"
+
+  "jannis-baum/tap/vivify"
 )
 echo "Installing brew packages..."
 brew_install "${packages[@]}"
