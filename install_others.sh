@@ -19,6 +19,7 @@ echo ""
 
 # Install Homebrew cask packages
 cask_packages=(
+  "dotnet-sdk" # sudo apt update && sudo apt install dotnet8
   "neovide"
   "iterm2"
   "postman"

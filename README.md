@@ -37,7 +37,6 @@ git clone https://github.com/chris542/ckVim ~/.vim
 sudo apt-get update && sudo apt-get install build-essential
 
 
-
 # Archlinux (SteamOS especially)
 sudo steamos-readoonly disable # enable once all packages are installed
 
@@ -48,10 +47,6 @@ sudo pacman-key --populate holo
 sudo pacman -Syu
 sudo pacman -S base-devel
 sudo pacman -S glibc linux-api-headers # If you see an error regards to stdint.h
-
-
-# Install dotnet8
-sudo apt update && sudo apt install dotnet8
 ```
 
 ## Run the script
