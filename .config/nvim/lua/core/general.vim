@@ -207,6 +207,7 @@ augroup vimrc
         \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
   "Markdown overrides
+  autocmd FileType markdown setlocal nowrap
   autocmd FileType markdown inoremap <buffer><silent><nowait> <tab> <esc>>>A
   autocmd FileType markdown inoremap <buffer><silent><nowait> <S-tab> <esc><<A
 
