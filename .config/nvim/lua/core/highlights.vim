@@ -56,5 +56,10 @@ hi NonText guibg=NONE ctermbg=NONE
 hi SignColumn guibg=NONE ctermbg=NONE
 hi CursorLine guibg=NONE ctermbg=NONE
 hi CursorLineNr guibg=NONE ctermbg=NONE
+hi StatusLine guibg=NONE ctermbg=NONE
+hi StatusLineNC guibg=NONE ctermbg=NONE
+hi TabLine guibg=NONE ctermbg=NONE
+hi TabLineSel guibg=NONE ctermbg=NONE
+hi TabLineFill guibg=NONE ctermbg=NONE
 hi EndOfBuffer guibg=NONE ctermbg=NONE
 hi VertSplit ctermfg=white guifg=white
