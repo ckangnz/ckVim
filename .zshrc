@@ -68,8 +68,6 @@ if [[ -d "$HOMEBREW_PREFIX/opt/lsd/bin" ]]; then
 fi
 
 # --Completions--
-# bun
-[ -s "/Users/chris.kang/.bun/_bun" ] && source "/Users/chris.kang/.bun/_bun"
 # Kubectl
 if [[ -f "$HOMEBREW_PREFIX/bin/kubectl" ]];then
   alias k=kubectl
@@ -81,7 +79,7 @@ if [[ -d "$HOME/.docker/completions" ]]; then
 fi
 # AwsCli
 if [[ -f "$HOMEBREW_PREFIX/bin/aws_completer" ]];then
-  complete -C "$HOMEBREW_PREFIX/bin/aws_completer" aws
+  complete -o nospace -C "$HOMEBREW_PREFIX/bin/aws_completer" aws
 fi
 # Terraform
 if [[ -f "$HOMEBREW_PREFIX/bin/terraform" ]];then
@@ -91,18 +89,21 @@ fi
 _dotnet_zsh_complete()
 {
   local completions=("$(dotnet complete "$words")")
-
-  # If the completion list is empty, just continue with filename selection
-  if [ -z "$completions" ]
-  then
+  if [ -z "$completions" ]; then
     _arguments '*::arguments: _normal'
     return
   fi
-
   # This is not a variable assignment, don't remove spaces!
   _values = "${(ps:\n:)completions}"
 }
 compdef _dotnet_zsh_complete dotnet
+
+# Makefile
+function _make_targets() {
+  [[ -f Makefile ]] || return
+  compadd $(awk -F: '/^[a-zA-Z0-9_-]+:/ {print $1}' Makefile)
+}
+compdef _make_targets make
 # --END Completions--
 
 #alias
@@ -135,13 +136,6 @@ function dcupp() {
 function dcdnp() {
   docker compose $(printf " --profile %s" "$@") down
 }
-
-# Makefile autocompletion
-function _make_targets() {
-  [[ -f Makefile ]] || return
-  compadd $(awk -F: '/^[a-zA-Z0-9_-]+:/ {print $1}' Makefile)
-}
-compdef _make_targets make
 
 function speedTest() {
   local count=${1:-1}  # Default to 1 if no argument is given
