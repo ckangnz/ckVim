@@ -147,28 +147,7 @@ if vim.fn.has('nvim') then
             inactive = { fg = Colors.light_grey, bg = Colors.light_black, gui = 'bold' },
           },
           fmt = function(name, context)
-            local tabnr = context.tabnr
-            local winid = vim.api.nvim_tabpage_get_win(tabnr) -- Get active window in the tab
-            local bufnr = vim.api.nvim_win_get_buf(winid)     -- Get buffer in that window
-            local bufname = vim.api.nvim_buf_get_name(bufnr)  -- Get full file path
-            -- Find the project root by checking for common project indicators
-            local function find_project_root(path)
-              local markers = { ".git", "package.json", "Makefile" }
-              local prev = ""
-              while path and path ~= prev do
-                for _, marker in ipairs(markers) do
-                  if vim.fn.filereadable(path .. "/" .. marker) == 1 or vim.fn.isdirectory(path .. "/" .. marker) == 1 then
-                    return path
-                  end
-                end
-                prev = path
-                path = vim.fn.fnamemodify(path, ":h")
-              end
-              return vim.fn.getcwd() -- Fallback to current working directory
-            end
-            local project_root = find_project_root(vim.fn.fnamemodify(bufname, ":h"))
-            local project_name = vim.fn.fnamemodify(project_root, ":t") -- Extract project folder name
-            return '  ' .. project_name
+            return '󰓩  ' .. context.tabnr
           end
         },
       }
