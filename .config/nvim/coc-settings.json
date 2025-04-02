@@ -42,6 +42,7 @@
     }
   },
 
+  "java.enabled": false,
   "java.compile.nullAnalysis.mode": "automatic",
 
   "diagnostic.enableMessage": "always",
