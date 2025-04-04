@@ -18,7 +18,6 @@ Plug 'stevearc/oil.nvim'                                            " Easy Netrw
 Plug 'Exafunction/codeium.vim', {'branch':'main'}                   " AI Coding
 
 " VIM GUI
-Plug 'levouh/tint.nvim'                                             " Dim inactive window
 Plug 'nvim-lualine/lualine.nvim'                                    " Status line
 Plug 'nvim-tree/nvim-web-devicons'                                  " Devicons
 Plug 'sainnhe/gruvbox-material'                                     " Gruvbox Theme
