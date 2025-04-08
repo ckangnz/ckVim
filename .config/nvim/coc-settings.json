@@ -14,6 +14,9 @@
   "eslint.enable": true,
   "eslint.format.enable": true,
   "eslint.autoFixOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
 
   "typescript.format.enable": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
