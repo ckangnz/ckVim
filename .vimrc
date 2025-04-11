@@ -20,7 +20,6 @@ so ~/.vim/.config/nvim/lua/plugins/vim-bookmarks.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-dadbod.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-docker-tools.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-easymotion.vim
-so ~/.vim/.config/nvim/lua/plugins/vim-http.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-rooter.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-sandwich.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-test.vim

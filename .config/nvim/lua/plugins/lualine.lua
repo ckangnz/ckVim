@@ -125,6 +125,7 @@ if vim.fn.has('nvim') then
             oil = '📂 Files',
             octo = ' Pull Request',
             octo_panel = ' PR Review',
+            ['json.kulala_ui'] = "🐼 Kulala",
             ['vim-plug'] = "🧩 Vim Plug"
           },
         }
