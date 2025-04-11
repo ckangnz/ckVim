@@ -65,7 +65,7 @@ Plug 'kkvh/vim-docker-tools'                                        " Docker wit
 Plug 'markonm/traces.vim'                                           " Preview highlights and substitute
 Plug 'mattesGroeger/vim-bookmarks'                                  " Vim Bookmarks
 Plug 'mbbill/undotree'                                              " Magic of Undos
-Plug 'nicwest/vim-http'                                             " HTTP calls from vim
+Plug 'mistweaverco/kulala.nvim'                                     " HTTP client for nvim
 Plug 'scrooloose/nerdcommenter'                                     " Easy Commenting tool
 Plug 'skywind3000/asyncrun.vim'                                     " Asyncrun tasks
 Plug 'wesQ3/vim-windowswap'                                         " Split Panel switch
