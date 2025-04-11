@@ -147,7 +147,7 @@ if vim.fn.has('nvim') then
             inactive = { fg = Colors.light_grey, bg = Colors.light_black, gui = 'bold' },
           },
           fmt = function(name, context)
-            return '󰓩  ' .. context.tabnr
+            return '󰓩  ' .. context.tabnr .. ' '
           end
         },
       }
