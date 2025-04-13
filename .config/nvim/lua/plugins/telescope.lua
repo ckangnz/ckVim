@@ -156,8 +156,8 @@ if vim.fn.has('nvim') then
     { noremap = true, silent = true, nowait = true }
   )
 
-  vim.keymap.set('n', '"', builtin.registers, { noremap = true, silent = true, nowait = true })
   vim.keymap.set('i', '<C-R><enter>', builtin.registers, { noremap = true, silent = true, nowait = true })
+  vim.api.nvim_create_user_command("Registers", function() require('telescope.builtin').registers() end, {})
 
   vim.keymap.set('n', '<leader>b', builtin.buffers, { noremap = true, silent = true, nowait = true })
 
