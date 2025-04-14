@@ -1,11 +1,13 @@
 "---------AI Toolkit: Exafunction/codeium.vim
 ":Codeium Auth
 let g:codeium_disable_bindings = 1
+let g:codeium_no_map_tab = v:false
+let g:codeium_render = v:true
 let g:codeium_manual = v:true
 
 command! -nargs=0 OpenCodeiumChat :call codeium#Chat()
 
-inoremap <C-d> <Cmd>call codeium#CycleOrComplete(1)<cr>
+inoremap <C-d> <Cmd>call codeium#CycleOrComplete()<cr>
 inoremap <C-s> <Cmd>call codeium#CycleCompletions(-1)<cr>
 inoremap <C-f> <Cmd>call codeium#Complete()<CR>
 
