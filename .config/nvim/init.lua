@@ -13,10 +13,16 @@ require 'plugins.telescope'
 require 'plugins.lualine'
 require 'plugins.todo-comments'
 require 'plugins.oil'
-require 'plugins.kulala'
 require 'plugins.autopairs'
 require 'plugins.smear-cursor'
 require 'plugins.render-markdown'
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "http", "rest" },
+  callback = function()
+    require("plugins.kulala")
+  end,
+})
 
 --GUI Config
 require 'gui.neovide'
