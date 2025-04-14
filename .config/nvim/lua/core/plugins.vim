@@ -15,7 +15,7 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 Plug 'dstein64/vim-startuptime'                                     " Show :StartupTime
 Plug 'nvim-lua/plenary.nvim'                                        " Essential for nvim plugins
 Plug 'stevearc/oil.nvim'                                            " Easy Netrw with '-'
-Plug 'Exafunction/codeium.vim', {'branch':'main'}                   " AI Coding
+Plug 'Exafunction/windsurf.vim', {'branch':'main'}                  " AI Coding
 
 " VIM GUI
 Plug 'nvim-lualine/lualine.nvim'                                    " Status line

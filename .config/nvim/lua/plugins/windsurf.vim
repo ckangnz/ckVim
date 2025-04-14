@@ -5,7 +5,7 @@ let g:codeium_manual = v:true
 
 command! -nargs=0 OpenCodeiumChat :call codeium#Chat()
 
-inoremap <C-d> <Cmd>call codeium#CycleOrComplete()<cr>
+inoremap <C-d> <Cmd>call codeium#CycleOrComplete(1)<cr>
 inoremap <C-s> <Cmd>call codeium#CycleCompletions(-1)<cr>
 inoremap <C-f> <Cmd>call codeium#Complete()<CR>
 
