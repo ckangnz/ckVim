@@ -1,4 +1,3 @@
--- Ensure paths are expanded correctly
 local home_dir = vim.fn.expand("$HOME")
 local vim_dir = home_dir .. "/.vim"
 vim.opt.runtimepath:prepend(vim_dir)

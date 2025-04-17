@@ -66,6 +66,12 @@ if [[ -d "$HOMEBREW_PREFIX/opt/lsd/bin" ]]; then
   alias la="lsd -la --group-directories-first"
   alias lt="lsd --tree"
 fi
+if [[ -x "${HOMEBREW_PREFIX}/bin/gh" ]]; then
+  eval "$(gh completion -s zsh)"
+  if { gh extension list 2>/dev/null | grep -q 'github/gh-copilot'; }; then
+    eval "$(gh copilot alias -- zsh)"
+  fi
+fi
 
 # --Completions--
 # Kubectl
