@@ -132,21 +132,13 @@ augroup vimrc
   vmap j gj
   vmap k gk
 
-  if s:is_mac
-    nnoremap <silent> ∆ :m .+1<CR>==
-    nnoremap <silent> ˚ :m .-2<CR>==
-    inoremap <silent> ∆ <Esc>:m .+1<CR>==gi
-    inoremap <silent> ˚ <Esc>:m .-2<CR>==gi
-    vnoremap <silent> ∆ :m '>+1<CR>gv=gv
-    vnoremap <silent> ˚ :m '<-2<CR>gv=gv
-  else
-    nnoremap <silent> <M-j> :m .+1<CR>==
-    nnoremap <silent> <M-k> :m .-2<CR>==
-    inoremap <silent> <M-j>∆ <Esc>:m .+1<CR>==gi
-    inoremap <silent> <M-k>˚ <Esc>:m .-2<CR>==gi
-    vnoremap <silent> <M-j>∆ :m '>+1<CR>gv=gv
-    vnoremap <silent> <M-k>˚ :m '<-2<CR>gv=gv
-  endif
+  nnoremap <silent> <M-j> :m .+1<CR>==
+  nnoremap <silent> <M-k> :m .-2<CR>==
+  inoremap <silent> <M-j>∆ <Esc>:m .+1<CR>==gi
+  inoremap <silent> <M-k>˚ <Esc>:m .-2<CR>==gi
+  vnoremap <silent> <M-j>∆ :m '>+1<CR>gv=gv
+  vnoremap <silent> <M-k>˚ :m '<-2<CR>gv=gv
+
   nmap <silent><C-O> <C-O>zz
   nmap <silent><C-I> <C-I>zz
   nmap <silent><C-D> <C-D>zz
