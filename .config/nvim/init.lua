@@ -16,6 +16,13 @@ require 'plugins.autopairs'
 require 'plugins.smear-cursor'
 require 'plugins.render-markdown'
 
+vim.api.nvim_create_autocmd("InsertEnter", {
+  pattern = "*",
+  callback = function()
+    require("plugins.windsurf")
+  end,
+})
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "http", "rest" },
   callback = function()
