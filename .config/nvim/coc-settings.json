@@ -35,16 +35,6 @@
   "prettier.enable": true,
   "prettier.statusItemText": "",
 
-  "languageserver": {
-    "terraform": {
-      "command": "terraform-ls",
-      "args": ["serve"],
-      "filetypes": ["terraform", "tf"],
-      "initializationOptions": {},
-      "settings": {}
-    }
-  },
-
   "java.enabled": false,
   "java.compile.nullAnalysis.mode": "automatic",
 
@@ -54,6 +44,7 @@
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "󱋴",
 
+  "snippets.ultisnips.pythonPrompt": false,
   "suggest.snippetsSupport": true,
   "snippets.extends": {
     "html": ["html"],
@@ -101,6 +92,5 @@
     "unit": "",
     "value": "",
     "variable": ""
-  },
-  "snippets.ultisnips.pythonPrompt": false
+  }
 }

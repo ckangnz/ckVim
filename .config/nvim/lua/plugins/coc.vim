@@ -21,6 +21,7 @@ let g:coc_global_extensions = [
   \ 'coc-eslint',
   \ 'coc-snippets',
   \ 'coc-db',
+  \ 'coc-terraform',
   \ 'coc-flutter',
   \ 'coc-kotlin'
 \]
