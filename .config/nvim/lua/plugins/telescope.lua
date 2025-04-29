@@ -16,6 +16,7 @@ if vim.fn.has('nvim') then
 
   telescope.setup {
     defaults = {
+      cwd = require('telescope.utils').buffer_dir(),
       winblend = 0,
       layout_config = { prompt_position = "top" },
       path_display = { 'smart' },

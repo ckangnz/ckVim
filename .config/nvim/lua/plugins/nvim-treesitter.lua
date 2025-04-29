@@ -1,8 +1,4 @@
 if vim.fn.has('nvim') then
-  vim.cmd([[
-    set foldmethod=expr
-    set foldexpr=nvim_treesitter#foldexpr()
-  ]])
   vim.opt.foldmethod = 'expr'
   vim.opt.foldenable = false
   vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'

@@ -10,74 +10,73 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| PlugInstall --sync | source $MYVIMRC
 \| endif
 
-
 " Essential
-Plug 'dstein64/vim-startuptime'                                     " Show :StartupTime
-Plug 'nvim-lua/plenary.nvim'                                        " Essential for nvim plugins
-Plug 'stevearc/oil.nvim'                                            " Easy Netrw with '-'
-Plug 'Exafunction/windsurf.vim', {'branch':'main'}                  " Windsurf AI
+Plug 'dstein64/vim-startuptime'                                      " Show :StartupTime
+Plug 'nvim-lua/plenary.nvim'                                         " Essential for nvim plugins
+Plug 'stevearc/oil.nvim', { 'on': '-' }                              " Easy Netrw with '-'
+Plug 'Exafunction/windsurf.vim', { 'branch': 'main' }                " Windsurf AI
 
 " VIM GUI
-Plug 'nvim-lualine/lualine.nvim'                                    " Status line
-Plug 'nvim-tree/nvim-web-devicons'                                  " Devicons
-Plug 'sainnhe/gruvbox-material'                                     " Gruvbox Theme
-Plug 'skywind3000/vim-quickui'                                      " Context Quick UI
-Plug 'sphamba/smear-cursor.nvim'                                    " Smooth cursor
+Plug 'nvim-lualine/lualine.nvim'                                     " Status line
+Plug 'nvim-tree/nvim-web-devicons'                                   " Devicons
+Plug 'sainnhe/gruvbox-material'                                      " Gruvbox Theme
+Plug 'skywind3000/vim-quickui'                                       " Context Quick UI
+Plug 'sphamba/smear-cursor.nvim'                                     " Smooth cursor
 
 " Language Specific
-Plug 'mattn/emmet-vim'                                              "HTML/CSS emmet
-Plug 'nvim-treesitter/nvim-treesitter'                              "Syntax highlight by treesitter
-Plug 'pedrohdz/vim-yaml-folds'                                      "Fold method for .yaml
+Plug 'mattn/emmet-vim', { 'for': [ 'html', 'css' ] }                 " HTML/CSS emmet
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate', 'event': 'BufReadPre' } " Syntax highlight by treesitter
+Plug 'pedrohdz/vim-yaml-folds', { 'for': [ 'yaml' ] }                " Fold method for .yaml
 
 " Git Tool
-Plug 'junegunn/gv.vim'                                              " Git commit history browser
-Plug 'tpope/vim-fugitive'                                           " Git on Vim
-Plug 'tpope/vim-rhubarb'                                            " Github on Vim
-Plug 'tyru/open-browser-github.vim'                                 " Open Github URL
-Plug 'tyru/open-browser.vim'                                        " Open URL
+Plug 'junegunn/gv.vim', { 'cmd': [ 'GV', 'GV!' ] }                   " Git commit history browser
+Plug 'tpope/vim-fugitive', { 'cmd': [ 'G', 'Git' ] }                  " Git on Vim
+Plug 'tpope/vim-rhubarb'                                             " Github on Vim
+Plug 'tyru/open-browser-github.vim'                                  " Open Github URL
+Plug 'tyru/open-browser.vim'                                         " Open URL
 
 " Pairing
-Plug 'machakann/vim-sandwich'                                       " Easy text wrap tool
-Plug 'tmhedberg/matchit'                                            " More functionality to %
-Plug 'tpope/vim-repeat'                                             " Repeat tpope's plugins
-Plug 'windwp/nvim-autopairs'                                         " Automatic closing ({['']})
+Plug 'machakann/vim-sandwich'                                        " Easy text wrap tool
+Plug 'tmhedberg/matchit'                                             " More functionality to %
+Plug 'tpope/vim-repeat'                                              " Repeat tpope's plugins
+Plug 'windwp/nvim-autopairs', { 'event': 'InsertEnter' }             " Automatic closing ({['']})
 
 " LSP
-Plug 'neoclide/coc.nvim', {'branch': 'release'}                     "Language server protocol
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }                    " Language server protocol
 
 " Search Tool
-Plug 'nvim-telescope/telescope.nvim', { 'branch': 'master' }        " Fuzzy finder
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }   " FZF Extension
-Plug 'nvim-telescope/telescope-project.nvim'                        " Project management
-Plug 'fannheyward/telescope-coc.nvim'                               " Coc Extension
-Plug 'tom-anders/telescope-vim-bookmarks.nvim'                      " Bookmarks Extension
+Plug 'nvim-telescope/telescope.nvim', { 'branch': 'master' }         " Fuzzy finder
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }    " FZF Extension
+Plug 'nvim-telescope/telescope-project.nvim'                         " Project management
+Plug 'fannheyward/telescope-coc.nvim'                                " Coc Extension
+Plug 'tom-anders/telescope-vim-bookmarks.nvim'                       " Bookmarks Extension
 
 " Functionality
-Plug 'Asheq/close-buffers.vim'                                      " Delete hidden buffers
-Plug 'MeanderingProgrammer/render-markdown.nvim'                    " Markdown renderer
-Plug 'airblade/vim-rooter'                                          " Find the root of the project automatically
-Plug 'dominikduda/vim_current_word'                                 " Highlight current word
-Plug 'easymotion/vim-easymotion'                                    " Easy Navigation
-Plug 'folke/todo-comments.nvim'                                     " Highlight Todo comments
-Plug 'jannis-baum/vivify.vim'                                       " Markdown Previewer
-Plug 'kkvh/vim-docker-tools'                                        " Docker within vim
-Plug 'markonm/traces.vim'                                           " Preview highlights and substitute
-Plug 'mattesGroeger/vim-bookmarks'                                  " Vim Bookmarks
-Plug 'mbbill/undotree'                                              " Magic of Undos
-Plug 'mistweaverco/kulala.nvim'                                     " HTTP client for nvim
-Plug 'scrooloose/nerdcommenter'                                     " Easy Commenting tool
-Plug 'skywind3000/asyncrun.vim'                                     " Asyncrun tasks
-Plug 'wesQ3/vim-windowswap'                                         " Split Panel switch
+Plug 'Asheq/close-buffers.vim', { 'cmd': [ 'Bdelete', 'Bwipeout' ] } " Delete hidden buffers
+Plug 'MeanderingProgrammer/render-markdown.nvim', { 'for': [ 'markdown' ] } " Markdown renderer
+Plug 'airblade/vim-rooter'                                           " Find the root of the project automatically
+Plug 'dominikduda/vim_current_word'                                  " Highlight current word
+Plug 'easymotion/vim-easymotion'                                     " Easy Navigation
+Plug 'folke/todo-comments.nvim'                                      " Highlight Todo comments
+Plug 'jannis-baum/vivify.vim', { 'for': [ 'markdown' ] }             " Markdown Previewer
+Plug 'kkvh/vim-docker-tools', { 'cmd': [ 'DockerToolsToggle' ] }     " Docker within vim
+Plug 'markonm/traces.vim'                                            " Preview highlights and substitute
+Plug 'mattesGroeger/vim-bookmarks'                                   " Vim Bookmarks
+Plug 'mbbill/undotree'                                               " Magic of Undos
+Plug 'mistweaverco/kulala.nvim', { 'cmd': [ 'Kulala' ] }             " HTTP client for nvim
+Plug 'scrooloose/nerdcommenter'                                      " Easy Commenting tool
+Plug 'skywind3000/asyncrun.vim'                                      " Asyncrun tasks
+Plug 'wesQ3/vim-windowswap'                                          " Split Panel switch
 
 " Test
-Plug 'vim-test/vim-test'                                            " Test files
+Plug 'vim-test/vim-test', { 'cmd': [ 'TestNearest', 'TestFile', 'TestSuite', 'TestLast', 'TestVisit' ] } " Test files
 
 " DB
-Plug 'tpope/vim-dadbod'                                             " DB Manager
-Plug 'kristijanhusak/vim-dadbod-ui'                                 " DB Manager UI
+Plug 'tpope/vim-dadbod', { 'cmd': [ 'DB', 'DBUI' ] }                  " DB Manager
+Plug 'kristijanhusak/vim-dadbod-ui', { 'cmd': [ 'DBUI' ] }            " DB Manager UI
 
 " Snippets
-Plug 'andrewstuart/vim-kubernetes'                                  " Kubernetes snippets
+Plug 'andrewstuart/vim-kubernetes', { 'for': [ 'yaml' ] }            " Kubernetes snippets
 
 call plug#end()
 
