@@ -51,7 +51,9 @@ if vim.fn.has('nvim') then
         'autoload/*',
         'esm/*',
         'cjs/*',
-        'dist/*'
+        'dist/*',
+        'yarn.lock',
+        '%.tsx%.html$',
       },
       preview = {
         mime_hook = function(filepath, bufnr, opts)
