@@ -6,20 +6,32 @@ vim.cmd("source " .. home_dir .. "/.vimrc")
 
 require 'core.myTheme'
 
---Lua Plugins
-require 'plugins.nvim-treesitter'
-require 'plugins.telescope'
-require 'plugins.lualine'
-require 'plugins.todo-comments'
-require 'plugins.oil'
-require 'plugins.autopairs'
-require 'plugins.smear-cursor'
-require 'plugins.render-markdown'
+vim.api.nvim_create_autocmd({ "BufRead", "BufEnter" }, {
+  pattern = "*",
+  callback = function()
+    require 'plugins.lualine'
+    require 'plugins.nvim-treesitter'
+    require 'plugins.oil'
+    require 'plugins.smear-cursor'
+    require 'plugins.telescope'
+    require 'plugins.todo-comments'
+
+    vim.opt.suffixesadd:prepend(".lua")
+  end,
+})
 
 vim.api.nvim_create_autocmd("InsertEnter", {
   pattern = "*",
   callback = function()
+    require 'plugins.autopairs'
     require("plugins.windsurf")
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { 'markdown', 'md' },
+  callback = function()
+    require 'plugins.render-markdown'
   end,
 })
 
@@ -32,10 +44,3 @@ vim.api.nvim_create_autocmd("FileType", {
 
 --GUI Config
 require 'gui.neovide'
-
-vim.api.nvim_create_autocmd({ "BufRead", "BufEnter" }, {
-  pattern = "*",
-  callback = function()
-    vim.opt.suffixesadd:prepend(".lua")
-  end,
-})
