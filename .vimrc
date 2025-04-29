@@ -10,7 +10,6 @@ so ~/.vim/.config/nvim/lua/plugins/vim_current_word.vim
 "*-*-*-*-*-*-FUNCTIONALITY PLUGINS-*-*-*-*-*-*
 so ~/.vim/.config/nvim/lua/plugins/asyncrun.vim
 so ~/.vim/.config/nvim/lua/plugins/close-buffers.vim
-so ~/.vim/.config/nvim/lua/plugins/ctrlsf.vim
 so ~/.vim/.config/nvim/lua/plugins/undotree.vim
 so ~/.vim/.config/nvim/lua/plugins/git.vim
 so ~/.vim/.config/nvim/lua/plugins/nerdcommenter.vim

@@ -70,7 +70,7 @@
 
     ,f (Rg)                         search all project
     ,F                              search the word on cursor in all project
-    ,h                              search and replace using ctrlsf ('M' to toggle view)
+    ,h                              search and replace using CocSearch
     R                               rename a variable
     cgn =>  . / n                   change word => Repeat / Skip
     :s/old/new/g                    change word old to new
