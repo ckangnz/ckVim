@@ -80,23 +80,58 @@ if vim.fn.has('nvim') then
         },
       },
       lualine_y = {
-        { '%{codeium#GetStatusString()}', fmt = function(t) return '󰚩 ' .. t end },
-        { 'g:coc_status' },
+        {
+          function()
+            local status = vim.fn['codeium#GetStatusString']()
+            local typing_icons = { ".  ", ".. ", "...", " ..", "  .", "   ", }
+            local loader_icons = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+            local robot_icon = "󰚩"
+
+            if status == ' * ' then
+              local ms = vim.loop.hrtime() / 1e6
+              local frame = math.floor(ms / 50) % #loader_icons + 1
+              return robot_icon .. "   " .. loader_icons[frame]
+            elseif status == "   " then
+              local ms = vim.loop.hrtime() / 1e6
+              local frame = math.floor(ms / 200) % #typing_icons + 1
+              return robot_icon .. " " .. typing_icons[frame]
+            elseif status == ' ON' or status == 'OFF' then
+              return robot_icon .. " " .. status
+            else
+              return robot_icon .. "   " .. status
+            end
+          end,
+          color = function()
+            local status = vim.fn['codeium#GetStatusString']()
+            if status == ' * ' then
+              return { fg = "#61afef" }
+            elseif status == " 0 " then
+              return { fg = Colors.light_grey }
+            else
+              return { fg = Colors.white }
+            end
+          end,
+        },
+        { function()
+          local status = vim.fn['coc#status']()
+          if status == "x" then
+            return ""
+          else
+            return status
+          end
+        end },
       },
       lualine_z = {
         { 'g:asyncrun_status' },
-        { '%s%l:%v' }
+        {
+          function()
+            local line = vim.fn.line('.')
+            local col = vim.fn.col('.')
+            return string.format('%03d:%03d', line, col)
+          end
+        }
       }
     },
-    inactive_sections = {
-      lualine_a = {},
-      lualine_b = { { 'filename' } },
-      lualine_c = {},
-      lualine_x = {},
-      lualine_y = {},
-      lualine_z = { { '%s%l:%v' } }
-    },
-
     tabline = {
       lualine_a = {
         {
