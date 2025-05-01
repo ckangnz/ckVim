@@ -1,7 +1,3 @@
-autoload -U +X bashcompinit && bashcompinit
-autoload -U +X compinit
-compinit -C -d ~/.zcompdump &>/dev/null
-
 # Set PATH
 typeset -U path
 path=(
@@ -48,7 +44,7 @@ if [[ -e "$HOMEBREW_PREFIX/bin/fnm" ]]; then
 fi
 # Java
 if [[ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]]; then
-  local JDK_HOME=$HOMEBREW_PREFIX/opt/openjdk
+  JDK_HOME=$HOMEBREW_PREFIX/opt/openjdk
   PATH="$JDK_HOME/bin:$PATH"
 fi
 # FZF
@@ -66,60 +62,9 @@ if [[ -d "$HOMEBREW_PREFIX/opt/lsd/bin" ]]; then
   alias la="lsd -la --group-directories-first"
   alias lt="lsd --tree"
 fi
-if [[ -x "${HOMEBREW_PREFIX}/bin/gh" ]]; then
-  eval "$(gh completion -s zsh)"
-  if { gh extension list 2>/dev/null | grep -q 'github/gh-copilot'; }; then
-    eval "$(gh copilot alias -- zsh)"
-  fi
-fi
 
-# --Completions--
-# Kubectl
-if [[ -f "$HOMEBREW_PREFIX/bin/kubectl" ]];then
-  alias k=kubectl
-  source <(kubectl completion zsh)
-fi
-# Docker
-if [[ -x "$(command -v docker)" ]]; then
-  if [[ "$(uname -m)" == "arm64" ]]; then
-    export DOCKER_DEFAULT_PLATFORM=linux/arm64
-  fi
-  if [[ -d "$HOME/.docker/completions" ]]; then
-    fpath+=("$HOME/.docker/completions")
-  else
-    mkdir -p $HOME/.docker/completions
-    docker completion zsh > $HOME/.docker/completions/_docker
-    fpath+=("$HOME/.docker/completions")
-  fi
-fi
-# AwsCli
-if [[ -f "$HOMEBREW_PREFIX/bin/aws_completer" ]];then
-  complete -o nospace -C "$HOMEBREW_PREFIX/bin/aws_completer" aws
-fi
-# Terraform
-if [[ -f "$HOMEBREW_PREFIX/bin/terraform" ]];then
-  complete -o nospace -C "$HOMEBREW_PREFIX/bin/terraform" terraform
-fi
-# Dotnet
-_dotnet_zsh_complete()
-{
-  local completions=("$(dotnet complete "$words")")
-  if [ -z "$completions" ]; then
-    _arguments '*::arguments: _normal'
-    return
-  fi
-  # This is not a variable assignment, don't remove spaces!
-  _values = "${(ps:\n:)completions}"
-}
-compdef _dotnet_zsh_complete dotnet
-
-# Makefile
-function _make_targets() {
-  [[ -f Makefile ]] || return
-  compadd $(awk -F: '/^[a-zA-Z0-9_-]+:/ {print $1}' Makefile)
-}
-compdef _make_targets make
-# --END Completions--
+# COMPLETIONS
+[[ -f $HOME/.vim/completions.zsh ]] && source $HOME/.vim/completions.zsh
 
 #alias
 alias neo="neovide --fork"
@@ -168,7 +113,13 @@ POWERLINE_DISABLE_RPROMPT="true"
 
 # --------Custom Methods--------
 
-[[ -f ~/.extraAlias.zsh ]] && source ~/.extraAlias.zsh
+autoload -Uz add-zsh-hook
+load_extra_aliases() {
+  unfunction load_extra_aliases
+  [[ -f ~/.extraAlias.zsh ]] && source ~/.extraAlias.zsh
+}
+add-zsh-hook precmd load_extra_aliases
+
 
 # -------- ZSH VIM Mode
 bindkey -v
