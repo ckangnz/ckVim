@@ -80,11 +80,16 @@ if [[ -f "$HOMEBREW_PREFIX/bin/kubectl" ]];then
   source <(kubectl completion zsh)
 fi
 # Docker
-if [[ -d "$HOME/.docker/completions" ]]; then
-  fpath+=("$HOME/.docker/completions")
-
+if [[ -x "$(command -v docker)" ]]; then
   if [[ "$(uname -m)" == "arm64" ]]; then
     export DOCKER_DEFAULT_PLATFORM=linux/arm64
+  fi
+  if [[ -d "$HOME/.docker/completions" ]]; then
+    fpath+=("$HOME/.docker/completions")
+  else
+    mkdir -p $HOME/.docker/completions
+    docker completion zsh > $HOME/.docker/completions/_docker
+    fpath+=("$HOME/.docker/completions")
   fi
 fi
 # AwsCli
