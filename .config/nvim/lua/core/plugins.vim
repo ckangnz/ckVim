@@ -53,7 +53,7 @@ Plug 'tom-anders/telescope-vim-bookmarks.nvim'                       " Bookmarks
 
 " Functionality
 Plug 'Asheq/close-buffers.vim', { 'cmd': [ 'Bdelete', 'Bwipeout' ] } " Delete hidden buffers
-Plug 'MeanderingProgrammer/render-markdown.nvim', { 'for': [ 'markdown' ] } " Markdown renderer
+Plug 'MeanderingProgrammer/render-markdown.nvim'                     " Markdown renderer
 Plug 'airblade/vim-rooter'                                           " Find the root of the project automatically
 Plug 'dominikduda/vim_current_word'                                  " Highlight current word
 Plug 'easymotion/vim-easymotion'                                     " Easy Navigation
