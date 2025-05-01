@@ -1,6 +1,9 @@
 # Load install methods
 . ./install_methods.sh --source-only
 
+echo "LET'S INSTALL CK-OTHERS!!!!!!!"
+echo ""
+
 # Install Homebrew packages
 packages=(
   "lazydocker"
@@ -13,7 +16,6 @@ packages=(
 )
 echo "Installing brew packages..."
 brew_install "${packages[@]}"
-
 echo ""
 echo ""
 

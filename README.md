@@ -54,7 +54,7 @@ sudo pacman -S linux-api-headers # If you see an error regards to stdint.h
 > This will override your .vimrc file
 
 ```bash
-. ~/.vim/install_vim.sh
+make vim
 ```
 
 ---
@@ -81,7 +81,7 @@ sudo pacman -S linux-api-headers # If you see an error regards to stdint.h
 > This will override your .zshrc file
 
 ```bash
-. ~/.vim/install_zsh.sh
+make zsh
 ```
 
 Now you can restart your terminal!
@@ -103,7 +103,7 @@ p10k configure
 ## Install extra software on MacOS
 
 ```bash
-. ~/.vim/install_others.sh
+make others
 ```
 
 ---
