@@ -1,3 +1,9 @@
+local animate = function(icons, duration)
+  local ms = vim.loop.hrtime() / 1e6
+  local frame = math.floor(ms / duration) % #icons + 1
+  return icons[frame]
+end
+
 if vim.fn.has('nvim') then
   local custom_theme = {
     normal = {
@@ -52,7 +58,8 @@ if vim.fn.has('nvim') then
         { 'branch', icons_enabled = true },
       },
       lualine_b = {
-        { 'filename',
+        {
+          'filename',
           file_status = false,
           path = 1,
         },
@@ -83,18 +90,14 @@ if vim.fn.has('nvim') then
         {
           function()
             local status = vim.fn['codeium#GetStatusString']()
-            local typing_icons = { ".  ", ".. ", "...", " ..", "  .", "   ", }
-            local loader_icons = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
             local robot_icon = "󰚩"
 
             if status == ' * ' then
-              local ms = vim.loop.hrtime() / 1e6
-              local frame = math.floor(ms / 50) % #loader_icons + 1
-              return robot_icon .. "   " .. loader_icons[frame]
+              local animation = animate({ "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }, 150)
+              return robot_icon .. "   " .. animation
             elseif status == "   " then
-              local ms = vim.loop.hrtime() / 1e6
-              local frame = math.floor(ms / 200) % #typing_icons + 1
-              return robot_icon .. " " .. typing_icons[frame]
+              local animation = animate({ ".  ", ".. ", "...", " ..", "  .", "   ", }, 200)
+              return robot_icon .. " " .. animation
             elseif status == ' ON' or status == 'OFF' then
               return robot_icon .. " " .. status
             else
@@ -122,7 +125,6 @@ if vim.fn.has('nvim') then
         end },
       },
       lualine_z = {
-        { 'g:asyncrun_status' },
         {
           function()
             local line = vim.fn.line('.')
@@ -185,6 +187,21 @@ if vim.fn.has('nvim') then
           fmt = function(name, context)
             return '󰓩  ' .. context.tabnr .. ' '
           end
+        },
+        {
+          'g:asyncrun_status',
+          fmt = function(status)
+            if status == 'running' then
+              return animate({ "◴", "◷", "◶", "◵" }, 150)
+            elseif status == 'success' then
+              return '✓'
+            elseif status == 'failure' then
+              return '✗'
+            else
+              return ''
+            end
+          end,
+          color = { fg = Colors.light_grey, bg = Colors.dark_black },
         },
       }
     },
