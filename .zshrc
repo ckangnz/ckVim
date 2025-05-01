@@ -82,6 +82,10 @@ fi
 # Docker
 if [[ -d "$HOME/.docker/completions" ]]; then
   fpath+=("$HOME/.docker/completions")
+
+  if [[ "$(uname -m)" == "arm64" ]]; then
+    export DOCKER_DEFAULT_PLATFORM=linux/arm64
+  fi
 fi
 # AwsCli
 if [[ -f "$HOMEBREW_PREFIX/bin/aws_completer" ]];then
@@ -122,6 +126,7 @@ alias buc="brew upgrade --cask"
 alias p10="p10k configure"
 
 alias gas="gh auth switch"
+alias gca='git commit --amend --no-edit'
 alias gcan='git commit --amend --no-edit'
 
 alias zl="zap list"
@@ -135,6 +140,7 @@ alias dcup="docker compose up"
 alias dcdn="docker compose down"
 alias dczsh="docker compose run --rm web zsh"
 alias dcbash="docker compose run --rm web bash"
+alias lzd="lazydocker"
 
 function dcupp() {
   docker compose $(printf " --profile %s" "$@") up
