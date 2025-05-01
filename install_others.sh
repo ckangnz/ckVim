@@ -3,7 +3,6 @@
 
 # Install Homebrew packages
 packages=(
-  "ducker"
   "lazydocker"
   "awscli"
   "kubectl"
