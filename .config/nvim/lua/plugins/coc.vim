@@ -51,7 +51,7 @@ xmap <silent> ga <Plug>(coc-codeaction-selected)
 nmap <silent><nowait> ga. <Plug>(coc-codeaction-cursor)
 nmap <nowait> <leader>r <Plug>(coc-codeaction-refactor)
 xmap <nowait> <leader>r <Plug>(coc-codeaction-refactor-selected)
-nmap <silent><nowait> ga<CR> <Plug>(coc-codeaction)
+nmap <silent><nowait> ga<CR> <Plug>(coc-fix-current)
 nmap <silent><nowait> <leader>h :CocSearch<space>
 
 " Documentation (Hover)
