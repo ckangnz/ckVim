@@ -1,5 +1,4 @@
--- ---------AI Toolkit: Exafunction/codeium.vim
--- Run :Codeium Auth to set up
+vim.g.codeium_enabled = false
 vim.g.codeium_disable_bindings = true
 vim.g.codeium_no_map_tab = true
 vim.g.codeium_render = true
@@ -11,6 +10,9 @@ vim.keymap.set('i', '<M-;>', function() return vim.fn['codeium#AcceptNextLine()'
 vim.keymap.set('i', '<M-d>', function() return vim.fn['codeium#CycleOrComplete']() end, { expr = true, silent = true })
 vim.keymap.set('i', '<M-s>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
 vim.keymap.set('i', '<M-f>', function() return vim.fn['codeium#Complete'](-1) end, { expr = true, silent = true })
+
+vim.api.nvim_create_user_command("EnableCodeium", ":Codeium Enable", {})
+vim.api.nvim_create_user_command("DisableCodeium", "Codeium Disable", {})
 
 vim.g.codeium_filetypes = {
   ["cs"] = true,
