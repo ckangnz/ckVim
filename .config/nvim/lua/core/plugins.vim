@@ -24,7 +24,7 @@ Plug 'skywind3000/vim-quickui'                                       " Context Q
 Plug 'sphamba/smear-cursor.nvim'                                     " Smooth cursor
 
 " Language Specific
-Plug 'mattn/emmet-vim', { 'for': [ 'html', 'css' ] }                 " HTML/CSS emmet
+Plug 'mattn/emmet-vim', { 'for': [ 'html', 'css', 'javascriptreact', 'typescriptreact' ] }                 " HTML/CSS emmet
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate', 'event': 'BufReadPre' } " Syntax highlight by treesitter
 Plug 'pedrohdz/vim-yaml-folds', { 'for': [ 'yaml' ] }                " Fold method for .yaml
 
