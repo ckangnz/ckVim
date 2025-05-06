@@ -5,30 +5,27 @@ let g:quickui_color_scheme = 'papercol-dark'
 "*-*-*-*-*-*-MY PATH MENU-*-*-*-*-*-*
 let myPathsOpts={ "title": "My Paths" }
 let myPaths=[]
-call add(myPaths,[" ~/.vim (&e)",'vsp $HOME/.vim'])
-call add(myPaths,[" ~/code (&d)",'vsp $HOME/code'])
 if exists('g:neovide') || has('nvim')
   call add(myPaths,['.vimrc (&v)','vsp $HOME/.vimrc'])
   call add(myPaths,['init.lua (&b)','vsp $MYVIMRC'])
 else
   call add(myPaths,['.vimrc (&v)','vsp $MYVIMRC'])
 endif
-call add(myPaths,['-'])
-call add(myPaths,['readme.md (&r)','vsp $HOME/.vim/README.md'])
-call add(myPaths,['Makefile (&m)','vsp $HOME/.vim/Makefile'])
-call add(myPaths,['install_vim.sh (&i)','vsp $HOME/.vim/install_vim.sh'])
-call add(myPaths,['-'])
+call add(myPaths,['.zshrc (&z)','vsp $HOME/.zshrc'])
+call add(myPaths,['.extraAlias.zsh (&a)','vsp $HOME/.extraAlias.zsh'])
+call add(myPaths,['.tmux.conf (&t)','e $HOME/.config/tmux/tmux.conf'])
 call add(myPaths,['general.vim (&g)','vsp $HOME/.vim/.config/nvim/lua/core/general.vim'])
 call add(myPaths,['plugins.vim (&p)','vsp $HOME/.vim/.config/nvim/lua/core/plugins.vim'])
-call add(myPaths,['/plugins (&c)','vsp $HOME/.vim/.config/nvim/lua/plugins'])
-call add(myPaths,['-'])
-call add(myPaths,['.tmux.conf (&t)','e $HOME/.config/tmux/tmux.conf'])
-call add(myPaths,['.zshrc (&z)','vsp $HOME/.zshrc'])
 call add(myPaths,['plugins.zsh (&l)','vsp $HOME/.vim/plugins.zsh'])
-call add(myPaths,['.extraAlias.zsh (&a)','vsp $HOME/.extraAlias.zsh'])
-call add(myPaths,['-'])
-call add(myPaths,['/notes (&n)','vsp $HOME/.vim/notes'])
+call add(myPaths,['Makefile (&m)','vsp $HOME/.vim/Makefile'])
+call add(myPaths,['install_vim.sh (&i)','vsp $HOME/.vim/install_vim.sh'])
 call add(myPaths,['vimhelp.md (&h)','vsp $HOME/.vim/notes/vimhelp.md'])
+call add(myPaths,['-'])
+call add(myPaths,[" ~/.vim (&e)",'vsp $HOME/.vim'])
+call add(myPaths,[" ~/code (&d)",'vsp $HOME/code'])
+call add(myPaths,['/plugins (&c)','vsp $HOME/.vim/.config/nvim/lua/plugins'])
+call add(myPaths,['/notes (&n)','vsp $HOME/.vim/notes'])
+call add(myPaths,['readme.md (&r)','vsp $HOME/.vim/README.md'])
 nnoremap <nowait><silent><leader>e :call quickui#context#open(myPaths, myPathsOpts)<cr>
 
 "*-*-*-*-*-*-MY UTILITY MENU-*-*-*-*-*-*
