@@ -88,20 +88,24 @@ if vim.fn.has('nvim') then
       },
       lualine_y = {
         {
+
           function()
             local status = vim.fn['codeium#GetStatusString']()
-            local robot_icon = "󰚩"
+            local robot_icon_on = ""
+            local robot_icon_off = ""
 
             if status == ' * ' then
               local animation = animate({ "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }, 150)
-              return robot_icon .. "   " .. animation
+              return robot_icon_on .. "   " .. animation
             elseif status == "   " then
               local animation = animate({ ".  ", ".. ", "...", " ..", "  .", "   ", }, 200)
-              return robot_icon .. " " .. animation
-            elseif status == ' ON' or status == 'OFF' then
-              return robot_icon .. " " .. status
+              return robot_icon_on .. " " .. animation
+            elseif status == ' ON' then
+              return robot_icon_on .. " " .. status
+            elseif status == 'OFF' then
+              return robot_icon_off .. " " .. status
             else
-              return robot_icon .. "   " .. status
+              return robot_icon_on .. " " .. status
             end
           end,
           color = function()
