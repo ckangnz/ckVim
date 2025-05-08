@@ -3,8 +3,6 @@ autoload -U +X bashcompinit && bashcompinit
 
 # Docker (before compinit, since it modifies fpath)
 if command -v docker &>/dev/null; then
-  [[ "$(uname -m)" == "arm64" ]] && export DOCKER_DEFAULT_PLATFORM=linux/arm64
-
   docker_comp_dir="${HOME}/.docker/completions"
   docker_comp_file="${docker_comp_dir}/_docker"
   if [[ ! -f "$docker_comp_file" ]]; then
