@@ -23,13 +23,25 @@ if vim.fn.has('nvim') then
       sorting_strategy = "ascending",
       mappings = {
         i = {
-          ["<esc>"] = 'close',
           ["<CR>"] = select_one_or_multi,
+          ["<C-n>"] = actions.move_selection_next,
+          ["<C-p>"] = actions.move_selection_previous,
           ["<C-j>"] = 'preview_scrolling_down',
           ["<C-k>"] = 'preview_scrolling_up',
           ["<C-h>"] = 'preview_scrolling_left',
           ["<C-l>"] = 'preview_scrolling_right',
+          ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
           ["<C-/>"] = 'which_key',
+          ["<LeftMouse>"] = {
+            actions.mouse_click,
+            type = "action",
+            opts = { expr = true },
+          },
+          ["<2-LeftMouse>"] = {
+            actions.double_mouse_click,
+            type = "action",
+            opts = { expr = true },
+          },
         },
       },
       vimgrep_arguments = {
