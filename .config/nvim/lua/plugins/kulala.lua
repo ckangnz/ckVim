@@ -1,16 +1,16 @@
 require("kulala").setup({
   vscode_rest_client_environmentvars = false,
   global_keymaps = {
-    ["Open scratchpad"] = { "<leader>t", ft = { "http", "rest" }, function() require("kulala").scratchpad() end, },
-
-    ["Open kulala"] = { "<leader>o", ft = { "http", "rest" }, function() require("kulala").open() end, },
-    ["Close window"] = false,
+    ["Open scratchpad"] = { "<leader>k?", ft = { "http", "rest" }, function() require("kulala").scratchpad() end, },
+    ["Show help"] = { "?", function() require("kulala.ui").show_help() end, },
+    ["Open kulala"] = { "<leader>ko", ft = { "http", "rest" }, function() require("kulala").open() end, },
+    ["Close kulala"] = false,
     ["Toggle headers/body"] = false,
     ["Show stats"] = false,
 
     ["Send request"] = false,
     ["Send request <cr>"] = { "<CR>", ft = { "http", "rest" }, function() require("kulala").run() end, mode = { "n", "v" }, },
-    ["Send all requests"] = { "<leader>a", ft = { "http", "rest" }, function() require("kulala").run_all() end, mode = { "n", "v" }, },
+    ["Send all requests"] = { "<leader><CR>", ft = { "http", "rest" }, function() require("kulala").run_all() end, mode = { "n", "v" }, },
     ["Inspect current request"] = false,
     ["Replay the last request"] = { "<leader>kl", ft = { "http", "rest" }, function() require("kulala").replay() end, },
 
@@ -21,16 +21,17 @@ require("kulala").setup({
     ["Jump to next request"] = { "]", ft = { "http", "rest" }, function() require("kulala").jump_next() end, },
     ["Jump to previous request"] = { "[", ft = { "http", "rest" }, function() require("kulala").jump_prev() end, },
 
-    ["Select environment"] = { "<leader>e", ft = { "http", "rest" }, function() require("kulala").set_selected_env() end, },
+    ["Select environment"] = { "<leader>ke", ft = { "http", "rest" }, function() require("kulala").set_selected_env() end, },
+    ["Manage Auth Config"] = { "<leader>ka", function() require("kulala.ui.auth_manager").open_auth_config() end, ft = { "http", "rest" }, },
     ["Download GraphQL schema"] = false,
 
-    ["Clear globals"] = { "<leader>x", ft = { "http", "rest" }, function() require("kulala").scripts_clear_global() end, },
-    ["Clear cached files"] = { "<leader>X", ft = { "http", "rest" }, function() require("kulala").clear_cached_files() end, }
+    ["Clear globals"] = { "<leader>kx", ft = { "http", "rest" }, function() require("kulala").scripts_clear_global() end, },
+    ["Clear cached files"] = { "<leader>kX", ft = { "http", "rest" }, function() require("kulala").clear_cached_files() end, }
   },
   kulala_keymaps = true,
   ui = {
     -- display mode: possible values: "split", "float"
-    display_mode = "split",
+    display_mode = "float",
     -- split direction: possible values: "vertical", "horizontal"
     split_direction = "horizontal",
     -- default view: "body" or "headers" or "headers_body" or "verbose" or fun(response: Response)
@@ -39,11 +40,11 @@ require("kulala").setup({
     winbar = true,
     -- Specify the panes to be displayed by default
     -- Current available pane contains { "body", "headers", "headers_body", "script_output", "stats", "verbose", "report", "help" },
-    default_winbar_panes = { "body", "headers", "headers_body", "verbose", "script_output", "report", "help" },
+    default_winbar_panes = { "headers_body", "body", "headers", "verbose", "script_output", "report", "help" },
     -- enable/disable variable info text
     -- this will show the variable name and value as float
     -- possible values: false, "float"
-    show_variable_info_text = false,
+    show_variable_info_text = "float",
     -- icons position: "signcolumn"|"on_request"|"above_request"|"below_request" or nil to disable
     show_icons = "on_request",
     -- default icons
@@ -89,6 +90,26 @@ require("kulala").setup({
       "{",
       '  "foo": "bar"',
       "}",
+      '',
+      '',
+      '',
+
+      '### https://github.com/mistweaverco/kulala.nvim/blob/main/lua/kulala/cmd/oauth.lua',
+      '### "Security": {',
+      '###   "Auth": {',
+      '###     "auth-id": {',
+      '###       "Type": "OAuth2",',
+      '###       "Grant Type": ["Authorization Code", "Client Credentials"],',
+      '###       "Token URL": "http://localhost:1234/getToken",',
+      '###       "Redirect URL": "http://localhost:1234",',
+      '###       "Acquire Automatically": true',
+      '###       "Client Credentials": ["in body", "basic", "jwt"]',
+      '###       "Client ID": "local_caller"',
+      '###       "Client Secret": "secret"',
+      '###       "Scope": ""',
+      '###     }',
+      '###   }',
+      '### }',
     },
     disable_news_popup = true,
   },
