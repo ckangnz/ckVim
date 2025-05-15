@@ -63,9 +63,6 @@ if [[ -d "$HOMEBREW_PREFIX/opt/lsd/bin" ]]; then
   alias lt="lsd --tree"
 fi
 
-# COMPLETIONS
-[[ -f $HOME/.vim/completions.zsh ]] && source $HOME/.vim/completions.zsh
-
 #alias
 alias neo="neovide --fork"
 
@@ -106,20 +103,16 @@ function speedTest() {
   done
 }
 
+# Extra Alias
+[[ -f $HOME/.extraAlias.zsh ]] && source $HOME/.extraAlias.zsh
+
+# COMPLETIONS
+[[ -f $HOME/.vim/completions.zsh ]] && source $HOME/.vim/completions.zsh
+
 # Powerlevel10k
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 POWERLINE_DISABLE_RPROMPT="true"
-
-# --------Custom Methods--------
-
-autoload -Uz add-zsh-hook
-load_extra_aliases() {
-  unfunction load_extra_aliases
-  [[ -f ~/.extraAlias.zsh ]] && source ~/.extraAlias.zsh
-}
-add-zsh-hook precmd load_extra_aliases
-
 
 # -------- ZSH VIM Mode
 bindkey -v
