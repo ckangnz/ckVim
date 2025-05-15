@@ -1,6 +1,3 @@
-# Load zsh + bash completions
-autoload -U +X bashcompinit && bashcompinit
-
 # Docker (before compinit, since it modifies fpath)
 if command -v docker &>/dev/null; then
   docker_comp_dir="${HOME}/.docker/completions"
@@ -11,12 +8,6 @@ if command -v docker &>/dev/null; then
   fi
   fpath+=("$docker_comp_dir")
 fi
-
-# Then run compinit
-autoload -U +X compinit
-compinit -C -d ~/.zcompdump &>/dev/null
-
-# --- Completion setup ---
 
 # Github CLI
 if [[ -x "${HOMEBREW_PREFIX}/bin/gh" ]]; then

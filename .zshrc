@@ -1,3 +1,8 @@
+# Load zsh + bash completions
+autoload -U +X bashcompinit && bashcompinit
+autoload -U +X compinit
+compinit -C -d ~/.zcompdump &>/dev/null
+
 # Set PATH
 typeset -U path
 path=(
