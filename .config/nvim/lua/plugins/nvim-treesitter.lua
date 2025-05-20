@@ -7,6 +7,7 @@ if vim.fn.has('nvim') then
   require 'nvim-treesitter.configs'.setup {
     highlight = { enable = true },
     ensure_installed = {
+      'gitignore', 'git_config',
       'vim', 'vimdoc', 'lua', 'luadoc', 'markdown', 'markdown_inline',
       'html', 'scss', 'dart',
       'java', 'python', 'c', 'c_sharp', 'kotlin',

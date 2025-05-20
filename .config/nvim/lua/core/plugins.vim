@@ -31,7 +31,8 @@ Plug 'pedrohdz/vim-yaml-folds', { 'for': [ 'yaml' ] }                " Fold meth
 
 " Git Tool
 Plug 'junegunn/gv.vim', { 'cmd': [ 'GV', 'GV!' ] }                   " Git commit history browser
-Plug 'tpope/vim-fugitive', { 'cmd': [ 'G', 'Git' ] }                  " Git on Vim
+Plug 'rhysd/vim-syntax-codeowners', { 'for': [ 'CODEOWNERS' ] }      " Git commit history browser
+Plug 'tpope/vim-fugitive', { 'cmd': [ 'G', 'Git' ] }                 " Git on Vim
 Plug 'tpope/vim-rhubarb'                                             " Github on Vim
 Plug 'tyru/open-browser-github.vim'                                  " Open Github URL
 Plug 'tyru/open-browser.vim'                                         " Open URL
