@@ -56,8 +56,7 @@ fi
 if [[ -f ~/.fzf.zsh ]]; then
   FZF_HOME="$HOMEBREW_PREFIX/opt/fzf"
   source ~/.fzf.zsh
-  [[ -f "$FZF_HOME/shell/completion.zsh" ]] && source "$FZF_HOME/shell/completion.zsh"
-  [[ -f "$FZF_HOME/shell/key-bindings.zsh" ]] && source "$FZF_HOME/shell/key-bindings.zsh"
+  source <(fzf --zsh)
 elif [[ -d "$HOMEBREW_PREFIX/opt/fzf/bin" ]]; then
   "$HOMEBREW_PREFIX/opt/fzf/install"
 fi
