@@ -1,4 +1,4 @@
-vim.g.codeium_enabled = false
+vim.g.codeium_enabled = true
 vim.g.codeium_disable_bindings = true
 vim.g.codeium_no_map_tab = true
 vim.g.codeium_render = true
