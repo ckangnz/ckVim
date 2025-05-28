@@ -4,18 +4,19 @@ require("kulala").setup({
     ["Open scratchpad"] = { "<leader>k?", ft = { "http", "rest" }, function() require("kulala").scratchpad() end, },
     ["Show help"] = { "?", function() require("kulala.ui").show_help() end, },
     ["Open kulala"] = { "<leader>ko", ft = { "http", "rest" }, function() require("kulala").open() end, },
-    ["Close kulala"] = false,
+
     ["Toggle headers/body"] = false,
     ["Show stats"] = false,
+
+    ["Copy as cURL"] = { "<leader>y", ft = { "http", "rest" }, function() require("kulala").copy() end, },
+    ["Paste from curl"] = { "<leader>p", ft = { "http", "rest" }, function() require("kulala").from_curl() end, },
 
     ["Send request"] = false,
     ["Send request <cr>"] = { "<CR>", ft = { "http", "rest" }, function() require("kulala").run() end, mode = { "n", "v" }, },
     ["Send all requests"] = { "<leader><CR>", ft = { "http", "rest" }, function() require("kulala").run_all() end, mode = { "n", "v" }, },
-    ["Inspect current request"] = false,
-    ["Replay the last request"] = { "<leader>kl", ft = { "http", "rest" }, function() require("kulala").replay() end, },
 
-    ["Copy as cURL"] = { "<leader>y", ft = { "http", "rest" }, function() require("kulala").copy() end, },
-    ["Paste from curl"] = { "<leader>p", ft = { "http", "rest" }, function() require("kulala").from_curl() end, },
+    ["Inspect current request"] = { "<leader>ki", function() require("kulala").inspect() end, ft = { "http", "rest" }, },
+    ["Replay the last request"] = { "<leader>kl", ft = { "http", "rest" }, function() require("kulala").replay() end, },
 
     ["Find request"] = { "<leader>f", ft = { "http", "rest" }, function() require("kulala").search() end, },
     ["Jump to next request"] = { "]", ft = { "http", "rest" }, function() require("kulala").jump_next() end, },
@@ -36,6 +37,8 @@ require("kulala").setup({
     split_direction = "horizontal",
     -- default view: "body" or "headers" or "headers_body" or "verbose" or fun(response: Response)
     default_view = "headers_body",
+    -- Enable/diable HTTP formatter
+    formatter = true,
     -- enable winbar
     winbar = true,
     -- Specify the panes to be displayed by default
@@ -90,7 +93,6 @@ require("kulala").setup({
       "{",
       '  "foo": "bar"',
       "}",
-      '',
       '',
       '',
 
