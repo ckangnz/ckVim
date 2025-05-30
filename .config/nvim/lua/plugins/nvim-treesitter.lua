@@ -2,7 +2,12 @@ if vim.fn.has('nvim') then
   vim.opt.foldmethod = 'expr'
   vim.opt.foldenable = false
   vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-  vim.api.nvim_create_autocmd({ "BufEnter" }, { pattern = { "*" }, command = "normal zx" })
+  vim.api.nvim_create_autocmd("BufReadPost", {
+    pattern = "*",
+    callback = function()
+      vim.cmd("normal! zx")
+    end,
+  })
 
   require 'nvim-treesitter.configs'.setup {
     highlight = { enable = true },

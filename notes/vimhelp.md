@@ -51,6 +51,10 @@
 ### Folding
 
     <space>                         toggle fold
+    zR                              open all folds
+    zr                              increment open fold
+    zM                              close all folds
+    zm                              decrement close fold
 
 ### Vim-Sandwich
 
