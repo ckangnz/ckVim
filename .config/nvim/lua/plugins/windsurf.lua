@@ -5,11 +5,12 @@ vim.g.codeium_render = true
 vim.g.codeium_manual = true
 vim.g.codeium_tab_fallback = "\t"
 
-vim.keymap.set('i', '<M-w>', function() return vim.fn['codeium#AcceptNextWord()']() end, { expr = true, silent = true })
-vim.keymap.set('i', '<M-;>', function() return vim.fn['codeium#AcceptNextLine()']() end, { expr = true, silent = true })
-vim.keymap.set('i', '<M-d>', function() return vim.fn['codeium#CycleOrComplete']() end, { expr = true, silent = true })
-vim.keymap.set('i', '<M-s>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
-vim.keymap.set('i', '<M-f>', function() return vim.fn['codeium#Complete'](-1) end, { expr = true, silent = true })
+vim.keymap.set('i', '<M-w>', function() return vim.fn['codeium#AcceptNextWord']() end, { expr = true, silent = true })
+vim.keymap.set('i', '<M-a>', function() return vim.fn['codeium#AcceptNextLine']() end, { expr = true, silent = true })
+vim.keymap.set('i', '<M-[>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
+vim.keymap.set('i', '<M-]>', function() return vim.fn['codeium#CycleOrComplete']() end, { expr = true, silent = true })
+vim.keymap.set('i', '<M-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
+-- vim.keymap.set('i', '<M-]>', function() return vim.fn['codeium#Complete'](-1) end, { expr = true, silent = true })
 
 vim.api.nvim_create_user_command("EnableCodeium", ":Codeium Enable", {})
 vim.api.nvim_create_user_command("DisableCodeium", "Codeium Disable", {})
