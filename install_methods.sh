@@ -1,9 +1,9 @@
 # Define colors
-GREEN="\e[32m"
-YELLOW="\e[33m"
-CYAN="\e[36m"
-RED="\e[31m"
-RESET="\e[0m"  # Reset color
+GREEN="\033[32m"
+YELLOW="\033[33m"
+CYAN="\033[36m"
+RED="\033[31m"
+RESET="\033[0m"
 
 unameOut="$(uname -s)"
 case "${unameOut}" in
