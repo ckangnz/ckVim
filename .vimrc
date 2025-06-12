@@ -15,6 +15,7 @@ so ~/.vim/.config/nvim/lua/plugins/undotree.vim
 so ~/.vim/.config/nvim/lua/plugins/git.vim
 so ~/.vim/.config/nvim/lua/plugins/nerdcommenter.vim
 so ~/.vim/.config/nvim/lua/plugins/open-browser.vim
+so ~/.vim/.config/nvim/lua/plugins/switch.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-bookmarks.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-dadbod.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-docker-tools.vim
