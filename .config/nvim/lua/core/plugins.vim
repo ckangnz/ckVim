@@ -39,7 +39,6 @@ Plug 'tyru/open-browser.vim'                                         " Open URL
 
 " Pairing
 Plug 'machakann/vim-sandwich'                                        " Easy text wrap tool
-Plug 'tmhedberg/matchit'                                             " More functionality to %
 Plug 'tpope/vim-repeat'                                              " Repeat tpope's plugins
 Plug 'windwp/nvim-autopairs', { 'event': 'InsertEnter' }             " Automatic closing ({['']})
 
