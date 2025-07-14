@@ -10,7 +10,6 @@ vim.keymap.set('i', '<M-a>', function() return vim.fn['codeium#AcceptNextLine'](
 vim.keymap.set('i', '<M-[>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
 vim.keymap.set('i', '<M-]>', function() return vim.fn['codeium#CycleOrComplete']() end, { expr = true, silent = true })
 vim.keymap.set('i', '<M-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
--- vim.keymap.set('i', '<M-]>', function() return vim.fn['codeium#Complete'](-1) end, { expr = true, silent = true })
 
 vim.api.nvim_create_user_command("EnableCodeium", ":Codeium Enable", {})
 vim.api.nvim_create_user_command("DisableCodeium", "Codeium Disable", {})
