@@ -26,5 +26,5 @@ so ~/.vim/.config/nvim/lua/plugins/vim-test.vim
 so ~/.vim/.config/nvim/lua/plugins/vim-windowswap.vim
 "*-*-*-*-*-*-HIGHLIGHT OVERRIDE-*-*-*-*-*-*
 so ~/.vim/.config/nvim/lua/core/highlights.vim
-"*-*-*-*-*-*-AUTO COMMANDS-*-*-*-*-*-*
-so ~/.vim/.config/nvim/lua/core/autosource.vim
+"*-*-*-*-*-*-AUGROUPS-*-*-*-*-*-*
+so ~/.vim/.config/nvim/lua/core/augroups.vim
