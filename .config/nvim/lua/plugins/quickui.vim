@@ -5,12 +5,8 @@ let g:quickui_color_scheme = 'papercol-dark'
 "*-*-*-*-*-*-MY PATH MENU-*-*-*-*-*-*
 let myPathsOpts={ "title": "My Paths" }
 let myPaths=[]
-if exists('g:neovide') || has('nvim')
-  call add(myPaths,['.vimrc (&v)','vsp $HOME/.vimrc'])
-  call add(myPaths,['init.lua (&b)','vsp $MYVIMRC'])
-else
-  call add(myPaths,['.vimrc (&v)','vsp $MYVIMRC'])
-endif
+call add(myPaths,['.vimrc (&v)','vsp $HOME/.vimrc'])
+call add(myPaths,['init.lua (&b)','vsp $HOME/.vim/.config/nvim/init.lua'])
 call add(myPaths,['.zshrc (&z)','vsp $HOME/.zshrc'])
 call add(myPaths,['.extraAlias.zsh (&a)','vsp $HOME/.extraAlias.zsh'])
 call add(myPaths,['.tmux.conf (&t)','e $HOME/.config/tmux/tmux.conf'])
