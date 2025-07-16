@@ -83,7 +83,7 @@ vnoremap <silent><expr> <C-k> coc#float#has_scroll() ? coc#float#scroll(0) : "\<
 let g:coc_snippet_next = '<TAB>'
 
 " Enter Key Completion
-inoremap <expr> <CR> coc#pum#visible() && coc#pum#has_confirm() ? coc#pum#confirm() : "\<C-g>u\<CR>"
+inoremap <expr> <CR> coc#pum#visible() && coc#pum#has_item_selected() ? coc#pum#confirm() : "\<C-g>u\<CR>"
 
 " ==========================================
 " Commands

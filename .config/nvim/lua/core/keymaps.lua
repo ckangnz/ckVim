@@ -8,7 +8,7 @@ end
 , { expr = true, silent = true })
 
 vim.keymap.set('i', '<Tab>', function()
-  if vim.fn['coc#pum#visible']() == 1 then
+  if vim.fn['coc#pum#visible']() == 1 and vim.fn['coc#pum#has_item_selected']() == 1 then
     return vim.fn['coc#pum#confirm']()
   elseif vim.fn['coc#expandableOrJumpable']() == 1 then
     return vim.api.nvim_replace_termcodes(
