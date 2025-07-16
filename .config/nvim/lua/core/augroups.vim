@@ -11,8 +11,6 @@ augroup AutoSourcing
     if has('nvim') || exists('g:neovide')
       autocmd BufWritePost $HOME/.vimrc source $MYVIMRC
     endif
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
-    autocmd BufWritePost $HOME/.vim/.config/nvim/* source $MYVIMRC
   endif
 augroup END
 
