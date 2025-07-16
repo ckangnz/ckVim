@@ -107,6 +107,18 @@ function speedTest() {
   done
 }
 
+function fixCompaudits() {
+  local files=()
+  while IFS= read -r line; do
+    files+=("$line")
+  done < <(compaudit)
+  echo "🔐 Fixing compaudit issues..."
+  for file in "${files[@]}"; do
+    chmod go-w "$file"
+  done
+  echo "✅ Compaudit issues fixed."
+}
+
 # Extra Alias
 [[ -f $HOME/.extraAlias.zsh ]] && source $HOME/.extraAlias.zsh
 
