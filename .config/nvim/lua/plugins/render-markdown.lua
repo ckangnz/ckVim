@@ -1,5 +1,6 @@
 require('render-markdown').setup({
   enabled = true,
+  file_types = { 'markdown', 'codecompanion' },
   render_modes = { 'n', 'i', 'v', 'V', 'c', 't' },
   latex = { enabled = false },
   heading = {

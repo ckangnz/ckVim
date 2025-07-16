@@ -17,8 +17,11 @@ Plug 'nvim-tree/nvim-web-devicons'                                   " Devicons
 " Essential
 Plug 'dstein64/vim-startuptime'                                      " Show :StartupTime
 Plug 'stevearc/oil.nvim', { 'on': '-' }                              " Easy Netrw with '-'
+
+" AI
 Plug 'zbirenbaum/copilot.lua', { 'cmd': 'Copilot' }                  " Github Copilot
 Plug 'AndreM222/copilot-lualine'                                     " Github Copilot lualine
+Plug 'olimorris/codecompanion.nvim'                                  " Chat agent
 Plug 'Exafunction/windsurf.vim', { 'branch': 'main', 'cmd': 'Codeium' } " Windsurf AI
 
 " VIM GUI
