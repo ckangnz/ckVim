@@ -88,23 +88,55 @@ if vim.fn.has('nvim') then
       },
       lualine_y = {
         {
+          'copilot',
+          symbols = {
+            status = {
+              icons = {
+                enabled = "  ON",
+                sleep = "󰒲 SLP",
+                disabled = "  OFF",
+                warning = "  WRN",
+                unknown = " UNK"
+              },
+              hl = {
+                enabled = Colors.white,
+                sleep = Colors.light_grey,
+                disabled = Colors.white,
+                warning = Colors.dark_red,
+                unknown = Colors.light_grey
+              }
+            },
+            spinners = {
+              "✶",
+              "✸",
+              "✹",
+              "✺",
+              "✹",
+              "✷",
+            },
+            spinner_color = "#61afef"
+          },
+          show_colors = true,
+          show_loading = true
+        },
+        {
           function()
             local status = vim.fn['codeium#GetStatusString']()
-            local robot_icon_on = ""
-            local robot_icon_off = ""
+            local robot_icon_on = " "
+            local robot_icon_off = " "
 
             if status == ' * ' then
               local animation = animate({ "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }, 150)
-              return robot_icon_on .. "   " .. animation
+              return robot_icon_on .. "  " .. animation
             elseif status == "   " then
               local animation = animate({ ".  ", ".. ", "...", " ..", "  .", "   ", }, 200)
-              return robot_icon_on .. " " .. animation
+              return robot_icon_on .. animation
             elseif status == ' ON' then
-              return robot_icon_on .. " " .. status
+              return robot_icon_on .. status
             elseif status == 'OFF' then
-              return robot_icon_off .. " " .. status
+              return robot_icon_off .. status
             else
-              return robot_icon_on .. " " .. status
+              return robot_icon_on .. status
             end
           end,
           color = function()

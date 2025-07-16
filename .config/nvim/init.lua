@@ -5,6 +5,7 @@ vim.opt.packpath = vim.opt.runtimepath:get()
 vim.cmd("source " .. home_dir .. "/.vimrc")
 
 require 'core.myTheme'
+require 'core.keymaps'
 
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufEnter' }, {
   pattern = '*',
@@ -24,6 +25,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufEnter' }, {
 vim.api.nvim_create_autocmd('InsertEnter', {
   pattern = '*',
   callback = function()
+    require 'plugins.copilot'
     require 'plugins.autopairs'
   end,
 })
