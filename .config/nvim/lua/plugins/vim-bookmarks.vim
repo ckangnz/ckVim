@@ -1,5 +1,5 @@
 "---------BOOKMARKS: MattesGroeger/vim-bookmarks
-let g:bookmark_sign = '♥'
+let g:bookmark_sign = ' '
 let g:bookmark_highlight_lines = 1
 let g:bookmark_auto_close = 1
 let g:bookmark_center = 1
