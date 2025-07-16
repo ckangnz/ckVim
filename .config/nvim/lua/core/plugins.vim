@@ -10,15 +10,17 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| PlugInstall --sync | source $MYVIMRC
 \| endif
 
+"NVIM Dependencies
+Plug 'nvim-lua/plenary.nvim'                                         " Essential for nvim plugins
+Plug 'nvim-tree/nvim-web-devicons'                                   " Devicons
+
 " Essential
 Plug 'dstein64/vim-startuptime'                                      " Show :StartupTime
-Plug 'nvim-lua/plenary.nvim'                                         " Essential for nvim plugins
 Plug 'stevearc/oil.nvim', { 'on': '-' }                              " Easy Netrw with '-'
 Plug 'Exafunction/windsurf.vim', { 'branch': 'main', 'cmd': 'Codeium' } " Windsurf AI
 
 " VIM GUI
 Plug 'nvim-lualine/lualine.nvim'                                     " Status line
-Plug 'nvim-tree/nvim-web-devicons'                                   " Devicons
 Plug 'sainnhe/gruvbox-material'                                      " Gruvbox Theme
 Plug 'skywind3000/vim-quickui'                                       " Context Quick UI
 Plug 'sphamba/smear-cursor.nvim'                                     " Smooth cursor
@@ -26,6 +28,7 @@ Plug 'sphamba/smear-cursor.nvim'                                     " Smooth cu
 " Language Specific
 Plug 'mattn/emmet-vim', { 'for':
       \[ 'html', 'css', 'javascriptreact', 'typescriptreact'] }      " HTML/CSS emmet
+Plug 'MeanderingProgrammer/render-markdown.nvim'                     " Markdown renderer
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate', 'event': 'BufReadPre' } " Syntax highlight by treesitter
 Plug 'pedrohdz/vim-yaml-folds', { 'for': [ 'yaml' ] }                " Fold method for .yaml
 
@@ -55,7 +58,6 @@ Plug 'tom-anders/telescope-vim-bookmarks.nvim'                       " Bookmarks
 " Functionality
 Plug 'Asheq/close-buffers.vim', { 'cmd': [ 'Bdelete', 'Bwipeout' ] } " Delete hidden buffers
 Plug 'AndrewRadev/switch.vim', { 'cmd': [ 'Switch', 'SwitchReverse' ] } " Delete hidden buffers
-Plug 'MeanderingProgrammer/render-markdown.nvim'                     " Markdown renderer
 Plug 'airblade/vim-rooter'                                           " Find the root of the project automatically
 Plug 'dominikduda/vim_current_word'                                  " Highlight current word
 Plug 'easymotion/vim-easymotion'                                     " Easy Navigation

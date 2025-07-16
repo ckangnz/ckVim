@@ -60,7 +60,7 @@ create_symlink() {
 
   if [ -e "$link_name" ]; then
     echo -e "${YELLOW}FOUND:${RESET}$link_name already exists!"
-    echo "${CYAN}REMOVING:${RESET} existing $target..."
+    echo -e "${CYAN}REMOVING:${RESET} existing $target..."
     rm -rf "$link_name"
   fi
 

@@ -88,7 +88,6 @@ if vim.fn.has('nvim') then
       },
       lualine_y = {
         {
-
           function()
             local status = vim.fn['codeium#GetStatusString']()
             local robot_icon_on = ""
