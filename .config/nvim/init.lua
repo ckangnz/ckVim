@@ -16,6 +16,9 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufEnter' }, {
     require 'plugins.smear-cursor'
     require 'plugins.telescope'
     require 'plugins.todo-comments'
+
+    require 'plugins.copilot'
+    require 'plugins.windsurf'
     require 'plugins.codecompanion'
 
     vim.opt.suffixesadd:prepend('.lua')
@@ -25,8 +28,6 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufEnter' }, {
 vim.api.nvim_create_autocmd('InsertEnter', {
   pattern = '*',
   callback = function()
-    require 'plugins.copilot'
-    require 'plugins.windsurf'
     require 'plugins.autopairs'
   end,
 })

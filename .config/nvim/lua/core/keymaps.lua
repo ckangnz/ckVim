@@ -8,15 +8,15 @@ end
 , { expr = true, silent = true })
 
 vim.keymap.set('i', '<Tab>', function()
-  if vim.fn['coc#expandableOrJumpable']() == 1 then
+  if vim.fn['coc#pum#visible']() == 1 then
+    return vim.fn['coc#pum#confirm']()
+  elseif vim.fn['coc#expandableOrJumpable']() == 1 then
     return vim.api.nvim_replace_termcodes(
       vim.fn['coc#rpc#request']('doKeymap', { 'snippets-expand-jump', '' }),
       true, true, true
     )
     -- elseif vim.fn['codeium#Accept']() ~= '' then
     --   return vim.fn['codeium#Accept']()
-  elseif vim.fn['coc#pum#visible']() == 1 then
-    return vim.fn['coc#pum#confirm']()
   else
     return "\t"
   end

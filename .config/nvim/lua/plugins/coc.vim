@@ -76,16 +76,6 @@ vnoremap <silent><expr> <C-j> coc#float#has_scroll() ? coc#float#scroll(1) : "\<
 vnoremap <silent><expr> <C-k> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-w>\<C-k>"
 
 " ==========================================
-" Insert Mode Enhancements
-" ==========================================
-
-" Tab Completion with Coc and Codeium
-let g:coc_snippet_next = '<TAB>'
-
-" Enter Key Completion
-inoremap <expr> <CR> coc#pum#visible() && coc#pum#has_item_selected() ? coc#pum#confirm() : "\<C-g>u\<CR>"
-
-" ==========================================
 " Commands
 " ==========================================
 
