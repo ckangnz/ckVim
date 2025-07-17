@@ -87,6 +87,7 @@ if vim.fn.has('nvim') then
         },
       },
       lualine_y = {
+        { 'codecompanion' },
         {
           'copilot',
           symbols = {

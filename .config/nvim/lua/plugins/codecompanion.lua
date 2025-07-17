@@ -39,7 +39,11 @@ require("codecompanion").setup({
       },
       opts = { completion_provider = "coc" }
     }
-  }
+  },
+  extensions = {
+    spinner = {},
+  },
+
 })
 
 vim.keymap.set('n', '<M-o>', function() vim.cmd('CodeCompanionChat Toggle') end, { desc = 'Open CodeCompanion Chat' })
