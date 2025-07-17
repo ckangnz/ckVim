@@ -1,7 +1,7 @@
 vim.api.nvim_create_user_command("ToggleCopilot", ":Copilot toggle", {})
 
 require('copilot').setup({
-  copilot_model = "",
+  copilot_model = "claude-sonnet-4",
   panel = {
     enabled = true,
     auto_refresh = false,
