@@ -108,13 +108,9 @@ function speedTest() {
 }
 
 function fixCompaudits() {
-  local files=()
-  while IFS= read -r line; do
-    files+=("$line")
-  done < <(compaudit)
-  echo "🔐 Fixing compaudit issues..."
-  for file in "${files[@]}"; do
-    chmod go-w "$file"
+  compaudit | while read file; do
+  echo "🔐 Fixing $file..."
+  sudo chmod go-w "$file"
   done
   echo "✅ Compaudit issues fixed."
 }
