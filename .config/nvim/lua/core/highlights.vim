@@ -3,7 +3,7 @@ augroup WhitespaceMatch
   func! s:ToggleWhitespaceMatch(mode)
     let pattern = (a:mode == 'i') ? '\s\+\%#\@<!$' : '\s\+$'
 
-    let excluded_filetypes = ['ctrlsf', 'help', 'codecompanion']
+    let excluded_filetypes = ['ctrlsf', 'help', 'codecompanion', 'mcphub']
     if index(excluded_filetypes, &filetype) >= 0
       if exists('w:whitespace_match_number')
         call matchdelete(w:whitespace_match_number)
