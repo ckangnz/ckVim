@@ -1,7 +1,7 @@
 if vim.fn.has('nvim') then
   vim.opt.foldmethod = 'expr'
   vim.opt.foldenable = false
-  vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+  vim.wo.foldexpr = vim.treesitter.foldexpr()
   vim.api.nvim_create_autocmd("BufReadPost", {
     pattern = "*",
     callback = function()

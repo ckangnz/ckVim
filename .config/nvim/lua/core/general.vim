@@ -106,7 +106,6 @@ endif
 "nbsp = alt + space
 "tab = ctrl+v+tab
 "extends/preceds = edge of phrase when set nowrap
-let g:markdown_recommended_style=0
 set list lcs=
       \space:\ ,
       \tab:»»,
@@ -216,8 +215,8 @@ augroup vimrc
 augroup END
 
 "*-*-*-*-*-*-CUSTOM FOLD STYLE-*-*-*-*-*-*
-" set foldmethod=syntax
-:setlocal foldcolumn=0
+set foldmethod=syntax
+set foldcolumn=0
 set foldlevel=99
 set foldlevelstart=99
 
