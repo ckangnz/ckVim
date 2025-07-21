@@ -25,7 +25,7 @@ require("codecompanion").setup({
         },
         ["buffer"] = {
           keymaps = {
-            modes = { n = { "<C-b>" }, },
+            modes = { n = { "<C-b>", "<leader>b" }, },
           },
         },
       }
@@ -46,7 +46,6 @@ require("codecompanion").setup({
     }
   },
   extensions = {
-    spinner = {},
     mcphub = {
       callback = "mcphub.extensions.codecompanion",
       opts = {
