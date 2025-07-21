@@ -1,11 +1,15 @@
+-- Set this in ZSHRC
+-- export CODECOMPANION_ADAPTER_NAME="copilot"
+-- export CODECOMPANION_ADAPTER_MODEL="claude-sonnet-4"
+
 require("mcphub").setup()
 require("codecompanion").setup({
   strategies = {
     chat = {
       adapter = {
-        name = "copilot",
+        name = os.getenv("CODECOMPANION_ADAPTER_NAME") or "githubmodels",
+        model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "github-4.1",
         -- "claude-3.7-sonnet", "gemini-2.0-flash-001", "claude-opus-4", "claude-3.7-sonnet-thought", "o3-mini", "gpt-4.1", "gpt-4o",
-        model = "claude-sonnet-4",
       },
       roles = {
         llm = function(adapter)
@@ -32,15 +36,15 @@ require("codecompanion").setup({
     },
     inline = {
       adapter = {
-        name = "copilot",
-        model = 'claude-sonnet-4'
+        name = os.getenv("CODECOMPANION_ADAPTER_NAME") or "githubmodels",
+        model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "github-4.1",
       },
       opts = { completion_provider = "coc" }
     },
     cmd = {
       adapter = {
-        name = "copilot",
-        model = 'claude-sonnet-4'
+        name = os.getenv("CODECOMPANION_ADAPTER_NAME") or "githubmodels",
+        model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "github-4.1",
       },
       opts = { completion_provider = "coc" }
     }

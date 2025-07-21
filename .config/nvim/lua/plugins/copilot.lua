@@ -1,7 +1,10 @@
+-- Set this in ZSHRC
+-- export COPILOT_MODEL="claude-sonnet-4"
+
 vim.api.nvim_create_user_command("ToggleCopilot", ":Copilot toggle", {})
 
 require('copilot').setup({
-  copilot_model = "claude-sonnet-4",
+  copilot_model = os.getenv("COPILOT_MODEL") or "github-4.1",
   panel = {
     enabled = true,
     auto_refresh = false,
