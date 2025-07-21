@@ -110,10 +110,10 @@ require 'lualine'.setup {
             },
             hl = {
               enabled = Colors.white,
-              sleep = Colors.light_grey,
-              disabled = Colors.white,
+              disabled = Colors.light_grey,
               warning = Colors.dark_red,
-              unknown = Colors.light_grey
+              sleep = Colors.light_black,
+              unknown = Colors.light_black
             }
           },
           spinners = {
@@ -124,10 +124,10 @@ require 'lualine'.setup {
             "✹",
             "✷",
           },
-          spinner_color = "#61afef"
+          spinner_color = Colors.cyan
         },
         show_colors = true,
-        show_loading = true
+        show_loading = true,
       },
       {
         function()
@@ -152,7 +152,7 @@ require 'lualine'.setup {
         color = function()
           local status = vim.fn['codeium#GetStatusString']()
           if status == ' * ' then
-            return { fg = "#61afef" }
+            return { fg = Colors.cyan }
           elseif status == " 0 " then
             return { fg = Colors.light_grey }
           else
@@ -166,10 +166,50 @@ require 'lualine'.setup {
           local status = value:match("%d+ (.+)")
           return status
         end,
-        color = { fg = Colors.white },
+        color = { fg = Colors.white, bg = Colors.black },
         icon = "󰛰 ",
         spinner_symbols = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
         done_symbol = "✓",
+      },
+      {
+        function()
+          -- Check if MCPHub is loaded
+          if not vim.g.loaded_mcphub then
+            return "󰐻 -"
+          end
+
+          local count = vim.g.mcphub_servers_count or 0
+          local status = vim.g.mcphub_status or "stopped"
+          local executing = vim.g.mcphub_executing
+
+          -- Show "-" when stopped
+          if status == "stopped" then
+            return "󰐻 -"
+          end
+
+          -- Show spinner when executing, starting, or restarting
+          if executing or status == "starting" or status == "restarting" then
+            local frames = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+            local frame = math.floor(vim.loop.now() / 100) % #frames + 1
+            return "󰐻 " .. frames[frame]
+          end
+
+          return "󰐻 " .. count
+        end,
+        color = function()
+          if not vim.g.loaded_mcphub then
+            return { fg = Colors.light_black, bg = Colors.black } -- Gray for not loaded
+          end
+
+          local status = vim.g.mcphub_status or "stopped"
+          if status == "ready" or status == "restarted" then
+            return { fg = Colors.white, bg = Colors.black }
+          elseif status == "starting" or status == "restarting" then
+            return { fg = Colors.brown, bg = Colors.black }
+          else
+            return { fg = Colors.dark_red, bg = Colors.black }
+          end
+        end,
       },
       {
         'g:asyncrun_status',
