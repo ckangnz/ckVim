@@ -22,7 +22,6 @@ Plug 'stevearc/oil.nvim', { 'on': '-' }                              " Easy Netr
 Plug 'zbirenbaum/copilot.lua', { 'cmd': 'Copilot' }                  " Github Copilot
 Plug 'AndreM222/copilot-lualine'                                     " Github Copilot lualine
 Plug 'olimorris/codecompanion.nvim'                                  " Chat agent
-Plug 'franco-ruggeri/codecompanion-spinner.nvim'                     " CodeCompanion loader
 Plug 'franco-ruggeri/codecompanion-lualine.nvim'                     " CodeCompanion lualine
 Plug 'ravitemer/mcphub.nvim', { 'do': 'npm install -g mcp-hub@latest'}  " MCP Hub
 Plug 'Exafunction/windsurf.vim', { 'branch': 'main', 'cmd': 'Codeium' } " Windsurf AI
