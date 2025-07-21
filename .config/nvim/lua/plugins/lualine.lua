@@ -124,7 +124,7 @@ require 'lualine'.setup {
             "✹",
             "✷",
           },
-          spinner_color = Colors.cyan
+          spinner_color = Colors.dark_cyan
         },
         show_colors = true,
         show_loading = true,
@@ -152,8 +152,8 @@ require 'lualine'.setup {
         color = function()
           local status = vim.fn['codeium#GetStatusString']()
           if status == ' * ' then
-            return { fg = Colors.cyan }
-          elseif status == " 0 " then
+            return { fg = Colors.dark_cyan }
+          elseif status == "OFF" then
             return { fg = Colors.light_grey }
           else
             return { fg = Colors.white }
@@ -163,8 +163,7 @@ require 'lualine'.setup {
       {
         'codecompanion',
         fmt = function(value)
-          local status = value:match("%d+ (.+)")
-          return status
+          return value:match("%d+ (.+)")
         end,
         color = { fg = Colors.white, bg = Colors.black },
         icon = "󰛰 ",

@@ -28,5 +28,15 @@ vim.g.codeium_filetypes = {
   ["javascript"] = true,
   ["javascriptreact"] = true,
   ["typescript"] = true,
-  ["typescriptreact"] = true
+  ["typescriptreact"] = true,
+  yaml = false,
+  markdown = false,
+  help = false,
+  gitcommit = false,
+  gitrebase = false,
+  fugitive = false,
+  hgcommit = false,
+  svn = false,
+  cvs = false,
+  ["."] = false,
 }
