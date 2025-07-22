@@ -76,6 +76,51 @@ require("codecompanion").setup({
         make_vars = true,                     -- Convert MCP resources to #variables for prompts
         make_slash_commands = true,           -- Add MCP prompts as /slash commands
       }
+    },
+    history = {
+      enabled = true,
+      opts = {
+        keymap = "gho",
+        save_chat_keymap = "ghi",
+        auto_save = true,
+        expiration_days = 0,
+        picker = "telescope",
+        chat_filter = nil,
+        picker_keymaps = {
+          rename = { n = "r", i = "<C-r>" },
+          delete = { n = "d", i = "<C-d>" },
+          duplicate = { n = "<C-y>", i = "<C-y>" },
+        },
+        auto_generate_title = true,
+        title_generation_opts = {
+          adapter = os.getenv("CODECOMPANION_ADAPTER_NAME") or "githubmodels",
+          model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "github-4.1",
+          refresh_every_n_prompts = 0,
+          max_refreshes = 3,
+          format_title = function(original_title)
+            return original_title
+          end
+        },
+        continue_last_chat = false,
+        delete_on_clearing_chat = true,
+        dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
+        enable_logging = false,
+        summary = {
+          -- Keymap to generate summary for current chat
+          create_summary_keymap = "ghs",
+          -- Keymap to browse summaries
+          browse_summaries_keymap = "ghb",
+          generation_opts = {
+            adapter = nil,               -- defaults to current chat adapter
+            model = nil,                 -- defaults to current chat model
+            context_size = 90000,        -- max tokens that the model supports
+            include_references = true,   -- include slash command content
+            include_tool_outputs = true, -- include tool execution results
+            system_prompt = nil,         -- custom system prompt (string or function)
+            format_summary = nil,        -- custom function to format generated summary e.g to remove <think/> tags from summary
+          },
+        },
+      }
     }
   },
 })

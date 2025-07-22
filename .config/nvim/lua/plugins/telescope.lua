@@ -28,6 +28,8 @@ if vim.fn.has('nvim') then
           ["<C-p>"] = actions.move_selection_previous,
           ["<C-j>"] = 'preview_scrolling_down',
           ["<C-k>"] = 'preview_scrolling_up',
+          ["<C-d>"] = false, -- Disable preview scroll down
+          ["<C-u>"] = false, -- Disable preview scroll up
           ["<C-h>"] = 'preview_scrolling_left',
           ["<C-l>"] = 'preview_scrolling_right',
           ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
