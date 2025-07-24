@@ -1,5 +1,12 @@
+if not vim.g.loaded_sandwich then
+  local lazy = require('lazy')
+  lazy.load({ plugins = { 'vim-sandwich' } })
+end
 vim.cmd('runtime macros/sandwich/keymap/surround.vim')
-vim.g['sandwich#recipes'] = vim.fn.deepcopy(vim.g['sandwich#default_recipes'])
+
+if vim.g['sandwich#default_recipes'] then
+  vim.g['sandwich#recipes'] = vim.fn.deepcopy(vim.g['sandwich#default_recipes'])
+end
 
 local custom_recipes = {
   {
