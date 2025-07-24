@@ -110,16 +110,15 @@ local plugins = {
       'hrsh7th/nvim-cmp',
       'nvim-telescope/telescope.nvim',
       'franco-ruggeri/codecompanion-lualine.nvim',
+      'ravitemer/codecompanion-history.nvim',
       { 'stevearc/dressing.nvim', opts = {} },
     },
     config = function()
       require('plugins.codecompanion')
     end,
   },
-  { 'ravitemer/codecompanion-history.nvim' },
   {
     'ravitemer/mcphub.nvim',
-    cmd = { 'CodeCompanion', 'CodeCompanionChat', 'CodeCompanionAction' },
     build = 'npm install -g mcp-hub@latest',
     config = function()
       require('mcphub').setup()
