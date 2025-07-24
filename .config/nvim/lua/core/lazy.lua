@@ -262,7 +262,7 @@ local plugins = {
   },
   {
     'neovim/nvim-lspconfig',
-    event = { 'BufReadPost', 'BufNewFile' }, -- Use BufReadPost instead of BufReadPre
+    event = { 'BufReadPost', 'BufNewFile' },
     dependencies = {
       'mason.nvim',
       'mason-lspconfig.nvim',
@@ -456,7 +456,7 @@ local plugins = {
   },
   {
     'scrooloose/nerdcommenter',
-    keys = { '<leader>c' },
+    event = { 'BufReadPost' },
     config = function()
       vim.g.NERDCreateDefaultMappings = 1
       vim.g.NERDSpaceDelims = 1

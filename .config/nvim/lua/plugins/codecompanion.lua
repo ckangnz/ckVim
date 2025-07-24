@@ -129,7 +129,6 @@ vim.keymap.set('n', '<BS>', function() vim.cmd('CodeCompanionChat Toggle') end, 
 vim.keymap.set('v', '<BS>', function()
   vim.cmd('CodeCompanionChat Add')
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
-  -- Focus on CodeCompanion window after adding selection
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     local buf_name = vim.api.nvim_buf_get_name(buf)
     if buf_name:match('CodeCompanion') then
