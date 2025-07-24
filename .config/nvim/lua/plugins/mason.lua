@@ -12,23 +12,14 @@ mason.setup({
       package_pending = "➜",
       package_uninstalled = "✗"
     },
-    keymaps = {
-      toggle_package_expand = "<CR>",
-      install_package = "i",
-      update_package = "u",
-      check_package_version = "c",
-      update_all_packages = "U",
-      check_outdated_packages = "C",
-      uninstall_package = "X",
-      cancel_installation = "<C-c>",
-      apply_language_filter = "<C-f>",
-      toggle_package_install_log = "<CR>",
-      toggle_help = "g?",
-    },
   },
   install_root_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "mason"),
-  log_level = vim.log.levels.INFO,
-  max_concurrent_installers = 4,
+  log_level = vim.log.levels.WARN,  -- Reduce logging for performance
+  max_concurrent_installers = 8,   -- Increase concurrent installers
+  github = {
+    -- Reduce GitHub API calls during startup
+    download_url_template = 'https://github.com/%s/releases/download/%s/%s',
+  },
 })
 
 -- LSP servers to install automatically
@@ -91,13 +82,21 @@ local ensure_installed_tools = {
 
 mason_lspconfig.setup({
   ensure_installed = ensure_installed_servers,
-  automatic_installation = true,
+  automatic_installation = false,  -- Disable automatic installation on startup
   handlers = {
     function(server_name)
       require('plugins.lsp').setup_server(server_name)
     end,
   },
 })
+
+-- Defer automatic installation to after startup
+vim.defer_fn(function()
+  mason_lspconfig.setup({
+    ensure_installed = ensure_installed_servers,
+    automatic_installation = true,
+  })
+end, 1000)  -- Delay by 1 second
 
 vim.api.nvim_create_user_command('Mason', function()
   require('mason.ui').open()

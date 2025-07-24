@@ -1,5 +1,3 @@
-local M = {}
-
 local function toggle_whitespace_match(mode)
   local pattern = (mode == 'i') and '\\s\\+\\%#\\@<!$' or '\\s\\+$'
 
@@ -36,30 +34,22 @@ vim.api.nvim_create_autocmd('InsertEnter', {
   end,
 })
 
-local function setup_highlights()
-  vim.api.nvim_set_hl(0, 'ExtraWhitespace', { bg = Colors.dark_red, ctermbg = 'red' })
-  vim.api.nvim_set_hl(0, 'Search', { fg = Colors.black, bg = Colors.white, ctermfg = 'black', ctermbg = 'white' })
-  vim.api.nvim_set_hl(0, 'CurSearch', { reverse = true, bold = true, cterm = { reverse = true, bold = true } })
-  vim.api.nvim_set_hl(0, 'CodeiumSuggestion', { fg = Colors.light_grey, ctermfg = 245 })
-  if not vim.g.neovide then
-    local transparent_groups = {
-      'Normal', 'NormalNC', 'Comment', 'Constant', 'Special', 'Identifier',
-      'Statement', 'PreProc', 'Type', 'Underlined', 'Todo', 'String',
-      'Function', 'Conditional', 'Repeat', 'Operator', 'Structure',
-      'LineNr', 'NonText', 'SignColumn', 'CursorLine', 'CursorLineNr',
-      'StatusLine', 'StatusLineNC', 'TabLine', 'TabLineFill', 'EndOfBuffer'
-    }
+-- Search highlights
+vim.api.nvim_set_hl(0, 'Search', { fg = Colors.black, bg = Colors.white, ctermfg = 'black', ctermbg = 'white' })
+vim.api.nvim_set_hl(0, 'CurSearch', { reverse = true, bold = true })
 
-    for _, group in ipairs(transparent_groups) do
-      vim.api.nvim_set_hl(0, group, { bg = 'NONE', ctermbg = 'NONE' })
-    end
+-- UI elements
+vim.api.nvim_set_hl(0, 'VertSplit', { fg = Colors.light_grey, ctermfg = 'white' })
+vim.api.nvim_set_hl(0, 'ExtraWhitespace', { bg = Colors.dark_red, ctermbg = 'red' })
 
-    vim.api.nvim_set_hl(0, 'CodeCompanion', { bg = Colors.black, fg = Colors.white })
-    vim.api.nvim_set_hl(0, 'CodeCompanionNormal', { bg = Colors.black, fg = Colors.white })
-    vim.api.nvim_set_hl(0, 'CodeCompanionBorder', { bg = Colors.black, fg = Colors.light_grey })
-  end
-  vim.api.nvim_set_hl(0, 'VertSplit', { fg = Colors.white, ctermfg = 'white' })
-end
-setup_highlights()
+-- Plugin highlights
+vim.api.nvim_set_hl(0, 'CodeiumSuggestion', { fg = Colors.light_grey, ctermfg = 245 })
 
-return M
+-- Remove backgrounds for transparent UI
+vim.api.nvim_set_hl(0, 'TabLine', { bg = 'NONE' })
+vim.api.nvim_set_hl(0, 'TabLineFill', { bg = 'NONE' })
+vim.api.nvim_set_hl(0, 'TabLineSel', { bg = 'NONE' })
+vim.api.nvim_set_hl(0, 'StatusLine', { bg = 'NONE' })
+vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = 'NONE' })
+vim.api.nvim_set_hl(0, 'CmdLine', { bg = 'NONE' })
+vim.api.nvim_set_hl(0, 'MsgArea', { bg = 'NONE' })

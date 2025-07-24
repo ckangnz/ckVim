@@ -46,6 +46,24 @@ autocmd('FileType', {
   end,
 })
 
+-- Ensure proper filetype detection for init.lua and nvim config files
+autocmd({ 'BufRead', 'BufNewFile' }, {
+  group = filetype_specific,
+  desc = 'Ensure init.lua files are detected as lua filetype',
+  pattern = { 'init.lua', '*/init.lua' },
+  callback = function()
+    vim.bo.filetype = 'lua'
+  end,
+})
+autocmd({ 'BufRead', 'BufNewFile' }, {
+  group = filetype_specific,
+  desc = 'Ensure lua files in nvim config are detected as lua filetype',
+  pattern = { '*/.config/nvim/*.lua', '*/.config/nvim/**/*.lua' },
+  callback = function()
+    vim.bo.filetype = 'lua'
+  end,
+})
+
 -- Terminal augroup
 local terminal = augroup('Terminal', { clear = true })
 autocmd('TermOpen', {
