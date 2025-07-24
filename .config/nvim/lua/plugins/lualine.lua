@@ -242,29 +242,6 @@ require('lualine').setup {
           end
         end,
       },
-      {
-        'g:asyncrun_status',
-        fmt = function(status)
-          if status == 'running' then
-            return animate({ "◴", "◷", "◶", "◵" }, 150)
-          elseif status == 'success' then
-            vim.defer_fn(function()
-              vim.g.asyncrun_status = ''
-              vim.cmd('redrawstatus')
-            end, 3000)
-            return '✓'
-          elseif status == 'failure' then
-            vim.defer_fn(function()
-              vim.g.asyncrun_status = ''
-              vim.cmd('redrawstatus')
-            end, 3000)
-            return '✗'
-          else
-            return ''
-          end
-        end,
-        color = { fg = Colors.white, bg = Colors.black },
-      },
     },
     lualine_z = {
       {
@@ -329,6 +306,33 @@ require('lualine').setup {
         fmt = function(_, context)
           return '󰓩  ' .. context.tabnr .. ' '
         end
+      },
+      {
+        function()
+          local status = vim.g.asyncrun_status
+          if status == 'running' then
+            local icons = { "◴", "◷", "◶", "◵" }
+            local ms = vim.loop.hrtime() / 1e6
+            local frame = math.floor(ms / 150) % #icons + 1
+            return icons[frame]
+          elseif status == 'success' then
+            vim.defer_fn(function()
+              vim.g.asyncrun_status = ''
+              vim.cmd('redrawstatus')
+            end, 3000)
+            return '✓'
+          elseif status == 'failure' then
+            vim.defer_fn(function()
+              vim.g.asyncrun_status = ''
+              vim.cmd('redrawstatus')
+            end, 3000)
+            return '✗'
+          else
+            return ''
+          end
+        end,
+        color = { fg = Colors.white, bg = Colors.black },
+        separator = { left =  '', right = '' },
       },
     }
   },
