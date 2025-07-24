@@ -4,53 +4,54 @@ local animate = function(icons, duration)
   return icons[frame]
 end
 
-local custom_theme = {
-  normal = {
-    a = { fg = Colors.black, bg = Colors.main_theme, gui = 'bold' },
-    b = { fg = Colors.white, bg = Colors.light_black },
-    c = { fg = Colors.light_grey, bg = nil },
-  },
-  insert = {
-    a = { fg = Colors.black, bg = Colors.brown, gui = 'bold' },
-    b = { fg = Colors.white, bg = Colors.light_black },
-    c = { fg = Colors.light_grey, bg = nil },
-  },
-  visual = {
-    a = { fg = Colors.black, bg = Colors.dark_magenta, gui = 'bold' },
-    b = { fg = Colors.white, bg = Colors.light_black },
-    c = { fg = Colors.light_grey, bg = nil },
-  },
-  command = {
-    a = { fg = Colors.black, bg = Colors.dark_blue, gui = 'bold' },
-    b = { fg = Colors.white, bg = Colors.light_black },
-    c = { fg = Colors.light_grey, bg = nil },
-  },
+local function get_custom_theme()
+  return {
+    normal = {
+      a = { fg = Colors.black, bg = Colors.main_theme, gui = 'bold' },
+      b = { fg = Colors.white, bg = Colors.light_black },
+      c = { fg = Colors.light_grey, bg = nil },
+    },
+    insert = {
+      a = { fg = Colors.black, bg = Colors.brown, gui = 'bold' },
+      b = { fg = Colors.white, bg = Colors.light_black },
+      c = { fg = Colors.light_grey, bg = nil },
+    },
+    visual = {
+      a = { fg = Colors.black, bg = Colors.dark_magenta, gui = 'bold' },
+      b = { fg = Colors.white, bg = Colors.light_black },
+      c = { fg = Colors.light_grey, bg = nil },
+    },
+    command = {
+      a = { fg = Colors.black, bg = Colors.dark_blue, gui = 'bold' },
+      b = { fg = Colors.white, bg = Colors.light_black },
+      c = { fg = Colors.light_grey, bg = nil },
+    },
+    inactive = {
+      a = { fg = nil, bg = Colors.dark_black },
+      b = { fg = Colors.light_grey, bg = Colors.black },
+      c = { fg = nil, bg = nil },
+      x = { fg = nil, bg = nil },
+      y = { fg = nil, bg = Colors.dark_black },
+      z = { fg = Colors.light_grey, bg = Colors.black },
+    },
+  }
+end
 
-  inactive = {
-    a = { fg = nil, bg = Colors.dark_black },
-    b = { fg = Colors.light_grey, bg = Colors.black },
-    c = { fg = nil, bg = nil },
-    x = { fg = nil, bg = nil },
-    y = { fg = nil, bg = Colors.dark_black },
-    z = { fg = Colors.light_grey, bg = Colors.black },
-  },
-}
-
-require 'lualine'.setup {
+-- Main lualine setup
+require('lualine').setup {
   options = {
-    theme = custom_theme,
+    theme = get_custom_theme(),
     separator = { left = '', right = '' },
     -- section_separators = { left = '', right = '' },
     section_separators = { left = '', right = '' },
-    component_separators = '',
-    refresh = { tabline = 100, statusline = 100, },
+    refresh = { tabline = 100, statusline = 100 },
     globalstatus = true,
   },
   sections = {
     lualine_a = {
       {
         'mode',
-        fmt = function() return '󰙱K' end,
+        fmt = function() return '󰙱K' end,
         icons_enabled = true,
         draw_empty = true,
       },
@@ -74,7 +75,7 @@ require 'lualine'.setup {
       {
         'diagnostics',
         always_visible = false,
-        sources = { 'nvim_diagnostic', 'coc' },
+        sources = { 'nvim_lsp' },
         symbols = { error = ' ', warn = ' ', info = ' ', hint = '󱋴 ' },
         separator = { left = "", right = "" }
       },
@@ -84,17 +85,38 @@ require 'lualine'.setup {
         icon_only = false,
         separator = { left = "", right = "" }
       },
-      {
-        function()
-          local status = vim.fn['coc#status']()
-          if status == "x" then
-            return ""
-          else
-            return status
-          end
-        end,
-        separator = { left = "", right = "" }
-      },
+        {
+          function()
+            local bufnr = vim.api.nvim_get_current_buf()
+            local clients = vim.lsp.get_clients({ bufnr = bufnr })
+            if #clients == 0 then
+              return ''
+            end
+            local ignored_clients = {
+              'null-ls',
+              'copilot',
+            }
+            local function is_ignored(client_name)
+              for _, ignored in ipairs(ignored_clients) do
+                if client_name == ignored then
+                  return true
+                end
+              end
+              return false
+            end
+            local client_names = {}
+            for _, client in ipairs(clients) do
+              if not is_ignored(client.name) and vim.lsp.buf_is_attached(bufnr, client.id) then
+                table.insert(client_names, client.name)
+              end
+            end
+            if #client_names == 0 then
+              return ''
+            end
+            return ' ' .. table.concat(client_names, ', ')
+          end,
+          separator = { left = "", right = "" }
+        },
     },
     lualine_y = {
       {
@@ -108,13 +130,13 @@ require 'lualine'.setup {
               warning = "  WRN",
               unknown = " UNK"
             },
-            hl = {
+            hl = Colors and {
               enabled = Colors.white,
               disabled = Colors.light_grey,
               warning = Colors.dark_red,
               sleep = Colors.light_black,
               unknown = Colors.light_black
-            }
+            } or {}
           },
           spinners = {
             "✶",
@@ -124,13 +146,18 @@ require 'lualine'.setup {
             "✹",
             "✷",
           },
-          spinner_color = Colors.dark_cyan
+          spinner_color = Colors and Colors.dark_cyan or "#cyan"
         },
         show_colors = true,
         show_loading = true,
       },
       {
         function()
+          -- Check if codeium functions are available
+          if not vim.fn.exists('*codeium#GetStatusString') then
+            return " OFF"
+          end
+
           local status = vim.fn['codeium#GetStatusString']()
           local robot_icon_on = " "
           local robot_icon_off = " "
@@ -150,6 +177,11 @@ require 'lualine'.setup {
           end
         end,
         color = function()
+          -- Check if codeium functions are available
+          if not vim.fn.exists('*codeium#GetStatusString') then
+            return {}
+          end
+
           local status = vim.fn['codeium#GetStatusString']()
           if status == ' * ' then
             return { fg = Colors.dark_cyan }
@@ -165,7 +197,7 @@ require 'lualine'.setup {
         fmt = function(value)
           return value:match("%d+ (.+)")
         end,
-        color = { fg = Colors.white, bg = Colors.black },
+        color = Colors and { fg = Colors.white, bg = Colors.black } or {},
         icon = "󰛰 ",
         spinner_symbols = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
         done_symbol = "✓",
@@ -196,8 +228,8 @@ require 'lualine'.setup {
           return "󰐻 " .. count
         end,
         color = function()
-          if not vim.g.loaded_mcphub then
-            return { fg = Colors.light_black, bg = Colors.black } -- Gray for not loaded
+          if not vim.g.loaded_mcphub or not Colors then
+            return Colors and { fg = Colors.light_black, bg = Colors.black } or {}
           end
 
           local status = vim.g.mcphub_status or "stopped"
@@ -239,7 +271,7 @@ require 'lualine'.setup {
         function()
           local line = vim.fn.line('.')
           local col = vim.fn.col('.')
-          return string.format('%03d:%03d', line, col)
+          return string.format('%03d:%03d', line, col)
         end
       }
     }
@@ -253,13 +285,13 @@ require 'lualine'.setup {
         show_filename_only = true,
         show_modified_status = true,
         section_separators = { left = '', right = '' },
-        windows_color = {
+        windows_color = Colors and {
           active = { fg = Colors.white, bg = Colors.bluish_black },
           inactive = { fg = Colors.light_grey, bg = Colors.light_black },
-        },
+        } or {},
         symbols = {
-          modified = ' ●', -- Text to show when the buffer is modified
-          alternate_file = '#', -- Text to show to identify the alternate file
+          modified = ' ●',
+          alternate_file = '#',
         },
         disabled_buftypes = { 'quickfix', 'prompt', 'nofile' },
         filetype_names = {
@@ -290,10 +322,10 @@ require 'lualine'.setup {
         use_mode_colors = false,
         show_modified_status = false,
         mode = 1,
-        tabs_color = {
+        tabs_color = Colors and {
           active = { fg = Colors.dark_black, bg = Colors.white, gui = 'bold' },
           inactive = { fg = Colors.light_grey, bg = Colors.light_black, gui = 'bold' },
-        },
+        } or {},
         fmt = function(_, context)
           return '󰓩  ' .. context.tabnr .. ' '
         end
@@ -303,13 +335,12 @@ require 'lualine'.setup {
   winbar = {}
 }
 
-local function renameTab()
-  local tabName = vim.fn.input("New Tab name: ")
-  if tabName == "" then
+local function rename_tab()
+  local tab_name = vim.fn.input("New Tab name: ")
+  if tab_name == "" then
     print(' ')
     return
   end
-  vim.cmd.LualineRenameTab { tabName }
+  vim.cmd.LualineRenameTab { tab_name }
 end
-
-vim.keymap.set('n', '<leader>T', renameTab, { nowait = true, noremap = true, silent = true })
+vim.keymap.set('n', '<leader>T', rename_tab, { desc = 'Rename current tab' })

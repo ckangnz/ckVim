@@ -1,7 +1,10 @@
 -- Set this in ZSHRC
 -- export COPILOT_MODEL="claude-sonnet-4"
 
-vim.api.nvim_create_user_command("ToggleCopilot", ":Copilot toggle", {})
+vim.api.nvim_create_user_command("ToggleCopilot", "Copilot toggle", { desc = "Toggle Copilot on/off" })
+vim.keymap.set('n', '<leader>ct', ':ToggleCopilot<CR>', { desc = 'Toggle Copilot' })
+
+vim.keymap.set('n', '<leader>cp', ':Copilot panel<CR>', { desc = 'Open Copilot panel' })
 
 require('copilot').setup({
   copilot_model = os.getenv("COPILOT_MODEL") or "github-4.1",
@@ -20,6 +23,7 @@ require('copilot').setup({
       ratio = 0.4
     },
   },
+
   suggestion = {
     enabled = true,
     auto_trigger = false,
@@ -27,7 +31,7 @@ require('copilot').setup({
     debounce = 75,
     trigger_on_accept = false,
     keymap = {
-      accept = false,
+      accept = false, -- refer to keymaps.lua
       accept_word = false,
       accept_line = false,
       prev = "<M-{>",
@@ -35,6 +39,7 @@ require('copilot').setup({
       dismiss = "<M-x>",
     },
   },
+
   filetypes = {
     yaml = false,
     markdown = false,

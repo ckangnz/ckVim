@@ -1,50 +1,25 @@
-local home_dir = vim.fn.expand("$HOME")
-local vim_dir = home_dir .. "/.vim"
-vim.opt.runtimepath:prepend(vim_dir)
-vim.opt.packpath = vim.opt.runtimepath:get()
-vim.cmd("source " .. home_dir .. "/.vimrc")
+local config_dir = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":p:h")
+vim.opt.runtimepath:prepend(config_dir)
 
-require 'core.myTheme'
-require 'core.keymaps'
+-- Also add the lua directory to package.path for module loading
+local lua_dir = config_dir .. "/lua"
+package.path = lua_dir .. "/?.lua;" .. lua_dir .. "/?/init.lua;" .. package.path
 
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufEnter' }, {
-  pattern = '*',
-  callback = function()
-    require 'plugins.lualine'
-    require 'plugins.nvim-treesitter'
-    require 'plugins.oil'
-    require 'plugins.smear-cursor'
-    require 'plugins.telescope'
-    require 'plugins.todo-comments'
+-- Set leader key early
+vim.g.mapleader = ','
+vim.g.maplocalleader = ','
 
-    require 'plugins.copilot'
-    require 'plugins.windsurf'
-    require 'plugins.codecompanion'
+require('core.theme')
+require('core.highlights')
 
-    vim.opt.suffixesadd:prepend('.lua')
-  end,
-})
+-- Core modules
+require('core.options')
+require('core.keymaps')
+require('core.autocmds')
 
-vim.api.nvim_create_autocmd('InsertEnter', {
-  pattern = '*',
-  callback = function()
-    require 'plugins.autopairs'
-  end,
-})
+require('core.lazy')
 
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'markdown', 'md', 'codecompanion' },
-  callback = function()
-    require 'plugins.render-markdown'
-  end,
-})
-
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { "http", "rest" },
-  callback = function()
-    require 'plugins.kulala'
-  end,
-})
-
---GUI Config
-require 'gui.neovide'
+-- Neovide specific
+if vim.g.neovide then
+  require('gui.neovide')
+end

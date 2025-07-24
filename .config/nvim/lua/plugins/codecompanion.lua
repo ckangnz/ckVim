@@ -1,15 +1,15 @@
--- Set this in ZSHRC
+-- Set environment variables:
 -- export CODECOMPANION_ADAPTER_NAME="copilot"
 -- export CODECOMPANION_ADAPTER_MODEL="claude-sonnet-4"
 
-require("mcphub").setup()
 require("codecompanion").setup({
   strategies = {
     chat = {
       adapter = {
         name = os.getenv("CODECOMPANION_ADAPTER_NAME") or "githubmodels",
         model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "github-4.1",
-        -- "claude-3.7-sonnet", "gemini-2.0-flash-001", "claude-opus-4", "claude-3.7-sonnet-thought", "o3-mini", "gpt-4.1", "gpt-4o",
+        -- Available models: "claude-3.7-sonnet", "gemini-2.0-flash-001", "claude-opus-4",
+        -- "claude-3.7-sonnet-thought", "o3-mini", "gpt-4.1", "gpt-4o"
       },
       roles = {
         llm = function(adapter)
@@ -18,8 +18,8 @@ require("codecompanion").setup({
         user = "👤 You",
       },
       opts = {
-        goto_file_action = 'tabnew', -- press gR
-        completion_provider = "coc",
+        goto_file_action = 'tabnew',      -- press gR to go to file in new tab
+        completion_provider = "cmp", -- Use nvim-cmp for completions
       },
       tools = {
         groups = {
@@ -39,12 +39,12 @@ require("codecompanion").setup({
       slash_commands = {
         ["file"] = {
           keymaps = {
-            modes = { n = { "<C-p>" }, },
+            modes = { n = { "<C-p>" } },
           },
         },
         ["buffer"] = {
           keymaps = {
-            modes = { n = { "<C-b>", "<leader>b" }, },
+            modes = { n = { "<C-b>", "<leader>b" } },
           },
         },
       },
@@ -54,36 +54,37 @@ require("codecompanion").setup({
         name = os.getenv("CODECOMPANION_ADAPTER_NAME") or "githubmodels",
         model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "github-4.1",
       },
-      opts = { completion_provider = "coc" }
+      opts = { completion_provider = "cmp" }
     },
     cmd = {
       adapter = {
         name = os.getenv("CODECOMPANION_ADAPTER_NAME") or "githubmodels",
         model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "github-4.1",
       },
-      opts = { completion_provider = "coc" }
+      opts = { completion_provider = "cmp" }
     }
   },
+
   extensions = {
     mcphub = {
       callback = "mcphub.extensions.codecompanion",
       opts = {
-        make_tools = true,                    -- Make individual tools (@server__tool) and server groups (@server) from MCP servers
-        show_server_tools_in_chat = true,     -- Show individual tools in chat completion (when make_tools=true)
-        add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`)
-        show_result_in_chat = true,           -- Show tool results directly in chat buffer
-        format_tool = nil,                    -- function(tool_name:string, tool: CodeCompanion.Agent.Tool) : string Function to format tool names to show in the chat buffer
-        make_vars = true,                     -- Convert MCP resources to #variables for prompts
-        make_slash_commands = true,           -- Add MCP prompts as /slash commands
+        make_tools = true,
+        show_server_tools_in_chat = true,
+        add_mcp_prefix_to_tool_names = false,
+        show_result_in_chat = true,
+        format_tool = nil,
+        make_vars = true,
+        make_slash_commands = true,
       }
     },
     history = {
       enabled = true,
       opts = {
-        keymap = "gho",
-        save_chat_keymap = "ghi",
+        keymap = "gho",           -- Open history
+        save_chat_keymap = "ghi", -- Save current chat
         auto_save = true,
-        expiration_days = 0,
+        expiration_days = 0,      -- 0 = never expire
         picker = "telescope",
         chat_filter = nil,
         picker_keymaps = {
@@ -106,18 +107,16 @@ require("codecompanion").setup({
         dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
         enable_logging = false,
         summary = {
-          -- Keymap to generate summary for current chat
           create_summary_keymap = "ghs",
-          -- Keymap to browse summaries
           browse_summaries_keymap = "ghb",
           generation_opts = {
-            adapter = nil,               -- defaults to current chat adapter
-            model = nil,                 -- defaults to current chat model
-            context_size = 90000,        -- max tokens that the model supports
-            include_references = true,   -- include slash command content
-            include_tool_outputs = true, -- include tool execution results
-            system_prompt = nil,         -- custom system prompt (string or function)
-            format_summary = nil,        -- custom function to format generated summary e.g to remove <think/> tags from summary
+            adapter = nil,
+            model = nil,
+            context_size = 90000,
+            include_references = true,
+            include_tool_outputs = true,
+            system_prompt = nil,
+            format_summary = nil,
           },
         },
       }
@@ -125,11 +124,12 @@ require("codecompanion").setup({
   },
 })
 
-vim.keymap.set('n', '<M-o>', function() vim.cmd('CodeCompanionChat') end, { desc = 'Start a new CodeCompanion Chat' })
-vim.keymap.set('n', '<BS>', function() vim.cmd('CodeCompanionChat Toggle') end, { desc = 'Toggle CodeCompanion Chat' })
+vim.keymap.set('n', '<M-o>', function() vim.cmd('CodeCompanionChat') end, { desc = 'Start new CodeCompanion chat' })
+vim.keymap.set('n', '<BS>', function() vim.cmd('CodeCompanionChat Toggle') end, { desc = 'Toggle CodeCompanion chat' })
 vim.keymap.set('v', '<BS>', function()
   vim.cmd('CodeCompanionChat Add')
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
+  -- Focus on CodeCompanion window after adding selection
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     local buf_name = vim.api.nvim_buf_get_name(buf)
     if buf_name:match('CodeCompanion') then
@@ -140,8 +140,7 @@ vim.keymap.set('v', '<BS>', function()
       end
     end
   end
-end, { desc = 'Add visual selection to CodeCompanion Chat' })
+end, { desc = 'Add visual selection to CodeCompanion chat' })
 
-vim.keymap.set({ 'n', 'v' }, '<M-p>', ':CodeCompanion ', { desc = 'Open CodeCompanion Prompt' })
-vim.keymap.set({ 'n', 'v' }, '<M-i>', function() vim.cmd('CodeCompanionAction') end,
-  { desc = 'Open CodeCompanion Prompt' })
+vim.keymap.set({ 'n', 'v' }, '<M-p>', ':CodeCompanion ', { desc = 'Open CodeCompanion prompt' })
+vim.keymap.set({ 'n', 'v' }, '<M-i>', function() vim.cmd('CodeCompanionAction') end, { desc = 'CodeCompanion actions' })

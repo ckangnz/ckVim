@@ -1,0 +1,59 @@
+vim.cmd('runtime macros/sandwich/keymap/surround.vim')
+vim.g['sandwich#recipes'] = vim.fn.deepcopy(vim.g['sandwich#default_recipes'])
+
+local custom_recipes = {
+  {
+    buns = { '{\\s*', '\\s*}' },
+    nesting = 1,
+    regex = 1,
+    match_syntax = 1,
+    kind = { 'delete', 'replace', 'textobj' },
+    action = { 'delete' },
+    input = { '{' }
+  },
+  {
+    buns = { '\\[\\s*', '\\s*\\]' },
+    nesting = 1,
+    regex = 1,
+    match_syntax = 1,
+    kind = { 'delete', 'replace', 'textobj' },
+    action = { 'delete' },
+    input = { '[' }
+  },
+  {
+    buns = { '(\\s*', '\\s*)' },
+    nesting = 1,
+    regex = 1,
+    match_syntax = 1,
+    kind = { 'delete', 'replace', 'textobj' },
+    action = { 'delete' },
+    input = { '(' }
+  }
+}
+
+-- Extend the default recipes
+for _, recipe in ipairs(custom_recipes) do
+  table.insert(vim.g['sandwich#recipes'], recipe)
+end
+
+vim.keymap.set('x', 'is', '<Plug>(textobj-sandwich-auto-i)', { desc = 'Inner sandwich textobj' })
+vim.keymap.set('x', 'as', '<Plug>(textobj-sandwich-auto-a)', { desc = 'A sandwich textobj' })
+vim.keymap.set('o', 'is', '<Plug>(textobj-sandwich-auto-i)', { desc = 'Inner sandwich textobj' })
+vim.keymap.set('o', 'as', '<Plug>(textobj-sandwich-auto-a)', { desc = 'A sandwich textobj' })
+
+vim.api.nvim_set_hl(0, 'OperatorSandwichChange', {
+  ctermfg = 109,
+  ctermbg = 237,
+  fg = '#83a598',
+  bg = '#3c3836'
+})
+vim.api.nvim_set_hl(0, 'OperatorSandwichAdd', {
+  bold = true,
+  ctermfg = 10,
+  fg = '#7fbf00'
+})
+vim.api.nvim_set_hl(0, 'OperatorSandwichDelete', {
+  bold = true,
+  ctermfg = 10,
+  fg = '#fb4934'
+})
