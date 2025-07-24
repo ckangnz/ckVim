@@ -1,8 +1,15 @@
+vim.api.nvim_set_hl(0, 'ExtraWhitespace', {
+  bg = '#fb4934',  -- Red background (gruvbox red)
+  fg = '#ffffff',  -- White foreground for contrast
+})
+
 local function toggle_whitespace_match(mode)
   local pattern = (mode == 'i') and '\\s\\+\\%#\\@<!$' or '\\s\\+$'
 
-  local excluded_filetypes = {'ctrlsf', 'help', 'codecompanion', 'mcphub'}
+  local excluded_filetypes = {'ctrlsf', 'help', 'codecompanion', 'mcphub', 'lazy', 'mason'}
   local current_filetype = vim.bo.filetype
+
+  -- Check if current filetype should be excluded
   for _, ft in ipairs(excluded_filetypes) do
     if ft == current_filetype then
       if vim.w.whitespace_match_number then
@@ -14,12 +21,12 @@ local function toggle_whitespace_match(mode)
   end
 
   if vim.w.whitespace_match_number then
-    vim.fn.matchdelete(vim.w.whitespace_match_number)
-    vim.w.whitespace_match_number = vim.fn.matchadd('ExtraWhitespace', pattern, 10, vim.w.whitespace_match_number)
-  else
-    vim.w.whitespace_match_number = vim.fn.matchadd('ExtraWhitespace', pattern)
+    pcall(vim.fn.matchdelete, vim.w.whitespace_match_number)
   end
+
+  vim.w.whitespace_match_number = vim.fn.matchadd('ExtraWhitespace', pattern, 10)
 end
+
 local whitespace_group = vim.api.nvim_create_augroup('WhitespaceMatch', { clear = true })
 vim.api.nvim_create_autocmd({'BufWinEnter', 'InsertLeave'}, {
   group = whitespace_group,
@@ -31,6 +38,15 @@ vim.api.nvim_create_autocmd('InsertEnter', {
   group = whitespace_group,
   callback = function()
     toggle_whitespace_match('i')
+  end,
+})
+vim.api.nvim_create_autocmd('BufWinLeave', {
+  group = whitespace_group,
+  callback = function()
+    if vim.w.whitespace_match_number then
+      pcall(vim.fn.matchdelete, vim.w.whitespace_match_number)
+      vim.w.whitespace_match_number = nil
+    end
   end,
 })
 
