@@ -119,6 +119,7 @@ local plugins = {
   { 'ravitemer/codecompanion-history.nvim' },
   {
     'ravitemer/mcphub.nvim',
+    cmd = { 'CodeCompanion', 'CodeCompanionChat', 'CodeCompanionAction' },
     build = 'npm install -g mcp-hub@latest',
     config = function()
       require('mcphub').setup()

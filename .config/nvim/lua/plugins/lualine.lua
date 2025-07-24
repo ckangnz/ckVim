@@ -153,16 +153,17 @@ require('lualine').setup {
       },
       {
         function()
-          if vim.fn.exists('*codeium#GetStatusString') ~= 1 then
-            return " OFF"
-          end
-          local ok, status = pcall(vim.fn['codeium#GetStatusString'])
-          if not ok or not status then
-            return " OFF"
-          end
 
           local robot_icon_on = " "
           local robot_icon_off = " "
+
+          if vim.fn.exists('*codeium#GetStatusString') ~= 1 then
+            return robot_icon_off .. " OFF"
+          end
+          local ok, status = pcall(vim.fn['codeium#GetStatusString'])
+          if not ok or not status then
+            return robot_icon_off .. " OFF"
+          end
 
           if status == ' * ' then
             local animation = animate({ "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }, 150)
