@@ -85,38 +85,38 @@ require('lualine').setup {
         icon_only = false,
         separator = { left = "", right = "" }
       },
-        {
-          function()
-            local bufnr = vim.api.nvim_get_current_buf()
-            local clients = vim.lsp.get_clients({ bufnr = bufnr })
-            if #clients == 0 then
-              return ''
-            end
-            local ignored_clients = {
-              'null-ls',
-              'copilot',
-            }
-            local function is_ignored(client_name)
-              for _, ignored in ipairs(ignored_clients) do
-                if client_name == ignored then
-                  return true
-                end
-              end
-              return false
-            end
-            local client_names = {}
-            for _, client in ipairs(clients) do
-              if not is_ignored(client.name) and vim.lsp.buf_is_attached(bufnr, client.id) then
-                table.insert(client_names, client.name)
+      {
+        function()
+          local bufnr = vim.api.nvim_get_current_buf()
+          local clients = vim.lsp.get_clients({ bufnr = bufnr })
+          if #clients == 0 then
+            return ''
+          end
+          local ignored_clients = {
+            'null-ls',
+            'copilot',
+          }
+          local function is_ignored(client_name)
+            for _, ignored in ipairs(ignored_clients) do
+              if client_name == ignored then
+                return true
               end
             end
-            if #client_names == 0 then
-              return ''
+            return false
+          end
+          local client_names = {}
+          for _, client in ipairs(clients) do
+            if not is_ignored(client.name) and vim.lsp.buf_is_attached(bufnr, client.id) then
+              table.insert(client_names, client.name)
             end
-            return ' ' .. table.concat(client_names, ', ')
-          end,
-          separator = { left = "", right = "" }
-        },
+          end
+          if #client_names == 0 then
+            return ''
+          end
+          return ' ' .. table.concat(client_names, ', ')
+        end,
+        separator = { left = "", right = "" }
+      },
     },
     lualine_y = {
       {
@@ -153,12 +153,14 @@ require('lualine').setup {
       },
       {
         function()
-          -- Check if codeium functions are available
-          if not vim.fn.exists('*codeium#GetStatusString') then
-            return " OFF"
+          if vim.fn.exists('*codeium#GetStatusString') ~= 1 then
+            return " OFF"
+          end
+          local ok, status = pcall(vim.fn['codeium#GetStatusString'])
+          if not ok or not status then
+            return " OFF"
           end
 
-          local status = vim.fn['codeium#GetStatusString']()
           local robot_icon_on = " "
           local robot_icon_off = " "
 
@@ -177,12 +179,14 @@ require('lualine').setup {
           end
         end,
         color = function()
-          -- Check if codeium functions are available
-          if not vim.fn.exists('*codeium#GetStatusString') then
-            return {}
+          if vim.fn.exists('*codeium#GetStatusString') ~= 1 then
+            return { fg = Colors.light_grey }
           end
 
-          local status = vim.fn['codeium#GetStatusString']()
+          local ok, status = pcall(vim.fn['codeium#GetStatusString'])
+          if not ok or not status then
+            return { fg = Colors.light_grey }
+          end
           if status == ' * ' then
             return { fg = Colors.dark_cyan }
           elseif status == "OFF" then
@@ -332,7 +336,7 @@ require('lualine').setup {
           end
         end,
         color = { fg = Colors.white, bg = Colors.black },
-        separator = { left =  '', right = '' },
+        separator = { left = '', right = '' },
       },
     }
   },

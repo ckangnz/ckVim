@@ -30,47 +30,42 @@ local plugins = {
       require('plugins.oil')
     end,
   },
-    {
-      "folke/which-key.nvim",
-      event = "VeryLazy",
-      init = function()
-        vim.o.timeout = true
-        vim.o.timeoutlen = 300
-      end,
-      keys = {
-        {
-          "<leader>?",
-          function()
-            require("which-key").show({ global = false })
-          end,
-          desc = "Buffer Local Keymaps (which-key)",
-        },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+    end,
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
       },
-      config = function()
-        local wk = require('which-key')
-        -- Add group descriptions
-        wk.add({
-          { '<leader>4', desc = 'Toggle quickfix list' },
-          { '<leader>N', desc = 'Add TODO item' },
-          { '<leader>e', group = 'Edit files' },
-          { '<leader>k', desc = 'Kulala' },
-          { '<leader>m', group = 'Utility menu' },
-          { '<leader>p', group = 'Lazy shortcuts' },
-          { '<leader>w', group = 'Window management' },
-          { '<leader>q', '<cmd>q<cr>', desc = 'Quit', mode = { 'n', 'v' } },
-          { '<leader>w', '<cmd>w<cr>', desc = 'Write', mode = { 'n', 'v' } },
-        })
-      end,
     },
+    config = function()
+      local wk = require('which-key')
+      -- Add group descriptions
+      wk.add({
+        { '<leader>4', desc = 'Toggle quickfix list' },
+        { '<leader>N', desc = 'Add TODO item' },
+        { '<leader>e', group = 'Edit files' },
+        { '<leader>k', desc = 'Kulala' },
+        { '<leader>m', group = 'Utility menu' },
+        { '<leader>p', group = 'Lazy shortcuts' },
+        { '<leader>w', group = 'Window management' },
+        { '<leader>q', '<cmd>q<cr>',                 desc = 'Quit',  mode = { 'n', 'v' } },
+        { '<leader>w', '<cmd>w<cr>',                 desc = 'Write', mode = { 'n', 'v' } },
+      })
+    end,
+  },
   {
     'nvim-lualine/lualine.nvim',
-    event = 'VeryLazy',
-    dependencies = {
-      'Exafunction/windsurf.vim',
-      'zbirenbaum/copilot.lua',
-      'AndreM222/copilot-lualine',
-      'franco-ruggeri/codecompanion-lualine.nvim',
-    },
+    event={'UIEnter'},
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('plugins.lualine')
     end,
@@ -80,7 +75,8 @@ local plugins = {
   {
     'Exafunction/windsurf.vim',
     branch = 'main',
-    event = 'VeryLazy',
+    event = 'InsertEnter',
+    keys = { '<M-[>', '<M-]>' },
     config = function()
       require('plugins.windsurf')
     end,
@@ -89,6 +85,10 @@ local plugins = {
     'zbirenbaum/copilot.lua',
     cmd = 'Copilot',
     event = 'InsertEnter',
+    keys = { '<leader>ct', '<leader>cp', '<M-{>', '<M-}>', '<M-x>' },
+    dependencies = {
+      'AndreM222/copilot-lualine',
+    },
     config = function()
       require('plugins.copilot')
     end,
@@ -109,6 +109,7 @@ local plugins = {
       'nvim-treesitter/nvim-treesitter',
       'hrsh7th/nvim-cmp',
       'nvim-telescope/telescope.nvim',
+      'franco-ruggeri/codecompanion-lualine.nvim',
       { 'stevearc/dressing.nvim', opts = {} },
     },
     config = function()
@@ -132,7 +133,7 @@ local plugins = {
     config = function()
       vim.g.gruvbox_material_enable_italic = true
       vim.g.gruvbox_material_better_performance = 1
-      vim.g.gruvbox_material_disable_terminal_colors = 1  -- Faster loading
+      vim.g.gruvbox_material_disable_terminal_colors = 1 -- Faster loading
       vim.g.gruvbox_material_sign_column_background = 'none'
       vim.g.gruvbox_material_disable_italic_comment = 0
       vim.g.gruvbox_material_enable_italic = 1
@@ -258,22 +259,22 @@ local plugins = {
       "mason-org/mason.nvim",
       "neovim/nvim-lspconfig",
     },
-      },
-    {
-      'neovim/nvim-lspconfig',
-      event = { 'BufReadPost', 'BufNewFile' },  -- Use BufReadPost instead of BufReadPre
-      dependencies = {
-        'mason.nvim',
-        'mason-lspconfig.nvim',
-      },
-      config = function()
-        require('plugins.lsp')
-      end,
-      },
-    {
-      'hrsh7th/nvim-cmp',
-      event = 'InsertEnter',
-      dependencies = {
+  },
+  {
+    'neovim/nvim-lspconfig',
+    event = { 'BufReadPost', 'BufNewFile' }, -- Use BufReadPost instead of BufReadPre
+    dependencies = {
+      'mason.nvim',
+      'mason-lspconfig.nvim',
+    },
+    config = function()
+      require('plugins.lsp')
+    end,
+  },
+  {
+    'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
+    dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
@@ -376,16 +377,16 @@ local plugins = {
     'dominikduda/vim_current_word',
     event = 'VeryLazy',
     config = function()
-vim.g['vim_current_word#highlight_current_word'] = 1
-vim.g['vim_current_word#highlight_twins'] = 1
-vim.api.nvim_set_hl(0, 'CurrentWord', {
-  bold = true,
-  underline = true
-})
-vim.api.nvim_set_hl(0, 'CurrentWordTwins', {
-  bold = true,
-  underline = true
-})
+      vim.g['vim_current_word#highlight_current_word'] = 1
+      vim.g['vim_current_word#highlight_twins'] = 1
+      vim.api.nvim_set_hl(0, 'CurrentWord', {
+        bold = true,
+        underline = true
+      })
+      vim.api.nvim_set_hl(0, 'CurrentWordTwins', {
+        bold = true,
+        underline = true
+      })
     end,
   },
   {
@@ -455,7 +456,7 @@ vim.api.nvim_set_hl(0, 'CurrentWordTwins', {
   },
   {
     'scrooloose/nerdcommenter',
-    keys = { '<leader>c<space>' },
+    keys = { '<leader>c' },
     config = function()
       vim.g.NERDCreateDefaultMappings = 1
       vim.g.NERDSpaceDelims = 1
@@ -489,7 +490,9 @@ vim.api.nvim_set_hl(0, 'CurrentWordTwins', {
   {
     'wesQ3/vim-windowswap',
     keys = {
-      {'<leader>ww', ':call WindowSwap#EasyWindowSwap()<CR>',
+      {
+        '<leader>ww',
+        ':call WindowSwap#EasyWindowSwap()<CR>',
         desc = 'Swap windows',
         silent = true
       }
@@ -499,20 +502,20 @@ vim.api.nvim_set_hl(0, 'CurrentWordTwins', {
     end,
   },
 
-    -- Test
-    {
-      'vim-test/vim-test',
-      cmd = { 'TestNearest', 'TestFile', 'TestSuite', 'TestLast', 'TestVisit' },
-      keys = {
-        { ',tt', desc = 'Test nearest' },
-        { ',tf', desc = 'Test file' },
-        { ',ts', desc = 'Test suite' },
-        { ',tl', desc = 'Test last' },
-      },
-      config = function()
-        require('plugins.vim-test')
-      end,
+  -- Test
+  {
+    'vim-test/vim-test',
+    cmd = { 'TestNearest', 'TestFile', 'TestSuite', 'TestLast', 'TestVisit' },
+    keys = {
+      { ',tt', desc = 'Test nearest' },
+      { ',tf', desc = 'Test file' },
+      { ',ts', desc = 'Test suite' },
+      { ',tl', desc = 'Test last' },
     },
+    config = function()
+      require('plugins.vim-test')
+    end,
+  },
 
   -- DB
   {
