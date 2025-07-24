@@ -187,14 +187,3 @@ map('i', '<M-a>', function()
     return vim.fn['codeium#Accept']()
   end
 end, { expr = true, silent = true, desc = 'Accept AI suggestion' })
-
--- Diagnostic navigation keymaps (global, not buffer-local)
-local opts = { silent = true }
-map('n', '<S-r>', vim.lsp.buf.rename, vim.tbl_extend('force', opts, { desc = 'Rename symbol' }))
-map('n', 'ga.', vim.lsp.buf.code_action, vim.tbl_extend('force', opts, { desc = 'Code action' }))
-map('v', 'ga', vim.lsp.buf.code_action,
-  vim.tbl_extend('force', opts, { desc = 'Code action for selection' }))
-map('n', 'gan', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })
-map('n', 'gap', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic' })
-map('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show line diagnostics' })
-map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic quickfix list' })

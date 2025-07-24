@@ -82,21 +82,22 @@ local ensure_installed_tools = {
 
 mason_lspconfig.setup({
   ensure_installed = ensure_installed_servers,
-  automatic_installation = false,  -- Disable automatic installation on startup
+  automatic_installation = true,
   handlers = {
     function(server_name)
+      -- Ensure lspconfig is properly loaded before setting up servers
+      local lspconfig_ok, _ = pcall(require, 'lspconfig')
+      if not lspconfig_ok then
+        vim.notify('lspconfig not available, retrying in 100ms...', vim.log.levels.WARN)
+        vim.defer_fn(function()
+          require('plugins.lsp').setup_server(server_name)
+        end, 100)
+        return
+      end
       require('plugins.lsp').setup_server(server_name)
     end,
   },
 })
-
--- Defer automatic installation to after startup
-vim.defer_fn(function()
-  mason_lspconfig.setup({
-    ensure_installed = ensure_installed_servers,
-    automatic_installation = true,
-  })
-end, 1000)  -- Delay by 1 second
 
 vim.api.nvim_create_user_command('Mason', function()
   require('mason.ui').open()

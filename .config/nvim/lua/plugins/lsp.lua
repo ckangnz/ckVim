@@ -15,70 +15,50 @@ vim.diagnostic.config({
   underline = true,
   update_in_insert = false,
   severity_sort = true,
-  float = {
-    border = 'rounded',
-    source = 'always',
-    header = '',
-    prefix = '',
-  },
+    float = {
+      border = 'rounded',
+      source = 'if_many',
+      header = '',
+      prefix = '',
+    },
 })
-
--- LSP handlers configuration
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-  vim.lsp.handlers.hover,
-  { border = 'rounded' }
-)
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-  vim.lsp.handlers.signature_help,
-  { border = 'rounded' }
-)
 
 -- Common LSP keymaps
 local function setup_lsp_keymaps(bufnr)
-  local opts = { buffer = bufnr, silent = true }
-
   -- Navigation
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('force', opts, { desc = 'Go to definition' }))
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, vim.tbl_extend('force', opts, { desc = 'Go to declaration' }))
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, vim.tbl_extend('force', opts, { desc = 'Go to implementation' }))
-  vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition,
-    vim.tbl_extend('force', opts, { desc = 'Go to type definition' }))
-  vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', vim.tbl_extend('force', opts, { desc = 'References' }))
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr, silent = true, desc = 'Go to definition' })
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, silent = true, desc = 'Go to declaration' })
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { buffer = bufnr, silent = true, desc = 'Go to implementation' })
+  vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, { buffer = bufnr, silent = true, desc = 'Go to type definition' })
+  vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', { buffer = bufnr, silent = true, desc = 'References' })
 
   -- Documentation
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('force', opts, { desc = 'Show documentation' }))
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, vim.tbl_extend('force', opts, { desc = 'Signature help' }))
+  vim.keymap.set('n', 'K', function() vim.lsp.buf.hover({ border = 'rounded' }) end, { buffer = bufnr, silent = true, desc = 'Show documentation' })
+  vim.keymap.set('n', '<C-k>', function() vim.lsp.buf.signature_help({ border = 'rounded' }) end, { buffer = bufnr, silent = true, desc = 'Signature help' })
 
   -- Code actions and refactoring
-  vim.keymap.set('n', '<S-r>', vim.lsp.buf.rename, vim.tbl_extend('force', opts, { desc = 'Rename symbol' }))
-  vim.keymap.set('n', 'ga.', vim.lsp.buf.code_action, vim.tbl_extend('force', opts, { desc = 'Code action' }))
-  vim.keymap.set('v', 'ga', vim.lsp.buf.code_action,
-    vim.tbl_extend('force', opts, { desc = 'Code action for selection' }))
+  vim.keymap.set('n', '<S-r>', vim.lsp.buf.rename, { buffer = bufnr, silent = true, desc = 'Rename symbol' })
+  vim.keymap.set('n', 'ga.', vim.lsp.buf.code_action, { buffer = bufnr, silent = true, desc = 'Code action' })
+  vim.keymap.set('v', 'ga', vim.lsp.buf.code_action, { buffer = bufnr, silent = true, desc = 'Code action for selection' })
 
   -- Formatting
   vim.keymap.set('n', '<leader>=', function()
     vim.lsp.buf.format({ async = true })
-  end, vim.tbl_extend('force', opts, { desc = 'Format document' }))
+  end, { buffer = bufnr, silent = true, desc = 'Format document' })
   vim.keymap.set('v', '<leader>=', function()
     vim.lsp.buf.format({ async = true })
-  end, vim.tbl_extend('force', opts, { desc = 'Format selection' }))
+  end, { buffer = bufnr, silent = true, desc = 'Format selection' })
 
   -- Diagnostics
-  vim.keymap.set('n', 'gan', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })
-  vim.keymap.set('n', 'gap', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic' })
-  vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float,
-    vim.tbl_extend('force', opts, { desc = 'Show line diagnostics' }))
-  vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist,
-    vim.tbl_extend('force', opts, { desc = 'Diagnostics to loclist' }))
+  vim.keymap.set('n', 'gan', function() vim.diagnostic.jump({ count = 1 }) end, { buffer = bufnr, silent = true, desc = 'Go to next diagnostic' })
+  vim.keymap.set('n', 'gap', function() vim.diagnostic.jump({ count = -1 }) end, { buffer = bufnr, silent = true, desc = 'Go to previous diagnostic' })
+  vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { buffer = bufnr, silent = true, desc = 'Diagnostics to loclist' })
 
   -- Telescope LSP integration
-  vim.keymap.set('n', 'gs', '<cmd>Telescope lsp_document_symbols<cr>',
-    vim.tbl_extend('force', opts, { desc = 'Document symbols' }))
-  vim.keymap.set('n', 'gS', '<cmd>Telescope lsp_workspace_symbols<cr>',
-    vim.tbl_extend('force', opts, { desc = 'Workspace symbols' }))
+  vim.keymap.set('n', 'gs', '<cmd>Telescope lsp_document_symbols<cr>', { buffer = bufnr, silent = true, desc = 'Document symbols' })
+  vim.keymap.set('n', 'gS', '<cmd>Telescope lsp_workspace_symbols<cr>', { buffer = bufnr, silent = true, desc = 'Workspace symbols' })
   -- Note: 'gc' is handled in telescope.lua for code actions (replaces old CoC commands)
-  vim.keymap.set('n', 'gC', '<cmd>Telescope lsp_outgoing_calls<cr>',
-    vim.tbl_extend('force', opts, { desc = 'Outgoing calls' }))
+  vim.keymap.set('n', 'gC', '<cmd>Telescope lsp_outgoing_calls<cr>', { buffer = bufnr, silent = true, desc = 'Outgoing calls' })
 end
 
 -- Common LSP capabilities (enhanced with nvim-cmp)
@@ -204,9 +184,12 @@ local servers = {
   -- TypeScript/JavaScript
   ts_ls = {
     settings = {
-      typescript = {
-        format = { enable = true },
-        updateImportsOnFileMove = { enabled = 'always' },
+        typescript = {
+          format = { enable = true },
+          updateImportsOnFileMove = { enabled = 'always' },
+          preferences = {
+            includePackageJsonAutoImports = 'auto',
+          },
         inlayHints = {
           includeInlayParameterNameHints = 'all',
           includeInlayParameterNameHintsWhenArgumentMatchesName = false,
@@ -354,9 +337,8 @@ vim.api.nvim_create_user_command('OrganizeImports', function()
   local params = {
     command = '_typescript.organizeImports',
     arguments = { vim.api.nvim_buf_get_name(0) },
-    title = '',
   }
-  vim.lsp.buf.execute_command(params)
+  vim.lsp.buf_request(0, 'workspace/executeCommand', params)
 end, { desc = 'Organize imports (TypeScript)' })
 
 return M

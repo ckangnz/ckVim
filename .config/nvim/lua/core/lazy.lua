@@ -244,34 +244,37 @@ local plugins = {
     end,
   },
 
-  -- Mason (must load early for LSP)
-  {
-    'mason-org/mason.nvim',
-    cmd = 'Mason',
-    keys = { { '<leader>pm', '<cmd>Mason<cr>', desc = 'Mason' } },
-    build = ':MasonUpdate',
-    config = function()
-      require('plugins.mason')
-    end,
-  },
-  {
-    "mason-org/mason-lspconfig.nvim",
-    dependencies = {
-      "mason-org/mason.nvim",
-      "neovim/nvim-lspconfig",
+    -- Mason (must load early for LSP)
+    {
+      'mason-org/mason.nvim',
+      lazy = false,
+      priority = 100,
+      keys = { { '<leader>pm', '<cmd>Mason<cr>', desc = 'Mason' } },
+      build = ':MasonUpdate',
+      config = function()
+        require('plugins.mason')
+      end,
     },
-  },
-  {
-    'neovim/nvim-lspconfig',
-    event = { 'BufReadPost', 'BufNewFile' },
-    dependencies = {
-      'mason.nvim',
-      'mason-lspconfig.nvim',
+    {
+      "mason-org/mason-lspconfig.nvim",
+      lazy = false,
+      priority = 99,
+      dependencies = {
+        "mason-org/mason.nvim",
+      },
     },
-    config = function()
-      require('plugins.lsp')
-    end,
-  },
+    {
+      'neovim/nvim-lspconfig',
+      event = { 'BufReadPost', 'BufNewFile' },
+      priority = 98,
+      dependencies = {
+        'mason-org/mason.nvim',
+        'mason-org/mason-lspconfig.nvim',
+      },
+      config = function()
+        require('plugins.lsp')
+      end,
+    },
   {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
