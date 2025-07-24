@@ -195,6 +195,7 @@ local plugins = {
   {
     'tpope/vim-fugitive',
     cmd = { 'Git', 'G', 'Gdiffsplit', 'Gread', 'Gwrite', 'Ggrep', 'GMove', 'GDelete', 'GBrowse', 'Gstatus', 'Gcommit', 'Gmerge', 'Gpull', 'Gpush', 'Gfetch', 'Glog' },
+    keys={ '<leader>1', '<leader>2', '<leader>3', },
     event = 'VeryLazy',
     config = function()
       require('plugins.git')
