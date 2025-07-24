@@ -226,8 +226,21 @@ local plugins = {
   {
     'machakann/vim-sandwich',
     keys = {
-      { 'is', mode = { 'x', 'o' } },
-      { 'as', mode = { 'x', 'o' } },
+    -- Text objects
+    { 'is', mode = { 'x', 'o' } },
+    { 'as', mode = { 'x', 'o' } },
+    -- Default sandwich operators
+    { 'sa', mode = { 'n', 'x' } },  -- sandwich add
+    { 'sd', mode = 'n' },           -- sandwich delete
+    { 'sr', mode = 'n' },           -- sandwich replace
+    -- Surround.vim compatibility mappings
+    { 'S', mode = 'x' },            -- visual surround
+    { 'ds', mode = 'n' },           -- delete surround
+    { 'cs', mode = 'n' },           -- change surround
+    { 'ys', mode = 'n' },           -- you surround (operator)
+    { 'yss', mode = 'n' },          -- you surround line
+    { 'yS', mode = 'n' },           -- you surround with newlines
+    { 'ySS', mode = 'n' },          -- you surround line with newlines
     },
     config = function()
       require('plugins.vim-sandwich')
