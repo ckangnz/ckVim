@@ -125,20 +125,6 @@ vim.keymap.set('n', '<leader>m', utility_menu, {
   nowait = true
 })
 
-vim.keymap.set('n', '<leader>q', function()
-  local current_buf = vim.api.nvim_get_current_buf()
-  local buffers = vim.api.nvim_list_bufs()
-
-  for _, buf in ipairs(buffers) do
-    if vim.api.nvim_buf_is_loaded(buf) and buf ~= current_buf then
-      local windows = vim.fn.win_findbuf(buf)
-      if #windows == 0 then -- buffer is not displayed in any window (hidden)
-        vim.api.nvim_buf_delete(buf, { force = false })
-      end
-    end
-  end
-end, { desc = "Close all hidden buffers" })
-
 local function toggle_quickfix()
   local qf_exists = false
   for _, win in pairs(vim.fn.getwininfo()) do

@@ -257,23 +257,41 @@ local plugins = {
     end,
   },
 
-  -- Native LSP
+  -- LSP
   {
-    'neovim/nvim-lspconfig',
-    event = { 'BufReadPost', 'BufNewFile' },
+    "mason-org/mason.nvim",
+    cmd = { 'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll', 'MasonLog' },
+    opts = {
+      ui = {
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗"
+        }
+      }
+    }
+  },
+  {
+    "mason-org/mason-lspconfig.nvim",
+    lazy = false,
+    opts = {},
+    dependencies = {
+      { "mason-org/mason.nvim", opts = {} },
+      "neovim/nvim-lspconfig",
+    },
     config = function()
       require('plugins.lsp')
-    end,
+    end
   },
   {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
-      'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-emoji',
       'hrsh7th/cmp-calc',
       'ray-x/cmp-treesitter',
@@ -298,6 +316,8 @@ local plugins = {
       require('plugins.nvim-cmp')
     end,
   },
+
+  -- Database
   {
     'kristijanhusak/vim-dadbod-completion',
     ft = { 'sql', 'mysql', 'plsql' },
