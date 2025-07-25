@@ -149,6 +149,13 @@ local plugins = {
       require('plugins.smear-cursor')
     end,
   },
+  {
+    'norcalli/nvim-colorizer.lua',
+    event = 'VeryLazy',
+    config = function()
+      require('colorizer').setup()
+    end
+  },
 
   -- Language Specific
   {
