@@ -64,7 +64,7 @@ local plugins = {
   },
   {
     'nvim-lualine/lualine.nvim',
-    event={'UIEnter'},
+    event = { 'UIEnter' },
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('plugins.lualine')
@@ -194,7 +194,7 @@ local plugins = {
   {
     'tpope/vim-fugitive',
     cmd = { 'Git', 'G', 'Gdiffsplit', 'Gread', 'Gwrite', 'Ggrep', 'GMove', 'GDelete', 'GBrowse', 'Gstatus', 'Gcommit', 'Gmerge', 'Gpull', 'Gpush', 'Gfetch', 'Glog' },
-    keys={ '<leader>1', '<leader>2', '<leader>3', },
+    keys = { '<leader>1', '<leader>2', '<leader>3', },
     event = 'VeryLazy',
     config = function()
       require('plugins.git')
@@ -226,21 +226,21 @@ local plugins = {
   {
     'machakann/vim-sandwich',
     keys = {
-    -- Text objects
-    { 'is', mode = { 'x', 'o' } },
-    { 'as', mode = { 'x', 'o' } },
-    -- Default sandwich operators
-    { 'sa', mode = { 'n', 'x' } },  -- sandwich add
-    { 'sd', mode = 'n' },           -- sandwich delete
-    { 'sr', mode = 'n' },           -- sandwich replace
-    -- Surround.vim compatibility mappings
-    { 'S', mode = 'x' },            -- visual surround
-    { 'ds', mode = 'n' },           -- delete surround
-    { 'cs', mode = 'n' },           -- change surround
-    { 'ys', mode = 'n' },           -- you surround (operator)
-    { 'yss', mode = 'n' },          -- you surround line
-    { 'yS', mode = 'n' },           -- you surround with newlines
-    { 'ySS', mode = 'n' },          -- you surround line with newlines
+      -- Text objects
+      { 'is',  mode = { 'x', 'o' } },
+      { 'as',  mode = { 'x', 'o' } },
+      -- Default sandwich operators
+      { 'sa',  mode = { 'n', 'x' } },
+      { 'sd',  mode = 'n' },
+      { 'sr',  mode = 'n' },
+      -- Surround.vim compatibility mappings
+      { 'S',   mode = 'x' },
+      { 'ds',  mode = 'n' },
+      { 'cs',  mode = 'n' },
+      { 'ys',  mode = 'n' },
+      { 'yss', mode = 'n' },
+      { 'yS',  mode = 'n' },
+      { 'ySS', mode = 'n' },
     },
     config = function()
       require('plugins.vim-sandwich')
@@ -257,37 +257,14 @@ local plugins = {
     end,
   },
 
-    -- Mason (must load early for LSP)
-    {
-      'mason-org/mason.nvim',
-      lazy = false,
-      priority = 100,
-      keys = { { '<leader>pm', '<cmd>Mason<cr>', desc = 'Mason' } },
-      build = ':MasonUpdate',
-      config = function()
-        require('plugins.mason')
-      end,
-    },
-    {
-      "mason-org/mason-lspconfig.nvim",
-      lazy = false,
-      priority = 99,
-      dependencies = {
-        "mason-org/mason.nvim",
-      },
-    },
-    {
-      'neovim/nvim-lspconfig',
-      event = { 'BufReadPost', 'BufNewFile' },
-      priority = 98,
-      dependencies = {
-        'mason-org/mason.nvim',
-        'mason-org/mason-lspconfig.nvim',
-      },
-      config = function()
-        require('plugins.lsp')
-      end,
-    },
+  -- Native LSP
+  {
+    'neovim/nvim-lspconfig',
+    event = { 'BufReadPost', 'BufNewFile' },
+    config = function()
+      require('plugins.lsp')
+    end,
+  },
   {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',

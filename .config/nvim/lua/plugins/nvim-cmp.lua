@@ -259,14 +259,12 @@ cmp.setup.filetype('lua', {
 })
 
 -- SQL completion
-if pcall(require, 'cmp_nvim_lsp') then
-  cmp.setup.filetype('sql', {
-    sources = cmp.config.sources({
-      { name = 'vim-dadbod-completion' },
-      { name = 'buffer' },
-    })
+cmp.setup.filetype('sql', {
+  sources = cmp.config.sources({
+    { name = 'vim-dadbod-completion' },
+    { name = 'buffer' },
   })
-end
+})
 
 -- Custom highlights
 vim.api.nvim_set_hl(0, 'CmpGhostText', { link = 'Comment', default = true })

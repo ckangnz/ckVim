@@ -45,6 +45,38 @@ autocmd('FileType', {
     vim.opt_local.wrap = false
   end,
 })
+autocmd({ 'BufRead', 'BufNewFile' }, {
+  group = filetype_specific,
+  desc = 'Set filetype for JavaScript files',
+  pattern = { '*.js', '*.mjs', '*.cjs' },
+  callback = function()
+    vim.bo.filetype = 'javascript'
+  end,
+})
+autocmd({ 'BufRead', 'BufNewFile' }, {
+  group = filetype_specific,
+  desc = 'Set filetype for JSX files',
+  pattern = { '*.jsx' },
+  callback = function()
+    vim.bo.filetype = 'javascriptreact'
+  end,
+})
+autocmd({ 'BufRead', 'BufNewFile' }, {
+  group = filetype_specific,
+  desc = 'Set filetype for TypeScript files',
+  pattern = { '*.ts', '*.mts', '*.cts' },
+  callback = function()
+    vim.bo.filetype = 'typescript'
+  end,
+})
+autocmd({ 'BufRead', 'BufNewFile' }, {
+  group = filetype_specific,
+  desc = 'Set filetype for TSX files',
+  pattern = { '*.tsx' },
+  callback = function()
+    vim.bo.filetype = 'typescriptreact'
+  end,
+})
 
 -- Ensure proper filetype detection for init.lua and nvim config files
 autocmd({ 'BufRead', 'BufNewFile' }, {

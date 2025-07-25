@@ -85,38 +85,37 @@ require('lualine').setup {
         icon_only = false,
         separator = { left = "", right = "" }
       },
-      {
-        function()
-          local bufnr = vim.api.nvim_get_current_buf()
-          local clients = vim.lsp.get_clients({ bufnr = bufnr })
-          if #clients == 0 then
-            return ''
-          end
-          local ignored_clients = {
-            'null-ls',
-            'copilot',
-          }
-          local function is_ignored(client_name)
-            for _, ignored in ipairs(ignored_clients) do
-              if client_name == ignored then
-                return true
+        {
+          function()
+            local bufnr = vim.api.nvim_get_current_buf()
+            local clients = vim.lsp.get_clients({ bufnr = bufnr })
+            if #clients == 0 then
+              return ''
+            end
+            local ignored_clients = {
+              'copilot',
+            }
+            local function is_ignored(client_name)
+              for _, ignored in ipairs(ignored_clients) do
+                if client_name == ignored then
+                  return true
+                end
+              end
+              return false
+            end
+            local client_names = {}
+            for _, client in ipairs(clients) do
+              if not is_ignored(client.name) and vim.lsp.buf_is_attached(bufnr, client.id) then
+                table.insert(client_names, client.name)
               end
             end
-            return false
-          end
-          local client_names = {}
-          for _, client in ipairs(clients) do
-            if not is_ignored(client.name) and vim.lsp.buf_is_attached(bufnr, client.id) then
-              table.insert(client_names, client.name)
+            if #client_names == 0 then
+              return ''
             end
-          end
-          if #client_names == 0 then
-            return ''
-          end
-          return ' ' .. table.concat(client_names, ', ')
-        end,
-        separator = { left = "", right = "" }
-      },
+            return ' ' .. table.concat(client_names, ', ')
+          end,
+          separator = { left = "", right = "" }
+        },
     },
     lualine_y = {
       {
