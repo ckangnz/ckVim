@@ -170,6 +170,7 @@ vim.lsp.config("ts_ls", {
 -- ESLint for auto-fixing
 vim.lsp.config("eslint", {
   capabilities = capabilities,
+  filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
   settings = {
     format = { enable = true },
     autoFixOnSave = true,
@@ -192,6 +193,7 @@ vim.lsp.config("eslint", {
 -- YAML Language Server
 vim.lsp.config("yamlls", {
   capabilities = capabilities,
+  filetypes = { 'yaml', 'yml' },
   settings = {
     yaml = {
       hover = true,
@@ -212,46 +214,55 @@ vim.lsp.config("yamlls", {
 
 -- JSON Language Server
 vim.lsp.config("jsonls", {
+  filetypes = { 'json' },
   capabilities = capabilities,
 })
 
 -- HTML Language Server
 vim.lsp.config("html", {
   capabilities = capabilities,
+  filetypes = { 'html' },
 })
 
 -- CSS Language Server
 vim.lsp.config("cssls", {
   capabilities = capabilities,
+  filetypes = { 'css', 'scss', 'sass' },
 })
 
 -- Python (Pyright)
 vim.lsp.config("pyright", {
   capabilities = capabilities,
+  filetypes = { 'python' },
 })
 
--- C# Language Server (disable Java as per config)
+-- C# Language Server
 vim.lsp.config("csharp_ls", {
   capabilities = capabilities,
+  filetypes = { 'cs' },
 })
 
 -- Bash Language Server
 vim.lsp.config("bashls", {
+  filetypes = { "zsh", "bash", "sh" },
   capabilities = capabilities,
 })
 
 -- Vim Language Server
 vim.lsp.config("vimls", {
   capabilities = capabilities,
+  filetypes = { 'vim' },
 })
 
 -- Markdown Language Server
 vim.lsp.config("marksman", {
+  filetypes = { "markdown", "md" },
   capabilities = capabilities,
 })
 
 -- Docker Language Server
 vim.lsp.config("dockerls", {
+  filetypes = { 'dockerfile' },
   capabilities = capabilities,
 })
 
@@ -267,4 +278,44 @@ vim.lsp.config("emmet_ls", {
     'typescript',
     'typescriptreact',
   },
+})
+
+-- Auto-start LSP servers when opening files
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  callback = function(ev)
+    vim.defer_fn(function()
+      local ft = vim.bo[ev.buf].filetype
+      local server_map = {
+        typescript = 'ts_ls',
+        typescriptreact = 'ts_ls',
+        javascript = 'ts_ls',
+        javascriptreact = 'ts_ls',
+        lua = 'lua_ls',
+        markdown = 'marksman',
+        md = 'marksman',
+        json = 'jsonls',
+        yaml = 'yamlls',
+        yml = 'yamlls',
+        sh = 'bashls',
+        zsh = 'bashls',
+        bash = 'bashls',
+        dockerfile = 'dockerls',
+        html = 'html',
+        css = 'cssls',
+        scss = 'cssls',
+        sass = 'cssls',
+        python = 'pyright',
+        cs = 'csharp_ls',
+        vim = 'vimls'
+      }
+
+      local server = server_map[ft]
+      if server then
+        local clients = vim.lsp.get_clients({ bufnr = ev.buf })
+        if not vim.tbl_contains(vim.tbl_map(function(c) return c.name end, clients), server) then
+          pcall(vim.cmd, 'LspStart ' .. server)
+        end
+      end
+    end, 100)
+  end,
 })

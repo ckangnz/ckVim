@@ -196,8 +196,6 @@ cmp.setup({
   },
 })
 
--- Specific filetype configurations
-
 -- Use buffer source for `/` and `?` (if you have cmdline enabled)
 local cmdline_config = {
   mapping = cmp.mapping.preset.cmdline({
@@ -256,6 +254,13 @@ cmp.setup.filetype('sql', {
   sources = cmp.config.sources({
     { name = 'vim-dadbod-completion' },
     { name = 'buffer' },
+  })
+})
+
+cmp.setup.filetype('codecompanion', {
+  sources = cmp.config.sources({
+    { name = 'codecompanion', priority = 1000 },
+    { name = 'buffer',        priority = 500, max_item_count = 3 },
   })
 })
 
