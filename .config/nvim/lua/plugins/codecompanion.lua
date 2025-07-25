@@ -18,7 +18,7 @@ require("codecompanion").setup({
         user = "👤 You",
       },
       opts = {
-        goto_file_action = 'tabnew',      -- press gR to go to file in new tab
+        goto_file_action = 'tabnew', -- press gR to go to file in new tab
         completion_provider = "cmp", -- Use nvim-cmp for completions
       },
       tools = {
@@ -143,3 +143,15 @@ end, { desc = 'Add visual selection to CodeCompanion chat' })
 
 vim.keymap.set({ 'n', 'v' }, '<M-p>', ':CodeCompanion ', { desc = 'Open CodeCompanion prompt' })
 vim.keymap.set({ 'n', 'v' }, '<M-i>', function() vim.cmd('CodeCompanionAction') end, { desc = 'CodeCompanion actions' })
+
+-- Custom background only for CodeCompanion
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
+  pattern = '*',
+  callback = function()
+    local buf_name = vim.api.nvim_buf_get_name(0)
+    if buf_name:match('CodeCompanion') then
+      vim.api.nvim_set_hl(0, 'CodeCompanionBackground', { bg = Colors.black })
+      vim.opt_local.winhighlight = 'Normal:CodeCompanionBackground,NormalNC:CodeCompanionBackground'
+    end
+  end,
+})

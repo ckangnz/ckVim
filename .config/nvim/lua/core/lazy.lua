@@ -131,22 +131,15 @@ local plugins = {
     lazy = false,
     priority = 1000,
     config = function()
+      vim.opt.background = 'dark'
       vim.g.gruvbox_material_enable_italic = true
       vim.g.gruvbox_material_better_performance = 1
-      vim.g.gruvbox_material_disable_terminal_colors = 1 -- Faster loading
       vim.g.gruvbox_material_sign_column_background = 'none'
       vim.g.gruvbox_material_disable_italic_comment = 0
-      vim.g.gruvbox_material_enable_italic = 1
       vim.g.gruvbox_material_palette = 'original'
       vim.g.gruvbox_material_background = 'hard'
 
-      vim.opt.background = 'dark'
       vim.cmd.colorscheme('gruvbox-material')
-
-      vim.api.nvim_set_hl(0, 'Comment', {
-        fg = '#928374',
-        italic = true
-      })
     end
   },
   {

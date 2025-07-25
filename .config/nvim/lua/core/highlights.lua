@@ -61,7 +61,11 @@ vim.api.nvim_set_hl(0, 'ExtraWhitespace', { bg = Colors.dark_red, ctermbg = 'red
 -- Plugin highlights
 vim.api.nvim_set_hl(0, 'CodeiumSuggestion', { fg = Colors.light_grey, ctermfg = 245 })
 
-local function apply_transparent_highlights()
+local function apply_custom_highlights()
+  vim.api.nvim_set_hl(0, 'Comment', {
+    fg = '#928374',
+    italic = true
+  })
   vim.api.nvim_set_hl(0, 'TabLine', { bg = 'NONE' })
   vim.api.nvim_set_hl(0, 'TabLineFill', { bg = 'NONE' })
   vim.api.nvim_set_hl(0, 'TabLineSel', { bg = 'NONE' })
@@ -72,13 +76,10 @@ local function apply_transparent_highlights()
   vim.api.nvim_set_hl(0, 'Normal', { bg = 'NONE' })
   vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'NONE' })
 end
-
--- Apply transparent backgrounds immediately
-apply_transparent_highlights()
-
+apply_custom_highlights()
 -- Reapply after colorscheme changes
 vim.api.nvim_create_autocmd('ColorScheme', {
   group = vim.api.nvim_create_augroup('TransparentUI', { clear = true }),
-  callback = apply_transparent_highlights,
+  callback = apply_custom_highlights,
   desc = 'Apply transparent backgrounds after colorscheme changes'
 })
