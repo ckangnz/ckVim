@@ -38,13 +38,6 @@ local kind_icons = {
   Codeium = "󰘦",
 }
 
--- Helper function to check if we have words before cursor
-local function has_words_before()
-  unpack = unpack or table.unpack
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
-end
-
 -- Main cmp setup
 cmp.setup({
   -- Snippet engine
@@ -155,18 +148,18 @@ cmp.setup({
 
   -- Sources configuration (ordered by priority)
   sources = cmp.config.sources({
-    { name = 'codecompanion',  priority = 1000 },
-    { name = 'copilot',  priority = 1000 },
-    { name = 'nvim_lsp', priority = 900 },
-    { name = 'luasnip',  priority = 800 },
-    { name = 'nvim_lua', priority = 700 },
+    { name = 'codecompanion', priority = 1000 },
+    { name = 'copilot',       priority = 1000 },
+    { name = 'nvim_lsp',      priority = 900 },
+    { name = 'luasnip',       priority = 800 },
+    { name = 'nvim_lua',      priority = 700 },
   }, {
-      { name = 'buffer',     priority = 500, max_item_count = 5 },
-      { name = 'path',       priority = 400 },
-      { name = 'emoji',      priority = 300 },
-      { name = 'calc',       priority = 200 },
-      { name = 'treesitter', priority = 100 },
-    }),
+    { name = 'buffer',     priority = 500, max_item_count = 5 },
+    { name = 'path',       priority = 400 },
+    { name = 'emoji',      priority = 300 },
+    { name = 'calc',       priority = 200 },
+    { name = 'treesitter', priority = 100 },
+  }),
 
   -- Experimental features
   experimental = {
@@ -219,8 +212,8 @@ local cmdline_config = {
   sources = cmp.config.sources({
     { name = 'path' }
   }, {
-      { name = 'cmdline' }
-    }),
+    { name = 'cmdline' }
+  }),
   matching = { disallow_symbol_nonprefix_matching = false },
   completion = {
     autocomplete = false

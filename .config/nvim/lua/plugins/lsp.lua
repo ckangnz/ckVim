@@ -110,6 +110,9 @@ vim.lsp.inlay_hint.enable(false)
 
 -- Lua Language Server
 vim.lsp.config("lua_ls", {
+  cmd = { 'lua-language-server' },
+  filetypes = { 'lua' },
+  root_markers = { '.luarc.json', '.luarc.jsonc', '.luacheckrc', '.stylua.toml', 'stylua.toml', 'selene.toml', 'selene.yml', '.git' },
   capabilities = capabilities,
   settings = {
     Lua = {
@@ -129,6 +132,9 @@ vim.lsp.config("lua_ls", {
 
 -- TypeScript/JavaScript
 vim.lsp.config("ts_ls", {
+  cmd = { 'typescript-language-server', '--stdio' },
+  filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+  root_markers = { 'package.json', 'tsconfig.json', '.git' },
   capabilities = capabilities,
   settings = {
     typescript = {
@@ -146,7 +152,6 @@ vim.lsp.config("ts_ls", {
     },
   },
   on_attach = function(client, bufnr)
-    -- Auto-organize imports on save for TypeScript files
     if client.name == 'ts_ls' then
       vim.api.nvim_create_autocmd('BufWritePre', {
         buffer = bufnr,
