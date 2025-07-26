@@ -83,7 +83,7 @@ require("codecompanion").setup({
       opts = {
         keymap = "gho",           -- Open history
         save_chat_keymap = "ghi", -- Save current chat
-        auto_save = true,
+        auto_save = false,
         expiration_days = 0,      -- 0 = never expire
         picker = "telescope",
         chat_filter = nil,
