@@ -9,7 +9,8 @@ end
 
 -- ANSI colors for terminal
 g.terminal_ansi_colors = {
-  Colors.bluish_black, Colors.dark_red, Colors.dark_green, Colors.brown, Colors.dark_blue, Colors.dark_magenta, Colors.dark_cyan, Colors.white,
+  Colors.bluish_black, Colors.dark_red, Colors.dark_green, Colors.brown, Colors.dark_blue, Colors.dark_magenta, Colors
+    .dark_cyan, Colors.white,
   Colors.dark_grey, Colors.red, Colors.green, Colors.yellow, Colors.blue, Colors.magenta, Colors.cyan, Colors.white
 }
 
@@ -82,7 +83,7 @@ opt.guifont = 'FiraCode Nerd Font:h12'
 opt.linespace = 0
 opt.wrapmargin = 0
 opt.textwidth = 0
-opt.guioptions:remove('e')                  -- Disable tabline
+opt.guioptions:remove('e')                    -- Disable tabline
 opt.guioptions:remove({ 'l', 'L', 'r', 'R' }) -- Disable scrollbars
 
 -- Cursor shapes
@@ -117,7 +118,6 @@ opt.listchars = {
 opt.fillchars = { stl = ' ' }
 
 -- Folding
-opt.foldmethod = 'syntax'
 opt.foldcolumn = '0'
 opt.foldlevel = 99
 opt.foldlevelstart = 99

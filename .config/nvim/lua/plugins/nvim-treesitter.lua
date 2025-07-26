@@ -1,6 +1,5 @@
-vim.opt.foldmethod = 'expr'
-vim.opt.foldenable = false
-vim.wo.foldexpr = vim.treesitter.foldexpr()
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 
 vim.api.nvim_create_autocmd("BufReadPost", {
   pattern = "*",
