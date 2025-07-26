@@ -184,35 +184,6 @@ vim.keymap.set('n', '<leader>/', function()
   builtin.current_buffer_fuzzy_find({ prompt_prefix = "🔍 " })
 end, { desc = 'Search in current buffer' })
 
--- LSP keymaps
-vim.keymap.set('n', 'gr', function()
-  builtin.lsp_references({ prompt_prefix = "🔗 ", path_display = { "shorten", "smart" } })
-end, { desc = 'LSP references' })
-
-vim.keymap.set('n', 'gs', function()
-  builtin.lsp_document_symbols({ prompt_prefix = "#️⃣  " })
-end, { desc = 'LSP document symbols' })
-
-vim.keymap.set('n', 'gS', function()
-  builtin.lsp_workspace_symbols({ prompt_prefix = "#️⃣  " })
-end, { desc = 'LSP workspace symbols' })
-
-vim.keymap.set('n', 'gd', function()
-  builtin.lsp_definitions({ prompt_prefix = "📍 " })
-end, { desc = 'LSP definitions' })
-
-vim.keymap.set('n', 'gi', function()
-  builtin.lsp_implementations({ prompt_prefix = "🔧 " })
-end, { desc = 'LSP implementations' })
-
-vim.keymap.set('n', 'gy', function()
-  builtin.lsp_type_definitions({ prompt_prefix = "🏷️  " })
-end, { desc = 'LSP type definitions' })
-
-vim.keymap.set('n', '<leader>D', function()
-  builtin.diagnostics({ prompt_prefix = "🩺 " })
-end, { desc = 'LSP diagnostics' })
-
 -- User command for registers
 vim.api.nvim_create_user_command("Registers", function()
   builtin.registers()
@@ -226,11 +197,6 @@ end
 
 -- Telescope color theme customization
 local function setup_telescope_colors()
-  -- Note: Colors global should be available from theme.lua
-  if not Colors then
-    return -- Skip if Colors not available
-  end
-
   local TelescopeColor = {
     TelescopeMatching = { bold = true, underline = true },
     TelescopeSelection = { fg = Colors.black, bg = Colors.main_theme, bold = true },

@@ -144,7 +144,7 @@ end, { desc = 'Add visual selection to CodeCompanion chat' })
 vim.keymap.set({ 'n', 'v' }, '<M-p>', ':CodeCompanion ', { desc = 'Open CodeCompanion prompt' })
 vim.keymap.set({ 'n', 'v' }, '<M-i>', function() vim.cmd('CodeCompanionAction') end, { desc = 'CodeCompanion actions' })
 
--- Custom background only for CodeCompanion
+-- CodeCompanion color theme customization
 vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
   pattern = '*',
   callback = function()

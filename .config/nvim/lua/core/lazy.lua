@@ -261,6 +261,9 @@ local plugins = {
   {
     "mason-org/mason.nvim",
     cmd = { 'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll', 'MasonLog' },
+    keys = {
+      { '<leader>pm', ':Mason<cr>', desc = "Open Mason", silent = true }
+    },
     opts = {
       ui = {
         icons = {
