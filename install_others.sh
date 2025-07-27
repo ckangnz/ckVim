@@ -36,4 +36,9 @@ cask_packages=(
   #"session-manager-plugin"
   #"microsoft-remote-desktop"
 )
+echo "Installing brew cask packages..."
 brew_install_cask "${cask_packages[@]}"
+
+echo ""
+echo ""
+echo "DONE!"

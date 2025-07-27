@@ -36,29 +36,12 @@ zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) 
 echo ""
 echo ""
 
-# Install Homebrew cask packages
-cask_packages=(
-  "font-fira-code-nerd-font"
-)
-echo "Installing brew cask packages..."
-brew_install_cask "${cask_packages[@]}"
-echo ""
-echo ""
-
-echo "Symlinking files..."
-create_symlink ~/.vim/.zshrc ~/.zshrc
-create_symlink ~/.vim/.config/tmux ~/.config/tmux
-echo ""
-echo ""
-
 if [[ "$(basename "$SHELL")" != "zsh" ]]; then
   echo "Changing default shell to zsh..."
   chsh -s "$(which zsh)"
 else
   echo "Default shell is already zsh."
 fi
-echo ""
-echo ""
 
 echo "."
 echo "."

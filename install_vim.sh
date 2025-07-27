@@ -28,20 +28,6 @@ brew_install "${packages[@]}"
 echo ""
 echo ""
 
-# Install Homebrew cask packages
-cask_packages=(
-  "font-fira-code-nerd-font"
-)
-echo "Installing brew cask packages..."
-brew_install_cask "${cask_packages[@]}"
-echo ""
-echo ""
-
-echo "Symlinking files..."
-create_symlink ~/.vim/.vimrc ~/.vimrc
-create_symlink ~/.vim/.config/nvim ~/.config/nvim
-echo ""
-echo ""
 echo "         888      888     888 d8b              "
 echo "         888      888     888 Y8P              "
 echo "         888      888     888                  "

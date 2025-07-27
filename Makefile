@@ -3,20 +3,26 @@
 SHELL := /bin/bash
 VIM_DIR := $(HOME)/.vim
 
-.PHONY: all vim zsh others clean help
+.PHONY: all vim zsh others reset fonts symlink help
 
 ## Default
 all: vim zsh others
 
 ## Install Vim + Neovim config
-vim:
-	@echo "Installing Vim/Neovim..."
-	@bash $(VIM_DIR)/install_vim.sh
+vim: fonts
+	@source $(VIM_DIR)/install_methods.sh && \
+	echo "Installing Vim/Neovim..." && \
+	bash $(VIM_DIR)/install_vim.sh && \
+	create_symlink ~/.vim/.vimrc ~/.vimrc && \
+	create_symlink ~/.vim/.config/nvim ~/.config/nvim
 
 ## Install Zsh + Zap config
-zsh:
-	@echo "Installing ZSH..."
-	@bash $(VIM_DIR)/install_zsh.sh
+zsh: fonts
+	@source $(VIM_DIR)/install_methods.sh && \
+	echo "Installing ZSH..." && \
+	bash $(VIM_DIR)/install_zsh.sh && \
+	create_symlink ~/.vim/.zshrc ~/.zshrc && \
+	create_symlink ~/.vim/.config/tmux ~/.config/tmux
 
 ## Install other tools (Docker, AWS CLI, etc.)
 others:
