@@ -27,56 +27,11 @@ vim.keymap.set('n', '<leader>cd', ':DisableCodeium<CR>', { desc = 'Disable Codei
 vim.keymap.set('n', '<leader>cs', ':Codeium<CR>', { desc = 'Codeium status' })
 
 vim.g.codeium_filetypes = {
-  -- Compiled languages
-  ["cs"] = true,
-  ["java"] = true,
-  ["kotlin"] = true,
-  ["c"] = true,
-  ["cpp"] = true,
-
-  -- Scripting languages
-  ["vim"] = true,
-  ["python"] = true,
-  ["lua"] = true,
-  ["javascript"] = true,
-  ["javascriptreact"] = true,
-  ["typescript"] = true,
-  ["typescriptreact"] = true,
-
-  -- Web technologies
-  ["html"] = true,
-  ["css"] = true,
-  ["sass"] = true,
-  ["scss"] = true,
-  ["json"] = true,
-
-  -- Mobile development
-  ["flutter"] = true,
-  ["dart"] = true,
-
-  -- DevOps and configuration
-  ["docker"] = true,
-  ["dockerfile"] = true,
-  ["yaml"] = true,
-  ["toml"] = true,
-  ["terraform"] = true,
-
-  -- Databases
-  ["sql"] = true,
-
-  -- Shell scripting
-  ["sh"] = true,
-  ["bash"] = true,
-  ["zsh"] = true,
-
-  -- Disable for certain file types
+  ["fugitive"] = false,
   ["markdown"] = false,
   ["help"] = false,
-  ["gitcommit"] = false,
-  ["gitrebase"] = false,
-  ["fugitive"] = false,
   ["hgcommit"] = false,
   ["svn"] = false,
   ["cvs"] = false,
-  ["."] = false,  -- Files starting with .
+  ["."] = false,
 }
