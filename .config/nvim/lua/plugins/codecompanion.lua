@@ -14,7 +14,7 @@ require("codecompanion").setup({
     chat = {
       adapter = {
         name = os.getenv("CODECOMPANION_ADAPTER_NAME") or "githubmodels",
-        model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "github-4.1",
+        model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "gpt-4.1",
         -- Available models: "claude-3.7-sonnet", "gemini-2.0-flash-001", "claude-opus-4",
         -- "claude-3.7-sonnet-thought", "o3-mini", "gpt-4.1", "gpt-4o"
       },
@@ -59,14 +59,14 @@ require("codecompanion").setup({
     inline = {
       adapter = {
         name = os.getenv("CODECOMPANION_ADAPTER_NAME") or "githubmodels",
-        model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "github-4.1",
+        model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "gpt-4.1",
       },
       opts = { completion_provider = "cmp" }
     },
     cmd = {
       adapter = {
         name = os.getenv("CODECOMPANION_ADAPTER_NAME") or "githubmodels",
-        model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "github-4.1",
+        model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "gpt-4.1",
       },
       opts = { completion_provider = "cmp" }
     }
@@ -101,8 +101,6 @@ require("codecompanion").setup({
         },
         auto_generate_title = true,
         title_generation_opts = {
-          adapter = os.getenv("CODECOMPANION_ADAPTER_NAME") or "githubmodels",
-          model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "github-4.1",
           refresh_every_n_prompts = 0,
           max_refreshes = 3,
           format_title = function(original_title)

@@ -7,7 +7,7 @@ vim.keymap.set('n', '<leader>ct', ':ToggleCopilot<CR>', { desc = 'Toggle Copilot
 vim.keymap.set('n', '<leader>cp', ':Copilot panel<CR>', { desc = 'Open Copilot panel' })
 
 require('copilot').setup({
-  copilot_model = os.getenv("COPILOT_MODEL") or "github-4.1",
+  copilot_model = os.getenv("COPILOT_MODEL") or "gpt-4.1",
   panel = {
     enabled = true,
     auto_refresh = false,
