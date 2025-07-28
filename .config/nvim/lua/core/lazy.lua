@@ -286,31 +286,30 @@ local plugins = {
 
   -- LSP
   {
-    "mason-org/mason.nvim",
-    cmd = { 'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll', 'MasonLog' },
-    keys = {
-      { '<leader>pm', ':Mason<cr>', desc = "Open Mason", silent = true }
-    },
-    opts = {
-      ui = {
-        icons = {
-          package_installed = "✓",
-          package_pending = "➜",
-          package_uninstalled = "✗"
-        }
-      }
-    }
-  },
-  {
     "mason-org/mason-lspconfig.nvim",
     lazy = false,
     opts = {},
     dependencies = {
-      { "mason-org/mason.nvim", opts = {} },
+      {
+        "mason-org/mason.nvim",
+        cmd = { 'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll', 'MasonLog' },
+        keys = {
+          { '<leader>pm', ':Mason<cr>', desc = "Open Mason", silent = true }
+        },
+        opts = {
+          ui = {
+            icons = {
+              package_installed = "✓",
+              package_pending = "➜",
+              package_uninstalled = "✗"
+            }
+          }
+        }
+      },
       "neovim/nvim-lspconfig",
     },
     config = function()
-      require('plugins.lsp')
+      require('plugins.mason')
     end
   },
   {
