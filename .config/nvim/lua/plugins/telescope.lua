@@ -137,6 +137,7 @@ end
 load_extension('fzf')
 load_extension('vim_bookmarks')
 load_extension('project')
+load_extension('notify')
 
 -- Helper functions for git integration
 local function is_git_repo()
