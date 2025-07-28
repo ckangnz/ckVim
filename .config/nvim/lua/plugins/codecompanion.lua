@@ -3,6 +3,13 @@
 -- export CODECOMPANION_ADAPTER_MODEL="claude-sonnet-4"
 
 require("codecompanion").setup({
+  display = {
+    chat = {
+      show_context = true,     -- Show context (from slash commands and variables) in the chat buffer?
+      show_settings = true,    -- Show LLM settings at the top of the chat buffer?
+      show_token_count = true, -- Show the token count for each response?
+    }
+  },
   strategies = {
     chat = {
       adapter = {
