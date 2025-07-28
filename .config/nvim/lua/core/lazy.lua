@@ -70,6 +70,19 @@ local plugins = {
       require('plugins.lualine')
     end,
   },
+  {
+    "rcarriga/nvim-notify",
+    event = "VimEnter",
+    config = function()
+      require("notify").setup({
+        background_colour = "#000000",
+        stages = "fade_in_slide_out",
+        timeout = 3000, -- milliseconds
+        max_height = 10,
+        max_width = 80,
+      })
+    end,
+  },
 
   -- AI
   {
@@ -488,20 +501,13 @@ local plugins = {
   },
   {
     'skywind3000/asyncrun.vim',
+    dependencies = {
+      "rcarriga/nvim-notify",
+    },
     cmd = { 'AsyncRun', 'AsyncStop' },
     event = 'VeryLazy',
     config = function()
-      vim.g.asyncrun_status = ''
-      vim.g.asyncrun_open = 0
-      vim.api.nvim_create_user_command('Make', function(opts)
-        local args = opts.args
-        vim.cmd('AsyncRun -program=make @ ' .. args)
-      end, {
-        bang = true,
-        nargs = '*',
-        complete = 'file',
-        desc = 'Async make command'
-      })
+      require('plugins.asyncrun')
     end,
   },
   {

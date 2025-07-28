@@ -85,37 +85,37 @@ require('lualine').setup {
         icon_only = false,
         separator = { left = "", right = "" }
       },
-        {
-          function()
-            local bufnr = vim.api.nvim_get_current_buf()
-            local clients = vim.lsp.get_clients({ bufnr = bufnr })
-            if #clients == 0 then
-              return ''
-            end
-            local ignored_clients = {
-              'copilot',
-            }
-            local function is_ignored(client_name)
-              for _, ignored in ipairs(ignored_clients) do
-                if client_name == ignored then
-                  return true
-                end
-              end
-              return false
-            end
-            local client_names = {}
-            for _, client in ipairs(clients) do
-              if not is_ignored(client.name) and vim.lsp.buf_is_attached(bufnr, client.id) then
-                table.insert(client_names, client.name)
+      {
+        function()
+          local bufnr = vim.api.nvim_get_current_buf()
+          local clients = vim.lsp.get_clients({ bufnr = bufnr })
+          if #clients == 0 then
+            return ''
+          end
+          local ignored_clients = {
+            'copilot',
+          }
+          local function is_ignored(client_name)
+            for _, ignored in ipairs(ignored_clients) do
+              if client_name == ignored then
+                return true
               end
             end
-            if #client_names == 0 then
-              return ''
+            return false
+          end
+          local client_names = {}
+          for _, client in ipairs(clients) do
+            if not is_ignored(client.name) and vim.lsp.buf_is_attached(bufnr, client.id) then
+              table.insert(client_names, client.name)
             end
-            return ' ' .. table.concat(client_names, ', ')
-          end,
-          separator = { left = "", right = "" }
-        },
+          end
+          if #client_names == 0 then
+            return ''
+          end
+          return ' ' .. table.concat(client_names, ', ')
+        end,
+        separator = { left = "", right = "" }
+      },
     },
     lualine_y = {
       {
@@ -152,7 +152,6 @@ require('lualine').setup {
       },
       {
         function()
-
           local robot_icon_on = " "
           local robot_icon_off = " "
 
@@ -294,7 +293,7 @@ require('lualine').setup {
     lualine_z = {
       {
         'tabs',
-        separator = { left = '', right = '' },
+        separator = { left = '', right = '' },
         max_length = vim.o.columns,
         use_mode_colors = false,
         show_modified_status = false,
@@ -304,35 +303,8 @@ require('lualine').setup {
           inactive = { fg = Colors.light_grey, bg = Colors.light_black, gui = 'bold' },
         } or {},
         fmt = function(_, context)
-          return '󰓩  ' .. context.tabnr .. ' '
+          return '󰓩  ' .. context.tabnr
         end
-      },
-      {
-        function()
-          local status = vim.g.asyncrun_status
-          if status == 'running' then
-            local icons = { "◴", "◷", "◶", "◵" }
-            local ms = vim.loop.hrtime() / 1e6
-            local frame = math.floor(ms / 150) % #icons + 1
-            return icons[frame]
-          elseif status == 'success' then
-            vim.defer_fn(function()
-              vim.g.asyncrun_status = ''
-              vim.cmd('redrawstatus')
-            end, 3000)
-            return '✓'
-          elseif status == 'failure' then
-            vim.defer_fn(function()
-              vim.g.asyncrun_status = ''
-              vim.cmd('redrawstatus')
-            end, 3000)
-            return '✗'
-          else
-            return ''
-          end
-        end,
-        color = { fg = Colors.white, bg = Colors.black },
-        separator = { left = '', right = '' },
       },
     }
   },
