@@ -33,34 +33,6 @@ local plugins = {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    init = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
-    end,
-    keys = {
-      {
-        "<leader>?",
-        function()
-          require("which-key").show({ global = false })
-        end,
-        desc = "Buffer Local Keymaps (which-key)",
-      },
-    },
-    config = function()
-      local wk = require('which-key')
-      -- Add group descriptions
-      wk.add({
-        { '<leader>4', desc = 'Toggle quickfix list' },
-        { '<leader>N', desc = 'Add TODO item' },
-        { '<leader>e', group = 'Edit files' },
-        { '<leader>k', desc = 'Kulala' },
-        { '<leader>m', group = 'Utility menu' },
-        { '<leader>p', group = 'Lazy shortcuts' },
-        { '<leader>w', group = 'Window management' },
-        { '<leader>q', '<cmd>q<cr>',                 desc = 'Quit',  mode = { 'n', 'v' } },
-        { '<leader>w', '<cmd>w<cr>',                 desc = 'Write', mode = { 'n', 'v' } },
-      })
-    end,
   },
   {
     'nvim-lualine/lualine.nvim',

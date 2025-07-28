@@ -5,6 +5,9 @@ map('v', ';', ':', { desc = 'Enter command mode' })
 map('n', ';;', ';', { desc = 'Repeat f/F/t/T search' })
 map('v', ';;', ';', { desc = 'Repeat f/F/t/T search' })
 
+map('n', '<leader>w', '<Nop>', { desc = 'Unmap <leader>w' })
+map('n', '<leader>q', '<Nop>', { desc = 'Unmap <leader>q' })
+
 map('n', '<Esc>', '<cmd>nohlsearch<cr>', { desc = 'Clear search highlight' })
 
 map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, desc = 'Down' })
