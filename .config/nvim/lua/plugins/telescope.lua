@@ -196,6 +196,11 @@ if ok and project then
   vim.keymap.set('n', '<leader>0', project.project, { desc = 'Switch projects' })
 end
 
+-- Notification history keymap
+vim.keymap.set('n', '<leader><tab>', function()
+  require('telescope').extensions.notify.notify()
+end, { desc = 'Notification history' })
+
 -- Telescope color theme customization
 local function setup_telescope_colors()
   local TelescopeColor = {

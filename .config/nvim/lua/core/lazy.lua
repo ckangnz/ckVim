@@ -77,10 +77,16 @@ local plugins = {
       require("notify").setup({
         background_colour = "#000000",
         stages = "fade_in_slide_out",
-        timeout = 3000, -- milliseconds
+        timeout = 3000,
         max_height = 10,
         max_width = 80,
+        top_down = true,
+        render = "default",
+        minimum_width = 50,
+        fps = 30,
+        level = 2,
       })
+      vim.notify = require("notify")
     end,
   },
   {
