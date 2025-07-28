@@ -31,7 +31,7 @@ require('copilot').setup({
     debounce = 75,
     trigger_on_accept = false,
     keymap = {
-      accept = false, -- refer to keymaps.lua
+      accept = false, -- refer to keymaps.lua <M-a>
       accept_word = false,
       accept_line = false,
       prev = "<M-{>",
