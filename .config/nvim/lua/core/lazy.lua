@@ -464,9 +464,9 @@ local plugins = {
   {
     "kkvh/vim-docker-tools",
     cmd = "DockerToolsToggle",
-    config = function()
-      require("plugins.vim-docker-tools")
-    end,
+    keys = {
+      { "<leader>dc", ":DockerToolsToggle<cr>", desc = "Toggle Docker tools", silent = true },
+    },
   },
   { "markonm/traces.vim" },
   {
