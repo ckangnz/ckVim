@@ -1,6 +1,5 @@
--- Set environment variables:
--- export CODECOMPANION_ADAPTER_NAME="copilot"
--- export CODECOMPANION_ADAPTER_MODEL="claude-sonnet-4"
+-- Set this in ZSHRC
+-- export COPILOT_MODEL="claude-sonnet-4"
 
 require("codecompanion").setup({
   display = {
@@ -13,10 +12,8 @@ require("codecompanion").setup({
   strategies = {
     chat = {
       adapter = {
-        name = os.getenv("CODECOMPANION_ADAPTER_NAME") or "githubmodels",
-        model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "gpt-4.1",
-        -- Available models: "claude-3.7-sonnet", "gemini-2.0-flash-001", "claude-opus-4",
-        -- "claude-3.7-sonnet-thought", "o3-mini", "gpt-4.1", "gpt-4o"
+        name = "copilot",
+        model = os.getenv("COPILOT_MODEL") or "gpt-4.1",
       },
       roles = {
         llm = function(adapter)
@@ -26,7 +23,7 @@ require("codecompanion").setup({
       },
       opts = {
         goto_file_action = 'tabnew', -- press gR to go to file in new tab
-        completion_provider = "cmp", -- Use nvim-cmp for completions
+        completion_provider = "cmp",
       },
       tools = {
         groups = {
@@ -58,15 +55,15 @@ require("codecompanion").setup({
     },
     inline = {
       adapter = {
-        name = os.getenv("CODECOMPANION_ADAPTER_NAME") or "githubmodels",
-        model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "gpt-4.1",
+        name = "copilot",
+        model = os.getenv("COPILOT_MODEL") or "gpt-4.1",
       },
       opts = { completion_provider = "cmp" }
     },
     cmd = {
       adapter = {
-        name = os.getenv("CODECOMPANION_ADAPTER_NAME") or "githubmodels",
-        model = os.getenv("CODECOMPANION_ADAPTER_MODEL") or "gpt-4.1",
+        name = "copilot",
+        model = os.getenv("COPILOT_MODEL") or "gpt-4.1",
       },
       opts = { completion_provider = "cmp" }
     }
@@ -91,7 +88,7 @@ require("codecompanion").setup({
         keymap = "gho",           -- Open history
         save_chat_keymap = "ghi", -- Save current chat
         auto_save = false,
-        expiration_days = 0,      -- 0 = never expire
+        expiration_days = 0,
         picker = "telescope",
         chat_filter = nil,
         picker_keymaps = {
@@ -112,8 +109,8 @@ require("codecompanion").setup({
         dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
         enable_logging = false,
         summary = {
-          create_summary_keymap = "ghs",
-          browse_summaries_keymap = "ghb",
+          create_summary_keymap = "ghs",   -- Save Summary
+          browse_summaries_keymap = "ghb", --Open Summary
           generation_opts = {
             adapter = nil,
             model = nil,
