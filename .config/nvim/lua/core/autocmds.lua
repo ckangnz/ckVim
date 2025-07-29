@@ -11,12 +11,6 @@ autocmd('TextYankPost', {
     vim.hl.on_yank()
   end,
 })
-autocmd('BufWritePre', {
-  group = general,
-  desc = 'Remove trailing whitespace',
-  pattern = '*',
-  command = [[%s/\s\+$//e]],
-})
 autocmd('BufEnter', {
   group = general,
   desc = 'Disable auto comment on new line',

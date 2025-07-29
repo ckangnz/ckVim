@@ -167,9 +167,19 @@ local plugins = {
     end
   },
   {
-    "mason-org/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim", -- lsp
     lazy = false,
     dependencies = { "mason-org/mason.nvim", "neovim/nvim-lspconfig", },
+    config = function()
+      require('plugins.mason-lsp')
+    end
+  },
+  {
+    'stevearc/conform.nvim', --formatter
+    opts = {},
+    config = function()
+      require('plugins.conform')
+    end
   },
   {
     'hrsh7th/nvim-cmp',
