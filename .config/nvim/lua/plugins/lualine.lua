@@ -46,13 +46,14 @@ require("lualine").setup({
     section_separators = { left = "", right = "" },
     refresh = { tabline = 100, statusline = 100 },
     globalstatus = true,
+    disabled_filetypes = { "alpha" },
   },
   sections = {
     lualine_a = {
       {
         "mode",
         fmt = function()
-          return "󰙱K"
+          return "󰙱K"
         end,
         icons_enabled = true,
         draw_empty = true,
@@ -286,6 +287,7 @@ require("lualine").setup({
         disabled_buftypes = { "quickfix", "prompt", "nofile" },
         filetype_names = {
           [""] = "📄 New file",
+          alpha = "󰙱K",
           TelescopePrompt = "🔍 Telescope",
           codecompanion = "💬 CodeCompanion",
           fugitive = " ",
