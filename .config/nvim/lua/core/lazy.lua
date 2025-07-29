@@ -156,6 +156,55 @@ local plugins = {
     end
   },
 
+  -- LSP
+  {
+    "mason-org/mason.nvim",
+    lazy = false,
+    cmd = { 'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll', 'MasonLog' },
+    keys = { { '<leader>pm', ':Mason<cr>', desc = "Open Mason", silent = true } },
+    config = function()
+      require('plugins.mason')
+    end
+  },
+  {
+    "mason-org/mason-lspconfig.nvim",
+    lazy = false,
+    dependencies = { "mason-org/mason.nvim", "neovim/nvim-lspconfig", },
+  },
+  {
+    'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-nvim-lua',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-emoji',
+      'hrsh7th/cmp-calc',
+      'ray-x/cmp-treesitter',
+      'f3fora/cmp-spell',
+      {
+        'L3MON4D3/LuaSnip',
+        build = 'make install_jsregexp',
+        dependencies = {
+          'rafamadriz/friendly-snippets',
+          'saadparwaiz1/cmp_luasnip',
+        },
+      },
+      {
+        'zbirenbaum/copilot-cmp',
+        dependencies = 'zbirenbaum/copilot.lua',
+        config = function()
+          require('copilot_cmp').setup()
+        end,
+      },
+    },
+    config = function()
+      require('plugins.nvim-cmp')
+    end,
+  },
+
   -- Language Specific
   {
     'MeanderingProgrammer/render-markdown.nvim',
@@ -253,68 +302,6 @@ local plugins = {
     event = 'InsertEnter',
     config = function()
       require('plugins.autopairs')
-    end,
-  },
-
-  -- LSP
-  {
-    "mason-org/mason-lspconfig.nvim",
-    lazy = false,
-    opts = {},
-    dependencies = {
-      {
-        "mason-org/mason.nvim",
-        cmd = { 'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll', 'MasonLog' },
-        keys = {
-          { '<leader>pm', ':Mason<cr>', desc = "Open Mason", silent = true }
-        },
-        opts = {
-          ui = {
-            icons = {
-              package_installed = "✓",
-              package_pending = "➜",
-              package_uninstalled = "✗"
-            }
-          }
-        }
-      },
-      "neovim/nvim-lspconfig",
-    },
-    config = function()
-      require('plugins.mason')
-    end
-  },
-  {
-    'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
-    dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-nvim-lua',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline',
-      'hrsh7th/cmp-emoji',
-      'hrsh7th/cmp-calc',
-      'ray-x/cmp-treesitter',
-      'f3fora/cmp-spell',
-      {
-        'L3MON4D3/LuaSnip',
-        build = 'make install_jsregexp',
-        dependencies = {
-          'rafamadriz/friendly-snippets',
-          'saadparwaiz1/cmp_luasnip',
-        },
-      },
-      {
-        'zbirenbaum/copilot-cmp',
-        dependencies = 'zbirenbaum/copilot.lua',
-        config = function()
-          require('copilot_cmp').setup()
-        end,
-      },
-    },
-    config = function()
-      require('plugins.nvim-cmp')
     end,
   },
 

@@ -1,13 +1,9 @@
 local cmp = require('cmp')
 local luasnip = require('luasnip')
 
--- Load VSCode-style snippets
 require('luasnip.loaders.from_vscode').lazy_load()
-
--- Custom snippet loading
 require('luasnip.loaders.from_vscode').lazy_load({ paths = { vim.fn.stdpath('config') .. '/snippets' } })
 
--- Completion item kind icons (matching your CoC config)
 local kind_icons = {
   Text = "󰈙",
   Method = "󰆧",
@@ -38,20 +34,15 @@ local kind_icons = {
   Codeium = "󰘦",
 }
 
--- Main cmp setup
 cmp.setup({
-  -- Snippet engine
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
     end,
   },
-
   completion = {
     completeopt = 'menu,menuone,noselect',
   },
-
-  -- Window configuration
   window = {
     completion = cmp.config.window.bordered({
       border = 'rounded',
@@ -67,8 +58,6 @@ cmp.setup({
       max_height = 15,
     }),
   },
-
-  -- Formatting
   formatting = {
     fields = { 'kind', 'abbr', 'menu' },
     format = function(entry, vim_item)
@@ -98,18 +87,11 @@ cmp.setup({
       return vim_item
     end,
   },
-
-  -- Key mappings
   mapping = cmp.mapping.preset.insert({
-    -- Scroll documentation
     ['<C-j>'] = cmp.mapping.scroll_docs(4),
     ['<C-k>'] = cmp.mapping.scroll_docs(-4),
-
-    -- Trigger completion
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
-
-    -- Confirm selection
     ['<CR>'] = cmp.mapping({
       i = function(fallback)
         if cmp.visible() and cmp.get_active_entry() then
@@ -121,8 +103,6 @@ cmp.setup({
       s = cmp.mapping.confirm({ select = true }),
       c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
     }),
-
-    -- Tab to select current item or navigate snippets
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })
@@ -132,7 +112,6 @@ cmp.setup({
         fallback()
       end
     end, { 'i', 's' }),
-
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if luasnip.jumpable(-1) then
         luasnip.jump(-1)
@@ -140,8 +119,6 @@ cmp.setup({
         fallback()
       end
     end, { 'i', 's' }),
-
-    -- Navigation
     ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
     ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
   }),
@@ -160,15 +137,11 @@ cmp.setup({
     { name = 'calc',       priority = 200 },
     { name = 'treesitter', priority = 100 },
   }),
-
-  -- Experimental features
   experimental = {
     ghost_text = {
       hl_group = 'CmpGhostText',
     },
   },
-
-  -- Performance
   performance = {
     debounce = 60,
     throttle = 30,
@@ -177,8 +150,6 @@ cmp.setup({
     async_budget = 1,
     max_view_entries = 200,
   },
-
-  -- Sorting
   sorting = {
     priority_weight = 2,
     comparators = {
@@ -257,6 +228,7 @@ cmp.setup.filetype('sql', {
   })
 })
 
+-- codecompanion completion
 cmp.setup.filetype('codecompanion', {
   sources = cmp.config.sources({
     { name = 'codecompanion', priority = 1000 },
@@ -267,10 +239,10 @@ cmp.setup.filetype('codecompanion', {
 -- Custom highlights
 vim.api.nvim_set_hl(0, 'CmpGhostText', { link = 'Comment', default = true })
 vim.api.nvim_set_hl(0, 'CmpNormal', { bg = 'NONE' })
-vim.api.nvim_set_hl(0, 'CmpBorder', { fg = '#565f89' })
-vim.api.nvim_set_hl(0, 'CmpSelection', { bg = '#313449' })
+vim.api.nvim_set_hl(0, 'CmpBorder', { fg = Colors.bluish_black })
+vim.api.nvim_set_hl(0, 'CmpSelection', { bg = Colors.bluish_black })
 vim.api.nvim_set_hl(0, 'CmpDocNormal', { bg = 'NONE' })
-vim.api.nvim_set_hl(0, 'CmpDocBorder', { fg = '#565f89' })
+vim.api.nvim_set_hl(0, 'CmpDocBorder', { fg = Colors.bluish_black })
 
 -- Choice node navigation
 vim.keymap.set('i', '<C-l>', function()

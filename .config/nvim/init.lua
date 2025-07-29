@@ -15,8 +15,8 @@ require('core.highlights')
 -- Core modules
 require('core.options')
 require('core.keymaps')
+require('core.diagnostics')
 require('core.autocmds')
-require('core.lsp')
 
 require('core.lazy')
 

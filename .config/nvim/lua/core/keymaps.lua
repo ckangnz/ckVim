@@ -86,20 +86,6 @@ map('n', '<leader>ee', '<cmd>vsp $HOME/.vim<cr>', { desc = 'Open ~/.vim director
 
 map('n', '<leader>ec', '<cmd>vsp $HOME/code<cr>', { desc = 'Open ~/code directory' })
 
--- LSP Keymaps (defaults)
--- "K" is mapped in Normal mode to |vim.lsp.buf.hover()|
--- "grn" is mapped in Normal mode to |vim.lsp.buf.rename()|
--- "[d" is mapped in Normal  mode to |vim.diagnostic.goto_prev()|
--- "]d" is mapped in Normal  mode to |vim..diagnostic.goto_next()|
--- "gra" is mapped in Normal and Visual mode to |vim.lsp.buf.code_action()|
--- "grr" is mapped in Normal mode to |vim.lsp.buf.references()|
--- "gri" is mapped in Normal mode to |vim.lsp.buf.implementation()|
--- "grt" is mapped in Normal mode to |vim.lsp.buf.type_definition()|
--- "gO" is mapped in Normal mode to |vim.lsp.buf.document_symbol()|
--- "gq" is mapped in Normal mode to |vim.lsp.formatexpr()|
-vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { silent = true, desc = 'Go to type_definition' })
-
-
 local function create_menu(items, prompt)
   local options = {}
   local commands = {}
