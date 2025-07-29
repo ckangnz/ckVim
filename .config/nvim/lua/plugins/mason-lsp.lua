@@ -42,8 +42,8 @@ vim.lsp.config("lua_ls", {
 vim.lsp.config("ts_ls", {
   capabilities = lsp_capabilities,
   on_attach = function(client, bufnr)
-    vim.lsp.config.ts_ls.on_attach(client, bufnr)
-
+    -- vim.lsp.config.ts_ls.on_attach(client, bufnr)
+    --
     vim.api.nvim_create_user_command("OrganizeImports", function()
       vim.lsp.buf_request(0, "workspace/executeCommand", {
         command = "_typescript.organizeImports",
