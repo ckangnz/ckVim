@@ -7,22 +7,22 @@ end
 local function get_custom_theme()
   return {
     normal = {
-      a = { fg = Colors.black, bg = Colors.main_theme, gui = 'bold' },
+      a = { fg = Colors.black, bg = Colors.main_theme, gui = "bold" },
       b = { fg = Colors.white, bg = Colors.light_black },
       c = { fg = Colors.light_grey, bg = nil },
     },
     insert = {
-      a = { fg = Colors.black, bg = Colors.brown, gui = 'bold' },
+      a = { fg = Colors.black, bg = Colors.brown, gui = "bold" },
       b = { fg = Colors.white, bg = Colors.light_black },
       c = { fg = Colors.light_grey, bg = nil },
     },
     visual = {
-      a = { fg = Colors.black, bg = Colors.dark_magenta, gui = 'bold' },
+      a = { fg = Colors.black, bg = Colors.dark_magenta, gui = "bold" },
       b = { fg = Colors.white, bg = Colors.light_black },
       c = { fg = Colors.light_grey, bg = nil },
     },
     command = {
-      a = { fg = Colors.black, bg = Colors.dark_blue, gui = 'bold' },
+      a = { fg = Colors.black, bg = Colors.dark_blue, gui = "bold" },
       b = { fg = Colors.white, bg = Colors.light_black },
       c = { fg = Colors.light_grey, bg = nil },
     },
@@ -38,62 +38,64 @@ local function get_custom_theme()
 end
 
 -- Main lualine setup
-require('lualine').setup {
+require("lualine").setup({
   options = {
     theme = get_custom_theme(),
-    separator = { left = '', right = '' },
+    separator = { left = "", right = "" },
     -- section_separators = { left = '', right = '' },
-    section_separators = { left = '', right = '' },
+    section_separators = { left = "", right = "" },
     refresh = { tabline = 100, statusline = 100 },
     globalstatus = true,
   },
   sections = {
     lualine_a = {
       {
-        'mode',
-        fmt = function() return '󰙱K' end,
+        "mode",
+        fmt = function()
+          return "󰙱K"
+        end,
         icons_enabled = true,
         draw_empty = true,
       },
-      { 'branch', icons_enabled = true },
+      { "branch", icons_enabled = true },
     },
     lualine_b = {
       {
-        'filename',
+        "filename",
         file_status = false,
         path = 1,
       },
     },
     lualine_c = {
       {
-        'diff',
-        symbols = { added = ' ', modified = ' ', removed = ' ' },
-        separator = { left = "", right = "" }
-      }
+        "diff",
+        symbols = { added = " ", modified = " ", removed = " " },
+        separator = { left = "", right = "" },
+      },
     },
     lualine_x = {
       {
-        'diagnostics',
+        "diagnostics",
         always_visible = false,
-        sources = { 'nvim_lsp' },
-        symbols = { error = ' ', warn = ' ', info = ' ', hint = '󱋴 ' },
-        separator = { left = "", right = "" }
+        sources = { "nvim_lsp" },
+        symbols = { error = " ", warn = " ", info = " ", hint = "󱋴 " },
+        separator = { left = "", right = "" },
       },
       {
-        'filetype',
+        "filetype",
         colored = true,
         icon_only = false,
-        separator = { left = "", right = "" }
+        separator = { left = "", right = "" },
       },
       {
         function()
           local bufnr = vim.api.nvim_get_current_buf()
           local clients = vim.lsp.get_clients({ bufnr = bufnr })
           if #clients == 0 then
-            return ''
+            return ""
           end
           local ignored_clients = {
-            'copilot',
+            "copilot",
           }
           local function is_ignored(client_name)
             for _, ignored in ipairs(ignored_clients) do
@@ -110,16 +112,27 @@ require('lualine').setup {
             end
           end
           if #client_names == 0 then
-            return ''
+            return ""
           end
-          return ' ' .. table.concat(client_names, ', ')
+          return " " .. table.concat(client_names, ", ")
         end,
-        separator = { left = "", right = "" }
+        separator = { left = "", right = "" },
+      },
+      {
+        function()
+          local linters = require("lint").get_running()
+          if #linters == 0 then
+            return "󰦕"
+          end
+          return "󱉶 " .. table.concat(linters, ", ")
+        end,
+        color = { fg = Colors.brown },
+        separator = { left = "", right = "" },
       },
     },
     lualine_y = {
       {
-        'copilot',
+        "copilot",
         symbols = {
           status = {
             icons = {
@@ -127,15 +140,15 @@ require('lualine').setup {
               sleep = "󰒲 SLP",
               disabled = "  OFF",
               warning = "  WRN",
-              unknown = " UNK"
+              unknown = " UNK",
             },
             hl = Colors and {
               enabled = Colors.white,
               disabled = Colors.light_grey,
               warning = Colors.dark_red,
               sleep = Colors.light_black,
-              unknown = Colors.light_black
-            } or {}
+              unknown = Colors.light_black,
+            } or {},
           },
           spinners = {
             "✶",
@@ -145,7 +158,7 @@ require('lualine').setup {
             "✹",
             "✷",
           },
-          spinner_color = Colors and Colors.dark_cyan or "#cyan"
+          spinner_color = Colors and Colors.dark_cyan or "#cyan",
         },
         show_colors = true,
         show_loading = true,
@@ -155,38 +168,39 @@ require('lualine').setup {
           local robot_icon_on = " "
           local robot_icon_off = " "
 
-          if vim.fn.exists('*codeium#GetStatusString') ~= 1 then
+          if vim.fn.exists("*codeium#GetStatusString") ~= 1 then
             return robot_icon_off .. " OFF"
           end
-          local ok, status = pcall(vim.fn['codeium#GetStatusString'])
+          local ok, status = pcall(vim.fn["codeium#GetStatusString"])
           if not ok or not status then
             return robot_icon_off .. " OFF"
           end
 
-          if status == ' * ' then
-            local animation = animate({ "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }, 150)
+          if status == " * " then
+            local animation =
+              animate({ "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }, 150)
             return robot_icon_on .. "  " .. animation
           elseif status == "   " then
-            local animation = animate({ ".  ", ".. ", "...", " ..", "  .", "   ", }, 200)
+            local animation = animate({ ".  ", ".. ", "...", " ..", "  .", "   " }, 200)
             return robot_icon_on .. animation
-          elseif status == ' ON' then
+          elseif status == " ON" then
             return robot_icon_on .. status
-          elseif status == 'OFF' then
+          elseif status == "OFF" then
             return robot_icon_off .. status
           else
             return robot_icon_on .. status
           end
         end,
         color = function()
-          if vim.fn.exists('*codeium#GetStatusString') ~= 1 then
+          if vim.fn.exists("*codeium#GetStatusString") ~= 1 then
             return { fg = Colors.light_grey }
           end
 
-          local ok, status = pcall(vim.fn['codeium#GetStatusString'])
+          local ok, status = pcall(vim.fn["codeium#GetStatusString"])
           if not ok or not status then
             return { fg = Colors.light_grey }
           end
-          if status == ' * ' then
+          if status == " * " then
             return { fg = Colors.dark_cyan }
           elseif status == "OFF" then
             return { fg = Colors.light_grey }
@@ -196,7 +210,7 @@ require('lualine').setup {
         end,
       },
       {
-        'codecompanion',
+        "codecompanion",
         fmt = function(value)
           return value:match("%d+ (.+)")
         end,
@@ -245,46 +259,46 @@ require('lualine').setup {
     lualine_z = {
       {
         function()
-          local line = vim.fn.line('.')
-          local col = vim.fn.col('.')
-          return string.format('%03d:%03d', line, col)
-        end
-      }
-    }
+          local line = vim.fn.line(".")
+          local col = vim.fn.col(".")
+          return string.format("%03d:%03d", line, col)
+        end,
+      },
+    },
   },
   tabline = {
     lualine_a = {
       {
-        'windows',
+        "windows",
         mode = 0,
         max_length = vim.o.columns * 2 / 3,
         show_filename_only = true,
         show_modified_status = true,
-        section_separators = { left = '', right = '' },
+        section_separators = { left = "", right = "" },
         windows_color = Colors and {
           active = { fg = Colors.white, bg = Colors.bluish_black },
           inactive = { fg = Colors.light_grey, bg = Colors.light_black },
         } or {},
         symbols = {
-          modified = ' ●',
-          alternate_file = '#',
+          modified = " ●",
+          alternate_file = "#",
         },
-        disabled_buftypes = { 'quickfix', 'prompt', 'nofile' },
+        disabled_buftypes = { "quickfix", "prompt", "nofile" },
         filetype_names = {
-          [''] = '📄 New file',
-          TelescopePrompt = '🔍 Telescope',
+          [""] = "📄 New file",
+          TelescopePrompt = "🔍 Telescope",
           codecompanion = "💬 CodeCompanion",
-          fugitive = ' ',
-          merginal = ' Branches',
-          GV = ' GV',
-          qf = '󰁨 quickfix',
-          oil = '📂 Files',
-          octo = ' Pull Request',
-          octo_panel = ' PR Review',
-          ['json.kulala_ui'] = "🐼 Kulala",
-          ['vim-plug'] = "🧩 Vim Plug"
+          fugitive = " ",
+          merginal = " Branches",
+          GV = " GV",
+          qf = "󰁨 quickfix",
+          oil = "📂 Files",
+          octo = " Pull Request",
+          octo_panel = " PR Review",
+          ["json.kulala_ui"] = "🐼 Kulala",
+          ["vim-plug"] = "🧩 Vim Plug",
         },
-      }
+      },
     },
     lualine_b = {},
     lualine_c = {},
@@ -292,31 +306,31 @@ require('lualine').setup {
     lualine_y = {},
     lualine_z = {
       {
-        'tabs',
-        separator = { left = '', right = '' },
+        "tabs",
+        separator = { left = "", right = "" },
         max_length = vim.o.columns,
         use_mode_colors = false,
         show_modified_status = false,
         mode = 1,
         tabs_color = Colors and {
-          active = { fg = Colors.dark_black, bg = Colors.white, gui = 'bold' },
-          inactive = { fg = Colors.light_grey, bg = Colors.light_black, gui = 'bold' },
+          active = { fg = Colors.dark_black, bg = Colors.white, gui = "bold" },
+          inactive = { fg = Colors.light_grey, bg = Colors.light_black, gui = "bold" },
         } or {},
         fmt = function(_, context)
-          return '󰓩  ' .. context.tabnr
-        end
+          return "󰓩  " .. context.tabnr
+        end,
       },
-    }
+    },
   },
-  winbar = {}
-}
+  winbar = {},
+})
 
 local function rename_tab()
   local tab_name = vim.fn.input("New Tab name: ")
   if tab_name == "" then
-    print(' ')
+    print(" ")
     return
   end
-  vim.cmd.LualineRenameTab { tab_name }
+  vim.cmd.LualineRenameTab({ tab_name })
 end
-vim.keymap.set('n', '<leader>T', rename_tab, { desc = 'Rename current tab' })
+vim.keymap.set("n", "<leader>T", rename_tab, { desc = "Rename current tab" })
