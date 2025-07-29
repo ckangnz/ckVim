@@ -19,6 +19,8 @@ dashboard.section.buttons.val = {
   dashboard.button('C-e', '  Recent files', ':Telescope oldfiles <CR>'),
   dashboard.button('n', '  New file', ':ene <BAR> startinsert <CR>'),
   dashboard.button('<leader>ev', '  Settings', '<cmd>e $HOME/.config/nvim/init.lua<cr>'),
+  dashboard.button('<leader>el', '  lazy', '<cmd>e $HOME/.config/nvim/lua/core/lazy.lua<cr>'),
+  dashboard.button('<leader>ep', ' Plugins', '<cmd>e $HOME/.config/nvim/lua/plugins/<cr>'),
 }
 
 -- Set footer
