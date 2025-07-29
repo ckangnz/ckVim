@@ -109,6 +109,49 @@ autocmd({ 'WinEnter', 'BufWinEnter', 'TermOpen' }, {
   command = 'startinsert',
 })
 
+-- WhitespaceMatch
+local function toggle_whitespace_match(mode)
+  local pattern = (mode == 'i') and '\\s\\+\\%#\\@<!$' or '\\s\\+$'
+  local excluded_filetypes = { 'ctrlsf', 'help', 'codecompanion', 'mcphub', 'lazy', 'mason' }
+  local current_filetype = vim.bo.filetype
+  for _, ft in ipairs(excluded_filetypes) do
+    if ft == current_filetype then
+      if vim.w.whitespace_match_number then
+        vim.fn.matchdelete(vim.w.whitespace_match_number)
+        vim.w.whitespace_match_number = nil
+      end
+      return
+    end
+  end
+  if vim.w.whitespace_match_number then
+    pcall(vim.fn.matchdelete, vim.w.whitespace_match_number)
+  end
+  vim.w.whitespace_match_number = vim.fn.matchadd('ExtraWhitespace', pattern, 10)
+end
+
+local whitespace_group = vim.api.nvim_create_augroup('WhitespaceMatch', { clear = true })
+vim.api.nvim_create_autocmd({ 'BufWinEnter', 'InsertLeave' }, {
+  group = whitespace_group,
+  callback = function()
+    toggle_whitespace_match('n')
+  end,
+})
+vim.api.nvim_create_autocmd('InsertEnter', {
+  group = whitespace_group,
+  callback = function()
+    toggle_whitespace_match('i')
+  end,
+})
+vim.api.nvim_create_autocmd('BufWinLeave', {
+  group = whitespace_group,
+  callback = function()
+    if vim.w.whitespace_match_number then
+      pcall(vim.fn.matchdelete, vim.w.whitespace_match_number)
+      vim.w.whitespace_match_number = nil
+    end
+  end,
+})
+
 local lsp_group = vim.api.nvim_create_augroup('LSPGroup', { clear = true })
 autocmd('BufWritePre', {
   group = lsp_group,
@@ -139,8 +182,13 @@ autocmd('LspAttach', {
     -- "grt" is mapped in Normal mode to |vim.lsp.buf.type_definition()|
     -- "gO" is mapped in Normal mode to |vim.lsp.buf.document_symbol()|
     -- "gq" is mapped in Normal mode to |vim.lsp.formatexpr()|
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { silent = true, desc = 'Go to type_definition' })
+    vim.keymap.set(
+      'n',
+      'gd',
+      vim.lsp.buf.definition,
+      { silent = true, desc = 'Go to type_definition' }
+    )
 
     vim.lsp.inlay_hint.enable(false)
-  end
+  end,
 })
