@@ -114,9 +114,3 @@ autocmd({ 'WinEnter', 'BufWinEnter', 'TermOpen' }, {
   pattern = 'term://*',
   command = 'startinsert',
 })
-autocmd('BufLeave', {
-  group = terminal,
-  desc = 'Close terminal on exit',
-  pattern = 'term://*',
-  command = 'stopinsert',
-})
