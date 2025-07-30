@@ -7,32 +7,32 @@ end
 local function get_custom_theme()
   return {
     normal = {
-      a = { fg = Colors.black, bg = Colors.main_theme, gui = 'bold' },
-      b = { fg = Colors.white, bg = Colors.light_black },
+      a = { fg = Colors.black, bg = Colors.green, gui = 'bold' },
+      b = { fg = Colors.white, bg = Colors.dark_grey },
       c = { fg = Colors.light_grey, bg = nil },
     },
     insert = {
-      a = { fg = Colors.black, bg = Colors.brown, gui = 'bold' },
-      b = { fg = Colors.white, bg = Colors.light_black },
+      a = { fg = Colors.black, bg = Colors.orange, gui = 'bold' },
+      b = { fg = Colors.white, bg = Colors.dark_grey },
       c = { fg = Colors.light_grey, bg = nil },
     },
     visual = {
-      a = { fg = Colors.black, bg = Colors.dark_magenta, gui = 'bold' },
-      b = { fg = Colors.white, bg = Colors.light_black },
+      a = { fg = Colors.black, bg = Colors.light_purple, gui = 'bold' },
+      b = { fg = Colors.white, bg = Colors.dark_grey },
       c = { fg = Colors.light_grey, bg = nil },
     },
     command = {
-      a = { fg = Colors.black, bg = Colors.dark_blue, gui = 'bold' },
-      b = { fg = Colors.white, bg = Colors.light_black },
+      a = { fg = Colors.black, bg = Colors.light_blue, gui = 'bold' },
+      b = { fg = Colors.white, bg = Colors.dark_grey },
       c = { fg = Colors.light_grey, bg = nil },
     },
     inactive = {
-      a = { fg = nil, bg = Colors.dark_black },
-      b = { fg = Colors.light_grey, bg = Colors.black },
+      a = { fg = nil, bg = Colors.dark_grey },
+      b = { fg = Colors.light_grey, bg = Colors.dark_grey },
       c = { fg = nil, bg = nil },
       x = { fg = nil, bg = nil },
-      y = { fg = nil, bg = Colors.dark_black },
-      z = { fg = Colors.light_grey, bg = Colors.black },
+      y = { fg = nil, bg = Colors.black },
+      z = { fg = Colors.light_grey, bg = Colors.dark_grey },
     },
   }
 end
@@ -151,13 +151,13 @@ require('lualine').setup({
               warning = '  WRN',
               unknown = ' UNK',
             },
-            hl = Colors and {
+            hl = {
               enabled = Colors.white,
               disabled = Colors.light_grey,
-              warning = Colors.dark_red,
-              sleep = Colors.light_black,
-              unknown = Colors.light_black,
-            } or {},
+              warning = Colors.light_red,
+              sleep = Colors.grey,
+              unknown = Colors.grey,
+            },
           },
           spinners = {
             '✶',
@@ -167,7 +167,7 @@ require('lualine').setup({
             '✹',
             '✷',
           },
-          spinner_color = Colors and Colors.dark_cyan or '#cyan',
+          spinner_color = Colors.light_cyan,
         },
         show_colors = true,
         show_loading = true,
@@ -187,7 +187,7 @@ require('lualine').setup({
 
           if status == ' * ' then
             local animation =
-              animate({ '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }, 150)
+                animate({ '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }, 150)
             return robot_icon_on .. '  ' .. animation
           elseif status == '   ' then
             local animation = animate({ '.  ', '.. ', '...', ' ..', '  .', '   ' }, 200)
@@ -210,7 +210,7 @@ require('lualine').setup({
             return { fg = Colors.light_grey }
           end
           if status == ' * ' then
-            return { fg = Colors.dark_cyan }
+            return { fg = Colors.light_cyan }
           elseif status == 'OFF' then
             return { fg = Colors.light_grey }
           else
@@ -223,7 +223,7 @@ require('lualine').setup({
         fmt = function(value)
           return value:match('%d+ (.+)')
         end,
-        color = Colors and { fg = Colors.white, bg = Colors.black } or {},
+        color = { fg = Colors.white, bg = Colors.black },
         icon = '󰛰 ',
         spinner_symbols = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
         done_symbol = '✓',
@@ -251,16 +251,16 @@ require('lualine').setup({
         end,
         color = function()
           if not vim.g.loaded_mcphub or not Colors then
-            return Colors and { fg = Colors.light_black, bg = Colors.black } or {}
+            return { fg = Colors.grey, bg = Colors.black }
           end
 
           local status = vim.g.mcphub_status or 'stopped'
           if status == 'ready' or status == 'restarted' then
             return { fg = Colors.white, bg = Colors.black }
           elseif status == 'starting' or status == 'restarting' then
-            return { fg = Colors.brown, bg = Colors.black }
+            return { fg = Colors.orange, bg = Colors.black }
           else
-            return { fg = Colors.dark_red, bg = Colors.black }
+            return { fg = Colors.light_red, bg = Colors.black }
           end
         end,
       },
@@ -270,7 +270,7 @@ require('lualine').setup({
         function()
           local line = vim.fn.line('.')
           local col = vim.fn.col('.')
-          return string.format('%03d:%03d', line, col)
+          return string.format('%03d:%03d', line, col)
         end,
       },
     },
@@ -283,11 +283,10 @@ require('lualine').setup({
         max_length = vim.o.columns * 2 / 3,
         show_filename_only = true,
         show_modified_status = true,
-        section_separators = { left = '', right = '' },
-        windows_color = Colors and {
-          active = { fg = Colors.white, bg = Colors.bluish_black },
-          inactive = { fg = Colors.light_grey, bg = Colors.light_black },
-        } or {},
+        section_separators = { left = '' },
+        component_separators = { left = '' },
+        separator = { left = '', right = '' },
+        use_mode_colors = true,
         symbols = {
           modified = ' ●',
           alternate_file = '#',
@@ -318,13 +317,15 @@ require('lualine').setup({
       {
         'tabs',
         separator = { left = '', right = '' },
+        component_separators = { right = '' },
+        section_separators = { right = '' },
         max_length = vim.o.columns,
-        use_mode_colors = false,
         show_modified_status = false,
         mode = 1,
+        use_mode_colors = false,
         tabs_color = Colors and {
-          active = { fg = Colors.dark_black, bg = Colors.white, gui = 'bold' },
-          inactive = { fg = Colors.light_grey, bg = Colors.light_black, gui = 'bold' },
+          active = { fg = Colors.black, bg = Colors.white, gui = 'bold' },
+          inactive = { fg = Colors.white, bg = Colors.dark_grey, gui = 'bold' },
         } or {},
         fmt = function(_, context)
           return '󰓩  ' .. context.tabnr

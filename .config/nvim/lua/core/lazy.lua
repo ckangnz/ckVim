@@ -47,7 +47,6 @@ local plugins = {
     event = "VimEnter",
     config = function()
       require("notify").setup({
-        background_colour = "#000000",
         stages = "fade_in_slide_out",
         timeout = 3000,
         max_height = 10,
@@ -97,7 +96,7 @@ local plugins = {
     event = "VeryLazy",
     cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionAction" },
     keys = {
-      { "<BS>", desc = "Toggle CodeCompanion chat" },
+      { "<BS>",  desc = "Toggle CodeCompanion chat" },
       { "<M-o>", desc = "Start new CodeCompanion chat" },
       { "<M-p>", desc = "Open CodeCompanion prompt" },
       { "<M-i>", desc = "CodeCompanion actions" },
@@ -299,8 +298,8 @@ local plugins = {
     dependencies = { "tyru/open-browser.vim" },
     keys = {
       { ",gog", "<cmd>OpenGithubProject<cr>", desc = "Open GitHub project" },
-      { ",gof", "<cmd>OpenGithubFile<cr>", desc = "Open current file on GitHub" },
-      { ",goi", "<cmd>OpenGithubIssue<cr>", desc = "Open GitHub issues" },
+      { ",gof", "<cmd>OpenGithubFile<cr>",    desc = "Open current file on GitHub" },
+      { ",goi", "<cmd>OpenGithubIssue<cr>",   desc = "Open GitHub issues" },
       {
         ",gor",
         function()
@@ -317,19 +316,19 @@ local plugins = {
     "machakann/vim-sandwich",
     keys = {
       -- Text objects
-      { "is", mode = { "x", "o" } },
-      { "as", mode = { "x", "o" } },
+      { "is",  mode = { "x", "o" } },
+      { "as",  mode = { "x", "o" } },
       -- Default sandwich operators
-      { "sa", mode = { "n", "x" } },
-      { "sd", mode = "n" },
-      { "sr", mode = "n" },
+      { "sa",  mode = { "n", "x" } },
+      { "sd",  mode = "n" },
+      { "sr",  mode = "n" },
       -- Surround.vim compatibility mappings
-      { "S", mode = "x" },
-      { "ds", mode = "n" },
-      { "cs", mode = "n" },
-      { "ys", mode = "n" },
+      { "S",   mode = "x" },
+      { "ds",  mode = "n" },
+      { "cs",  mode = "n" },
+      { "ys",  mode = "n" },
       { "yss", mode = "n" },
-      { "yS", mode = "n" },
+      { "yS",  mode = "n" },
       { "ySS", mode = "n" },
     },
     config = function()
@@ -398,7 +397,8 @@ local plugins = {
         { "!NOTE", "!TIP", "!IMPORTANT", "!CAUTION", "!WARNING" },
         {
           ["\\<\\(\\l\\)\\(\\l\\+\\(\\u\\l\\+\\)\\+\\)\\>"] = "\\=toupper(submatch(1)) . submatch(2)",
-          ["\\<\\(\\u\\l\\+\\)\\(\\u\\l\\+\\)\\+\\>"] = "\\=tolower(substitute(submatch(0), '\\(\\l\\)\\(\\u\\)', '\\1_\\2', 'g'))",
+          ["\\<\\(\\u\\l\\+\\)\\(\\u\\l\\+\\)\\+\\>"] =
+          "\\=tolower(substitute(submatch(0), '\\(\\l\\)\\(\\u\\)', '\\1_\\2', 'g'))",
           ["\\<\\(\\l\\+\\)\\(_\\l\\+\\)\\+\\>"] = "\\U\\0",
           ["\\<\\(\\u\\+\\)\\(_\\u\\+\\)\\+\\>"] = "\\=tolower(substitute(submatch(0), '_', '-', 'g'))",
           ["\\<\\(\\l\\+\\)\\(-\\l\\+\\)\\+\\>"] = "\\=substitute(submatch(0), '-\\(\\l\\)', '\\u\\1', 'g')",

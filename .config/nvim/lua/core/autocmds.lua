@@ -128,7 +128,6 @@ local function toggle_whitespace_match(mode)
   end
   vim.w.whitespace_match_number = vim.fn.matchadd('ExtraWhitespace', pattern, 10)
 end
-
 local whitespace_group = vim.api.nvim_create_augroup('WhitespaceMatch', { clear = true })
 vim.api.nvim_create_autocmd({ 'BufWinEnter', 'InsertLeave' }, {
   group = whitespace_group,

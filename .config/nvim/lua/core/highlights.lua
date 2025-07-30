@@ -1,6 +1,6 @@
 vim.api.nvim_set_hl(0, 'ExtraWhitespace', {
-  bg = '#fb4934', -- Red background (gruvbox red)
-  fg = '#ffffff', -- White foreground for contrast
+  bg = Colors.red,
+  fg = Colors.white,
 })
 
 -- Search highlights
@@ -12,8 +12,8 @@ vim.api.nvim_set_hl(
 vim.api.nvim_set_hl(0, 'CurSearch', { reverse = true, bold = true })
 
 -- UI elements
-vim.api.nvim_set_hl(0, 'VertSplit', { fg = Colors.light_grey, ctermfg = 'white' })
-vim.api.nvim_set_hl(0, 'ExtraWhitespace', { bg = Colors.dark_red, ctermbg = 'red' })
+vim.api.nvim_set_hl(0, 'VertSplit', { fg = Colors.white, ctermfg = 'white' })
+vim.api.nvim_set_hl(0, 'ExtraWhitespace', { bg = Colors.light_red, ctermbg = 'red' })
 
 -- Plugin highlights
 vim.api.nvim_set_hl(0, 'CodeiumSuggestion', { fg = Colors.light_grey, ctermfg = 245 })

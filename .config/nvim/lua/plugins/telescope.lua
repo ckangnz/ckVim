@@ -17,49 +17,49 @@ end
 -- Main telescope configuration
 local telescope_utils = require('telescope.utils')
 
-telescope.setup {
+telescope.setup({
   defaults = {
     cwd = telescope_utils.buffer_dir(),
     winblend = 0,
-    layout_config = { prompt_position = "top" },
+    layout_config = { prompt_position = 'top' },
     path_display = { 'smart' },
-    sorting_strategy = "ascending",
+    sorting_strategy = 'ascending',
     mappings = {
       i = {
-        ["<CR>"] = select_one_or_multi,
-        ["<C-n>"] = actions.move_selection_next,
-        ["<C-p>"] = actions.move_selection_previous,
-        ["<C-j>"] = 'preview_scrolling_down',
-        ["<C-k>"] = 'preview_scrolling_up',
-        ["<C-d>"] = false, -- Disable preview scroll down
-        ["<C-u>"] = false, -- Disable preview scroll up
-        ["<C-h>"] = 'preview_scrolling_left',
-        ["<C-l>"] = 'preview_scrolling_right',
-        ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-        ["<C-/>"] = 'which_key',
-        ["<LeftMouse>"] = {
+        ['<CR>'] = select_one_or_multi,
+        ['<C-n>'] = actions.move_selection_next,
+        ['<C-p>'] = actions.move_selection_previous,
+        ['<C-j>'] = 'preview_scrolling_down',
+        ['<C-k>'] = 'preview_scrolling_up',
+        ['<C-d>'] = false, -- Disable preview scroll down
+        ['<C-u>'] = false, -- Disable preview scroll up
+        ['<C-h>'] = 'preview_scrolling_left',
+        ['<C-l>'] = 'preview_scrolling_right',
+        ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
+        ['<C-/>'] = 'which_key',
+        ['<LeftMouse>'] = {
           actions.mouse_click,
-          type = "action",
+          type = 'action',
           opts = { expr = true },
         },
-        ["<2-LeftMouse>"] = {
+        ['<2-LeftMouse>'] = {
           actions.double_mouse_click,
-          type = "action",
+          type = 'action',
           opts = { expr = true },
         },
       },
     },
     vimgrep_arguments = {
-      "rg",
-      "--color=never",
-      "--no-heading",
-      "--no-ignore-vcs",
-      "--with-filename",
-      "--line-number",
-      "--column",
-      "--smart-case",
-      "--trim",
-      "--hidden",
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--no-ignore-vcs',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case',
+      '--trim',
+      '--hidden',
     },
     file_ignore_patterns = {
       '^.git/',
@@ -88,11 +88,18 @@ telescope.setup {
               vim.api.nvim_chan_send(term, d .. '\r\n')
             end
           end
-          vim.fn.jobstart({ 'catimg', filepath }, { on_stdout = send_output, stdout_buffered = true, pty = true })
+          vim.fn.jobstart(
+            { 'catimg', filepath },
+            { on_stdout = send_output, stdout_buffered = true, pty = true }
+          )
         else
-          require("telescope.previewers.utils").set_preview_message(bufnr, opts.winid, "Binary cannot be previewed")
+          require('telescope.previewers.utils').set_preview_message(
+            bufnr,
+            opts.winid,
+            'Binary cannot be previewed'
+          )
         end
-      end
+      end,
     },
   },
   pickers = {
@@ -108,22 +115,22 @@ telescope.setup {
       fuzzy = true,
       override_generic_sorter = true,
       override_file_sorter = true,
-      case_mode = "smart_case"
+      case_mode = 'smart_case',
     },
     project = {
-      display_type = "full",
+      display_type = 'full',
       hidden_files = true,
-      order_by = "desc",
-      prompt_prefix = "🗂️ ",
+      order_by = 'desc',
+      prompt_prefix = '🗂️ ',
       theme = 'ivy',
-      search_by = "title",
+      search_by = 'title',
       on_project_selected = function(prompt_bufnr)
-        local project_actions = require("telescope._extensions.project.actions")
+        local project_actions = require('telescope._extensions.project.actions')
         project_actions.find_project_files(prompt_bufnr, true)
-      end
-    }
-  }
-}
+      end,
+    },
+  },
+})
 
 -- Load extensions with error handling
 local function load_extension(name)
@@ -141,24 +148,28 @@ load_extension('notify')
 
 -- Helper functions for git integration
 local function is_git_repo()
-  vim.fn.system("git rev-parse --is-inside-work-tree")
+  vim.fn.system('git rev-parse --is-inside-work-tree')
   return vim.v.shell_error == 0
 end
 
 local function get_git_root()
-  local dot_git_path = vim.fn.finddir(".git", ".;")
-  return vim.fn.fnamemodify(dot_git_path, ":h")
+  local dot_git_path = vim.fn.finddir('.git', '.;')
+  return vim.fn.fnamemodify(dot_git_path, ':h')
 end
 
 local function find_files_or_git_files()
   local opts = { hidden = true }
-  if is_git_repo() then opts.cwd = get_git_root() end
+  if is_git_repo() then
+    opts.cwd = get_git_root()
+  end
   builtin.find_files(opts)
 end
 
 local function live_grep_git_root()
   local opts = {}
-  if is_git_repo() then opts.cwd = get_git_root() end
+  if is_git_repo() then
+    opts.cwd = get_git_root()
+  end
   builtin.live_grep(opts)
 end
 
@@ -166,7 +177,7 @@ local function find_visual_selection()
   vim.cmd('noau normal! "vy"')
   local text = vim.fn.getreg('v')
   vim.fn.setreg('v', {})
-  text = string.gsub(text, "\n", "")
+  text = string.gsub(text, '\n', '')
   builtin.grep_string({ search = text })
 end
 
@@ -182,16 +193,18 @@ vim.keymap.set('i', '<C-R><enter>', builtin.registers, { desc = 'Insert from reg
 vim.keymap.set('n', '<leader>b', builtin.buffers, { desc = 'Switch buffers' })
 vim.keymap.set('n', 'gh', builtin.help_tags, { desc = 'Help tags' })
 vim.keymap.set('n', '<leader>/', function()
-  builtin.current_buffer_fuzzy_find({ prompt_prefix = "🔍 " })
+  builtin.current_buffer_fuzzy_find({ prompt_prefix = '🔍 ' })
 end, { desc = 'Search in current buffer' })
 
 -- User command for registers
-vim.api.nvim_create_user_command("Registers", function()
+vim.api.nvim_create_user_command('Registers', function()
   builtin.registers()
-end, { desc = "Show registers with Telescope" })
+end, { desc = 'Show registers with Telescope' })
 
 -- Telescope Project integration
-local ok, project = pcall(function() return telescope.extensions.project end)
+local ok, project = pcall(function()
+  return telescope.extensions.project
+end)
 if ok and project then
   vim.keymap.set('n', '<leader>0', project.project, { desc = 'Switch projects' })
 end
@@ -205,21 +218,21 @@ end, { desc = 'Notification history' })
 local function setup_telescope_colors()
   local TelescopeColor = {
     TelescopeMatching = { bold = true, underline = true },
-    TelescopeSelection = { fg = Colors.black, bg = Colors.main_theme, bold = true },
+    TelescopeSelection = { fg = Colors.black, bg = Colors.light_green, bold = true },
 
-    TelescopePromptTitle = { bg = Colors.black, fg = Colors.light_grey },
-    TelescopePromptPrefix = { bg = Colors.black },
-    TelescopePromptCounter = { bg = Colors.black },
-    TelescopePromptNormal = { bg = Colors.black },
-    TelescopePromptBorder = { bg = Colors.black, fg = Colors.black },
+    TelescopePromptTitle = { bg = Colors.dark_grey, fg = Colors.white },
+    TelescopePromptPrefix = { bg = Colors.dark_grey },
+    TelescopePromptCounter = { bg = Colors.dark_grey },
+    TelescopePromptNormal = { bg = Colors.dark_grey },
+    TelescopePromptBorder = { bg = Colors.dark_grey, fg = Colors.grey },
 
-    TelescopeResultsTitle = { fg = Colors.black },
-    TelescopeResultsNormal = { bg = Colors.dark_black },
-    TelescopeResultsBorder = { bg = Colors.black, fg = Colors.black },
+    TelescopeResultsTitle = { fg = Colors.white },
+    TelescopeResultsNormal = { fg = Colors.white, bg = Colors.black },
+    TelescopeResultsBorder = { bg = Colors.dark_grey, fg = Colors.dark_grey },
 
-    TelescopePreviewTitle = { bg = Colors.black, fg = Colors.black },
-    TelescopePreviewNormal = { bg = Colors.dark_black },
-    TelescopePreviewBorder = { bg = Colors.black, fg = Colors.black },
+    TelescopePreviewTitle = { bg = Colors.dark_grey, fg = Colors.white },
+    TelescopePreviewNormal = { bg = Colors.black },
+    TelescopePreviewBorder = { bg = Colors.dark_grey, fg = Colors.dark_grey },
   }
 
   for hl, col in pairs(TelescopeColor) do

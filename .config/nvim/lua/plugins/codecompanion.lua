@@ -152,7 +152,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
   callback = function()
     local buf_name = vim.api.nvim_buf_get_name(0)
     if buf_name:match('CodeCompanion') then
-      vim.api.nvim_set_hl(0, 'CodeCompanionBackground', { bg = Colors.dark_black })
+      vim.api.nvim_set_hl(0, 'CodeCompanionBackground', { bg = Colors.black })
       vim.opt_local.winhighlight = 'Normal:CodeCompanionBackground,NormalNC:CodeCompanionBackground'
     end
   end,

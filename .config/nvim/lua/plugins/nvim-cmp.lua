@@ -239,10 +239,9 @@ cmp.setup.filetype('codecompanion', {
 -- Custom highlights
 vim.api.nvim_set_hl(0, 'CmpGhostText', { link = 'Comment', default = true })
 vim.api.nvim_set_hl(0, 'CmpNormal', { bg = 'NONE' })
-vim.api.nvim_set_hl(0, 'CmpBorder', { fg = Colors.bluish_black })
-vim.api.nvim_set_hl(0, 'CmpSelection', { bg = Colors.bluish_black })
-vim.api.nvim_set_hl(0, 'CmpDocNormal', { bg = 'NONE' })
-vim.api.nvim_set_hl(0, 'CmpDocBorder', { fg = Colors.bluish_black })
+vim.api.nvim_set_hl(0, 'CmpBorder', { fg = Colors.dark_blue })
+vim.api.nvim_set_hl(0, 'CmpSelection', { bg = Colors.dark_blue })
+vim.api.nvim_set_hl(0, 'CmpDocBorder', { fg = Colors.dark_blue })
 
 -- Choice node navigation
 vim.keymap.set('i', '<C-l>', function()

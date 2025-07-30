@@ -9,9 +9,9 @@ end
 
 -- ANSI colors for terminal
 g.terminal_ansi_colors = {
-  Colors.bluish_black, Colors.dark_red, Colors.dark_green, Colors.brown, Colors.dark_blue, Colors.dark_magenta, Colors
+  Colors.dark_blue, Colors.dark_red, Colors.dark_green, Colors.orange, Colors.blue, Colors.purple, Colors
     .dark_cyan, Colors.white,
-  Colors.dark_grey, Colors.red, Colors.green, Colors.yellow, Colors.blue, Colors.magenta, Colors.cyan, Colors.white
+  Colors.grey, Colors.red, Colors.green, Colors.yellow, Colors.blue, Colors.purple, Colors.cyan, Colors.white
 }
 
 -- Provider settings
