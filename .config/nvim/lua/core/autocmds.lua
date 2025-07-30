@@ -191,3 +191,9 @@ autocmd('LspAttach', {
     vim.lsp.inlay_hint.enable(false)
   end,
 })
+autocmd('CursorHold', {
+  group = lsp_group,
+  callback = function()
+    vim.diagnostic.open_float(nil, { focus = false })
+  end,
+})

@@ -16,7 +16,9 @@ require("mason-lspconfig").setup({
   },
 })
 
-local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+lsp_capabilities = vim.tbl_deep_extend("force", lsp_capabilities, require("cmp_nvim_lsp").default_capabilities())
+
 vim.lsp.config("*", {
   root_markers = { ".git" },
   capabilities = lsp_capabilities,
