@@ -45,7 +45,7 @@ sudo pacman-key --populate archlinux
 sudo pacman-key --populate holo
 
 sudo pacman -Syu
-sudo pacman -S linux-api-headers # If you see an error regards to stdint.h
+sudo pacman -S --noconfirm base-devel glibc linux-api-headers # If you see an error regards to stdint.h
 ```
 
 ## Run the script
