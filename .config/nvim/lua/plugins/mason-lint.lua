@@ -1,32 +1,32 @@
-require("mason-nvim-lint").setup({
+require('mason-nvim-lint').setup({
   ensure_installed = {
-    "shellcheck",
-    "markdownlint",
+    'shellcheck',
+    'markdownlint',
 
-    "eslint_d",
+    'eslint_d',
 
-    "jsonlint",
-    "yamllint",
-    "hadolint",
+    'jsonlint',
+    'yamllint',
+    'hadolint',
   },
 })
 
-local lint = require("lint")
+local lint = require('lint')
 lint.linters_by_ft = {
-  bash = { "shellcheck" },
-  sh = { "shellcheck" },
-  zsh = { "shellcheck" },
-  markdown = { "markdownlint" },
-  javascript = { "eslint_d" },
-  typescript = { "eslint_d" },
-  javascriptreact = { "eslint_d" },
-  typescriptreact = { "eslint_d" },
-  json = { "jsonlint" },
-  yaml = { "yamllint" },
-  dockerfile = { "hadolint" },
+  bash = { 'shellcheck' },
+  sh = { 'shellcheck' },
+  zsh = { 'shellcheck' },
+  markdown = { 'markdownlint' },
+  javascript = { 'eslint_d' },
+  typescript = { 'eslint_d' },
+  javascriptreact = { 'eslint_d' },
+  typescriptreact = { 'eslint_d' },
+  json = { 'jsonlint' },
+  yaml = { 'yamllint' },
+  dockerfile = { 'hadolint' },
 }
 vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter' }, {
   callback = function()
     require('lint').try_lint()
-  end
+  end,
 })

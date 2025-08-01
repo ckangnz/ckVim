@@ -2,36 +2,38 @@ local cmp = require('cmp')
 local luasnip = require('luasnip')
 
 require('luasnip.loaders.from_vscode').lazy_load()
-require('luasnip.loaders.from_vscode').lazy_load({ paths = { vim.fn.stdpath('config') .. '/snippets' } })
+require('luasnip.loaders.from_vscode').lazy_load({
+  paths = { vim.fn.stdpath('config') .. '/snippets' },
+})
 
 local kind_icons = {
-  Text = "󰈙",
-  Method = "󰆧",
-  Function = "󰊕",
-  Constructor = "󰤔",
-  Field = "󰜢",
-  Variable = "󰀫",
-  Class = "󰠱",
-  Interface = "󰜰",
-  Module = "󰏗",
-  Property = "󰜢",
-  Unit = "󰑭",
-  Value = "󰎠",
-  Enum = "󰕘",
-  Keyword = "󰌋",
-  Snippet = "󰩫",
-  Color = "󰏘",
-  File = "󰈙",
-  Reference = "󰈇",
-  Folder = "󰉋",
-  EnumMember = "󰕘",
-  Constant = "󰏿",
-  Struct = "󰙅",
-  Event = "󰉁",
-  Operator = "󰆕",
-  TypeParameter = "󰊄",
-  Copilot = "󰚩",
-  Codeium = "󰘦",
+  Text = '󰈙',
+  Method = '󰆧',
+  Function = '󰊕',
+  Constructor = '󰤔',
+  Field = '󰜢',
+  Variable = '󰀫',
+  Class = '󰠱',
+  Interface = '󰜰',
+  Module = '󰏗',
+  Property = '󰜢',
+  Unit = '󰑭',
+  Value = '󰎠',
+  Enum = '󰕘',
+  Keyword = '󰌋',
+  Snippet = '󰩫',
+  Color = '󰏘',
+  File = '󰈙',
+  Reference = '󰈇',
+  Folder = '󰉋',
+  EnumMember = '󰕘',
+  Constant = '󰏿',
+  Struct = '󰙅',
+  Event = '󰉁',
+  Operator = '󰆕',
+  TypeParameter = '󰊄',
+  Copilot = '󰚩',
+  Codeium = '󰘦',
 }
 
 cmp.setup({
@@ -126,15 +128,15 @@ cmp.setup({
   -- Sources configuration (ordered by priority)
   sources = cmp.config.sources({
     { name = 'codecompanion', priority = 1000 },
-    { name = 'copilot',       priority = 1000 },
-    { name = 'nvim_lsp',      priority = 900 },
-    { name = 'luasnip',       priority = 800 },
-    { name = 'nvim_lua',      priority = 700 },
+    { name = 'copilot', priority = 1000 },
+    { name = 'nvim_lsp', priority = 900 },
+    { name = 'luasnip', priority = 800 },
+    { name = 'nvim_lua', priority = 700 },
   }, {
-    { name = 'buffer',     priority = 500, max_item_count = 5 },
-    { name = 'path',       priority = 400 },
-    { name = 'emoji',      priority = 300 },
-    { name = 'calc',       priority = 200 },
+    { name = 'buffer', priority = 500, max_item_count = 5 },
+    { name = 'path', priority = 400 },
+    { name = 'emoji', priority = 300 },
+    { name = 'calc', priority = 200 },
     { name = 'treesitter', priority = 100 },
   }),
   experimental = {
@@ -179,14 +181,14 @@ local cmdline_config = {
     end),
   }),
   sources = cmp.config.sources({
-    { name = 'path' }
+    { name = 'path' },
   }, {
-    { name = 'cmdline' }
+    { name = 'cmdline' },
   }),
   matching = { disallow_symbol_nonprefix_matching = false },
   completion = {
-    autocomplete = false
-  }
+    autocomplete = false,
+  },
 }
 cmp.setup.cmdline(':', cmdline_config)
 cmp.setup.cmdline('/', cmdline_config)
@@ -196,7 +198,7 @@ cmp.setup.filetype('gitcommit', {
   sources = cmp.config.sources({
     { name = 'buffer' },
     { name = 'spell' },
-  })
+  }),
 })
 
 -- Markdown completion
@@ -206,7 +208,7 @@ cmp.setup.filetype('markdown', {
     { name = 'spell' },
     { name = 'emoji' },
     { name = 'path' },
-  })
+  }),
 })
 
 -- Lua completion (enhanced for Neovim config)
@@ -217,7 +219,7 @@ cmp.setup.filetype('lua', {
     { name = 'luasnip' },
     { name = 'buffer' },
     { name = 'path' },
-  })
+  }),
 })
 
 -- SQL completion
@@ -225,15 +227,15 @@ cmp.setup.filetype('sql', {
   sources = cmp.config.sources({
     { name = 'vim-dadbod-completion' },
     { name = 'buffer' },
-  })
+  }),
 })
 
 -- codecompanion completion
 cmp.setup.filetype('codecompanion', {
   sources = cmp.config.sources({
     { name = 'codecompanion', priority = 1000 },
-    { name = 'buffer',        priority = 500, max_item_count = 3 },
-  })
+    { name = 'buffer', priority = 500, max_item_count = 3 },
+  }),
 })
 
 -- Custom highlights

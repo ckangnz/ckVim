@@ -1,77 +1,84 @@
 -- Set this in ZSHRC
 -- export COPILOT_MODEL="claude-sonnet-4"
 
-require("codecompanion").setup({
+require('codecompanion').setup({
   display = {
     chat = {
-      show_context = true,     -- Show context (from slash commands and variables) in the chat buffer?
-      show_settings = true,    -- Show LLM settings at the top of the chat buffer?
+      show_context = true, -- Show context (from slash commands and variables) in the chat buffer?
+      show_settings = true, -- Show LLM settings at the top of the chat buffer?
       show_token_count = true, -- Show the token count for each response?
-    }
+    },
   },
   strategies = {
     chat = {
       adapter = {
-        name = "copilot",
-        model = os.getenv("COPILOT_MODEL") or "gpt-4.1",
+        name = 'copilot',
+        model = os.getenv('COPILOT_MODEL') or 'gpt-4.1',
       },
       roles = {
         llm = function(adapter)
-          return "🤖 CodeCompanion (" .. adapter.formatted_name .. ")"
+          return '🤖 CodeCompanion (' .. adapter.formatted_name .. ')'
         end,
-        user = "👤 You",
+        user = '👤 You',
       },
       opts = {
         goto_file_action = 'tabnew', -- press gR to go to file in new tab
-        completion_provider = "cmp",
+        completion_provider = 'cmp',
       },
       tools = {
         groups = {
-          ["github_pr_workflow"] = {
-            description = "GitHub operations from issue to PR",
+          ['github_pr_workflow'] = {
+            description = 'GitHub operations from issue to PR',
             tools = {
               -- File operations
-              "neovim__read_multiple_files", "neovim__write_file", "neovim__edit_file",
+              'neovim__read_multiple_files',
+              'neovim__write_file',
+              'neovim__edit_file',
               -- GitHub operations
-              "github__list_issues", "github__get_issue", "github__get_issue_comments",
-              "github__create_issue", "github__create_pull_request", "github__get_file_contents",
-              "github__create_or_update_file", "github__search_code"
+              'github__list_issues',
+              'github__get_issue',
+              'github__get_issue_comments',
+              'github__create_issue',
+              'github__create_pull_request',
+              'github__get_file_contents',
+              'github__create_or_update_file',
+              'github__search_code',
             },
-          }
-        }
-      },
-      slash_commands = {
-        ["file"] = {
-          keymaps = {
-            modes = { n = { "<C-p>" } },
           },
         },
-        ["buffer"] = {
+      },
+      slash_commands = {
+        ['file'] = {
           keymaps = {
-            modes = { n = { "<C-b>", "<leader>b" } },
+            modes = { n = { '<C-p>' } },
+          },
+        },
+        ['buffer'] = {
+          keymaps = {
+            modes = { n = { '<C-b>', '<leader>b' } },
           },
         },
       },
     },
     inline = {
       adapter = {
-        name = "copilot",
-        model = os.getenv("COPILOT_MODEL") or "gpt-4.1",
+        name = 'copilot',
+        model = os.getenv('COPILOT_MODEL') or 'gpt-4.1',
       },
-      opts = { completion_provider = "cmp" }
+      opts = { completion_provider = 'cmp' },
     },
     cmd = {
       adapter = {
-        name = "copilot",
-        model = os.getenv("COPILOT_MODEL") or "gpt-4.1",
+        name = 'copilot',
+        model = os.getenv('COPILOT_MODEL') or 'gpt-4.1',
       },
-      opts = { completion_provider = "cmp" }
-    }
+      opts = { completion_provider = 'cmp' },
+    },
   },
 
   extensions = {
     mcphub = {
-      callback = "mcphub.extensions.codecompanion",
+      callback = 'mcphub.extensions.codecompanion',
       opts = {
         make_tools = true,
         show_server_tools_in_chat = true,
@@ -80,21 +87,21 @@ require("codecompanion").setup({
         format_tool = nil,
         make_vars = true,
         make_slash_commands = true,
-      }
+      },
     },
     history = {
       enabled = true,
       opts = {
-        keymap = "gho",           -- Open history
-        save_chat_keymap = "ghi", -- Save current chat
+        keymap = 'gho', -- Open history
+        save_chat_keymap = 'ghi', -- Save current chat
         auto_save = false,
         expiration_days = 0,
-        picker = "telescope",
+        picker = 'telescope',
         chat_filter = nil,
         picker_keymaps = {
-          rename = { n = "r", i = "<C-r>" },
-          delete = { n = "d", i = "<C-d>" },
-          duplicate = { n = "<C-y>", i = "<C-y>" },
+          rename = { n = 'r', i = '<C-r>' },
+          delete = { n = 'd', i = '<C-d>' },
+          duplicate = { n = '<C-y>', i = '<C-y>' },
         },
         auto_generate_title = true,
         title_generation_opts = {
@@ -102,15 +109,15 @@ require("codecompanion").setup({
           max_refreshes = 3,
           format_title = function(original_title)
             return original_title
-          end
+          end,
         },
         continue_last_chat = false,
         delete_on_clearing_chat = true,
-        dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
+        dir_to_save = vim.fn.stdpath('data') .. '/codecompanion-history',
         enable_logging = false,
         summary = {
-          create_summary_keymap = "ghs",   -- Save Summary
-          browse_summaries_keymap = "ghb", --Open Summary
+          create_summary_keymap = 'ghs', -- Save Summary
+          browse_summaries_keymap = 'ghb', --Open Summary
           generation_opts = {
             adapter = nil,
             model = nil,
@@ -121,13 +128,17 @@ require("codecompanion").setup({
             format_summary = nil,
           },
         },
-      }
-    }
+      },
+    },
   },
 })
 
-vim.keymap.set('n', '<M-o>', function() vim.cmd('CodeCompanionChat') end, { desc = 'Start new CodeCompanion chat' })
-vim.keymap.set('n', '<BS>', function() vim.cmd('CodeCompanionChat Toggle') end, { desc = 'Toggle CodeCompanion chat' })
+vim.keymap.set('n', '<M-o>', function()
+  vim.cmd('CodeCompanionChat')
+end, { desc = 'Start new CodeCompanion chat' })
+vim.keymap.set('n', '<BS>', function()
+  vim.cmd('CodeCompanionChat Toggle')
+end, { desc = 'Toggle CodeCompanion chat' })
 vim.keymap.set('v', '<BS>', function()
   vim.cmd('CodeCompanionChat Add')
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
@@ -144,7 +155,9 @@ vim.keymap.set('v', '<BS>', function()
 end, { desc = 'Add visual selection to CodeCompanion chat' })
 
 vim.keymap.set({ 'n', 'v' }, '<M-p>', ':CodeCompanion ', { desc = 'Open CodeCompanion prompt' })
-vim.keymap.set({ 'n', 'v' }, '<M-i>', function() vim.cmd('CodeCompanionAction') end, { desc = 'CodeCompanion actions' })
+vim.keymap.set({ 'n', 'v' }, '<M-i>', function()
+  vim.cmd('CodeCompanionAction')
+end, { desc = 'CodeCompanion actions' })
 
 -- CodeCompanion color theme customization
 vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {

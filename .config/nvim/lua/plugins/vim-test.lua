@@ -4,7 +4,13 @@ vim.g['test#basic#start_normal'] = 1
 vim.g['test#neovim#start_normal'] = 1
 vim.g['test#echo_command'] = 0
 vim.g['test#runner_commands'] = {
-  'Jest', 'Vitest', 'Cypress', 'Playwright', 'DotnetTest', 'Xunit', 'FlutterTest'
+  'Jest',
+  'Vitest',
+  'Cypress',
+  'Playwright',
+  'DotnetTest',
+  'Xunit',
+  'FlutterTest',
 }
 
 -- JavaScript test configuration
@@ -15,31 +21,31 @@ vim.g['test#javascript#playwright#options'] = '--config ./jest-playwright.config
 -- C# test configuration
 vim.g['test#csharp#runner'] = 'dotnettest'
 vim.g['test#csharp#dotnettest#options'] =
-'--nologo -v=q -l:"console;verbosity=minimal;consoleloggerparameters=ErrorsOnly" '
+  '--nologo -v=q -l:"console;verbosity=minimal;consoleloggerparameters=ErrorsOnly" '
 
 -- Keymaps
 vim.keymap.set('n', ',tt', ':TestNearest<cr>', {
   desc = 'Test nearest',
   silent = true,
-  nowait = true
+  nowait = true,
 })
 
 vim.keymap.set('n', ',tf', ':TestFile<cr>', {
   desc = 'Test file',
   silent = true,
-  nowait = true
+  nowait = true,
 })
 
 vim.keymap.set('n', ',ts', ':TestSuite<cr>', {
   desc = 'Test suite',
   silent = true,
-  nowait = true
+  nowait = true,
 })
 
 vim.keymap.set('n', ',tl', ':TestLast<cr>', {
   desc = 'Test last',
   silent = true,
-  nowait = true
+  nowait = true,
 })
 
 -- C# specific keymaps
@@ -50,7 +56,7 @@ vim.api.nvim_create_autocmd('FileType', {
       desc = 'Build .NET project',
       buffer = true,
       silent = true,
-      nowait = true
+      nowait = true,
     })
   end,
 })

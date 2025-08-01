@@ -1,15 +1,15 @@
 vim.wo.foldmethod = 'expr'
-vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
-vim.api.nvim_create_autocmd("BufReadPost", {
-  pattern = "*",
+vim.api.nvim_create_autocmd('BufReadPost', {
+  pattern = '*',
   callback = function()
-    vim.cmd("normal! zx")
+    vim.cmd('normal! zx')
   end,
-  desc = "Expand folds when opening files"
+  desc = 'Expand folds when opening files',
 })
 
-require('nvim-treesitter.configs').setup {
+require('nvim-treesitter.configs').setup({
   modules = {},
   highlight = {
     enable = true,
@@ -82,13 +82,13 @@ require('nvim-treesitter.configs').setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
+      init_selection = 'gnn',
+      node_incremental = 'grn',
+      scope_incremental = 'grc',
+      node_decremental = 'grm',
     },
   },
-}
+})
 
 if vim.fn.has('unix') == 1 and vim.fn.has('mac') == 1 then
   require('nvim-treesitter.install').compilers = { 'gcc' }

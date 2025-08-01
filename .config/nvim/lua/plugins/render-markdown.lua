@@ -8,7 +8,7 @@ require('render-markdown').setup({
     signs = { '󰫎 ' },
     icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
     position = 'overlay', -- Determines how icons fill the available space. right|inline|overlay
-    width = 'block',      -- Width of the heading background. | block | full
+    width = 'block', -- Width of the heading background. | block | full
     left_margin = 0,
     left_pad = 0,
     right_pad = 0,
@@ -18,7 +18,7 @@ require('render-markdown').setup({
     border_prefix = false,
     above = '▄',
     below = '▀',
-    backgrounds = { 'DiffAdd', 'DiffAdd', 'DiffAdd', 'DiffAdd', 'DiffAdd', 'DiffAdd', },
+    backgrounds = { 'DiffAdd', 'DiffAdd', 'DiffAdd', 'DiffAdd', 'DiffAdd', 'DiffAdd' },
   },
   code = {
     sign = false,

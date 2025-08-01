@@ -187,7 +187,7 @@ require('lualine').setup({
 
           if status == ' * ' then
             local animation =
-                animate({ '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }, 150)
+              animate({ '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }, 150)
             return robot_icon_on .. '  ' .. animation
           elseif status == '   ' then
             local animation = animate({ '.  ', '.. ', '...', ' ..', '  .', '   ' }, 200)

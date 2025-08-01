@@ -23,7 +23,11 @@ vim.api.nvim_create_autocmd('User', {
     if code == 0 then
       require('notify')('Completed: ' .. cmd, 'info', { title = 'AsyncRun' })
     else
-      require('notify')('Failed: ' .. cmd .. ' (exit code: ' .. code .. ')', 'error', { title = 'AsyncRun' })
+      require('notify')(
+        'Failed: ' .. cmd .. ' (exit code: ' .. code .. ')',
+        'error',
+        { title = 'AsyncRun' }
+      )
     end
   end,
 })
@@ -35,5 +39,5 @@ end, {
   bang = true,
   nargs = '*',
   complete = 'file',
-  desc = 'Async make command'
+  desc = 'Async make command',
 })

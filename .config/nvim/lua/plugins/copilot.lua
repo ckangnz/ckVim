@@ -1,26 +1,30 @@
 -- Set this in ZSHRC
 -- export COPILOT_MODEL="claude-sonnet-4"
 
-vim.api.nvim_create_user_command("ToggleCopilot", "Copilot toggle", { desc = "Toggle Copilot on/off" })
+vim.api.nvim_create_user_command(
+  'ToggleCopilot',
+  'Copilot toggle',
+  { desc = 'Toggle Copilot on/off' }
+)
 vim.keymap.set('n', '<leader>ct', ':ToggleCopilot<CR>', { desc = 'Toggle Copilot' })
 
 vim.keymap.set('n', '<leader>cp', ':Copilot panel<CR>', { desc = 'Open Copilot panel' })
 
 require('copilot').setup({
-  copilot_model = os.getenv("COPILOT_MODEL") or "gpt-4.1",
+  copilot_model = os.getenv('COPILOT_MODEL') or 'gpt-4.1',
   panel = {
     enabled = true,
     auto_refresh = false,
     keymap = {
-      jump_prev = "[[",
-      jump_next = "]]",
-      accept = "<CR>",
-      refresh = "gr",
-      open = "<M-*>"
+      jump_prev = '[[',
+      jump_next = ']]',
+      accept = '<CR>',
+      refresh = 'gr',
+      open = '<M-*>',
     },
     layout = {
-      position = "bottom",
-      ratio = 0.4
+      position = 'bottom',
+      ratio = 0.4,
     },
   },
 
@@ -34,9 +38,9 @@ require('copilot').setup({
       accept = false, -- refer to keymaps.lua <M-a>
       accept_word = false,
       accept_line = false,
-      prev = "<M-{>",
-      next = "<M-}>",
-      dismiss = "<M-x>",
+      prev = '<M-{>',
+      next = '<M-}>',
+      dismiss = '<M-x>',
     },
   },
 
@@ -46,6 +50,6 @@ require('copilot').setup({
     hgcommit = false,
     svn = false,
     cvs = false,
-    ["."] = false,
+    ['.'] = false,
   },
 })

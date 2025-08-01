@@ -10,8 +10,8 @@ map('n', '<leader>q', '<Nop>', { desc = 'Unmap <leader>q' })
 
 map('n', '<Esc>', '<cmd>nohlsearch<cr>', { desc = 'Clear search highlight' })
 
-map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, desc = 'Down' })
-map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, desc = 'Up' })
+map('n', 'j', 'v:count == 0 ? \'gj\' : \'j\'', { expr = true, desc = 'Down' })
+map('n', 'k', 'v:count == 0 ? \'gk\' : \'k\'', { expr = true, desc = 'Up' })
 map('v', 'j', 'gj', { desc = 'Down (wrapped)' })
 map('v', 'k', 'gk', { desc = 'Up (wrapped)' })
 
@@ -19,8 +19,8 @@ map('n', '<M-j>', ':m .+1<cr>==', { desc = 'Move line down' })
 map('n', '<M-k>', ':m .-2<cr>==', { desc = 'Move line up' })
 map('i', '<M-j>', '<Esc>:m .+1<cr>==gi', { desc = 'Move line down (insert)' })
 map('i', '<M-k>', '<Esc>:m .-2<cr>==gi', { desc = 'Move line up (insert)' })
-map('v', '<M-j>', ":m '>+1<cr>gv=gv", { desc = 'Move selection down' })
-map('v', '<M-k>', ":m '<-2<cr>gv=gv", { desc = 'Move selection up' })
+map('v', '<M-j>', ':m \'>+1<cr>gv=gv', { desc = 'Move selection down' })
+map('v', '<M-k>', ':m \'<-2<cr>gv=gv', { desc = 'Move selection up' })
 
 map('n', '<C-o>', '<C-o>zz', { desc = 'Jump back and center' })
 map('n', '<C-i>', '<C-i>zz', { desc = 'Jump forward and center' })
@@ -67,10 +67,30 @@ map('v', '?', '<Esc>?\\%V', { desc = 'Reverse search within selection' })
 
 -- File/Path keymaps (replacing menu system)
 map('n', '<leader>ev', '<cmd>vsp $HOME/.config/nvim/init.lua<cr>', { desc = 'Edit init.lua' })
-map('n', '<leader>ek', '<cmd>vsp $HOME/.config/nvim/lua/core/keymaps.lua<cr>', { desc = 'Edit keymaps.lua' })
-map('n', '<leader>eo', '<cmd>vsp $HOME/.config/nvim/lua/core/options.lua<cr>', { desc = 'Edit options.lua' })
-map('n', '<leader>el', '<cmd>vsp $HOME/.config/nvim/lua/core/lazy.lua<cr>', { desc = 'Edit lazy.lua' })
-map('n', '<leader>ep', '<cmd>vsp $HOME/.config/nvim/lua/plugins/<cr>', { desc = 'Open plugins directory' })
+map(
+  'n',
+  '<leader>ek',
+  '<cmd>vsp $HOME/.config/nvim/lua/core/keymaps.lua<cr>',
+  { desc = 'Edit keymaps.lua' }
+)
+map(
+  'n',
+  '<leader>eo',
+  '<cmd>vsp $HOME/.config/nvim/lua/core/options.lua<cr>',
+  { desc = 'Edit options.lua' }
+)
+map(
+  'n',
+  '<leader>el',
+  '<cmd>vsp $HOME/.config/nvim/lua/core/lazy.lua<cr>',
+  { desc = 'Edit lazy.lua' }
+)
+map(
+  'n',
+  '<leader>ep',
+  '<cmd>vsp $HOME/.config/nvim/lua/plugins/<cr>',
+  { desc = 'Open plugins directory' }
+)
 
 map('n', '<leader>ez', '<cmd>vsp $HOME/.zshrc<cr>', { desc = 'Edit .zshrc' })
 map('n', '<leader>ea', '<cmd>vsp $HOME/.extraAlias.zsh<cr>', { desc = 'Edit .extraAlias.zsh' })
@@ -112,12 +132,12 @@ end
 
 local function utility_menu()
   local utilContent = {
-    { 'Generate GUID',              'call GenerateGUID()' },
-    { 'Delete all white spaces',    '%s/^$\\|^\\s\\+//g' },
-    { 'Render Markdown toggle',     'RenderMarkdown toggle' },
+    { 'Generate GUID', 'call GenerateGUID()' },
+    { 'Delete all white spaces', '%s/^$\\|^\\s\\+//g' },
+    { 'Render Markdown toggle', 'RenderMarkdown toggle' },
     { 'Vivify (Markdown Renderer)', 'Vivify' },
-    { 'Yaml Schema',                'CocCommand yaml.selectSchema' },
-    { 'Clear Registers',            'call ClearReg()' },
+    { 'Yaml Schema', 'CocCommand yaml.selectSchema' },
+    { 'Clear Registers', 'call ClearReg()' },
   }
 
   create_menu(utilContent, 'Utility:')
@@ -125,7 +145,7 @@ end
 vim.keymap.set('n', '<leader>m', utility_menu, {
   desc = 'Utility menu',
   silent = true,
-  nowait = true
+  nowait = true,
 })
 
 local function toggle_quickfix()

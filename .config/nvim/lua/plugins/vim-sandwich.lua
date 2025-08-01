@@ -16,7 +16,7 @@ local custom_recipes = {
     match_syntax = 1,
     kind = { 'delete', 'replace', 'textobj' },
     action = { 'delete' },
-    input = { '{' }
+    input = { '{' },
   },
   {
     buns = { '\\[\\s*', '\\s*\\]' },
@@ -25,7 +25,7 @@ local custom_recipes = {
     match_syntax = 1,
     kind = { 'delete', 'replace', 'textobj' },
     action = { 'delete' },
-    input = { '[' }
+    input = { '[' },
   },
   {
     buns = { '(\\s*', '\\s*)' },
@@ -34,8 +34,8 @@ local custom_recipes = {
     match_syntax = 1,
     kind = { 'delete', 'replace', 'textobj' },
     action = { 'delete' },
-    input = { '(' }
-  }
+    input = { '(' },
+  },
 }
 
 -- Extend the default recipes
@@ -52,15 +52,15 @@ vim.api.nvim_set_hl(0, 'OperatorSandwichChange', {
   ctermfg = 109,
   ctermbg = 237,
   fg = '#83a598',
-  bg = '#3c3836'
+  bg = '#3c3836',
 })
 vim.api.nvim_set_hl(0, 'OperatorSandwichAdd', {
   bold = true,
   ctermfg = 10,
-  fg = '#7fbf00'
+  fg = '#7fbf00',
 })
 vim.api.nvim_set_hl(0, 'OperatorSandwichDelete', {
   bold = true,
   ctermfg = 10,
-  fg = '#fb4934'
+  fg = '#fb4934',
 })

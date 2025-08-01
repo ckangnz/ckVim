@@ -1,9 +1,9 @@
-local config_dir = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":p:h")
+local config_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 vim.opt.runtimepath:prepend(config_dir)
 
 -- Also add the lua directory to package.path for module loading
-local lua_dir = config_dir .. "/lua"
-package.path = lua_dir .. "/?.lua;" .. lua_dir .. "/?/init.lua;" .. package.path
+local lua_dir = config_dir .. '/lua'
+package.path = lua_dir .. '/?.lua;' .. lua_dir .. '/?/init.lua;' .. package.path
 
 -- Set leader key early
 vim.g.mapleader = ','

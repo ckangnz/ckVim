@@ -1,6 +1,6 @@
 -- Keymaps
 vim.keymap.set('n', 'F', '<Plug>(easymotion-overwin-f2)', {
-  desc = 'EasyMotion: Jump to 2 characters'
+  desc = 'EasyMotion: Jump to 2 characters',
 })
 
 -- Highlight groups

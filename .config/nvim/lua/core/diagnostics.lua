@@ -5,11 +5,11 @@ vim.diagnostic.config({
   },
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = "",
-      [vim.diagnostic.severity.WARN] = "",
-      [vim.diagnostic.severity.INFO] = "",
-      [vim.diagnostic.severity.HINT] = "󰌶",
-    }
+      [vim.diagnostic.severity.ERROR] = '',
+      [vim.diagnostic.severity.WARN] = '',
+      [vim.diagnostic.severity.INFO] = '',
+      [vim.diagnostic.severity.HINT] = '󰌶',
+    },
   },
   underline = true,
   update_in_insert = false,
@@ -22,6 +22,6 @@ vim.diagnostic.config({
   },
   jump = {
     float = true,
-    wrap = true
+    wrap = true,
   },
 })
