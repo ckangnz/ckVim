@@ -1,9 +1,6 @@
 require('mason-conform').setup({
   ensure_installed = {
-    'codespell',
     'stylua',
-    'markdownlint',
-
     'prettier',
     'prettierd',
   },
@@ -13,7 +10,6 @@ require('mason-conform').setup({
 require('conform').setup({
   formatters_by_ft = {
     lua = { 'stylua' },
-    markdown = { 'markdownlint' },
     javascript = { 'prettierd', 'prettier', stop_after_first = true },
     typescript = { 'prettierd', 'prettier', stop_after_first = true },
     javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
@@ -23,6 +19,7 @@ require('conform').setup({
     css = { 'prettier' },
     scss = { 'prettier' },
     yaml = { 'prettier' },
+    markdown = { 'prettierd' },
     ['*'] = { 'codespell' },
     ['_'] = { 'trim_whitespace' },
   },
