@@ -109,36 +109,40 @@ autocmd({ 'WinEnter', 'BufWinEnter', 'TermOpen' }, {
   command = 'startinsert',
 })
 
--- WhitespaceMatch
+-- ExtraWhitespace highlights
 local function toggle_whitespace_match(mode)
-  local pattern = (mode == 'i') and '\\s\\+\\%#\\@<!$' or '\\s\\+$'
-  local excluded_filetypes = { 'ctrlsf', 'help', 'codecompanion', 'mcphub', 'lazy', 'mason' }
+  local excluded_filetypes =
+    { 'ctrlsf', 'help', 'codecompanion', 'mcphub', 'lazy', 'mason', 'alpha' }
   local current_filetype = vim.bo.filetype
-  for _, ft in ipairs(excluded_filetypes) do
-    if ft == current_filetype then
-      if vim.w.whitespace_match_number then
-        vim.fn.matchdelete(vim.w.whitespace_match_number)
-        vim.w.whitespace_match_number = nil
-      end
-      return
-    end
+
+  if vim.tbl_contains(excluded_filetypes, current_filetype) then
+    return
   end
+
   if vim.w.whitespace_match_number then
     pcall(vim.fn.matchdelete, vim.w.whitespace_match_number)
+    vim.w.whitespace_match_number = nil
   end
+
+  local pattern = (mode == 'i') and '\\s\\+\\%#\\@<!$' or '\\s\\+$'
   vim.w.whitespace_match_number = vim.fn.matchadd('ExtraWhitespace', pattern, 10)
 end
 local whitespace_group = vim.api.nvim_create_augroup('WhitespaceMatch', { clear = true })
-vim.api.nvim_create_autocmd({ 'BufWinEnter', 'InsertLeave' }, {
+vim.api.nvim_create_autocmd({ 'FileType', 'BufWinEnter', 'InsertLeave' }, {
   group = whitespace_group,
   callback = function()
-    toggle_whitespace_match('n')
+    -- Defer the check to ensure filetype is set
+    vim.defer_fn(function()
+      toggle_whitespace_match('n')
+    end, 0)
   end,
 })
 vim.api.nvim_create_autocmd('InsertEnter', {
   group = whitespace_group,
   callback = function()
-    toggle_whitespace_match('i')
+    vim.defer_fn(function()
+      toggle_whitespace_match('i')
+    end, 0)
   end,
 })
 vim.api.nvim_create_autocmd('BufWinLeave', {
@@ -150,7 +154,6 @@ vim.api.nvim_create_autocmd('BufWinLeave', {
     end
   end,
 })
-
 local lsp_group = vim.api.nvim_create_augroup('LSPGroup', { clear = true })
 autocmd('LspAttach', {
   group = lsp_group,

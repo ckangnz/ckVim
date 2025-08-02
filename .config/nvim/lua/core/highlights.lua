@@ -1,28 +1,28 @@
-vim.api.nvim_set_hl(0, 'ExtraWhitespace', {
-  bg = Colors.red,
-  fg = Colors.white,
-})
-
--- Search highlights
-vim.api.nvim_set_hl(
-  0,
-  'Search',
-  { fg = Colors.black, bg = Colors.white, ctermfg = 'black', ctermbg = 'white' }
-)
-vim.api.nvim_set_hl(0, 'CurSearch', { reverse = true, bold = true })
-
--- UI elements
-vim.api.nvim_set_hl(0, 'VertSplit', { fg = Colors.white, ctermfg = 'white' })
-vim.api.nvim_set_hl(0, 'ExtraWhitespace', { bg = Colors.light_red, ctermbg = 'red' })
-
--- Plugin highlights
-vim.api.nvim_set_hl(0, 'CodeiumSuggestion', { fg = Colors.light_grey, ctermfg = 245 })
-
 local function apply_custom_highlights()
+  -- Custom ExtraWhitespace
+  vim.api.nvim_set_hl(0, 'ExtraWhitespace', {
+    bg = Colors.red,
+    fg = Colors.white,
+  })
+
+  -- Search highlights
+  vim.api.nvim_set_hl(0, 'Search', { fg = Colors.black, bg = Colors.white })
+  vim.api.nvim_set_hl(0, 'CurSearch', { reverse = true, bold = true })
+
+  -- UI elements
+  vim.api.nvim_set_hl(0, 'VertSplit', { fg = Colors.white })
+  vim.api.nvim_set_hl(0, 'ExtraWhitespace', { bg = Colors.light_red })
+
+  -- CodeiumSuggestion highlights
+  vim.api.nvim_set_hl(0, 'CodeiumSuggestion', { fg = Colors.light_grey })
+
+  -- Comment Highlights
   vim.api.nvim_set_hl(0, 'Comment', {
-    fg = '#928374',
+    fg = Colors.light_grey,
     italic = true,
   })
+
+  -- TransparentUI
   vim.api.nvim_set_hl(0, 'TabLine', { bg = 'NONE' })
   vim.api.nvim_set_hl(0, 'TabLineFill', { bg = 'NONE' })
   vim.api.nvim_set_hl(0, 'TabLineSel', { bg = 'NONE' })
