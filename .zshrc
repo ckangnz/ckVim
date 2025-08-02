@@ -47,6 +47,11 @@ export HOMEBREW_NO_ENV_HINTS=1
 if [[ -e "$HOMEBREW_PREFIX/bin/fnm" ]]; then
   PATH="$FNM_MULTISHELL_PATH:$PATH"
 fi
+# Python3
+# check opt/homebrew/bin/python3
+if [[ -e "$HOMEBREW_PREFIX/opt/python3/bin" ]]; then
+  PATH="$HOMEBREW_PREFIX/opt/python3/bin:$PATH"
+fi
 # Java
 if [[ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]]; then
   JDK_HOME=$HOMEBREW_PREFIX/opt/openjdk

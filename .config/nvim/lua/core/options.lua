@@ -35,7 +35,7 @@ g.loaded_node_provider = 0
 
 local is_mac = vim.fn.has('unix') == 1 and vim.fn.has('mac') == 1
 if is_mac then
-  g.python3_host_prog = '/usr/bin/python3'
+  g.python3_host_prog = '/opt/homebrew/bin/python3'
 else
   g.python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'
 end
