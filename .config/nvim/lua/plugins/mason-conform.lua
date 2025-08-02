@@ -1,11 +1,4 @@
-require('mason-conform').setup({
-  ensure_installed = {
-    'stylua',
-    'prettier',
-    'prettierd',
-  },
-  ignore_install = {},
-})
+require('mason-conform').setup()
 
 require('conform').setup({
   formatters_by_ft = {
@@ -20,7 +13,6 @@ require('conform').setup({
     scss = { 'prettier' },
     yaml = { 'prettier' },
     markdown = { 'prettierd' },
-    ['*'] = { 'codespell' },
     ['_'] = { 'trim_whitespace' },
   },
   default_format_opts = {

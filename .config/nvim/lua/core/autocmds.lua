@@ -152,6 +152,50 @@ vim.api.nvim_create_autocmd('BufWinLeave', {
 })
 
 local lsp_group = vim.api.nvim_create_augroup('LSPGroup', { clear = true })
+autocmd('LspAttach', {
+  group = lsp_group,
+  desc = 'LSP config',
+  callback = function()
+    vim.keymap.set('n', 'K', vim.diagnostic.open_float, { silent = true, desc = 'Show hover' })
+    vim.keymap.set('n', 'grn', vim.lsp.buf.rename, { silent = true, desc = 'Rename' })
+    vim.keymap.set(
+      'n',
+      '[d',
+      vim.diagnostic.goto_prev,
+      { silent = true, desc = 'Previous Diagnostic' }
+    )
+    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { silent = true, desc = 'Next Diagnostic' })
+    vim.keymap.set('n', 'gra', vim.lsp.buf.code_action, { silent = true, desc = 'Code Action' })
+    vim.keymap.set('n', 'grr', vim.lsp.buf.references, { silent = true, desc = 'References' })
+    vim.keymap.set(
+      'n',
+      'gri',
+      vim.lsp.buf.implementation,
+      { silent = true, desc = 'Implementation' }
+    )
+    vim.keymap.set(
+      'n',
+      'grd',
+      vim.lsp.buf.definition,
+      { silent = true, desc = 'Go to type_definition' }
+    )
+    vim.keymap.set(
+      'n',
+      'grt',
+      vim.lsp.buf.type_definition,
+      { silent = true, desc = 'Type Definition' }
+    )
+    vim.keymap.set(
+      'n',
+      'gO',
+      vim.lsp.buf.document_symbol,
+      { silent = true, desc = 'Document Symbols' }
+    )
+    vim.keymap.set('n', 'gq', vim.lsp.formatexpr, { silent = true, desc = 'Format' })
+
+    vim.lsp.inlay_hint.enable(false)
+  end,
+})
 autocmd('BufWritePre', {
   group = lsp_group,
   desc = 'Format on save',
@@ -164,36 +208,5 @@ autocmd('BufWritePre', {
         break
       end
     end
-  end,
-})
-autocmd('LspAttach', {
-  group = lsp_group,
-  desc = 'LSP config',
-  callback = function()
-    -- LSP Keymaps (defaults)
-    -- "K" is mapped in Normal mode to |vim.lsp.buf.hover()|
-    -- "grn" is mapped in Normal mode to |vim.lsp.buf.rename()|
-    -- "[d" is mapped in Normal  mode to |vim.diagnostic.goto_prev()|
-    -- "]d" is mapped in Normal  mode to |vim..diagnostic.goto_next()|
-    -- "gra" is mapped in Normal and Visual mode to |vim.lsp.buf.code_action()|
-    -- "grr" is mapped in Normal mode to |vim.lsp.buf.references()|
-    -- "gri" is mapped in Normal mode to |vim.lsp.buf.implementation()|
-    -- "grt" is mapped in Normal mode to |vim.lsp.buf.type_definition()|
-    -- "gO" is mapped in Normal mode to |vim.lsp.buf.document_symbol()|
-    -- "gq" is mapped in Normal mode to |vim.lsp.formatexpr()|
-    vim.keymap.set(
-      'n',
-      'gd',
-      vim.lsp.buf.definition,
-      { silent = true, desc = 'Go to type_definition' }
-    )
-
-    vim.lsp.inlay_hint.enable(false)
-  end,
-})
-autocmd('CursorHold', {
-  group = lsp_group,
-  callback = function()
-    vim.diagnostic.open_float(nil, { focus = false })
   end,
 })

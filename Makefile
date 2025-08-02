@@ -1,5 +1,3 @@
-# Makefile for ckDotfiles setup
-
 SHELL := /bin/bash
 VIM_DIR := $(HOME)/.vim
 

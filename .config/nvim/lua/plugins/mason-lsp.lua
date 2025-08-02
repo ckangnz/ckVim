@@ -18,7 +18,7 @@ require('mason-lspconfig').setup({
 
 local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
 lsp_capabilities =
-  vim.tbl_deep_extend('force', lsp_capabilities, require('cmp_nvim_lsp').default_capabilities())
+    vim.tbl_deep_extend('force', lsp_capabilities, require('cmp_nvim_lsp').default_capabilities())
 
 vim.lsp.config('*', {
   root_markers = { '.git' },
@@ -32,6 +32,7 @@ vim.lsp.config('*', {
     end
   end,
 })
+
 vim.lsp.config('lua_ls', {
   capabilities = lsp_capabilities,
   settings = {
@@ -42,6 +43,7 @@ vim.lsp.config('lua_ls', {
     },
   },
 })
+
 vim.lsp.config('ts_ls', {
   capabilities = lsp_capabilities,
   on_attach = function(client, bufnr)

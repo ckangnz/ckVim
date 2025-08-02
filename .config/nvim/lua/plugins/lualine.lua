@@ -100,6 +100,16 @@ require('lualine').setup({
       },
       {
         function()
+          local linters = require('lint').get_running()
+          if #linters == 0 then
+            return '󰦕'
+          end
+          return '󱉶 ' .. table.concat(linters, ', ')
+        end,
+        separator = { left = '', right = '' },
+      },
+      {
+        function()
           local status, conform = pcall(require, 'conform')
           if not status then
             return 'Conform not installed'

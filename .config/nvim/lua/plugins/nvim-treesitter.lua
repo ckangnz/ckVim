@@ -79,15 +79,7 @@ require('nvim-treesitter.configs').setup({
   indent = {
     enable = true,
   },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = 'gnn',
-      node_incremental = 'grn',
-      scope_incremental = 'grc',
-      node_decremental = 'grm',
-    },
-  },
+  incremental_selection = { enable = false, },
 })
 
 if vim.fn.has('unix') == 1 and vim.fn.has('mac') == 1 then
