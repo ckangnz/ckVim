@@ -21,6 +21,11 @@ local function get_custom_theme()
       b = { fg = Colors.white, bg = Colors.dark_grey },
       c = { fg = Colors.light_grey, bg = nil },
     },
+    replace = {
+      a = { fg = Colors.black, bg = Colors.red, gui = 'bold' },
+      b = { fg = Colors.white, bg = Colors.dark_grey },
+      c = { fg = Colors.light_grey, bg = nil },
+    },
     command = {
       a = { fg = Colors.black, bg = Colors.light_blue, gui = 'bold' },
       b = { fg = Colors.white, bg = Colors.dark_grey },
@@ -345,13 +350,3 @@ require('lualine').setup({
   },
   winbar = {},
 })
-
-local function rename_tab()
-  local tab_name = vim.fn.input('New Tab name: ')
-  if tab_name == '' then
-    print(' ')
-    return
-  end
-  vim.cmd.LualineRenameTab({ tab_name })
-end
-vim.keymap.set('n', '<leader>T', rename_tab, { desc = 'Rename current tab' })

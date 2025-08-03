@@ -359,6 +359,7 @@ local plugins = {
     branch = 'master',
     event = 'VeryLazy',
     cmd = 'Telescope',
+    keys = { { '<leader>T', '<cmd>Telescope<cr>', desc = 'Open Telescope', silent = true } },
     dependencies = {
       'nvim-lua/plenary.nvim',
       {
