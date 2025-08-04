@@ -15,8 +15,8 @@ dashboard.section.header.val = {
 
 -- keys
 dashboard.section.buttons.val = {
-  dashboard.button('C-p', '󰈞  Find file', ':Telescope find_files <CR>'),
   dashboard.button('C-e', '  Recent files', ':Telescope oldfiles <CR>'),
+  dashboard.button('C-p', '󰈞  Find file', ':Telescope find_files <CR>'),
   dashboard.button('<leader>ev', '  Init.lua', '<cmd>e $HOME/.config/nvim/init.lua<cr>'),
   dashboard.button(
     '<leader>el',
