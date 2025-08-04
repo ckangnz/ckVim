@@ -67,6 +67,7 @@ map('v', '?', '<Esc>?\\%V', { desc = 'Reverse search within selection' })
 
 -- File/Path keymaps (replacing menu system)
 map('n', '<leader>ev', '<cmd>vsp $HOME/.config/nvim/init.lua<cr>', { desc = 'Edit init.lua' })
+map('n', '<leader>ec', '<cmd>vsp $HOME/.config/nvim/lua/core<cr>', { desc = 'Open core directory' })
 map(
   'n',
   '<leader>ek',
@@ -108,8 +109,6 @@ map('n', '<leader>ei', '<cmd>vsp $HOME/.vim/install_vim.sh<cr>', { desc = 'Edit 
 map('n', '<leader>en', '<cmd>vsp $HOME/.vim/notes<cr>', { desc = 'Open notes directory' })
 map('n', '<leader>er', '<cmd>vsp $HOME/.vim/README.md<cr>', { desc = 'Edit readme.md' })
 map('n', '<leader>ee', '<cmd>vsp $HOME/.vim<cr>', { desc = 'Open ~/.vim directory' })
-
-map('n', '<leader>ec', '<cmd>vsp $HOME/code<cr>', { desc = 'Open ~/code directory' })
 
 local function create_menu(items, prompt)
   local options = {}
