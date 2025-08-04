@@ -214,12 +214,6 @@ autocmd('BufWritePre', {
   desc = 'Format on save',
   pattern = '*',
   callback = function(args)
-    local clients = vim.lsp.get_clients({ bufnr = args.buf })
-    for _, client in ipairs(clients) do
-      if client.supports_method('textDocument/formatting') then
-        vim.lsp.buf.format({ async = false, bufnr = args.buf })
-        break
-      end
-    end
+    vim.lsp.buf.format({ async = false, bufnr = args.buf })
   end,
 })
