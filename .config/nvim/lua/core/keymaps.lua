@@ -75,6 +75,12 @@ map(
 )
 map(
   'n',
+  '<leader>eh',
+  '<cmd>vsp $HOME/.config/nvim/lua/core/highlights.lua<cr>',
+  { desc = 'Edit vimhelp.md' }
+)
+map(
+  'n',
   '<leader>eo',
   '<cmd>vsp $HOME/.config/nvim/lua/core/options.lua<cr>',
   { desc = 'Edit options.lua' }
@@ -100,7 +106,6 @@ map('n', '<leader>eP', '<cmd>vsp $HOME/.vim/plugins.zsh<cr>', { desc = 'Edit plu
 map('n', '<leader>em', '<cmd>vsp $HOME/.vim/Makefile<cr>', { desc = 'Edit Makefile' })
 map('n', '<leader>ei', '<cmd>vsp $HOME/.vim/install_vim.sh<cr>', { desc = 'Edit install_vim.sh' })
 map('n', '<leader>en', '<cmd>vsp $HOME/.vim/notes<cr>', { desc = 'Open notes directory' })
-map('n', '<leader>eh', '<cmd>vsp $HOME/.vim/notes/vimhelp.md<cr>', { desc = 'Edit vimhelp.md' })
 map('n', '<leader>er', '<cmd>vsp $HOME/.vim/README.md<cr>', { desc = 'Edit readme.md' })
 map('n', '<leader>ee', '<cmd>vsp $HOME/.vim<cr>', { desc = 'Open ~/.vim directory' })
 

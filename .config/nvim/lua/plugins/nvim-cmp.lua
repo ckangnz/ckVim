@@ -32,8 +32,8 @@ local kind_icons = {
   Event = '󰉁',
   Operator = '󰆕',
   TypeParameter = '󰊄',
-  Copilot = '󰚩',
-  Codeium = '󰘦',
+  Copilot = '',
+  Codeium = '',
 }
 
 cmp.setup({
@@ -75,6 +75,11 @@ cmp.setup({
         nvim_lua = '[Lua]',
         copilot = '[AI]',
         codeium = '[AI]',
+        codecompanion = '[AI Assistant]',
+        codecompanion_models = '[AI Models]',
+        codecompanion_slash_commands = '[AI Commands]',
+        codecompanion_tools = '[AI Tools]',
+        codecompanion_variables = '[AI Variables]',
         emoji = '[Emoji]',
         calc = '[Calc]',
         treesitter = '[TS]',

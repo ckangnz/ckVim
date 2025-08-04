@@ -33,10 +33,10 @@ local function apply_custom_highlights()
   vim.api.nvim_set_hl(0, 'Normal', { bg = 'NONE' })
   vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'NONE' })
 end
-apply_custom_highlights()
--- Reapply after colorscheme changes
+
+HighlightOverride = vim.api.nvim_create_augroup('HighlightOverride', { clear = true })
 vim.api.nvim_create_autocmd('ColorScheme', {
-  group = vim.api.nvim_create_augroup('TransparentUI', { clear = true }),
+  group = HighlightOverride,
   callback = apply_custom_highlights,
   desc = 'Apply transparent backgrounds after colorscheme changes',
 })

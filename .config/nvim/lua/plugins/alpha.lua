@@ -23,11 +23,16 @@ dashboard.section.buttons.val = {
     '󰒲  Lazy.lua',
     '<cmd>e $HOME/.config/nvim/lua/core/lazy.lua<cr>'
   ),
-  -- keymaps
   dashboard.button(
     '<leader>ek',
     '󰌚  Keymaps',
     '<cmd>e $HOME/.config/nvim/lua/core/keymaps.lua<cr>'
+  ),
+  -- eh to highlights
+  dashboard.button(
+    '<leader>eh',
+    '󰏘  Highlight',
+    '<cmd>e $HOME/.config/nvim/lua/core/highlights.lua<cr>'
   ),
   dashboard.button('<leader>ep', ' Plugins', '<cmd>e $HOME/.config/nvim/lua/plugins/<cr>'),
   dashboard.button('n', '  New file', ':ene <BAR> startinsert <CR>'),

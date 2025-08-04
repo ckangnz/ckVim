@@ -7,6 +7,15 @@ require('codecompanion').setup({
       show_context = true, -- Show context (from slash commands and variables) in the chat buffer?
       show_settings = true, -- Show LLM settings at the top of the chat buffer?
       show_token_count = true, -- Show the token count for each response?
+      window = {
+        layout = 'float', -- float|vertical|horizontal|buffer
+        border = 'single',
+        height = 0.8,
+        width = 0.5,
+        relative = 'editor',
+        full_height = false,
+        sticky = true,
+      },
     },
   },
   strategies = {
@@ -17,35 +26,13 @@ require('codecompanion').setup({
       },
       roles = {
         llm = function(adapter)
-          return '🤖 CodeCompanion (' .. adapter.formatted_name .. ')'
+          return 'CodeCompanion (' .. adapter.formatted_name .. ')'
         end,
-        user = '👤 You',
+        user = 'You',
       },
       opts = {
         goto_file_action = 'tabnew', -- press gR to go to file in new tab
         completion_provider = 'cmp',
-      },
-      tools = {
-        groups = {
-          ['github_pr_workflow'] = {
-            description = 'GitHub operations from issue to PR',
-            tools = {
-              -- File operations
-              'neovim__read_multiple_files',
-              'neovim__write_file',
-              'neovim__edit_file',
-              -- GitHub operations
-              'github__list_issues',
-              'github__get_issue',
-              'github__get_issue_comments',
-              'github__create_issue',
-              'github__create_pull_request',
-              'github__get_file_contents',
-              'github__create_or_update_file',
-              'github__search_code',
-            },
-          },
-        },
       },
       slash_commands = {
         ['file'] = {
@@ -136,9 +123,34 @@ require('codecompanion').setup({
 vim.keymap.set('n', '<M-o>', function()
   vim.cmd('CodeCompanionChat')
 end, { desc = 'Start new CodeCompanion chat' })
+
 vim.keymap.set('n', '<BS>', function()
-  vim.cmd('CodeCompanionChat Toggle')
-end, { desc = 'Toggle CodeCompanion chat' })
+  local function find_codecompanion_window()
+    local windows = vim.api.nvim_list_wins()
+    for _, winid in ipairs(windows) do
+      local bufnr = vim.api.nvim_win_get_buf(winid)
+      local filetype = vim.bo[bufnr].filetype
+      if filetype == 'codecompanion' then
+        return winid
+      end
+    end
+    return nil
+  end
+
+  local codecompanion_win = find_codecompanion_window()
+  local current_win = vim.api.nvim_get_current_win()
+
+  if codecompanion_win then
+    if codecompanion_win == current_win then
+      vim.cmd('CodeCompanionChat Toggle')
+    else
+      vim.api.nvim_set_current_win(codecompanion_win)
+    end
+  else
+    vim.cmd('CodeCompanionChat Toggle')
+  end
+end, { desc = 'Toggle or focus CodeCompanion chat' })
+
 vim.keymap.set('v', '<BS>', function()
   vim.cmd('CodeCompanionChat Add')
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
