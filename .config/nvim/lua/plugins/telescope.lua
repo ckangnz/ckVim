@@ -19,6 +19,7 @@ local telescope_utils = require('telescope.utils')
 
 telescope.setup({
   defaults = {
+    initial_mode = 'normal',
     cwd = telescope_utils.buffer_dir(),
     winblend = 0,
     layout_config = { prompt_position = 'top' },

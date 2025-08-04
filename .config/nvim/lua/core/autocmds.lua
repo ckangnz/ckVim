@@ -111,8 +111,18 @@ autocmd({ 'WinEnter', 'BufWinEnter', 'TermOpen' }, {
 
 -- ExtraWhitespace highlights
 local function toggle_whitespace_match(mode)
-  local excluded_filetypes =
-    { 'ctrlsf', 'help', 'codecompanion', 'mcphub', 'lazy', 'mason', 'alpha' }
+  local excluded_filetypes = {
+    'ctrlsf',
+    'help',
+    'codecompanion',
+    'mcphub',
+    'lazy',
+    'mason',
+    'alpha',
+    'TelescopePrompt',
+    'TelescopeResults',
+    'TelescopePreview',
+  }
   local current_filetype = vim.bo.filetype
 
   if vim.tbl_contains(excluded_filetypes, current_filetype) then
