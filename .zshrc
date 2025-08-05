@@ -52,11 +52,24 @@ if [[ -e "$HOMEBREW_PREFIX/opt/python3/bin" ]]; then
     PATH="$HOMEBREW_PREFIX/opt/python3/bin:$PATH"
 fi
 # Dotnet
-for dotnet_path in "$HOMEBREW_PREFIX"/opt/dotnet@*/bin; do
-    if [[ -d "$dotnet_path" ]]; then
-        PATH="$dotnet_path:$PATH"
-    fi
-done
+if [[ -d "$HOMEBREW_PREFIX/opt/dotnet" ]]; then
+    for dotnet_path in "$HOMEBREW_PREFIX"/opt/dotnet@*/bin; do
+        if [[ -d "$dotnet_path" ]]; then
+            PATH="$dotnet_path:$PATH"
+        fi
+    done
+    export DOTNET_ROOT="$HOMEBREW_PREFIX/opt/dotnet/libexec"
+    mkdir -p "$DOTNET_ROOT/sdk"
+    for dotnet_version_path in "$HOMEBREW_PREFIX"/opt/dotnet@*/libexec/sdk/*; do
+        if [[ -d "$dotnet_version_path" ]]; then
+            sdk_version=$(basename "$dotnet_version_path")
+            target_link="$DOTNET_ROOT/sdk/$sdk_version"
+            if [[ ! -L "$target_link" ]] || [[ "$(readlink "$target_link")" != "$dotnet_version_path" ]]; then
+                ln -sf "$dotnet_version_path" "$target_link" 2>/dev/null
+            fi
+        fi
+    done
+fi
 # Java
 if [[ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]]; then
     JDK_HOME=$HOMEBREW_PREFIX/opt/openjdk
