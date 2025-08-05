@@ -6,35 +6,35 @@ compinit -C -d ~/.zcompdump &>/dev/null
 # Set PATH
 typeset -U path
 path=(
-  $HOME/.pub-cache/bin
-  $HOME/.dotnet/tools
-  $HOME/.rvm/bin
-  /home/linuxbrew/.linuxbrew/bin
-  /home/linuxbrew/.linuxbrew/sbin
-  /usr/local/bin
-  /usr/bin
-  /bin
-  /usr/sbin
-  /sbin
-  $path
+    $HOME/.pub-cache/bin
+    $HOME/.dotnet/tools
+    $HOME/.rvm/bin
+    /home/linuxbrew/.linuxbrew/bin
+    /home/linuxbrew/.linuxbrew/sbin
+    /usr/local/bin
+    /usr/bin
+    /bin
+    /usr/sbin
+    /sbin
+    $path
 )
 export PATH
 
 #------Source Zap--------
 if [[ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ]]; then
-  source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
-  source $HOME/.vim/plugins.zsh
+    source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
+    source $HOME/.vim/plugins.zsh
 else
-  echo "----OOPS: You need to install ZAP!------"
-  echo ""
-  echo "Please copy this below:"
-  echo ""
-  echo "zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1"
-  echo ""
-  echo "Please copy this below:"
-  echo ""
-  echo "rm .zshrc && ln -s $HOME/.vim/.zshrc $HOME/.zshrc"
-  echo ""
+    echo "----OOPS: You need to install ZAP!------"
+    echo ""
+    echo "Please copy this below:"
+    echo ""
+    echo "zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1"
+    echo ""
+    echo "Please copy this below:"
+    echo ""
+    echo "rm .zshrc && ln -s $HOME/.vim/.zshrc $HOME/.zshrc"
+    echo ""
 fi
 
 #------Source Brew plugins--------
@@ -45,31 +45,36 @@ export HOMEBREW_NO_ENV_HINTS=1
 
 # FNM
 if [[ -e "$HOMEBREW_PREFIX/bin/fnm" ]]; then
-  PATH="$FNM_MULTISHELL_PATH:$PATH"
+    PATH="$FNM_MULTISHELL_PATH:$PATH"
 fi
 # Python3
-# check opt/homebrew/bin/python3
 if [[ -e "$HOMEBREW_PREFIX/opt/python3/bin" ]]; then
-  PATH="$HOMEBREW_PREFIX/opt/python3/bin:$PATH"
+    PATH="$HOMEBREW_PREFIX/opt/python3/bin:$PATH"
 fi
+# Dotnet
+for dotnet_path in "$HOMEBREW_PREFIX"/opt/dotnet@*/bin; do
+    if [[ -d "$dotnet_path" ]]; then
+        PATH="$dotnet_path:$PATH"
+    fi
+done
 # Java
 if [[ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]]; then
-  JDK_HOME=$HOMEBREW_PREFIX/opt/openjdk
-  PATH="$JDK_HOME/bin:$PATH"
+    JDK_HOME=$HOMEBREW_PREFIX/opt/openjdk
+    PATH="$JDK_HOME/bin:$PATH"
 fi
 # FZF
 if [[ -f ~/.fzf.zsh ]]; then
-  FZF_HOME="$HOMEBREW_PREFIX/opt/fzf"
-  source ~/.fzf.zsh
-  source <(fzf --zsh)
+    FZF_HOME="$HOMEBREW_PREFIX/opt/fzf"
+    source ~/.fzf.zsh
+    source <(fzf --zsh)
 elif [[ -d "$HOMEBREW_PREFIX/opt/fzf/bin" ]]; then
-  "$HOMEBREW_PREFIX/opt/fzf/install"
+    "$HOMEBREW_PREFIX/opt/fzf/install"
 fi
 #lsd
 if [[ -d "$HOMEBREW_PREFIX/opt/lsd/bin" ]]; then
-  alias ls="lsd --group-directories-first"
-  alias la="lsd -la --group-directories-first"
-  alias lt="lsd --tree"
+    alias ls="lsd --group-directories-first"
+    alias la="lsd -la --group-directories-first"
+    alias lt="lsd --tree"
 fi
 
 #alias
@@ -99,25 +104,25 @@ alias dcbash="docker compose run --rm web bash"
 alias lzd="lazydocker"
 
 function dcupp() {
-  docker compose $(printf " --profile %s" "$@") up
+    docker compose $(printf " --profile %s" "$@") up
 }
 function dcdnp() {
-  docker compose $(printf " --profile %s" "$@") down
+    docker compose $(printf " --profile %s" "$@") down
 }
 
 function speedTest() {
-  local count=${1:-1}  # Default to 1 if no argument is given
-  for ((i = 1; i <= count; i++)); do
-    /usr/bin/time zsh -lic exit
-  done
+    local count=${1:-1}  # Default to 1 if no argument is given
+    for ((i = 1; i <= count; i++)); do
+        /usr/bin/time zsh -lic exit
+    done
 }
 
 function fixCompaudits() {
-  compaudit | while read file; do
-  echo "🔐 Fixing $file..."
-  sudo chmod go-w "$file"
-  done
-  echo "✅ Compaudit issues fixed."
+    compaudit | while read file; do
+        echo "🔐 Fixing $file..."
+        sudo chmod go-w "$file"
+    done
+    echo "✅ Compaudit issues fixed."
 }
 
 # Extra Alias
