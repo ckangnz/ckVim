@@ -98,7 +98,6 @@ map(
   '<cmd>vsp $HOME/.config/nvim/lua/plugins/<cr>',
   { desc = 'Open plugins directory' }
 )
-
 map('n', '<leader>ez', '<cmd>vsp $HOME/.zshrc<cr>', { desc = 'Edit .zshrc' })
 map('n', '<leader>ea', '<cmd>vsp $HOME/.extraAlias.zsh<cr>', { desc = 'Edit .extraAlias.zsh' })
 map('n', '<leader>et', '<cmd>vsp $HOME/.config/tmux/tmux.conf<cr>', { desc = 'Edit tmux.conf' })
@@ -109,6 +108,21 @@ map('n', '<leader>ei', '<cmd>vsp $HOME/.vim/install_vim.sh<cr>', { desc = 'Edit 
 map('n', '<leader>en', '<cmd>vsp $HOME/.vim/notes<cr>', { desc = 'Open notes directory' })
 map('n', '<leader>er', '<cmd>vsp $HOME/.vim/README.md<cr>', { desc = 'Edit readme.md' })
 map('n', '<leader>ee', '<cmd>vsp $HOME/.vim<cr>', { desc = 'Open ~/.vim directory' })
+
+-- LSP
+map('n', 'K', vim.diagnostic.open_float, { silent = true, desc = 'Show hover' })
+map('n', 'grn', vim.lsp.buf.rename, { silent = true, desc = 'Rename' })
+map('n', '[d', vim.diagnostic.goto_prev, { silent = true, desc = 'Previous Diagnostic' })
+map('n', ']d', vim.diagnostic.goto_next, { silent = true, desc = 'Next Diagnostic' })
+map('n', 'gra', vim.lsp.buf.code_action, { silent = true, desc = 'Code Action' })
+map('n', 'grr', vim.lsp.buf.references, { silent = true, desc = 'References' })
+map('n', 'gri', vim.lsp.buf.implementation, { silent = true, desc = 'Implementation' })
+map('n', 'grd', vim.lsp.buf.definition, { silent = true, desc = 'Go to type_definition' })
+map('n', 'grt', vim.lsp.buf.type_definition, { silent = true, desc = 'Type Definition' })
+map('n', 'gO', vim.lsp.buf.document_symbol, { silent = true, desc = 'Document Symbols' })
+map('n', 'gq', vim.lsp.formatexpr, { silent = true, desc = 'Format' })
+
+vim.lsp.inlay_hint.enable(false)
 
 local function create_menu(items, prompt)
   local options = {}

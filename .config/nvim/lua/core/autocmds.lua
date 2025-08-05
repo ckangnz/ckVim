@@ -138,7 +138,7 @@ local function toggle_whitespace_match(mode)
   vim.w.whitespace_match_number = vim.fn.matchadd('ExtraWhitespace', pattern, 10)
 end
 local whitespace_group = vim.api.nvim_create_augroup('WhitespaceMatch', { clear = true })
-vim.api.nvim_create_autocmd({ 'FileType', 'BufWinEnter', 'InsertLeave' }, {
+autocmd({ 'FileType', 'BufWinEnter', 'InsertLeave' }, {
   group = whitespace_group,
   callback = function()
     -- Defer the check to ensure filetype is set
@@ -147,7 +147,7 @@ vim.api.nvim_create_autocmd({ 'FileType', 'BufWinEnter', 'InsertLeave' }, {
     end, 0)
   end,
 })
-vim.api.nvim_create_autocmd('InsertEnter', {
+autocmd('InsertEnter', {
   group = whitespace_group,
   callback = function()
     vim.defer_fn(function()
@@ -155,57 +155,12 @@ vim.api.nvim_create_autocmd('InsertEnter', {
     end, 0)
   end,
 })
-vim.api.nvim_create_autocmd('BufWinLeave', {
+autocmd('BufWinLeave', {
   group = whitespace_group,
   callback = function()
     if vim.w.whitespace_match_number then
       pcall(vim.fn.matchdelete, vim.w.whitespace_match_number)
       vim.w.whitespace_match_number = nil
     end
-  end,
-})
-local lsp_group = vim.api.nvim_create_augroup('LSPGroup', { clear = true })
-autocmd('LspAttach', {
-  group = lsp_group,
-  desc = 'LSP config',
-  callback = function()
-    vim.keymap.set('n', 'K', vim.diagnostic.open_float, { silent = true, desc = 'Show hover' })
-    vim.keymap.set('n', 'grn', vim.lsp.buf.rename, { silent = true, desc = 'Rename' })
-    vim.keymap.set(
-      'n',
-      '[d',
-      vim.diagnostic.goto_prev,
-      { silent = true, desc = 'Previous Diagnostic' }
-    )
-    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { silent = true, desc = 'Next Diagnostic' })
-    vim.keymap.set('n', 'gra', vim.lsp.buf.code_action, { silent = true, desc = 'Code Action' })
-    vim.keymap.set('n', 'grr', vim.lsp.buf.references, { silent = true, desc = 'References' })
-    vim.keymap.set(
-      'n',
-      'gri',
-      vim.lsp.buf.implementation,
-      { silent = true, desc = 'Implementation' }
-    )
-    vim.keymap.set(
-      'n',
-      'grd',
-      vim.lsp.buf.definition,
-      { silent = true, desc = 'Go to type_definition' }
-    )
-    vim.keymap.set(
-      'n',
-      'grt',
-      vim.lsp.buf.type_definition,
-      { silent = true, desc = 'Type Definition' }
-    )
-    vim.keymap.set(
-      'n',
-      'gO',
-      vim.lsp.buf.document_symbol,
-      { silent = true, desc = 'Document Symbols' }
-    )
-    vim.keymap.set('n', 'gq', vim.lsp.formatexpr, { silent = true, desc = 'Format' })
-
-    vim.lsp.inlay_hint.enable(false)
   end,
 })

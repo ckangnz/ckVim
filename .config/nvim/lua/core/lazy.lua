@@ -581,7 +581,7 @@ require('lazy').setup(plugins, {
   },
   change_detection = {
     enabled = true, -- automatically check for config file changes
-    notify = false, -- don't notify on changes
+    notify = true, -- don't notify on changes
   },
   performance = {
     rtp = {

@@ -18,7 +18,7 @@ require('mason-lspconfig').setup({
 
 local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
 lsp_capabilities =
-    vim.tbl_deep_extend('force', lsp_capabilities, require('cmp_nvim_lsp').default_capabilities())
+  vim.tbl_deep_extend('force', lsp_capabilities, require('cmp_nvim_lsp').default_capabilities())
 
 vim.lsp.config('*', {
   root_markers = { '.git' },
@@ -47,8 +47,6 @@ vim.lsp.config('lua_ls', {
 vim.lsp.config('ts_ls', {
   capabilities = lsp_capabilities,
   on_attach = function(client, bufnr)
-    -- vim.lsp.config.ts_ls.on_attach(client, bufnr)
-    --
     vim.api.nvim_create_user_command('OrganizeImports', function()
       vim.lsp.buf_request(0, 'workspace/executeCommand', {
         command = '_typescript.organizeImports',
