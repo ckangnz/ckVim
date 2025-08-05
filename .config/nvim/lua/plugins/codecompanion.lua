@@ -4,8 +4,8 @@
 require('codecompanion').setup({
   display = {
     chat = {
-      show_context = true,     -- Show context (from slash commands and variables) in the chat buffer?
-      show_settings = true,    -- Show LLM settings at the top of the chat buffer?
+      show_context = true, -- Show context (from slash commands and variables) in the chat buffer?
+      show_settings = true, -- Show LLM settings at the top of the chat buffer?
       show_token_count = true, -- Show the token count for each response?
       icons = {
         buffer_pin = '📌 ',
@@ -83,7 +83,7 @@ require('codecompanion').setup({
     history = {
       enabled = true,
       opts = {
-        keymap = 'gho',           -- Open history
+        keymap = 'gho', -- Open history
         save_chat_keymap = 'ghi', -- Save current chat
         auto_save = false,
         expiration_days = 0,
@@ -107,7 +107,7 @@ require('codecompanion').setup({
         dir_to_save = vim.fn.stdpath('data') .. '/codecompanion-history',
         enable_logging = false,
         summary = {
-          create_summary_keymap = 'ghs',   -- Save Summary
+          create_summary_keymap = 'ghs', -- Save Summary
           browse_summaries_keymap = 'ghb', --Open Summary
           generation_opts = {
             adapter = nil,
@@ -123,10 +123,6 @@ require('codecompanion').setup({
     },
   },
 })
-
-vim.keymap.set('n', '<M-o>', function()
-  return require('codecompanion').buf_get_chat()
-end, { desc = 'Open CodeCompanion chats' })
 
 vim.keymap.set('n', '<M-n>', function()
   vim.cmd('CodeCompanionChat')
@@ -175,7 +171,8 @@ vim.keymap.set('v', '<BS>', function()
 end, { desc = 'Add visual selection to CodeCompanion chat' })
 
 vim.keymap.set({ 'n', 'v' }, '<M-p>', ':CodeCompanion ', { desc = 'Open CodeCompanion prompt' })
-vim.keymap.set({ 'n', 'v' }, '<M-i>', function()
+
+vim.keymap.set({ 'n', 'v' }, '<M-o>', function()
   vim.cmd('CodeCompanionAction')
 end, { desc = 'CodeCompanion actions' })
 
