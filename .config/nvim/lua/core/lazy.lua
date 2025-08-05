@@ -37,7 +37,13 @@ local plugins = {
   {
     'nvim-lualine/lualine.nvim',
     event = { 'UIEnter' },
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+      'Exafunction/windsurf.vim',
+      'AndreM222/copilot-lualine',
+      'franco-ruggeri/codecompanion-lualine.nvim',
+      'franco-ruggeri/mcphub-lualine.nvim',
+    },
     config = function()
       require('plugins.lualine')
     end,
@@ -84,9 +90,6 @@ local plugins = {
     cmd = 'Copilot',
     event = 'InsertEnter',
     keys = { '<leader>ct', '<leader>cp', '<M-{>', '<M-}>', '<M-x>' },
-    dependencies = {
-      'AndreM222/copilot-lualine',
-    },
     config = function()
       require('plugins.copilot')
     end,
@@ -107,7 +110,6 @@ local plugins = {
       'nvim-treesitter/nvim-treesitter',
       'hrsh7th/nvim-cmp',
       'nvim-telescope/telescope.nvim',
-      'franco-ruggeri/codecompanion-lualine.nvim',
       'ravitemer/codecompanion-history.nvim',
       { 'stevearc/dressing.nvim', opts = {} },
     },
