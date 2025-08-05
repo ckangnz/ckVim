@@ -1,6 +1,6 @@
-local animate = function(icons, duration)
+local function get_spinner(icons, duration)
   local ms = vim.loop.hrtime() / 1e6
-  local frame = math.floor(ms / duration) % #icons + 1
+  local frame = math.floor(ms / (duration or 150)) % #icons + 1
   return icons[frame]
 end
 
@@ -174,14 +174,7 @@ require('lualine').setup({
               unknown = Colors.grey,
             },
           },
-          spinners = {
-            '✶',
-            '✸',
-            '✹',
-            '✺',
-            '✹',
-            '✷',
-          },
+          spinners = { '✶', '✸', '✹', '✺', '✹', '✷' },
           spinner_color = Colors.light_cyan,
         },
         show_colors = true,
@@ -191,6 +184,9 @@ require('lualine').setup({
         function()
           local robot_icon_on = ' '
           local robot_icon_off = ' '
+          local loading_dots = { '.  ', '.. ', '...', ' ..', '  .', '   ' }
+          local spinner_icons =
+            { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }
 
           if vim.fn.exists('*codeium#GetStatusString') ~= 1 then
             return robot_icon_off .. ' OFF'
@@ -201,12 +197,11 @@ require('lualine').setup({
           end
 
           if status == ' * ' then
-            local animation =
-              animate({ '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }, 150)
-            return robot_icon_on .. '  ' .. animation
+            local spinner = get_spinner(spinner_icons, 150)
+            return robot_icon_on .. '  ' .. spinner
           elseif status == '   ' then
-            local animation = animate({ '.  ', '.. ', '...', ' ..', '  .', '   ' }, 200)
-            return robot_icon_on .. animation
+            local dots = get_spinner(loading_dots, 200)
+            return robot_icon_on .. dots
           elseif status == ' ON' then
             return robot_icon_on .. status
           elseif status == 'OFF' then
@@ -219,7 +214,6 @@ require('lualine').setup({
           if vim.fn.exists('*codeium#GetStatusString') ~= 1 then
             return { fg = Colors.light_grey }
           end
-
           local ok, status = pcall(vim.fn['codeium#GetStatusString'])
           if not ok or not status then
             return { fg = Colors.light_grey }
