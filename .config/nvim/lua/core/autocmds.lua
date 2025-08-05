@@ -209,17 +209,3 @@ autocmd('LspAttach', {
     vim.lsp.inlay_hint.enable(false)
   end,
 })
-autocmd('BufWritePre', {
-  group = lsp_group,
-  desc = 'Format on save',
-  pattern = '*',
-  callback = function(args)
-    local clients = vim.lsp.get_clients({
-      bufnr = args.buf,
-      method = 'textDocument/formatting',
-    })
-    if #clients > 0 then
-      vim.lsp.buf.format({ async = false, bufnr = args.buf })
-    end
-  end,
-})
