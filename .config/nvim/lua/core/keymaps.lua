@@ -8,7 +8,15 @@ map('v', ';;', ';', { desc = 'Repeat f/F/t/T search' })
 map('n', '<leader>w', '<Nop>', { desc = 'Unmap <leader>w' })
 map('n', '<leader>q', '<Nop>', { desc = 'Unmap <leader>q' })
 
-map('n', '<Esc>', '<cmd>nohlsearch<cr>', { desc = 'Clear search highlight' })
+map('n', '<Esc>', function()
+  vim.cmd('nohlsearch')
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local config = vim.api.nvim_win_get_config(win)
+    if config.relative ~= '' then
+      vim.api.nvim_win_close(win, false)
+    end
+  end
+end, { desc = 'Clear search highlights and close floating windows' })
 
 map('n', 'j', 'v:count == 0 ? \'gj\' : \'j\'', { expr = true, desc = 'Down' })
 map('n', 'k', 'v:count == 0 ? \'gk\' : \'k\'', { expr = true, desc = 'Up' })
