@@ -20,3 +20,12 @@ vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter' }, {
     require('lint').try_lint()
   end,
 })
+
+lint.linters.markdownlint.args = {
+  '--disable',
+  'MD013', -- Line length (disables max line length enforcement)
+  '--disable',
+  'MD033', -- HTML elements (allows raw HTML in markdown)
+  '--disable',
+  'MD022', -- Headers spacing (headers don't need blank lines around them)
+}
