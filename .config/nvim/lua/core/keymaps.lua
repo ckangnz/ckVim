@@ -110,15 +110,15 @@ map('n', '<leader>er', '<cmd>vsp $HOME/.vim/README.md<cr>', { desc = 'Edit readm
 map('n', '<leader>ee', '<cmd>vsp $HOME/.vim<cr>', { desc = 'Open ~/.vim directory' })
 
 -- LSP
-map('n', 'K', vim.diagnostic.open_float, { silent = true, desc = 'Show hover' })
+map('n', 'K', vim.lsp.buf.hover, { silent = true, desc = 'Show hover' })
 map('n', 'grn', vim.lsp.buf.rename, { silent = true, desc = 'Rename' })
+map('n', 'grr', vim.lsp.buf.references, { silent = true, desc = 'References' })
 map('n', '[d', vim.diagnostic.goto_prev, { silent = true, desc = 'Previous Diagnostic' })
 map('n', ']d', vim.diagnostic.goto_next, { silent = true, desc = 'Next Diagnostic' })
-map('n', 'gra', vim.lsp.buf.code_action, { silent = true, desc = 'Code Action' })
-map('n', 'grr', vim.lsp.buf.references, { silent = true, desc = 'References' })
-map('n', 'gri', vim.lsp.buf.implementation, { silent = true, desc = 'Implementation' })
-map('n', 'grd', vim.lsp.buf.definition, { silent = true, desc = 'Go to type_definition' })
-map('n', 'grt', vim.lsp.buf.type_definition, { silent = true, desc = 'Type Definition' })
+map('n', 'ga', vim.lsp.buf.code_action, { silent = true, desc = 'Code Action' })
+map('n', 'gi', vim.lsp.buf.implementation, { silent = true, desc = 'Implementation' })
+map('n', 'gd', vim.lsp.buf.definition, { silent = true, desc = 'Go to type_definition' })
+map('n', 'gt', vim.lsp.buf.type_definition, { silent = true, desc = 'Type Definition' })
 map('n', 'gO', vim.lsp.buf.document_symbol, { silent = true, desc = 'Document Symbols' })
 map('n', 'gq', vim.lsp.formatexpr, { silent = true, desc = 'Format' })
 
