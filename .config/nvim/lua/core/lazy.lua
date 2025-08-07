@@ -169,7 +169,7 @@ local plugins = {
   },
   {
     'mason-org/mason-lspconfig.nvim', -- lsp
-    lazy = false,
+    event = { 'BufReadPre', 'BufNewFile' }, -- Load when opening files
     dependencies = { 'mason-org/mason.nvim', 'neovim/nvim-lspconfig' },
     config = function()
       require('plugins.mason-lsp')
@@ -177,7 +177,7 @@ local plugins = {
   },
   {
     'rshkarin/mason-nvim-lint', -- linter
-    lazy = false,
+    event = { 'BufReadPost', 'BufNewFile' }, -- Load slightly after file is read
     dependencies = {
       'mason-org/mason.nvim',
       'mfussenegger/nvim-lint',
@@ -188,7 +188,7 @@ local plugins = {
   },
   {
     'zapling/mason-conform.nvim', -- formatter
-    lazy = false,
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'mason-org/mason.nvim',
       { 'stevearc/conform.nvim' },
