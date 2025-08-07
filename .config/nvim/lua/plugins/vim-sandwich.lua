@@ -51,16 +51,16 @@ vim.keymap.set('o', 'as', '<Plug>(textobj-sandwich-auto-a)', { desc = 'A sandwic
 vim.api.nvim_set_hl(0, 'OperatorSandwichChange', {
   ctermfg = 109,
   ctermbg = 237,
-  fg = '#83a598',
-  bg = '#3c3836',
+  fg = Colors.cyan,
+  bg = Colors.dark_grey,
 })
 vim.api.nvim_set_hl(0, 'OperatorSandwichAdd', {
   bold = true,
   ctermfg = 10,
-  fg = '#7fbf00',
+  fg = Colors.light_green,
 })
 vim.api.nvim_set_hl(0, 'OperatorSandwichDelete', {
   bold = true,
   ctermfg = 10,
-  fg = '#fb4934',
+  fg = Colors.light_red,
 })
