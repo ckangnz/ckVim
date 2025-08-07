@@ -12,7 +12,8 @@ vim: fonts
 	echo "Installing Vim/Neovim..." && \
 	bash $(VIM_DIR)/install_vim.sh && \
 	create_symlink ~/.vim/.vimrc ~/.vimrc && \
-	create_symlink ~/.vim/.config/nvim ~/.config/nvim
+	create_symlink ~/.vim/.config/nvim ~/.config/nvim && \
+	create_symlink ~/.vim/.config/mcphub ~/.config/mcphub
 
 ## Install Zsh + Zap config
 zsh: fonts
@@ -31,7 +32,7 @@ others:
 reset:
 	@echo "Cleaning symlinks..."
 	@rm -f ~/.zshrc ~/.vimrc
-	@rm -rf ~/.config/nvim ~/.config/tmux
+	@rm -rf ~/.config/nvim ~/.config/tmux ~/.config/mcphub
 
 fonts:
 	@brew install --cask font-fira-code-nerd-font
@@ -41,6 +42,7 @@ symlink:
 	create_symlink ~/.vim/.zshrc ~/.zshrc && \
 	create_symlink ~/.vim/.vimrc ~/.vimrc && \
 	create_symlink ~/.vim/.config/nvim ~/.config/nvim && \
+	create_symlink ~/.vim/.config/mcphub ~/.config/mcphub && \
 	create_symlink ~/.vim/.config/tmux ~/.config/tmux
 
 

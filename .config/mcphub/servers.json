@@ -1,0 +1,115 @@
+{
+  "mcpServers": {
+    "atlassian-remote": {
+      "autoApprove": [
+        "atlassianUserInfo",
+        "getAccessibleAtlassianResources",
+        "getConfluenceSpaces",
+        "getConfluencePage",
+        "getPagesInConfluenceSpace",
+        "getConfluencePageAncestors",
+        "getConfluencePageFooterComments",
+        "getConfluencePageInlineComments",
+        "getConfluencePageDescendants",
+        "createConfluenceFooterComment",
+        "createConfluenceInlineComment",
+        "searchConfluenceUsingCql",
+        "getJiraIssue",
+        "getTransitionsForJiraIssue",
+        "transitionJiraIssue",
+        "lookupJiraAccountId",
+        "searchJiraIssuesUsingJql",
+        "getJiraIssueRemoteIssueLinks",
+        "getVisibleJiraProjects",
+        "getJiraProjectIssueTypesMetadata"
+      ],
+      "disabled": false,
+      "type": "sse",
+      "url": "https://mcp.atlassian.com/v1/sse"
+    },
+    "github": {
+      "autoApprove": [
+        "assign_copilot_to_issue",
+        "cancel_workflow_run",
+        "create_and_submit_pull_request_review",
+        "dismiss_notification",
+        "download_workflow_run_artifact",
+        "fork_repository",
+        "get_code_scanning_alert",
+        "get_commit",
+        "get_dependabot_alert",
+        "get_discussion",
+        "get_discussion_comments",
+        "get_file_contents",
+        "get_issue",
+        "get_issue_comments",
+        "get_job_logs",
+        "get_me",
+        "get_notification_details",
+        "get_pull_request",
+        "get_pull_request_comments",
+        "get_pull_request_diff",
+        "get_pull_request_files",
+        "get_pull_request_reviews",
+        "get_pull_request_status",
+        "get_secret_scanning_alert",
+        "get_tag",
+        "get_workflow_run",
+        "get_workflow_run_logs",
+        "get_workflow_run_usage",
+        "list_branches",
+        "list_code_scanning_alerts",
+        "list_commits",
+        "list_dependabot_alerts",
+        "list_discussion_categories",
+        "list_discussions",
+        "list_issues",
+        "list_notifications",
+        "list_pull_requests",
+        "list_secret_scanning_alerts",
+        "list_tags",
+        "list_workflow_jobs",
+        "list_workflow_run_artifacts",
+        "list_workflow_runs",
+        "list_workflows",
+        "manage_repository_notification_subscription",
+        "merge_pull_request",
+        "request_copilot_review",
+        "rerun_failed_jobs",
+        "rerun_workflow_run",
+        "run_workflow",
+        "search_code",
+        "search_issues",
+        "search_orgs",
+        "search_pull_requests",
+        "search_repositories",
+        "search_users",
+        "submit_pending_pull_request_review"
+      ],
+      "headers": {
+        "Authorization": "Bearer ${cmd: gh auth token}"
+      },
+      "url": "https://api.githubcopilot.com/mcp/"
+    }
+  },
+  "nativeMCPServers": {
+    "mcphub": {
+      "autoApprove": [
+        "get_current_servers",
+        "toggle_mcp_server"
+      ],
+      "disabled": false
+    },
+    "neovim": {
+      "autoApprove": [
+        "execute_lua",
+        "read_file",
+        "read_multiple_files",
+        "find_files",
+        "list_directory"
+      ],
+      "disabled_resources": [],
+      "disabled_tools": []
+    }
+  }
+}
