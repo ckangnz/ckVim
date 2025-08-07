@@ -5,6 +5,18 @@ local function apply_custom_highlights()
     fg = Colors.white,
   })
 
+  -- Visual Highlights
+  vim.api.nvim_set_hl(0, 'Visual', {
+    bg = Colors.dark_grey,
+    bold = true,
+  })
+
+  -- Comment Highlights
+  vim.api.nvim_set_hl(0, 'Comment', {
+    fg = Colors.light_grey,
+    italic = true,
+  })
+
   -- Search highlights
   vim.api.nvim_set_hl(0, 'Search', { fg = Colors.black, bg = Colors.white })
   vim.api.nvim_set_hl(0, 'CurSearch', { reverse = true, bold = true })
@@ -15,12 +27,6 @@ local function apply_custom_highlights()
 
   -- CodeiumSuggestion highlights
   vim.api.nvim_set_hl(0, 'CodeiumSuggestion', { fg = Colors.light_grey })
-
-  -- Comment Highlights
-  vim.api.nvim_set_hl(0, 'Comment', {
-    fg = Colors.light_grey,
-    italic = true,
-  })
 
   -- TransparentUI
   vim.api.nvim_set_hl(0, 'TabLine', { bg = 'NONE' })
