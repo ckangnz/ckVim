@@ -2,7 +2,6 @@ local npairs = require('nvim-autopairs')
 local Rule = require('nvim-autopairs.rule')
 local cond = require('nvim-autopairs.conds')
 
--- Main autopairs configuration
 npairs.setup({
   disable_filetype = { 'TelescopePrompt', 'vim' },
   disable_in_macro = true, -- disable when recording or executing a macro
@@ -25,21 +24,16 @@ npairs.setup({
 -- Custom rules for better spacing
 local brackets = { { '(', ')' }, { '[', ']' }, { '{', '}' } }
 
--- Add rule for spaces inside brackets
 npairs.add_rules({
-  -- Rule for a pair with left-side ' ' and right side ' '
   Rule(' ', ' ')
-    -- Pair will only occur if we are inserting a space in (), [], or {}
-    :with_pair(
-      function(opts)
-        local pair = opts.line:sub(opts.col - 1, opts.col)
-        return vim.tbl_contains({
-          brackets[1][1] .. brackets[1][2],
-          brackets[2][1] .. brackets[2][2],
-          brackets[3][1] .. brackets[3][2],
-        }, pair)
-      end
-    )
+    :with_pair(function(opts)
+      local pair = opts.line:sub(opts.col - 1, opts.col)
+      return vim.tbl_contains({
+        brackets[1][1] .. brackets[1][2],
+        brackets[2][1] .. brackets[2][2],
+        brackets[3][1] .. brackets[3][2],
+      }, pair)
+    end)
     :with_move(cond.none())
     :with_cr(cond.none())
     -- Delete the pair of spaces when the cursor is as such: ( | )
@@ -54,7 +48,6 @@ npairs.add_rules({
     end),
 })
 
--- Add rules for each bracket type with proper spacing
 for _, bracket in pairs(brackets) do
   npairs.add_rules({
     -- Rule for '( ' and ' )' patterns
@@ -72,20 +65,20 @@ for _, bracket in pairs(brackets) do
   })
 end
 
--- JavaScript/TypeScript arrow function rule
+npairs.add_rules({
+  Rule('```', '```'),
+})
+
 npairs.add_rules({
   Rule('%(.*%)%s*%=>$', ' {  }', { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' })
     :use_regex(true)
     :set_end_pair_length(2),
 })
 
--- Additional language-specific rules can be added here
--- For example, template literals in JavaScript/TypeScript
 npairs.add_rules({
   Rule('`', '`', { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' }),
 })
 
--- Python f-string support
 npairs.add_rules({
   Rule('f"', '"', 'python'),
   Rule('f\'', '\'', 'python'),
