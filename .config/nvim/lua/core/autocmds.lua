@@ -8,7 +8,11 @@ autocmd('TextYankPost', {
   group = general,
   desc = 'Highlight on yank',
   callback = function()
-    vim.hl.on_yank()
+    vim.api.nvim_set_hl(0, 'YankHighlight', { fg = Colors.black, bg = Colors.white, bold = true })
+    vim.hl.on_yank({
+      higroup = 'YankHighlight',
+      timeout = 300,
+    })
   end,
 })
 autocmd('BufEnter', {
@@ -71,8 +75,6 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
     vim.bo.filetype = 'typescriptreact'
   end,
 })
-
--- Ensure proper filetype detection for init.lua and nvim config files
 autocmd({ 'BufRead', 'BufNewFile' }, {
   group = filetype_specific,
   desc = 'Ensure init.lua files are detected as lua filetype',
