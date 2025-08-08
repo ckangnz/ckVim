@@ -13,11 +13,11 @@ require('codecompanion').setup({
       },
       window = {
         layout = 'float', -- float|vertical|horizontal|buffer
-        border = 'single',
+        border = 'rounded',
         height = 0.8,
         width = 0.5,
         relative = 'editor',
-        full_height = false,
+        full_height = true,
         sticky = true,
       },
     },
