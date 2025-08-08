@@ -21,7 +21,6 @@ echo ""
 
 # Install Homebrew cask packages
 cask_packages=(
-  "neovide"
   "iterm2"
   "postman"
   "postman-agent"

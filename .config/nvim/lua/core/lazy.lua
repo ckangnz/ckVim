@@ -145,9 +145,14 @@ local plugins = {
   {
     'sphamba/smear-cursor.nvim',
     event = 'VeryLazy',
-    config = function()
-      require('plugins.smear-cursor')
-    end,
+    opts = {
+      normal_bg = nil,
+      smear_between_buffers = true,
+      smear_between_neighbor_lines = true,
+      scroll_buffer_space = true,
+      legacy_computing_symbols_support = false,
+      smear_insert_mode = true,
+    },
   },
   {
     'norcalli/nvim-colorizer.lua',
