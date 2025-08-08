@@ -96,13 +96,12 @@ local plugins = {
   },
   {
     'olimorris/codecompanion.nvim',
-    event = 'VeryLazy',
     cmd = { 'CodeCompanion', 'CodeCompanionChat', 'CodeCompanionAction' },
     keys = {
-      { '<BS>', desc = 'Toggle CodeCompanion chat' },
-      { '<M-o>', desc = 'Start new CodeCompanion chat' },
-      { '<M-p>', desc = 'Open CodeCompanion prompt' },
-      { '<M-i>', desc = 'CodeCompanion actions' },
+      { '<BS>', desc = 'Toggle CodeCompanion chat', mode = { 'n', 'v' } },
+      { '<M-n>', desc = 'Start new CodeCompanion chat' },
+      { '<M-p>', desc = 'Open CodeCompanion prompt', mode = { 'n', 'v' } },
+      { '<M-o>', desc = 'CodeCompanion actions', mode = { 'n', 'v' } },
     },
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -119,6 +118,7 @@ local plugins = {
   },
   {
     'ravitemer/mcphub.nvim',
+    cmd = { 'MCPHub' },
     build = 'npm install -g mcp-hub@latest',
     config = function()
       require('mcphub').setup()
@@ -165,7 +165,7 @@ local plugins = {
   -- LSP
   {
     'mason-org/mason.nvim',
-    lazy = false,
+    event = { 'BufReadPre', 'BufNewFile' },
     cmd = { 'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll', 'MasonLog' },
     keys = { { '<leader>pm', ':Mason<cr>', desc = 'Open Mason', silent = true } },
     config = function()
@@ -174,7 +174,7 @@ local plugins = {
   },
   {
     'mason-org/mason-lspconfig.nvim', -- lsp
-    event = { 'BufReadPre', 'BufNewFile' }, -- Load when opening files
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = { 'mason-org/mason.nvim', 'neovim/nvim-lspconfig' },
     config = function()
       require('plugins.mason-lsp')
@@ -182,7 +182,7 @@ local plugins = {
   },
   {
     'rshkarin/mason-nvim-lint', -- linter
-    event = { 'BufReadPost', 'BufNewFile' }, -- Load slightly after file is read
+    event = { 'BufReadPost', 'BufNewFile' },
     dependencies = {
       'mason-org/mason.nvim',
       'mfussenegger/nvim-lint',
@@ -193,7 +193,7 @@ local plugins = {
   },
   {
     'zapling/mason-conform.nvim', -- formatter
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = { 'BufReadPost', 'BufNewFile' },
     dependencies = {
       'mason-org/mason.nvim',
       { 'stevearc/conform.nvim' },
@@ -272,25 +272,6 @@ local plugins = {
   },
   {
     'tpope/vim-fugitive',
-    cmd = {
-      'Git',
-      'G',
-      'Gdiffsplit',
-      'Gread',
-      'Gwrite',
-      'Ggrep',
-      'GMove',
-      'GDelete',
-      'GBrowse',
-      'Gstatus',
-      'Gcommit',
-      'Gmerge',
-      'Gpull',
-      'Gpush',
-      'Gfetch',
-      'Glog',
-    },
-    keys = { '<leader>1', '<leader>2', '<leader>3' },
     event = 'VeryLazy',
     config = function()
       require('plugins.git')
@@ -512,7 +493,6 @@ local plugins = {
       'rcarriga/nvim-notify',
     },
     cmd = { 'AsyncRun', 'AsyncStop' },
-    event = 'VeryLazy',
     config = function()
       require('plugins.asyncrun')
     end,
