@@ -11,12 +11,20 @@ map('n', '<leader>q', '<Nop>', { desc = 'Unmap <leader>q' })
 map('n', '<Esc>', function()
   vim.cmd('nohlsearch')
   for _, win in ipairs(vim.api.nvim_list_wins()) do
-    local config = vim.api.nvim_win_get_config(win)
-    if config.relative ~= '' then
-      vim.api.nvim_win_close(win, false)
+    local ok, config = pcall(vim.api.nvim_win_get_config, win)
+    if ok and config.relative ~= '' then
+      local buf = vim.api.nvim_win_get_buf(win)
+      local ft = vim.bo[buf].filetype
+      local buf_name = vim.api.nvim_buf_get_name(buf)
+      if buf_name == '' and ft == 'markdown' and config.focusable then
+        local is_small = (config.height or 0) < 20 and (config.width or 0) < 80
+        if is_small then
+          pcall(vim.api.nvim_win_close, win, false)
+        end
+      end
     end
   end
-end, { desc = 'Clear search highlights and close floating windows' })
+end, { desc = 'Clear search highlights and close LSP hover windows' })
 
 map('n', 'j', 'v:count == 0 ? \'gj\' : \'j\'', { expr = true, desc = 'Down' })
 map('n', 'k', 'v:count == 0 ? \'gk\' : \'k\'', { expr = true, desc = 'Up' })
