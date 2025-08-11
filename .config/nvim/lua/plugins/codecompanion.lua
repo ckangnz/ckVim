@@ -124,23 +124,21 @@ require('codecompanion').setup({
   },
 })
 
+local function find_codecompanion_window()
+  for _, winid in ipairs(vim.api.nvim_list_wins()) do
+    local bufnr = vim.api.nvim_win_get_buf(winid)
+    if vim.bo[bufnr].filetype == 'codecompanion' then
+      return winid
+    end
+  end
+  return nil
+end
+
 vim.keymap.set('n', '<M-n>', function()
   vim.cmd('CodeCompanionChat')
 end, { desc = 'Start new CodeCompanion chat' })
 
 vim.keymap.set('n', '<BS>', function()
-  local function find_codecompanion_window()
-    local windows = vim.api.nvim_list_wins()
-    for _, winid in ipairs(windows) do
-      local bufnr = vim.api.nvim_win_get_buf(winid)
-      local filetype = vim.bo[bufnr].filetype
-      if filetype == 'codecompanion' then
-        return winid
-      end
-    end
-    return nil
-  end
-
   local codecompanion_win = find_codecompanion_window()
   local current_win = vim.api.nvim_get_current_win()
 
@@ -158,15 +156,10 @@ end, { desc = 'Toggle or focus CodeCompanion chat' })
 vim.keymap.set('v', '<BS>', function()
   vim.cmd('CodeCompanionChat Add')
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    local buf_name = vim.api.nvim_buf_get_name(buf)
-    if buf_name:match('CodeCompanion') then
-      local wins = vim.fn.win_findbuf(buf)
-      if #wins > 0 then
-        vim.api.nvim_set_current_win(wins[1])
-        break
-      end
-    end
+
+  local codecompanion_win = find_codecompanion_window()
+  if codecompanion_win then
+    vim.api.nvim_set_current_win(codecompanion_win)
   end
 end, { desc = 'Add visual selection to CodeCompanion chat' })
 
@@ -176,7 +169,6 @@ vim.keymap.set({ 'n', 'v' }, '<M-o>', function()
   vim.cmd('CodeCompanionAction')
 end, { desc = 'CodeCompanion actions' })
 
--- CodeCompanion color theme customization
 vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
   pattern = '*',
   callback = function()
