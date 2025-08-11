@@ -35,7 +35,7 @@ local function get_custom_theme()
       a = { fg = Colors.black, bg = Colors.light_cyan, gui = 'bold' },
     },
     inactive = {
-      a = { fg = nil, bg = Colors.dark_grey },
+      a = { fg = Colors.light_grey, bg = Colors.dark_grey },
       b = { fg = Colors.light_grey, bg = Colors.dark_grey },
       c = { fg = nil, bg = nil },
       x = { fg = nil, bg = nil },
@@ -157,6 +157,99 @@ require('lualine').setup({
         separator = { left = '', right = '' },
       },
     },
+    lualine_y = {},
+    lualine_z = {
+      {
+        function()
+          local line = vim.fn.line('.')
+          local col = vim.fn.col('.')
+          return string.format('%03d:%03d', line, col)
+        end,
+      },
+    },
+  },
+  winbar = {
+    lualine_a = {
+      {
+        'filename',
+        path = 4,
+        symbols = {
+          modified = ' ',
+          readonly = ' ',
+          unnamed = '󱀶 ',
+          newfile = ' ',
+        },
+      },
+    },
+  },
+  inactive_winbar = {
+    lualine_a = {
+      {
+        'filename',
+        path = 4,
+        symbols = {
+          modified = ' ',
+          readonly = ' ',
+          unnamed = '󱀶 ',
+          newfile = ' ',
+        },
+      },
+    },
+  },
+  tabline = {
+    lualine_a = {
+      {
+        'tabs',
+        separator = { left = '', right = '' },
+        component_separators = { left = '' },
+        section_separators = { left = '' },
+        max_length = vim.o.columns,
+        show_modified_status = false,
+        mode = 1,
+        use_mode_colors = false,
+        tabs_color = Colors and {
+          active = { fg = Colors.white, bg = Colors.black, gui = 'bold' },
+          inactive = { fg = Colors.light_grey, bg = Colors.dark_grey, gui = 'bold' },
+        } or {},
+        fmt = function(_, context)
+          return '󰓩  Tab ' .. context.tabnr
+        end,
+      },
+      -- {
+      --   'windows',
+      --   mode = 0,
+      --   max_length = vim.o.columns * 2 / 3,
+      --   show_filename_only = true,
+      --   show_modified_status = true,
+      --   section_separators = { left = '' },
+      --   component_separators = { left = '' },
+      --   separator = { left = '', right = '' },
+      --   use_mode_colors = true,
+      --   symbols = {
+      --     modified = ' ●',
+      --     alternate_file = '#',
+      --   },
+      --   disabled_buftypes = { 'quickfix', 'prompt', 'nofile' },
+      --   buftype_names = {},
+      --   filetype_names = {
+      --     alpha = '󰙱K',
+      --     TelescopePrompt = '🔍 Telescope',
+      --     codecompanion = '💬 CodeCompanion',
+      --     fugitive = ' ',
+      --     merginal = ' Branches',
+      --     GV = ' GV',
+      --     qf = '󰁨 quickfix',
+      --     oil = '📂 Files',
+      --     octo = ' Pull Request',
+      --     octo_panel = ' PR Review',
+      --     ['json.kulala_ui'] = '🐼 Kulala',
+      --     ['vim-plug'] = '🧩 Vim Plug',
+      --   },
+      -- },
+    },
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
     lualine_y = {
       {
         'copilot',
@@ -230,6 +323,8 @@ require('lualine').setup({
           end
         end,
       },
+    },
+    lualine_z = {
       {
         'codecompanion',
         fmt = function(value)
@@ -248,73 +343,5 @@ require('lualine').setup({
         color = { fg = Colors.white, bg = Colors.black },
       },
     },
-    lualine_z = {
-      {
-        function()
-          local line = vim.fn.line('.')
-          local col = vim.fn.col('.')
-          return string.format('%03d:%03d', line, col)
-        end,
-      },
-    },
   },
-  tabline = {
-    lualine_a = {
-      {
-        'windows',
-        mode = 0,
-        max_length = vim.o.columns * 2 / 3,
-        show_filename_only = true,
-        show_modified_status = true,
-        section_separators = { left = '' },
-        component_separators = { left = '' },
-        separator = { left = '', right = '' },
-        use_mode_colors = true,
-        symbols = {
-          modified = ' ●',
-          alternate_file = '#',
-        },
-        disabled_buftypes = { 'quickfix', 'prompt', 'nofile' },
-        buftype_names = {},
-        filetype_names = {
-          alpha = '󰙱K',
-          TelescopePrompt = '🔍 Telescope',
-          codecompanion = '💬 CodeCompanion',
-          fugitive = ' ',
-          merginal = ' Branches',
-          GV = ' GV',
-          qf = '󰁨 quickfix',
-          oil = '📂 Files',
-          octo = ' Pull Request',
-          octo_panel = ' PR Review',
-          ['json.kulala_ui'] = '🐼 Kulala',
-          ['vim-plug'] = '🧩 Vim Plug',
-        },
-      },
-    },
-    lualine_b = {},
-    lualine_c = {},
-    lualine_x = {},
-    lualine_y = {},
-    lualine_z = {
-      {
-        'tabs',
-        separator = { left = '', right = '' },
-        component_separators = { right = '' },
-        section_separators = { right = '' },
-        max_length = vim.o.columns,
-        show_modified_status = false,
-        mode = 1,
-        use_mode_colors = false,
-        tabs_color = Colors and {
-          active = { fg = Colors.black, bg = Colors.white, gui = 'bold' },
-          inactive = { fg = Colors.white, bg = Colors.dark_grey, gui = 'bold' },
-        } or {},
-        fmt = function(_, context)
-          return '󰓩  ' .. context.tabnr
-        end,
-      },
-    },
-  },
-  winbar = {},
 })

@@ -29,6 +29,8 @@ local function apply_custom_highlights()
   vim.api.nvim_set_hl(0, 'CodeiumSuggestion', { fg = Colors.light_grey })
 
   -- TransparentUI
+  vim.api.nvim_set_hl(0, 'WinBar', { bg = 'NONE' })
+  vim.api.nvim_set_hl(0, 'WinBarNC', { bg = 'NONE' })
   vim.api.nvim_set_hl(0, 'TabLine', { bg = 'NONE' })
   vim.api.nvim_set_hl(0, 'TabLineFill', { bg = 'NONE' })
   vim.api.nvim_set_hl(0, 'TabLineSel', { bg = 'NONE' })
