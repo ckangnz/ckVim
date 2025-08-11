@@ -31,12 +31,15 @@ local function get_custom_theme()
       b = { fg = Colors.white, bg = Colors.dark_grey },
       c = { fg = Colors.light_grey, bg = nil },
     },
+    terminal = {
+      a = { fg = Colors.black, bg = Colors.light_cyan, gui = 'bold' },
+    },
     inactive = {
       a = { fg = nil, bg = Colors.dark_grey },
       b = { fg = Colors.light_grey, bg = Colors.dark_grey },
       c = { fg = nil, bg = nil },
       x = { fg = nil, bg = nil },
-      y = { fg = nil, bg = Colors.black },
+      y = { fg = nil, bg = nil },
       z = { fg = Colors.light_grey, bg = Colors.dark_grey },
     },
   }
@@ -272,8 +275,8 @@ require('lualine').setup({
           alternate_file = '#',
         },
         disabled_buftypes = { 'quickfix', 'prompt', 'nofile' },
+        buftype_names = {},
         filetype_names = {
-          [''] = '📄 New file',
           alpha = '󰙱K',
           TelescopePrompt = '🔍 Telescope',
           codecompanion = '💬 CodeCompanion',

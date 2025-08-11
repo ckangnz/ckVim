@@ -35,6 +35,7 @@ dashboard.section.buttons.val = {
     '<cmd>e $HOME/.config/nvim/lua/core/highlights.lua<cr>'
   ),
   dashboard.button('<leader>ep', ' Plugins', '<cmd>e $HOME/.config/nvim/lua/plugins/<cr>'),
+  dashboard.button('t', '  Terminal', ':terminal<CR>'),
   dashboard.button('n', '  New file', ':ene <BAR> startinsert <CR>'),
   dashboard.button('q', '  Quit Neovim', ':qa<CR>'),
 }
