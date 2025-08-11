@@ -190,14 +190,21 @@ vim.keymap.set('n', '<leader>f', live_grep_git_root, { desc = 'Live grep (git ro
 vim.keymap.set('v', '<leader>f', find_visual_selection, { desc = 'Grep selection' })
 vim.keymap.set('n', '<leader>F', builtin.grep_string, { desc = 'Grep string under cursor' })
 
-vim.keymap.set('i', '<C-R><enter>', builtin.registers, { desc = 'Insert from registers' })
 vim.keymap.set('n', '<leader>b', builtin.buffers, { desc = 'Switch buffers' })
 vim.keymap.set('n', 'gh', builtin.help_tags, { desc = 'Help tags' })
 vim.keymap.set('n', '<leader>/', function()
   builtin.current_buffer_fuzzy_find({ prompt_prefix = '🔍 ' })
 end, { desc = 'Search in current buffer' })
 
+-- Telescope LSP keymaps
+vim.keymap.set('n', ']D', builtin.diagnostics, { desc = 'Workspace diagnostics' })
+vim.keymap.set('n', 'grr', builtin.lsp_references, { desc = 'LSP references' })
+vim.keymap.set('n', 'gi', builtin.lsp_implementations, { desc = 'LSP implementations' })
+vim.keymap.set('n', 'gt', builtin.lsp_type_definitions, { desc = 'LSP type definitions' })
+vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { desc = 'LSP document symbols' })
+
 -- User command for registers
+vim.keymap.set('i', '<C-R><enter>', builtin.registers, { desc = 'Insert from registers' })
 vim.api.nvim_create_user_command('Registers', function()
   builtin.registers()
 end, { desc = 'Show registers with Telescope' })
