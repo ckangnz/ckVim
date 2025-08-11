@@ -176,8 +176,8 @@ require('lualine').setup({
         symbols = {
           modified = ' ',
           readonly = ' ',
-          unnamed = '󱀶 ',
-          newfile = ' ',
+          unnamed = '󱀶 [UNNAMED]',
+          newfile = ' [NEW-FILE]',
         },
       },
     },
@@ -190,8 +190,8 @@ require('lualine').setup({
         symbols = {
           modified = ' ',
           readonly = ' ',
-          unnamed = '󱀶 ',
-          newfile = ' ',
+          unnamed = '󱀶 [UNNAMED]',
+          newfile = ' [NEW-FILE]',
         },
       },
     },
