@@ -29,3 +29,11 @@ lint.linters.markdownlint.args = {
   '--disable',
   'MD022', -- Headers spacing (headers don't need blank lines around them)
 }
+
+-- Configure yamllint to disable line length and document start warnings
+lint.linters.yamllint.args = {
+  '--format',
+  'parsable', -- Output format for nvim-lint parsing
+  '--config-data', -- Inline configuration override
+  '{extends: relaxed, rules: {line-length: {max: 200}, document-start: disable}}', -- Extend relaxed preset, allow 200 char lines, disable document start requirement
+}
