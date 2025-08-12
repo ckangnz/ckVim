@@ -55,13 +55,13 @@ require('render-markdown').setup({
           width = 'full',
           custom = {
             codecompanion_llm = {
-              pattern = 'CodeCompanion',
+              pattern = 'CodeCompanion %b()',
               icon = '🤖 ',
               foreground = 'CodeCompanionChatHeaderRobot',
               background = 'CodeCompanionChatHeaderRobot',
             },
             codecompanion_user = {
-              pattern = 'You',
+              pattern = 'You %(User%)',
               icon = '👤 ',
               foreground = 'CodeCompanionChatHeaderMe',
               background = 'CodeCompanionChatHeaderMe',

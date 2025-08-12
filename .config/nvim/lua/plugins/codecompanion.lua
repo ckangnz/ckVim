@@ -12,10 +12,10 @@ require('codecompanion').setup({
         buffer_watch = '👀 ',
       },
       window = {
-        layout = 'float', -- float|vertical|horizontal|buffer
-        border = 'rounded',
-        height = 0.8,
-        width = 0.5,
+        layout = 'vertical', -- float|vertical|horizontal|buffer
+        border = 'solid',
+        height = 1.0,
+        width = 0.4,
         relative = 'editor',
         full_height = true,
         sticky = true,
@@ -32,7 +32,7 @@ require('codecompanion').setup({
         llm = function(adapter)
           return 'CodeCompanion (' .. adapter.formatted_name .. ')'
         end,
-        user = 'You',
+        user = 'You (User)',
       },
       opts = {
         goto_file_action = 'tabnew', -- press gR to go to file in new tab
