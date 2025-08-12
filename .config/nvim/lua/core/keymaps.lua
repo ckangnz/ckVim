@@ -16,11 +16,25 @@ map('n', '<Esc>', function()
       local buf = vim.api.nvim_win_get_buf(win)
       local ft = vim.bo[buf].filetype
       local buf_name = vim.api.nvim_buf_get_name(buf)
+
       if buf_name == '' and ft == 'markdown' and config.focusable then
         local is_small = (config.height or 0) < 20 and (config.width or 0) < 80
         if is_small then
           pcall(vim.api.nvim_win_close, win, false)
         end
+      end
+
+      if
+        config.focusable
+        and (
+          ft == ''
+          or ft == 'help'
+          or ft == 'lsp-hover'
+          or buf_name:match('%.lsp%-hover$')
+          or buf_name:match('diagnostics')
+        )
+      then
+        pcall(vim.api.nvim_win_close, win, false)
       end
     end
   end
