@@ -46,7 +46,7 @@ local function bookmark_menu()
     }, function(choice, idx)
       if choice and commands[idx] then
         if commands[idx]:match('^lua ') then
-          loadstring(commands[idx]:sub(5))()
+          load(commands[idx]:sub(5))()
         else
           vim.cmd(commands[idx])
         end

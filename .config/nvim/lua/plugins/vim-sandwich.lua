@@ -1,7 +1,3 @@
-if not vim.g.loaded_sandwich then
-  local lazy = require('lazy')
-  lazy.load({ plugins = { 'vim-sandwich' } })
-end
 vim.cmd('runtime macros/sandwich/keymap/surround.vim')
 
 if vim.g['sandwich#default_recipes'] then
