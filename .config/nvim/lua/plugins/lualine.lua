@@ -4,6 +4,21 @@ local function get_spinner(icons, duration)
   return icons[frame]
 end
 
+local function disableWinbar()
+  local excluded_filetypes = {
+    'fugitive',
+    'GV',
+    'gitcommit',
+    'gitrebase',
+    'hgcommit',
+    'undotree',
+    'docker-tools-container',
+    'codecompanion',
+    'help',
+  }
+  return not vim.tbl_contains(excluded_filetypes, vim.bo.filetype)
+end
+
 local function get_custom_theme()
   return {
     normal = {
@@ -179,6 +194,7 @@ require('lualine').setup({
           unnamed = '󱀶 [UNNAMED]',
           newfile = ' [NEW-FILE]',
         },
+        cond = disableWinbar,
       },
     },
   },
@@ -193,6 +209,7 @@ require('lualine').setup({
           unnamed = '󱀶 [UNNAMED]',
           newfile = ' [NEW-FILE]',
         },
+        cond = disableWinbar,
       },
     },
   },
