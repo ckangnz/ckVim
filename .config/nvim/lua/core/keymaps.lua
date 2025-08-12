@@ -167,13 +167,9 @@ end
 local function utility_menu()
   local utilContent = {
     { 'Generate GUID', 'call GenerateGUID()' },
-    { 'Delete all white spaces', '%s/^$\\|^\\s\\+//g' },
     { 'Render Markdown toggle', 'RenderMarkdown toggle' },
     { 'Vivify (Markdown Renderer)', 'Vivify' },
-    { 'Yaml Schema', 'CocCommand yaml.selectSchema' },
-    { 'Clear Registers', 'call ClearReg()' },
   }
-
   create_menu(utilContent, 'Utility:')
 end
 vim.keymap.set('n', '<leader>m', utility_menu, {
