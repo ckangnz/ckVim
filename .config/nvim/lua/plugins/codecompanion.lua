@@ -18,7 +18,7 @@ require('codecompanion').setup({
         width = 0.4,
         relative = 'editor',
         full_height = true,
-        sticky = true,
+        sticky = false,
       },
     },
   },
