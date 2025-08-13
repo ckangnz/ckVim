@@ -73,11 +73,12 @@ map('n', 'g[', 'gT', { desc = 'Previous tab' })
 map('n', 'g]', 'gt', { desc = 'Next tab' })
 
 -- Panel Resizing
-map('n', '<leader>wf', '<C-w>|', { desc = 'Maximize window width' })
+map('n', '<leader>wf', '<C-w>_<C-w>|', { desc = 'Maximize window' })
 map('n', '<leader>wm', '<C-w>=', { desc = 'Balance windows' })
 map('n', '<leader>wh', '<C-w>t<C-w>K', { desc = 'Change to horizontal layout' })
 map('n', '<leader>wv', '<C-w>t<C-w>H', { desc = 'Change to vertical layout' })
 map('n', '<leader>wt', '<C-w>T', { desc = 'Move window to new tab' })
+map('n', '<leader>wo', '<C-w>o', { desc = 'Move window to new tab' })
 
 -- Better indenting
 map('v', '<', '<gv', { desc = 'Decrease indent' })
