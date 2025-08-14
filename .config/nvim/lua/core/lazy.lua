@@ -170,6 +170,7 @@ local plugins = {
     event = { 'BufReadPre', 'BufNewFile' },
     cmd = { 'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll', 'MasonLog' },
     keys = { { '<leader>pm', ':Mason<cr>', desc = 'Open Mason', silent = true } },
+    dependencies = { { 'stevearc/dressing.nvim', opts = {} } },
     config = function()
       require('plugins.mason')
     end,
