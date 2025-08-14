@@ -18,6 +18,7 @@ dashboard.section.buttons.val = {
   dashboard.button('C-e', '  Recent files', ':Telescope oldfiles <CR>'),
   dashboard.button('C-p', '󰈞  Find file', ':Telescope find_files <CR>'),
   dashboard.button('<leader>ev', '  Init.lua', '<cmd>e $HOME/.config/nvim/init.lua<cr>'),
+  dashboard.button('<leader>ec', '  Cores', '<cmd>e $HOME/.config/nvim/lua/core/<cr>'),
   dashboard.button(
     '<leader>el',
     '󰒲  Lazy.lua',
@@ -34,7 +35,7 @@ dashboard.section.buttons.val = {
     '󰏘  Highlight',
     '<cmd>e $HOME/.config/nvim/lua/core/highlights.lua<cr>'
   ),
-  dashboard.button('<leader>ep', ' Plugins', '<cmd>e $HOME/.config/nvim/lua/plugins/<cr>'),
+  dashboard.button('<leader>ep', '  Plugins', '<cmd>e $HOME/.config/nvim/lua/plugins/<cr>'),
   dashboard.button('t', '  Terminal', ':terminal<CR>'),
   dashboard.button('n', '  New file', ':ene <BAR> startinsert <CR>'),
   dashboard.button('q', '  Quit Neovim', ':qa<CR>'),
