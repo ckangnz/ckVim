@@ -21,6 +21,13 @@ vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter' }, {
   end,
 })
 
+lint.linters.shellcheck.args = {
+  '--format',
+  'json1',
+  '--shell=zsh',
+  '--exclude=SC1091,SC2034,SC1090,SC2207',
+}
+
 lint.linters.markdownlint.args = {
   '--disable',
   'MD013', -- Line length (disables max line length enforcement)
