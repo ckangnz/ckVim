@@ -17,7 +17,6 @@ packages=(
   "python3"
   "node"
   "fnm"
-  "dotnet@9"
 
   "gh"
   "bat"

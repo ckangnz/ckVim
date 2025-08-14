@@ -147,6 +147,7 @@ map('n', '[d', vim.diagnostic.goto_prev, { silent = true, desc = 'Previous Diagn
 map('n', ']d', vim.diagnostic.goto_next, { silent = true, desc = 'Next Diagnostic' })
 map('n', 'ga', vim.lsp.buf.code_action, { silent = true, desc = 'Code Action' })
 map('n', 'gd', vim.lsp.buf.definition, { silent = true, desc = 'Go to type_definition' })
+map('n', '<C-]>', vim.lsp.buf.definition, { silent = true, desc = 'Go to type_definition' })
 --map('n', 'grr', vim.lsp.buf.references, { silent = true, desc = 'References' })
 --map('n', 'gi', vim.lsp.buf.implementation, { silent = true, desc = 'Implementation' })
 --map('n', 'gt', vim.lsp.buf.type_definition, { silent = true, desc = 'Type Definition' })

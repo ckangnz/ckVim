@@ -21,8 +21,10 @@ echo ""
 
 # Install Homebrew cask packages
 cask_packages=(
+  "dotnet-sdk" # sudo apt update && sudo apt install dotnet dotnet8
+  "dotnet-sdk8:isen-ng/dotnet-sdk-versions"
+
   "iterm2"
-  "postman"
   "postman-agent"
   "docker"
   "itsycal"
