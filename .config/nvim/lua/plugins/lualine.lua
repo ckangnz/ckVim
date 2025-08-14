@@ -225,8 +225,8 @@ require('lualine').setup({
         mode = 1,
         use_mode_colors = false,
         tabs_color = Colors and {
-          active = { fg = Colors.white, bg = Colors.black, gui = 'bold' },
-          inactive = { fg = Colors.light_grey, bg = Colors.dark_grey, gui = 'bold' },
+          active = { fg = Colors.white, bg = Colors.grey, gui = 'bold' },
+          inactive = { fg = Colors.grey, bg = Colors.dark_grey, gui = 'bold' },
         } or {},
         fmt = function(_, context)
           return '󰓩  Tab ' .. context.tabnr
