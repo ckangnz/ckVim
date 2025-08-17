@@ -22,6 +22,14 @@ local plugins = {
     end,
   },
   {
+    'goolord/alpha-nvim',
+    event = 'VimEnter',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('plugins.alpha')
+    end,
+  },
+  {
     'stevearc/oil.nvim',
     event = 'VimEnter',
     cmd = 'Oil',
@@ -33,46 +41,6 @@ local plugins = {
   {
     'folke/which-key.nvim',
     event = 'VeryLazy',
-  },
-  {
-    'nvim-lualine/lualine.nvim',
-    event = { 'UIEnter' },
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-      'Exafunction/windsurf.vim',
-      'AndreM222/copilot-lualine',
-      'franco-ruggeri/codecompanion-lualine.nvim',
-      'franco-ruggeri/mcphub-lualine.nvim',
-    },
-    config = function()
-      require('plugins.lualine')
-    end,
-  },
-  {
-    'rcarriga/nvim-notify',
-    event = 'VimEnter',
-    config = function()
-      require('notify').setup({
-        stages = 'fade_in_slide_out',
-        timeout = 3000,
-        max_height = 10,
-        max_width = 80,
-        top_down = true,
-        render = 'default',
-        minimum_width = 50,
-        fps = 30,
-        level = 2,
-      })
-      vim.notify = require('notify')
-    end,
-  },
-  {
-    'goolord/alpha-nvim',
-    event = 'VimEnter',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      require('plugins.alpha')
-    end,
   },
 
   -- AI
@@ -143,6 +111,20 @@ local plugins = {
     end,
   },
   {
+    'nvim-lualine/lualine.nvim',
+    event = { 'UIEnter' },
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+      'Exafunction/windsurf.vim',
+      'AndreM222/copilot-lualine',
+      'franco-ruggeri/codecompanion-lualine.nvim',
+      'franco-ruggeri/mcphub-lualine.nvim',
+    },
+    config = function()
+      require('plugins.lualine')
+    end,
+  },
+  {
     'sphamba/smear-cursor.nvim',
     event = 'VeryLazy',
     opts = {
@@ -153,6 +135,31 @@ local plugins = {
       legacy_computing_symbols_support = false,
       smear_insert_mode = true,
     },
+  },
+  {
+    'rcarriga/nvim-notify',
+    event = 'VimEnter',
+    config = function()
+      require('notify').setup({
+        stages = 'fade_in_slide_out',
+        timeout = 3000,
+        max_height = 10,
+        max_width = 80,
+        top_down = true,
+        render = 'default',
+        minimum_width = 50,
+        fps = 30,
+        level = 2,
+      })
+      vim.notify = require('notify')
+    end,
+  },
+  {
+    'shellRaining/hlchunk.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+      require('plugins.hlchunk')
+    end,
   },
   {
     'norcalli/nvim-colorizer.lua',
