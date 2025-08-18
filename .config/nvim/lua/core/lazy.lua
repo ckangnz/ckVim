@@ -86,6 +86,7 @@ local plugins = {
   },
   {
     'ravitemer/mcphub.nvim',
+    keys = { { '<leader>ph', ':MCPHub<cr>', desc = 'Open MCPHub', silent = true } },
     cmd = { 'MCPHub' },
     build = 'npm install -g mcp-hub@latest',
     config = function()
