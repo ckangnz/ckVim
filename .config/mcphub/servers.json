@@ -2,43 +2,51 @@
   "mcpServers": {
     "atlassian-remote": {
       "autoApprove": [
-        "atlassianUserInfo",
         "getAccessibleAtlassianResources",
-        "getConfluenceSpaces",
         "getConfluencePage",
-        "getPagesInConfluenceSpace",
         "getConfluencePageAncestors",
+        "getConfluencePageDescendants",
         "getConfluencePageFooterComments",
         "getConfluencePageInlineComments",
-        "getConfluencePageDescendants",
-        "createConfluenceFooterComment",
-        "createConfluenceInlineComment",
-        "searchConfluenceUsingCql",
+        "getConfluenceSpaces",
         "getJiraIssue",
-        "getTransitionsForJiraIssue",
-        "transitionJiraIssue",
-        "lookupJiraAccountId",
-        "searchJiraIssuesUsingJql",
         "getJiraIssueRemoteIssueLinks",
+        "getJiraProjectIssueTypesMetadata",
+        "getPagesInConfluenceSpace",
+        "getTransitionsForJiraIssue",
         "getVisibleJiraProjects",
-        "getJiraProjectIssueTypesMetadata"
+        "lookupJiraAccountId",
+        "searchConfluenceUsingCql",
+        "searchJiraIssuesUsingJql",
+        "transitionJiraIssue",
+        "atlassianUserInfo"
       ],
-      "disabled": false,
       "type": "sse",
-      "url": "https://mcp.atlassian.com/v1/sse"
+      "url": "https://mcp.atlassian.com/v2/sse"
     },
     "context7": {
-      "autoApprove": ["resolve-library-id", "get-library-docs"],
+      "autoApprove": [
+        "resolve-library-id",
+        "get-library-docs"
+      ],
       "type": "streamable-http",
       "url": "https://mcp.context7.com/mcp"
     },
     "fetch": {
-      "args": ["mcp-server-fetch"],
-      "autoApprove": ["fetch"],
+      "args": [
+        "mcp-server-fetch"
+      ],
+      "autoApprove": [
+        "fetch"
+      ],
       "command": "uvx"
     },
     "filesystem": {
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "~/code"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "~/code"
+      ],
       "autoApprove": [
         "directory_tree",
         "get_file_info",
@@ -121,7 +129,10 @@
       "url": "https://api.githubcopilot.com/mcp/"
     },
     "memory": {
-      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ],
       "autoApprove": [
         "create_entities",
         "create_relations",
@@ -137,7 +148,9 @@
       "disabled": false
     },
     "playwright": {
-      "args": ["@playwright/mcp@latest"],
+      "args": [
+        "@playwright/mcp@latest"
+      ],
       "autoApprove": [
         "browser_close",
         "browser_resize",
@@ -168,15 +181,23 @@
       "disabled": false
     },
     "sequentialthinking": {
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
-      "autoApprove": ["sequentialthinking"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "autoApprove": [
+        "sequentialthinking"
+      ],
       "command": "npx",
       "disabled": false
     }
   },
   "nativeMCPServers": {
     "mcphub": {
-      "autoApprove": ["get_current_servers", "toggle_mcp_server"],
+      "autoApprove": [
+        "get_current_servers",
+        "toggle_mcp_server"
+      ],
       "disabled": false
     },
     "neovim": {
