@@ -23,7 +23,6 @@ local function apply_custom_highlights()
 
   -- UI elements
   vim.api.nvim_set_hl(0, 'VertSplit', { fg = Colors.white })
-  vim.api.nvim_set_hl(0, 'ExtraWhitespace', { bg = Colors.light_red })
 
   -- CodeiumSuggestion highlights
   vim.api.nvim_set_hl(0, 'CodeiumSuggestion', { fg = Colors.light_grey })
@@ -47,5 +46,5 @@ HighlightOverride = vim.api.nvim_create_augroup('HighlightOverride', { clear = t
 vim.api.nvim_create_autocmd('ColorScheme', {
   group = HighlightOverride,
   callback = apply_custom_highlights,
-  desc = 'Apply transparent backgrounds after colorscheme changes',
+  desc = 'Apply colorscheme overrides',
 })

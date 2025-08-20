@@ -1,1 +1,0 @@
-Test write to simple text!

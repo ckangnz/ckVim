@@ -19,8 +19,3 @@ require('core.diagnostics')
 require('core.autocmds')
 
 require('core.lazy')
-
--- Neovide specific
-if vim.g.neovide then
-  require('gui.neovide')
-end
