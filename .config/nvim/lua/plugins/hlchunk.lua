@@ -4,6 +4,7 @@ require('hlchunk').setup({
     notify = true,
     exclude_filetypes = {
       alpha = true,
+      fugitive = true,
     },
     use_treesitter = true,
     priority = 15,
