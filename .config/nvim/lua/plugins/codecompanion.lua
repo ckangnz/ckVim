@@ -26,7 +26,7 @@ require('codecompanion').setup({
     chat = {
       adapter = {
         name = 'copilot',
-        model = os.getenv('COPILOT_MODEL') or 'gpt-4.1',
+        model = vim.g.copilot_model,
       },
       roles = {
         llm = function(adapter)
@@ -54,14 +54,14 @@ require('codecompanion').setup({
     inline = {
       adapter = {
         name = 'copilot',
-        model = os.getenv('COPILOT_MODEL') or 'gpt-4.1',
+        model = vim.g.copilot_model,
       },
       opts = { completion_provider = 'cmp' },
     },
     cmd = {
       adapter = {
         name = 'copilot',
-        model = os.getenv('COPILOT_MODEL') or 'gpt-4.1',
+        model = vim.g.copilot_model,
       },
       opts = { completion_provider = 'cmp' },
     },

@@ -7,6 +7,10 @@ if vim.fn.has('termguicolors') == 1 then
   vim.env.COLORTERM = 'truecolor'
 end
 
+-- Copilot Model
+-- export COPILOT_MODEL="claude-sonnet-4"
+g.copilot_model = os.getenv('COPILOT_MODEL') or 'gpt-5-mini'
+
 -- ANSI colors for terminal
 g.terminal_ansi_colors = {
   Colors.dark_blue,
