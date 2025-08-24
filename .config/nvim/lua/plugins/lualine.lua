@@ -337,6 +337,14 @@ require('lualine').setup({
       {
         'codecompanion',
         fmt = function(value)
+          local bufnr = vim.api.nvim_get_current_buf()
+          ---@diagnostic disable-next-line: undefined-field
+          local meta = _G.codecompanion_chat_metadata[bufnr]
+          if meta and meta.adapter then
+            local adapter_name = meta.adapter.name or ''
+            local model_name = meta.adapter.model or ''
+            return string.format('%s(%s) ', adapter_name, model_name) .. value:match('%d+ (.+)')
+          end
           return value:match('%d+ (.+)')
         end,
         color = { fg = Colors.white, bg = Colors.black },
