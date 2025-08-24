@@ -8,10 +8,6 @@ local function exclude_filetypes(filetypes)
   return not vim.tbl_contains(filetypes or {}, vim.bo.filetype)
 end
 
-local function only_filetypes(filetypes)
-  return vim.tbl_contains(filetypes or {}, vim.bo.filetype)
-end
-
 local winbar_excluded = {
   'fugitive',
   'GV',
@@ -194,6 +190,9 @@ require('lualine').setup({
           local col = vim.fn.col('.')
           return string.format('%03d:%03d', line, col)
         end,
+        cond = function()
+          return exclude_filetypes({ 'codecompanion' })
+        end,
       },
     },
   },
@@ -250,37 +249,6 @@ require('lualine').setup({
           return '󰓩  Tab ' .. context.tabnr
         end,
       },
-      -- {
-      --   'windows',
-      --   mode = 0,
-      --   max_length = vim.o.columns * 2 / 3,
-      --   show_filename_only = true,
-      --   show_modified_status = true,
-      --   section_separators = { left = '' },
-      --   component_separators = { left = '' },
-      --   separator = { left = '', right = '' },
-      --   use_mode_colors = true,
-      --   symbols = {
-      --     modified = ' ●',
-      --     alternate_file = '#',
-      --   },
-      --   disabled_buftypes = { 'quickfix', 'prompt', 'nofile' },
-      --   buftype_names = {},
-      --   filetype_names = {
-      --     alpha = '󰙱K',
-      --     TelescopePrompt = '🔍 Telescope',
-      --     codecompanion = '💬 CodeCompanion',
-      --     fugitive = ' ',
-      --     merginal = ' Branches',
-      --     GV = ' GV',
-      --     qf = '󰁨 quickfix',
-      --     oil = '📂 Files',
-      --     octo = ' Pull Request',
-      --     octo_panel = ' PR Review',
-      --     ['json.kulala_ui'] = '🐼 Kulala',
-      --     ['vim-plug'] = '🧩 Vim Plug',
-      --   },
-      -- },
     },
     lualine_b = {},
     lualine_c = {},
