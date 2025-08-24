@@ -4,20 +4,25 @@ local function get_spinner(icons, duration)
   return icons[frame]
 end
 
-local function disableWinbar()
-  local excluded_filetypes = {
-    'fugitive',
-    'GV',
-    'gitcommit',
-    'gitrebase',
-    'hgcommit',
-    'undotree',
-    'docker-tools-container',
-    'codecompanion',
-    'help',
-  }
-  return not vim.tbl_contains(excluded_filetypes, vim.bo.filetype)
+local function exclude_filetypes(filetypes)
+  return not vim.tbl_contains(filetypes or {}, vim.bo.filetype)
 end
+
+local function only_filetypes(filetypes)
+  return vim.tbl_contains(filetypes or {}, vim.bo.filetype)
+end
+
+local winbar_excluded = {
+  'fugitive',
+  'GV',
+  'gitcommit',
+  'gitrebase',
+  'hgcommit',
+  'undotree',
+  'docker-tools-container',
+  'codecompanion',
+  'help',
+}
 
 local function get_custom_theme()
   return {
@@ -88,6 +93,9 @@ require('lualine').setup({
         'filename',
         file_status = false,
         path = 1,
+        cond = function()
+          return exclude_filetypes({ 'codecompanion' })
+        end,
       },
     },
     lualine_c = {
@@ -95,6 +103,9 @@ require('lualine').setup({
         'diff',
         symbols = { added = ' ', modified = ' ', removed = ' ' },
         separator = { left = '', right = '' },
+        cond = function()
+          return exclude_filetypes({ 'codecompanion' })
+        end,
       },
     },
     lualine_x = {
@@ -128,6 +139,9 @@ require('lualine').setup({
             return '󰦕'
           end
           return '󱉶 ' .. table.concat(linters, ', ')
+        end,
+        cond = function()
+          return exclude_filetypes({ 'codecompanion', 'help' })
         end,
         separator = { left = '', right = '' },
       },
@@ -194,7 +208,9 @@ require('lualine').setup({
           unnamed = '󱀶 [UNNAMED]',
           newfile = ' [NEW-FILE]',
         },
-        cond = disableWinbar,
+        cond = function()
+          return exclude_filetypes(winbar_excluded)
+        end,
       },
     },
   },
@@ -209,7 +225,9 @@ require('lualine').setup({
           unnamed = '󱀶 [UNNAMED]',
           newfile = ' [NEW-FILE]',
         },
-        cond = disableWinbar,
+        cond = function()
+          return exclude_filetypes(winbar_excluded)
+        end,
       },
     },
   },
@@ -270,6 +288,9 @@ require('lualine').setup({
     lualine_y = {
       {
         'copilot',
+        cond = function()
+          return exclude_filetypes({ 'codecompanion', 'help', 'fugitive' })
+        end,
         symbols = {
           status = {
             icons = {
@@ -338,6 +359,9 @@ require('lualine').setup({
           else
             return { fg = Colors.white }
           end
+        end,
+        cond = function()
+          return exclude_filetypes({ 'codecompanion', 'help', 'fugitive' })
         end,
       },
     },
