@@ -15,13 +15,6 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
   -- Essential
   {
-    'dstein64/vim-startuptime',
-    cmd = 'StartupTime',
-    config = function()
-      vim.g.startuptime_tries = 10
-    end,
-  },
-  {
     'goolord/alpha-nvim',
     event = 'VimEnter',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
