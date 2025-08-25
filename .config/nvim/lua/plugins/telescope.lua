@@ -104,12 +104,12 @@ telescope.setup({
     },
   },
   pickers = {
-    find_files = { prompt_prefix = '📁 ' },
-    oldfiles = { prompt_prefix = '📁 ' },
-    buffers = { prompt_prefix = '📄 ' },
-    live_grep = { prompt_prefix = '🔍 ' },
-    grep_string = { prompt_prefix = '🔍 ', use_regex = true },
-    help_tags = { prompt_prefix = '❔ ' },
+    find_files = { prompt_prefix = Icons.directory },
+    oldfiles = { prompt_prefix = Icons.directory },
+    buffers = { prompt_prefix = Icons.file_default },
+    live_grep = { prompt_prefix = Icons.magnify },
+    grep_string = { prompt_prefix = Icons.magnify, use_regex = true },
+    help_tags = { prompt_prefix = Icons.question_default },
   },
   extensions = {
     fzf = {
@@ -122,7 +122,7 @@ telescope.setup({
       display_type = 'full',
       hidden_files = true,
       order_by = 'desc',
-      prompt_prefix = '🗂️ ',
+      prompt_prefix = Icons.project,
       theme = 'ivy',
       search_by = 'title',
       on_project_selected = function(prompt_bufnr)
@@ -193,7 +193,7 @@ vim.keymap.set('n', '<leader>F', builtin.grep_string, { desc = 'Grep string unde
 vim.keymap.set('n', '<leader>b', builtin.buffers, { desc = 'Switch buffers' })
 vim.keymap.set('n', 'gh', builtin.help_tags, { desc = 'Help tags' })
 vim.keymap.set('n', '<leader>/', function()
-  builtin.current_buffer_fuzzy_find({ prompt_prefix = '🔍 ' })
+  builtin.current_buffer_fuzzy_find({ prompt_prefix = Icons.magnify })
 end, { desc = 'Search in current buffer' })
 
 -- Telescope LSP keymaps

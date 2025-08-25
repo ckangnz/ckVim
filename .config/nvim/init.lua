@@ -10,6 +10,7 @@ vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 
 require('core.theme')
+require('core.icons')
 require('core.highlights')
 
 -- Core modules

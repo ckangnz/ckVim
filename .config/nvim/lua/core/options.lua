@@ -113,7 +113,7 @@ vim.cmd([[
 -- Line breaking
 if vim.fn.has('linebreak') == 1 then
   opt.breakindent = true
-  opt.showbreak = '󱞩 '
+  opt.showbreak = Icons.text_wrap
   opt.cpoptions:append('n')
   opt.breakat = ' ^I!@*-+;:,./?'
 end
@@ -122,13 +122,13 @@ end
 opt.list = true
 opt.listchars = {
   space = ' ',
-  tab = '»»',
-  lead = '·',
-  trail = '·',
-  nbsp = '◇',
-  extends = '▸',
-  precedes = '◂',
-  multispace = '····',
+  tab = Icons.tabs:rep(2),
+  lead = Icons.lead,
+  trail = Icons.lead,
+  nbsp = Icons.nbsp,
+  extends = Icons.triangle_right,
+  precedes = Icons.triangle_left,
+  multispace = Icons.tabs:rep(4),
 }
 
 -- Fill characters

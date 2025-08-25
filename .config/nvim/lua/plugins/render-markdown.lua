@@ -5,8 +5,15 @@ require('render-markdown').setup({
   latex = { enabled = false },
   heading = {
     sign = true,
-    signs = { '󰫎 ' },
-    icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
+    signs = { Icons.label },
+    icons = {
+      Icons.number_1,
+      Icons.number_2,
+      Icons.number_3,
+      Icons.number_4,
+      Icons.number_5,
+      Icons.number_6,
+    },
     atx = true,
     setext = true,
     position = 'overlay', -- Determines how icons fill the available space. right|inline|overlay
@@ -18,8 +25,8 @@ require('render-markdown').setup({
     border = false,
     border_virtual = false,
     border_prefix = false,
-    above = '▄',
-    below = '▀',
+    above = Icons.block_bottom,
+    below = Icons.block_top,
   },
   code = {
     sign = false,
@@ -38,8 +45,8 @@ require('render-markdown').setup({
     -- | thick | use the same highlight as the code body              |
     -- | thin  | when lines are empty overlay the above & below icons |
     border = 'thick',
-    above = '▄',
-    below = '▀',
+    above = Icons.block_bottom,
+    below = Icons.block_top,
     highlight = 'RenderMarkdownCode',
     highlight_language = nil,
     inline_pad = 0,
@@ -74,16 +81,16 @@ require('render-markdown').setup({
   html = {
     enabled = true,
     tag = {
-      buf = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
-      file = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
-      help = { icon = '󰘥 ', highlight = 'CodeCompanionChatVariable' },
-      image = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
-      symbols = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
-      url = { icon = '󰖟 ', highlight = 'CodeCompanionChatVariable' },
-      var = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
-      tool = { icon = ' ', highlight = 'CodeCompanionChatTool' },
-      user_prompt = { icon = ' ', highlight = 'CodeCompanionChatTool' },
-      group = { icon = ' ', highlight = 'CodeCompanionChatToolGroup' },
+      buf = { icon = Icons.file_text, highlight = 'CodeCompanionChatVariable' },
+      file = { icon = Icons.file_text, highlight = 'CodeCompanionChatVariable' },
+      help = { icon = Icons.question_circle, highlight = 'CodeCompanionChatVariable' },
+      image = { icon = Icons.image, highlight = 'CodeCompanionChatVariable' },
+      symbols = { icon = Icons.cube, highlight = 'CodeCompanionChatVariable' },
+      url = { icon = Icons.globe, highlight = 'CodeCompanionChatVariable' },
+      var = { icon = Icons.variable, highlight = 'CodeCompanionChatVariable' },
+      tool = { icon = Icons.tool, highlight = 'CodeCompanionChatTool' },
+      user_prompt = { icon = Icons.user, highlight = 'CodeCompanionChatTool' },
+      group = { icon = Icons.tools, highlight = 'CodeCompanionChatToolGroup' },
     },
   },
 })

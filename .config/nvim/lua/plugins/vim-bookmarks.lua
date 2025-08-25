@@ -1,77 +1,83 @@
-vim.g.bookmark_sign = ' '
+vim.g.bookmark_sign = Icons.heart
+vim.g.bookmark_annotation_sign = Icons.hearts
 vim.g.bookmark_highlight_lines = 1
 vim.g.bookmark_auto_close = 1
 vim.g.bookmark_center = 1
 vim.g.bookmark_no_default_key_mappings = 1
 vim.g.bookmark_disable_ctrlp = 1
 
--- Bookmark menu function
-local function bookmark_menu()
-  local bookmarkMenu = {
-    { 'Add/Delete bookmark (&m)', 'BookmarkToggle' },
-    { 'Bookmark Annotate(&i)', 'BookmarkAnnotate' },
-    { '-' },
-    {
-      'Bookmark Search (&s)',
-      'lua require(\'telescope\').extensions.vim_bookmarks.all({ prompt_title=\'Bookmarks\', prompt_prefix=\'📖 \' })',
-    },
-    { '-' },
-    { 'Bookmark MoveDown (&j)', 'BookmarkMoveDown' },
-    { 'Bookmark MoveUp (&k)', 'BookmarkMoveUp' },
-    { 'Bookmark Next (&n)', 'BookmarkNext' },
-    { 'Bookmark Previous (&p)', 'BookmarkPrev' },
-    { '-' },
-    { 'Clear bookmarks (&c)', 'BookmarkClear' },
-    { 'Clear all bookmarks (&x)', 'BookmarkClearAll' },
-  }
+vim.keymap.set(
+  'n',
+  'mm',
+  ':BookmarkToggle<cr>',
+  { desc = 'Bookmark Toggle', silent = true, nowait = true }
+)
+vim.keymap.set(
+  'n',
+  'mi',
+  ':BookmarkAnnotate<cr>',
+  { desc = 'Bookmark Annotate', silent = true, nowait = true }
+)
+vim.keymap.set(
+  'n',
+  'mj',
+  ':BookmarkMoveDown<cr>',
+  { desc = 'Bookmark MoveDown', silent = true, nowait = true }
+)
+vim.keymap.set(
+  'n',
+  'mk',
+  ':BookmarkMoveUp<cr>',
+  { desc = 'Bookmark MoveUp', silent = true, nowait = true }
+)
+vim.keymap.set(
+  'n',
+  'mn',
+  ':BookmarkNext<cr>',
+  { desc = 'Bookmark Next', silent = true, nowait = true }
+)
+vim.keymap.set(
+  'n',
+  'mp',
+  ':BookmarkPrev<cr>',
+  { desc = 'Bookmark Previous', silent = true, nowait = true }
+)
+vim.keymap.set(
+  'n',
+  'mc',
+  ':BookmarkClear<cr>',
+  { desc = 'Clear bookmark', silent = true, nowait = true }
+)
+vim.keymap.set(
+  'n',
+  'mx',
+  ':BookmarkClearAll<cr>',
+  { desc = 'Clear all bookmarks', silent = true, nowait = true }
+)
 
-  local bookmarkOpt = { title = 'Bookmarks' }
-
-  -- Check if quickui is available
-  if vim.fn.exists('*quickui#context#open') == 1 then
-    vim.fn['quickui#context#open'](bookmarkMenu, bookmarkOpt)
-  else
-    -- Fallback to vim.ui.select if quickui is not available
-    local items = {}
-    local commands = {}
-    for _, item in ipairs(bookmarkMenu) do
-      if item[1] ~= '-' then
-        table.insert(items, item[1])
-        table.insert(commands, item[2])
-      end
-    end
-
-    vim.ui.select(items, {
-      prompt = 'Bookmarks:',
-    }, function(choice, idx)
-      if choice and commands[idx] then
-        if commands[idx]:match('^lua ') then
-          load(commands[idx]:sub(5))()
-        else
-          vim.cmd(commands[idx])
-        end
-      end
-    end)
+-- ms: open telescope vim_bookmarks picker (safe check)
+vim.keymap.set('n', 'ms', function()
+  local ok, telescope = pcall(require, 'telescope')
+  if not ok or not telescope.extensions or not telescope.extensions.vim_bookmarks then
+    vim.notify('telescope vim_bookmarks extension not available', vim.log.levels.WARN)
+    return
   end
-end
+  telescope.extensions.vim_bookmarks.all({
+    prompt_title = 'Bookmarks',
+    prompt_prefix = Icons.bookmark,
+  })
+end, { desc = 'Bookmark Search (telescope)', silent = true, nowait = true })
 
--- Keymaps
-vim.keymap.set('n', 'm', bookmark_menu, {
-  desc = 'Bookmark menu',
-  silent = true,
-  nowait = true,
-})
-
--- Highlight groups
 vim.api.nvim_set_hl(0, 'BookmarkSign', {
-  ctermbg = 'NONE',
-  ctermfg = 'red',
   bg = 'NONE',
-  fg = '#ea6962',
+  fg = Colors.light_red,
 })
+
 vim.api.nvim_set_hl(0, 'BookmarkLine', {
-  ctermbg = '3',
-  ctermfg = 'NONE',
-  bg = '#343434',
+  bg = Colors.dark_grey,
+  fg = 'NONE',
+})
+vim.api.nvim_set_hl(0, 'BookmarkAnnotationLine', {
+  bg = Colors.dark_grey,
   fg = 'NONE',
 })

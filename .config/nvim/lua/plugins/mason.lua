@@ -1,9 +1,9 @@
 require('mason').setup({
   ui = {
     icons = {
-      package_installed = '✓',
-      package_pending = '➜',
-      package_uninstalled = '✗',
+      package_installed = Icons.check_default,
+      package_pending = Icons.timer,
+      package_uninstalled = Icons.error_slanted,
     },
     keymaps = {
       apply_language_filter = '/',

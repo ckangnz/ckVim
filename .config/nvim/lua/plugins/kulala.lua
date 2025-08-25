@@ -158,11 +158,11 @@ require('kulala').setup({
     -- default icons
     icons = {
       inlay = {
-        loading = '⏳',
-        done = '✅',
-        error = '❌',
+        loading = Icons.timer,
+        done = Icons.check_circle_fill,
+        error = Icons.error_circle,
       },
-      lualine = '🐼',
+      lualine = Icons.panda,
       textHighlight = 'WarningMsg', -- highlight group for request elapsed time
     },
     -- enable/disable request summary in the output window

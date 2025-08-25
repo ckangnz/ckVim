@@ -8,8 +8,8 @@ require('codecompanion').setup({
       show_settings = false, -- Show LLM settings at the top of the chat buffer?
       show_token_count = true, -- Show the token count for each response?
       icons = {
-        buffer_pin = '📌 ',
-        buffer_watch = '👀 ',
+        buffer_pin = Icons.pin,
+        buffer_watch = Icons.watch,
       },
       window = {
         layout = 'vertical', -- float|vertical|horizontal|buffer

@@ -15,30 +15,38 @@ dashboard.section.header.val = {
 
 -- keys
 dashboard.section.buttons.val = {
-  dashboard.button('C-e', '  Recent files', ':Telescope oldfiles <CR>'),
-  dashboard.button('C-p', '󰈞  Find file', ':Telescope find_files <CR>'),
-  dashboard.button('<leader>ev', '  Init.lua', '<cmd>e $HOME/.config/nvim/init.lua<cr>'),
-  dashboard.button('<leader>ec', '  Cores', '<cmd>e $HOME/.config/nvim/lua/core/<cr>'),
+  dashboard.button('C-e', Icons.files .. 'Recent files', ':Telescope oldfiles <CR>'),
+  dashboard.button('C-p', Icons.file_find .. 'Find file', ':Telescope find_files <CR>'),
+  dashboard.button(
+    '<leader>ev',
+    Icons.setting .. 'Init.lua',
+    '<cmd>e $HOME/.config/nvim/init.lua<cr>'
+  ),
+  dashboard.button('<leader>ec', Icons.core .. 'Cores', '<cmd>e $HOME/.config/nvim/lua/core/<cr>'),
   dashboard.button(
     '<leader>el',
-    '󰒲  Lazy.lua',
+    Icons.zzz .. 'Lazy.lua',
     '<cmd>e $HOME/.config/nvim/lua/core/lazy.lua<cr>'
   ),
   dashboard.button(
     '<leader>ek',
-    '󰌚  Keymaps',
+    Icons.keyboard .. 'Keymaps',
     '<cmd>e $HOME/.config/nvim/lua/core/keymaps.lua<cr>'
   ),
   -- eh to highlights
   dashboard.button(
     '<leader>eh',
-    '󰏘  Highlight',
+    Icons.palette .. 'Highlight',
     '<cmd>e $HOME/.config/nvim/lua/core/highlights.lua<cr>'
   ),
-  dashboard.button('<leader>ep', '  Plugins', '<cmd>e $HOME/.config/nvim/lua/plugins/<cr>'),
-  dashboard.button('t', '  Terminal', ':terminal<CR>'),
-  dashboard.button('n', '  New file', ':ene <BAR> startinsert <CR>'),
-  dashboard.button('q', '  Quit Neovim', ':qa<CR>'),
+  dashboard.button(
+    '<leader>ep',
+    Icons.plug .. 'Plugins',
+    '<cmd>e $HOME/.config/nvim/lua/plugins/<cr>'
+  ),
+  dashboard.button('t', Icons.terminal .. 'Terminal', ':terminal<CR>'),
+  dashboard.button('n', Icons.file_new .. 'New file', ':ene <BAR> startinsert <CR>'),
+  dashboard.button('q', Icons.exit .. 'Quit Neovim', ':qa<CR>'),
 }
 
 -- Set footer

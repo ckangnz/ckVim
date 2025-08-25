@@ -65,9 +65,8 @@ end
 require('lualine').setup({
   options = {
     theme = get_custom_theme(),
-    separator = { left = '', right = '' },
-    -- section_separators = { left = '', right = '' },
-    section_separators = { left = '', right = '' },
+    separator = Icons.separator.circle,
+    section_separators = Icons.separator.empty,
     refresh = { tabline = 100, statusline = 100 },
     globalstatus = true,
     disabled_filetypes = { 'alpha' },
@@ -77,7 +76,7 @@ require('lualine').setup({
       {
         'mode',
         fmt = function()
-          return '󰙱K'
+          return Icons.ckVim
         end,
         icons_enabled = true,
         draw_empty = true,
@@ -97,8 +96,8 @@ require('lualine').setup({
     lualine_c = {
       {
         'diff',
-        symbols = { added = ' ', modified = ' ', removed = ' ' },
-        separator = { left = '', right = '' },
+        symbols = { added = Icons.added, modified = Icons.modified, removed = Icons.removed },
+        separator = Icons.separator.empty,
         cond = function()
           return exclude_filetypes({ 'codecompanion' })
         end,
@@ -109,37 +108,42 @@ require('lualine').setup({
         'diagnostics',
         always_visible = false,
         sources = { 'nvim_lsp' },
-        symbols = { error = ' ', warn = ' ', info = ' ', hint = '󱋴 ' },
+        symbols = {
+          error = Icons.error_circle,
+          warn = Icons.warn,
+          info = Icons.info,
+          hint = Icons.hint,
+        },
       },
       {
         'filetype',
         colored = true,
         icon_only = false,
-        separator = { left = '', right = '' },
+        separator = Icons.separator.empty,
       },
       {
         'lsp_status',
         icon = ' ',
         symbols = {
-          spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
-          done = '✓',
+          spinner = Icons.spinner.dots,
+          done = Icons.check_default,
           separator = '|',
         },
         ignore_lsp = { 'copilot' },
-        separator = { left = '', right = '' },
+        separator = Icons.separator.empty,
       },
       {
         function()
           local linters = require('lint').get_running()
           if #linters == 0 then
-            return '󰦕'
+            return Icons.check_progress
           end
-          return '󱉶 ' .. table.concat(linters, ', ')
+          return Icons.magnify_extend .. table.concat(linters, ', ')
         end,
         cond = function()
           return exclude_filetypes({ 'codecompanion', 'help' })
         end,
-        separator = { left = '', right = '' },
+        separator = Icons.separator.empty,
       },
       {
         function()
@@ -169,13 +173,13 @@ require('lualine').setup({
               end
             end
             if #formatterNames > 0 then
-              return '󰷈 ' .. table.concat(formatterNames, ' ')
+              return Icons.file_document_edit .. table.concat(formatterNames, ' ')
             end
           end
           local bufnr = vim.api.nvim_get_current_buf()
           local lsp_clients = lsp_format.get_format_clients({ bufnr = bufnr })
           if not vim.tbl_isempty(lsp_clients) then
-            return '󰷈 LSP Formatter'
+            return Icons.file_document_edit .. 'LSP Formatter'
           end
           return ''
         end,
@@ -188,7 +192,11 @@ require('lualine').setup({
         function()
           local line = vim.fn.line('.')
           local col = vim.fn.col('.')
-          return string.format('%03d:%03d', line, col)
+          return string.format(
+            Icons.line_number .. '%03d' .. Icons.column_number .. '%03d',
+            line,
+            col
+          )
         end,
         cond = function()
           return exclude_filetypes({ 'codecompanion' })
@@ -202,10 +210,10 @@ require('lualine').setup({
         'filename',
         path = 4,
         symbols = {
-          modified = ' ',
-          readonly = ' ',
-          unnamed = '󱀶 [UNNAMED]',
-          newfile = ' [NEW-FILE]',
+          modified = Icons.modified,
+          readonly = Icons.lock,
+          unnamed = Icons.file_unknown .. '[UNNAMED]',
+          newfile = Icons.file_new .. '[NEW-FILE]',
         },
         cond = function()
           return exclude_filetypes(winbar_excluded)
@@ -219,10 +227,10 @@ require('lualine').setup({
         'filename',
         path = 4,
         symbols = {
-          modified = ' ',
-          readonly = ' ',
-          unnamed = '󱀶 [UNNAMED]',
-          newfile = ' [NEW-FILE]',
+          modified = Icons.modified,
+          readonly = Icons.lock,
+          unnamed = Icons.file_unknown .. '[UNNAMED]',
+          newfile = Icons.file_new .. '[NEW-FILE]',
         },
         cond = function()
           return exclude_filetypes(winbar_excluded)
@@ -234,9 +242,9 @@ require('lualine').setup({
     lualine_a = {
       {
         'tabs',
-        separator = { left = '', right = '' },
-        component_separators = { left = '' },
-        section_separators = { left = '' },
+        separator = Icons.separator.circle,
+        component_separators = { left = Icons.separator.empty_circle.right },
+        section_separators = { left = Icons.separator.circle.right },
         max_length = vim.o.columns,
         show_modified_status = false,
         mode = 1,
@@ -246,7 +254,7 @@ require('lualine').setup({
           inactive = { fg = Colors.grey, bg = Colors.dark_grey, gui = 'bold' },
         } or {},
         fmt = function(_, context)
-          return '󰓩  Tab ' .. context.tabnr
+          return Icons.tab .. 'Tab ' .. context.tabnr
         end,
       },
     },
@@ -262,11 +270,11 @@ require('lualine').setup({
         symbols = {
           status = {
             icons = {
-              enabled = '  ON',
-              sleep = '󰒲 SLP',
-              disabled = '  OFF',
-              warning = '  WRN',
-              unknown = ' UNK',
+              enabled = Icons.copilot_enabled .. 'ON',
+              sleep = Icons.zzz .. 'SLP',
+              disabled = Icons.copilot_disabled .. 'OFF',
+              warning = Icons.copilot_warning .. 'WRN',
+              unknown = Icons.forbidden .. 'UNK',
             },
             hl = {
               enabled = Colors.white,
@@ -276,7 +284,7 @@ require('lualine').setup({
               unknown = Colors.grey,
             },
           },
-          spinners = { '✶', '✸', '✹', '✺', '✹', '✷' },
+          spinners = Icons.spinner.stars,
           spinner_color = Colors.light_cyan,
         },
         show_colors = true,
@@ -284,11 +292,10 @@ require('lualine').setup({
       },
       {
         function()
-          local robot_icon_on = ' '
-          local robot_icon_off = ' '
-          local loading_dots = { '.  ', '.. ', '...', ' ..', '  .', '   ' }
-          local spinner_icons =
-            { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }
+          local robot_icon_on = Icons.windsurf_enabled
+          local robot_icon_off = Icons.windsurf_disabled
+          local is_typing_spinner = Icons.spinner.ellipsis
+          local in_progress_spinner = Icons.spinner.dots
 
           if vim.fn.exists('*codeium#GetStatusString') ~= 1 then
             return robot_icon_off .. ' OFF'
@@ -299,10 +306,10 @@ require('lualine').setup({
           end
 
           if status == ' * ' then
-            local spinner = get_spinner(spinner_icons, 150)
+            local spinner = get_spinner(in_progress_spinner, 150)
             return robot_icon_on .. '  ' .. spinner
           elseif status == '   ' then
-            local dots = get_spinner(loading_dots, 200)
+            local dots = get_spinner(is_typing_spinner, 200)
             return robot_icon_on .. dots
           elseif status == ' ON' then
             return robot_icon_on .. status
@@ -350,15 +357,15 @@ require('lualine').setup({
           return icon
         end,
         color = { fg = Colors.white, bg = Colors.black },
-        icon = '󰛰 ',
-        spinner_symbols = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
-        done_symbol = '✓',
+        icon = Icons.speechBubble,
+        spinner_symbols = Icons.spinner.dots,
+        done_symbol = Icons.check_default,
       },
       {
         'mcphub',
-        icon = '󰐻 ',
-        spinner_symbols = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
-        stopped_symbol = '-',
+        icon = Icons.hub,
+        spinner_symbols = Icons.spinner.dots,
+        stopped_symbol = Icons.check_default,
         color = { fg = Colors.white, bg = Colors.black },
       },
     },
