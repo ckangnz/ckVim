@@ -33,11 +33,10 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 vim.api.nvim_create_user_command('Make', function(opts)
-  local args = opts.args
-  vim.cmd('AsyncRun -program=make @ ' .. args)
-end, {
-  bang = true,
-  nargs = '*',
-  complete = 'file',
-  desc = 'Async make command',
-})
+  local args = opts.args or ''
+  local cmd = 'AsyncRun -program=make @'
+  if args ~= '' then
+    cmd = cmd .. ' ' .. args
+  end
+  vim.cmd(cmd)
+end, { bang = true, nargs = '*', complete = 'file', desc = 'Async make command' })

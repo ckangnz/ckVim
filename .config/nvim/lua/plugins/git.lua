@@ -49,28 +49,28 @@ vim.keymap.set('n', '<leader>gb', ':Git blame<CR>', { silent = true, desc = 'Git
 vim.keymap.set(
   'n',
   '<leader>gp',
-  ':AsyncRun git -c push.default=current push<CR>',
+  ':AsyncRun Git push<CR>',
   { silent = true, desc = 'Git push current branch' }
 )
 vim.keymap.set(
   'n',
   '<leader>gP',
-  ':AsyncRun git push -f<CR>',
+  ':AsyncRun Git push -f<CR>',
   { silent = true, desc = 'Git force push' }
 )
-vim.keymap.set('n', '<leader>gl', ':AsyncRun git pull<CR>', { silent = true, desc = 'Git pull' })
+vim.keymap.set('n', '<leader>gl', ':AsyncRun Git pull<CR>', { silent = true, desc = 'Git pull' })
 
 -- Git fetch operations
 vim.keymap.set(
   'n',
   '<leader>gfo',
-  ':AsyncRun git fetch origin<CR>',
+  ':AsyncRun Git fetch origin<CR>',
   { silent = true, desc = 'Git fetch origin' }
 )
 vim.keymap.set(
   'n',
   '<leader>gfa',
-  ':AsyncRun git fetch --all --prune<CR>',
+  ':AsyncRun Git fetch --all --prune<CR>',
   { silent = true, desc = 'Git fetch all with prune' }
 )
 
