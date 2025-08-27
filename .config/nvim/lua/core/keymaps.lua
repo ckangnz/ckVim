@@ -180,6 +180,16 @@ local function create_menu(items, prompt)
   end)
 end
 
+vim.cmd([[
+  func GenerateGUID()
+  let l:new_uuid=system('uuidgen')[:-2]
+  let l:nuuid_case = "lower"
+  let l:id= l:nuuid_case == "lower" ? tolower(l:new_uuid) : toupper(l:new_uuid)
+  let @"=l:id
+  echo "NEW GUID: " . l:id
+endfunc
+]])
+
 local function utility_menu()
   local utilContent = {
     { 'Generate GUID', 'call GenerateGUID()' },
