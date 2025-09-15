@@ -7,12 +7,12 @@ echo ""
 # Install Homebrew packages
 packages=(
   "lazydocker"
-  "awscli"
-  "kubectl"
-  "k9s"
-  "helm"
-  "tfenv" # Terraform with version control
-  "hashicorp/tap/terraform-ls"
+  # "awscli"
+  # "kubectl"
+  # "k9s"
+  # "helm"
+  # "tfenv" # Terraform with version control
+  # "hashicorp/tap/terraform-ls"
 )
 echo "Installing brew packages..."
 brew_install "${packages[@]}"
@@ -25,12 +25,11 @@ cask_packages=(
   "dotnet-sdk8:isen-ng/dotnet-sdk-versions"
 
   "iterm2"
-  "postman-agent"
   "docker"
   "itsycal"
   "rectangle"
   "maccy"
-  "hiddenbar"
+  # "postman-agent"
   #"azure-data-studio"
   #"session-manager-plugin"
   #"microsoft-remote-desktop"
