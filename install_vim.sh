@@ -17,6 +17,7 @@ packages=(
   "nvim"
   "vim"
 
+  "uv"
   "ripgrep"
   "catimg"
   "fzf"
