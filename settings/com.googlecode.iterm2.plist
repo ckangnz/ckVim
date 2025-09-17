@@ -251,6 +251,8 @@
 	<false/>
 	<key>HideFromDockAndAppSwitcher</key>
 	<true/>
+	<key>HideMenuBarInFullscreen</key>
+	<false/>
 	<key>HideScrollbar</key>
 	<true/>
 	<key>HideTab</key>
