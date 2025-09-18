@@ -1,7 +1,8 @@
 -- Set this in ZSHRC
 -- export COPILOT_MODEL="claude-sonnet-4"
+local codecompanion = require('codecompanion')
 
-require('codecompanion').setup({
+codecompanion.setup({
   display = {
     chat = {
       show_context = true, -- Show context (from slash commands and variables) in the chat buffer?
@@ -126,9 +127,12 @@ require('codecompanion').setup({
 
 local function find_codecompanion_window()
   for _, winid in ipairs(vim.api.nvim_list_wins()) do
-    local bufnr = vim.api.nvim_win_get_buf(winid)
-    if vim.bo[bufnr].filetype == 'codecompanion' then
-      return winid
+    local ok, bufnr = pcall(vim.api.nvim_win_get_buf, winid)
+    if ok then
+      local ft = vim.bo[bufnr].filetype
+      if ft == 'codecompanion' then
+        return winid
+      end
     end
   end
   return nil
@@ -144,12 +148,12 @@ vim.keymap.set('n', '<BS>', function()
 
   if codecompanion_win then
     if codecompanion_win == current_win then
-      vim.cmd('CodeCompanionChat Toggle')
+      codecompanion.toggle()
     else
       vim.api.nvim_set_current_win(codecompanion_win)
     end
   else
-    vim.cmd('CodeCompanionChat Toggle')
+    codecompanion.toggle()
   end
 end, { desc = 'Toggle or focus CodeCompanion chat' })
 
