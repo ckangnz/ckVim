@@ -18,9 +18,10 @@ packages=(
   "vim"
 
   "uv"
+  "fd"
   "ripgrep"
-  "catimg"
   "fzf"
+  "catimg"
 
   "jannis-baum/tap/vivify"
 )

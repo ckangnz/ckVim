@@ -50,6 +50,14 @@ telescope.setup({
         },
       },
     },
+    find_command = {
+      'fd',
+      '--hidden',
+      '--type=f',
+      '--strip-cwd-prefix',
+      '--exclude=.git',
+      '--exclude=node_modules',
+    },
     vimgrep_arguments = {
       'rg',
       '--color=never',

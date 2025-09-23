@@ -20,8 +20,11 @@ packages=(
 
   "gh"
   "bat"
+
+  "fd"
   "ripgrep"
   "fzf"
+
   "lsd"
 
   "jannis-baum/tap/vivify"
