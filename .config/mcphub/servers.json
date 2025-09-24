@@ -1,29 +1,5 @@
 {
   "mcpServers": {
-    "atlassian-remote": {
-      "autoApprove": [
-        "getAccessibleAtlassianResources",
-        "getConfluencePage",
-        "getConfluencePageAncestors",
-        "getConfluencePageDescendants",
-        "getConfluencePageFooterComments",
-        "getConfluencePageInlineComments",
-        "getConfluenceSpaces",
-        "getJiraIssue",
-        "getJiraIssueRemoteIssueLinks",
-        "getJiraProjectIssueTypesMetadata",
-        "getPagesInConfluenceSpace",
-        "getTransitionsForJiraIssue",
-        "getVisibleJiraProjects",
-        "lookupJiraAccountId",
-        "searchConfluenceUsingCql",
-        "searchJiraIssuesUsingJql",
-        "transitionJiraIssue",
-        "atlassianUserInfo"
-      ],
-      "type": "sse",
-      "url": "https://mcp.atlassian.com/v2/sse"
-    },
     "context7": {
       "autoApprove": [
         "resolve-library-id",
@@ -40,28 +16,6 @@
         "fetch"
       ],
       "command": "uvx"
-    },
-    "filesystem": {
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "~/code"
-      ],
-      "autoApprove": [
-        "directory_tree",
-        "get_file_info",
-        "list_allowed_directories",
-        "list_directory",
-        "list_directory_with_sizes",
-        "read_file",
-        "read_media_file",
-        "read_multiple_files",
-        "read_text_file",
-        "search_files",
-        "move_file",
-        "create_directory"
-      ],
-      "command": "npx"
     },
     "github": {
       "autoApprove": [
