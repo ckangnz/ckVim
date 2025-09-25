@@ -71,7 +71,7 @@ local plugins = {
       'hrsh7th/nvim-cmp',
       'nvim-telescope/telescope.nvim',
       'ravitemer/codecompanion-history.nvim',
-      { 'stevearc/dressing.nvim', opts = {} },
+      'stevearc/dressing.nvim',
     },
     config = function()
       require('plugins.codecompanion')
@@ -116,6 +116,13 @@ local plugins = {
     },
     config = function()
       require('plugins.lualine')
+    end,
+  },
+  {
+    'stevearc/dressing.nvim',
+    lazy = true,
+    config = function()
+      require('plugins.dressing')
     end,
   },
   {
@@ -171,7 +178,7 @@ local plugins = {
     event = { 'BufReadPre', 'BufNewFile' },
     cmd = { 'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll', 'MasonLog' },
     keys = { { '<leader>pm', ':Mason<cr>', desc = 'Open Mason', silent = true } },
-    dependencies = { { 'stevearc/dressing.nvim', opts = {} } },
+    dependencies = { 'stevearc/dressing.nvim' },
     config = function()
       require('plugins.mason')
     end,
@@ -179,7 +186,11 @@ local plugins = {
   {
     'mason-org/mason-lspconfig.nvim', -- lsp
     event = { 'BufReadPre', 'BufNewFile' },
-    dependencies = { 'mason-org/mason.nvim', 'neovim/nvim-lspconfig' },
+    dependencies = {
+      'mason-org/mason.nvim',
+      'neovim/nvim-lspconfig',
+      'stevearc/dressing.nvim',
+    },
     config = function()
       require('plugins.mason-lsp')
     end,

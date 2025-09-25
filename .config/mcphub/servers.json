@@ -11,8 +11,9 @@
       "command": "uvx"
     },
     "filesystem": {
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "~/code"],
-      "command": "npx"
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "~/"],
+      "command": "npx",
+      "disabled": false
     },
     "github": {
       "autoApprove": [

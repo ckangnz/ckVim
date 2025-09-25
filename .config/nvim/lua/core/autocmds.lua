@@ -114,6 +114,7 @@ autocmd({ 'WinEnter', 'BufWinEnter', 'TermOpen' }, {
 -- ExtraWhitespace highlights
 local function toggle_whitespace_match(mode)
   local excluded_filetypes = {
+    '',
     'ctrlsf',
     'help',
     'codecompanion',

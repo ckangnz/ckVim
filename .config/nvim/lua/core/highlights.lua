@@ -27,6 +27,28 @@ local function apply_custom_highlights()
   -- CodeiumSuggestion highlights
   vim.api.nvim_set_hl(0, 'CodeiumSuggestion', { fg = Colors.light_grey })
 
+  vim.api.nvim_set_hl(0, 'Question', {
+    fg = Colors.yellow,
+    bold = true,
+  })
+  vim.api.nvim_set_hl(0, 'MoreMsg', {
+    fg = Colors.green,
+    bold = true,
+  })
+  vim.api.nvim_set_hl(0, 'NormalFloat', {
+    fg = Colors.white,
+    bg = Colors.dark_grey,
+  })
+  vim.api.nvim_set_hl(0, 'FloatBorder', {
+    fg = Colors.light_grey,
+    bg = Colors.dark_grey,
+  })
+  vim.api.nvim_set_hl(0, 'FloatTitle', {
+    fg = Colors.yellow,
+    bg = Colors.dark_grey,
+    bold = true,
+  })
+
   -- TransparentUI
   vim.api.nvim_set_hl(0, 'WinBar', { bg = 'NONE' })
   vim.api.nvim_set_hl(0, 'WinBarNC', { bg = 'NONE' })
