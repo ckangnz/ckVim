@@ -67,6 +67,13 @@ codecompanion.setup({
       opts = { completion_provider = 'cmp' },
     },
   },
+  memory = {
+    opts = {
+      chat = {
+        enabled = true,
+      },
+    },
+  },
 
   extensions = {
     mcphub = {
