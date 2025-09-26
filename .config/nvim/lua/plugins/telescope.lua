@@ -233,7 +233,7 @@ end, { desc = 'Search in current buffer' })
 vim.keymap.set('n', ']D', builtin.diagnostics, { desc = 'Workspace diagnostics' })
 vim.keymap.set('n', 'grr', builtin.lsp_references, { desc = 'LSP references' })
 vim.keymap.set('n', 'gi', builtin.lsp_implementations, { desc = 'LSP implementations' })
-vim.keymap.set('n', 'gt', builtin.lsp_type_definitions, { desc = 'LSP type definitions' })
+vim.keymap.set('n', 'gy', builtin.lsp_type_definitions, { desc = 'LSP type definitions' })
 vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { desc = 'LSP document symbols' })
 
 -- User command for registers
