@@ -14,17 +14,18 @@ local select_one_or_multi = function(prompt_bufnr)
   end
 end
 
--- Main telescope configuration
-local telescope_utils = require('telescope.utils')
-
 telescope.setup({
   defaults = {
     initial_mode = 'insert',
-    cwd = telescope_utils.buffer_dir(),
     winblend = 0,
     layout_config = { prompt_position = 'top' },
     path_display = { 'smart' },
     sorting_strategy = 'ascending',
+    cache_picker = {
+      num_pickers = 10,
+    },
+    dynamic_preview_title = false,
+    results_title = false,
     mappings = {
       i = {
         ['<CR>'] = select_one_or_multi,
@@ -62,7 +63,6 @@ telescope.setup({
       'rg',
       '--color=never',
       '--no-heading',
-      '--no-ignore-vcs',
       '--with-filename',
       '--line-number',
       '--column',
@@ -75,14 +75,17 @@ telescope.setup({
       'node_modules/',
       'plugged/',
       'autoload/',
-      'esm/',
-      'cjs/',
+      'target/',
+      'build/',
       'dist/',
-      'yarn.lock',
+      'yarn%.lock',
+      'package%-lock%.json',
       '%.plist',
       '%.tsx%.html$',
     },
     preview = {
+      timeout = 200,
+      filesize_limit = 25,
       mime_hook = function(filepath, bufnr, opts)
         local is_image = function()
           local image_extensions = { 'png', 'jpg', 'jpeg' }
@@ -112,11 +115,30 @@ telescope.setup({
     },
   },
   pickers = {
-    find_files = { prompt_prefix = Icons.directory },
-    oldfiles = { prompt_prefix = Icons.directory },
-    buffers = { prompt_prefix = Icons.file_default },
-    live_grep = { prompt_prefix = Icons.magnify },
-    grep_string = { prompt_prefix = Icons.magnify, use_regex = true },
+    find_files = {
+      prompt_prefix = Icons.directory,
+      find_command = { 'fd', '--type=f', '--strip-cwd-prefix' },
+    },
+    oldfiles = {
+      prompt_prefix = Icons.directory,
+      only_cwd = true, -- Limit to current directory for speed
+    },
+    buffers = {
+      prompt_prefix = Icons.file_default,
+      sort_mru = true,
+      ignore_current_buffer = true,
+    },
+    live_grep = {
+      prompt_prefix = Icons.magnify,
+      additional_args = function()
+        return { '--hidden', '--smart-case' }
+      end,
+    },
+    grep_string = {
+      prompt_prefix = Icons.magnify,
+      use_regex = true,
+      word_match = '-w',
+    },
     help_tags = { prompt_prefix = Icons.question_default },
   },
   extensions = {
@@ -167,11 +189,14 @@ local function get_git_root()
 end
 
 local function find_files_or_git_files()
-  local opts = { hidden = true }
   if is_git_repo() then
-    opts.cwd = get_git_root()
+    builtin.git_files()
+  else
+    builtin.find_files({
+      hidden = true,
+      no_ignore = false,
+    })
   end
-  builtin.find_files(opts)
 end
 
 local function live_grep_git_root()
