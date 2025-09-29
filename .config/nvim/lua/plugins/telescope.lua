@@ -19,7 +19,7 @@ telescope.setup({
     initial_mode = 'insert',
     winblend = 0,
     layout_config = { prompt_position = 'top' },
-    path_display = { 'smart' },
+    path_display = { 'truncate' },
     sorting_strategy = 'ascending',
     cache_picker = {
       num_pickers = 10,
@@ -121,7 +121,6 @@ telescope.setup({
     },
     oldfiles = {
       prompt_prefix = Icons.directory,
-      only_cwd = true, -- Limit to current directory for speed
     },
     buffers = {
       prompt_prefix = Icons.file_default,
