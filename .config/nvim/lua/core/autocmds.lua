@@ -46,6 +46,14 @@ autocmd('FileType', {
 autocmd({ 'BufRead', 'BufNewFile' }, {
   group = filetype_specific,
   desc = 'Set filetype for JavaScript files',
+  pattern = { '.env', '.env.local', '.env.development', '.env.production' },
+  callback = function()
+    vim.bo.filetype = 'ini'
+  end,
+})
+autocmd({ 'BufRead', 'BufNewFile' }, {
+  group = filetype_specific,
+  desc = 'Set filetype for JavaScript files',
   pattern = { '*.js', '*.mjs', '*.cjs' },
   callback = function()
     vim.bo.filetype = 'javascript'
