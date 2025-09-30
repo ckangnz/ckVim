@@ -288,30 +288,10 @@ local plugins = {
   {
     'tpope/vim-fugitive',
     event = 'VeryLazy',
+    dependencies = { 'tpope/vim-rhubarb' },
     config = function()
       require('plugins.git')
     end,
-  },
-  {
-    'tpope/vim-rhubarb',
-    dependencies = { 'tpope/vim-fugitive' },
-  },
-  {
-    'tyru/open-browser-github.vim',
-    dependencies = { 'tyru/open-browser.vim' },
-    keys = {
-      { ',gog', '<cmd>OpenGithubProject<cr>', desc = 'Open GitHub project' },
-      { ',gof', '<cmd>OpenGithubFile<cr>', desc = 'Open current file on GitHub' },
-      { ',goi', '<cmd>OpenGithubIssue<cr>', desc = 'Open GitHub issues' },
-      {
-        ',gor',
-        function()
-          vim.cmd('OpenGithubPullReq #' .. vim.fn['FugitiveHead']())
-        end,
-        desc = 'Open current branch PR',
-      },
-      { ',gop', '<cmd>OpenGithubPullReq<cr>', desc = 'Open GitHub pull requests' },
-    },
   },
 
   -- Pairing
