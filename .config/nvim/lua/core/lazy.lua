@@ -268,11 +268,25 @@ local plugins = {
     end,
   },
   {
+    'davidmh/mdx.nvim',
+    config = true,
+    ft = 'mdx',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  },
+  {
     'pedrohdz/vim-yaml-folds',
     ft = 'yaml',
   },
 
   -- Git Tools
+  {
+    'tpope/vim-fugitive',
+    event = 'VeryLazy',
+    dependencies = { 'tpope/vim-rhubarb' },
+    config = function()
+      require('plugins.git')
+    end,
+  },
   {
     'junegunn/gv.vim',
     cmd = { 'GV' },
@@ -284,14 +298,6 @@ local plugins = {
   {
     'rhysd/vim-syntax-codeowners',
     ft = 'CODEOWNERS',
-  },
-  {
-    'tpope/vim-fugitive',
-    event = 'VeryLazy',
-    dependencies = { 'tpope/vim-rhubarb' },
-    config = function()
-      require('plugins.git')
-    end,
   },
 
   -- Pairing

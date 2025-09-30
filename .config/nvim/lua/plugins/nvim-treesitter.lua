@@ -1,20 +1,3 @@
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = '*',
-  callback = function()
-    local ok, has_parser = pcall(require('nvim-treesitter.parsers').has_parser)
-    if ok and has_parser then
-      vim.wo.foldmethod = 'expr'
-      vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-      vim.defer_fn(function()
-        if vim.api.nvim_buf_is_valid(0) then
-          pcall(vim.cmd, 'normal! zx')
-        end
-      end, 100)
-    end
-  end,
-  desc = 'Setup treesitter folding for supported filetypes',
-})
-
 require('nvim-treesitter.configs').setup({
   modules = {},
   highlight = {
@@ -103,6 +86,23 @@ require('nvim-treesitter.configs').setup({
 if vim.fn.has('unix') == 1 and vim.fn.has('mac') == 1 then
   require('nvim-treesitter.install').compilers = { 'gcc' }
 end
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = '*',
+  callback = function()
+    local ok, has_parser = pcall(require('nvim-treesitter.parsers').has_parser)
+    if ok and has_parser then
+      vim.wo.foldmethod = 'expr'
+      vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+      vim.defer_fn(function()
+        if vim.api.nvim_buf_is_valid(0) then
+          pcall(vim.cmd, 'normal! zx')
+        end
+      end, 100)
+    end
+  end,
+  desc = 'Setup treesitter folding for supported filetypes',
+})
 
 vim.api.nvim_create_autocmd('User', {
   pattern = 'TSHighlightError',
