@@ -187,17 +187,6 @@ local function get_git_root()
   return vim.fn.fnamemodify(dot_git_path, ':h')
 end
 
-local function find_files_or_git_files()
-  if is_git_repo() then
-    builtin.git_files()
-  else
-    builtin.find_files({
-      hidden = true,
-      no_ignore = false,
-    })
-  end
-end
-
 local function live_grep_git_root()
   local opts = {}
   if is_git_repo() then
@@ -215,7 +204,7 @@ local function find_visual_selection()
 end
 
 -- Telescope keymaps
-vim.keymap.set('n', '<C-p>', find_files_or_git_files, { desc = 'Find files (git aware)' })
+vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Find files' })
 vim.keymap.set('n', '<C-e>', builtin.oldfiles, { desc = 'Recent files' })
 
 vim.keymap.set('n', '<leader>f', live_grep_git_root, { desc = 'Live grep (git root)' })
