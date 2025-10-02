@@ -67,3 +67,12 @@ vim.lsp.config('ts_ls', {
     end, {})
   end,
 })
+
+vim.lsp.config('eslint', {
+  capabilities = lsp_capabilities,
+  settings = {
+    experimental = {
+      useFlatConfig = true,
+    },
+  },
+})
