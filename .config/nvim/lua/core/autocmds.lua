@@ -120,12 +120,6 @@ autocmd('TermOpen', {
     vim.opt_local.signcolumn = 'no'
   end,
 })
-autocmd({ 'WinEnter', 'BufWinEnter', 'TermOpen' }, {
-  group = terminal,
-  desc = 'Auto insert mode in terminal',
-  pattern = 'term://*',
-  command = 'startinsert',
-})
 
 -- ExtraWhitespace highlights
 local function toggle_whitespace_match(mode)
