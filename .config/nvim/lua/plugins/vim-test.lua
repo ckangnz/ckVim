@@ -12,6 +12,15 @@ vim.g['test#runner_commands'] = {
   'Xunit',
   'FlutterTest',
 }
+vim.g['test#enabled_runners'] = {
+  'javascript#jest',
+  'javascript#vitest',
+  'javascript#cypress',
+  'javascript#playwright',
+  'csharp#dotnettest',
+  'csharp#xunit',
+  'dart#fluttertest',
+}
 
 -- JavaScript test configuration
 vim.g['test#javascript#jest#options'] = '--update-snapshot'
