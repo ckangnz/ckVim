@@ -32,18 +32,25 @@ local custom_recipes = {
     action = { 'delete' },
     input = { '(' },
   },
+  {
+    buns = { '```', '```' },
+    nesting = 0,
+    match_syntax = 1,
+    linewise = 1,
+    kind = { 'add', 'replace', 'delete', 'textobj' },
+    input = { 'c' },
+  },
 }
 
--- Extend the default recipes
-for _, recipe in ipairs(custom_recipes) do
-  table.insert(vim.g['sandwich#recipes'], recipe)
-end
+-- Extend the existing recipes with custom ones
+vim.g['sandwich#recipes'] = vim.list_extend(vim.g['sandwich#recipes'], custom_recipes)
 
 vim.keymap.set('x', 'is', '<Plug>(textobj-sandwich-auto-i)', { desc = 'Inner sandwich textobj' })
 vim.keymap.set('x', 'as', '<Plug>(textobj-sandwich-auto-a)', { desc = 'A sandwich textobj' })
 vim.keymap.set('o', 'is', '<Plug>(textobj-sandwich-auto-i)', { desc = 'Inner sandwich textobj' })
 vim.keymap.set('o', 'as', '<Plug>(textobj-sandwich-auto-a)', { desc = 'A sandwich textobj' })
 
+-- Comment out highlight settings for now to avoid Colors error
 vim.api.nvim_set_hl(0, 'OperatorSandwichChange', {
   ctermfg = 109,
   ctermbg = 237,
