@@ -14,7 +14,12 @@ npairs.setup({
   enable_bracket_in_quote = true,
   enable_abbr = false, -- trigger abbreviation
   break_undo = true, -- switch for basic rule break undo sequence
-  check_ts = false, -- use treesitter for checking
+  check_ts = true,
+  ts_config = {
+    lua = { 'string' }, -- it will not add a pair on that treesitter node
+    javascript = { 'template_string' },
+    java = false, -- don't check treesitter on java
+  },
   map_cr = true, -- map <CR> key
   map_bs = true, -- map the <BS> key
   map_c_h = false, -- map the <C-h> key to delete a pair
