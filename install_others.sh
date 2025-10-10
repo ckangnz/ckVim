@@ -24,6 +24,7 @@ cask_packages=(
   "dotnet-sdk" # sudo apt update && sudo apt install dotnet dotnet8
   "dotnet-sdk8:isen-ng/dotnet-sdk-versions"
 
+  "arc"
   "iterm2"
   "docker"
   "itsycal"
