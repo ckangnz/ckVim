@@ -56,21 +56,6 @@ telescope.setup({
         },
       },
     },
-    find_command = {
-      'fd',
-      '--hidden',
-      '--type=f',
-      '--strip-cwd-prefix',
-      '--no-ignore-vcs',
-      '--exclude=*.lock',
-      '--exclude=.cache',
-      '--exclude=.git',
-      '--exclude=.next',
-      '--exclude=build',
-      '--exclude=dist',
-      '--exclude=node_modules',
-      '--exclude=vendor',
-    },
     vimgrep_arguments = {
       'rg',
       '--color=never',
@@ -129,7 +114,20 @@ telescope.setup({
   pickers = {
     find_files = {
       prompt_prefix = Icons.directory,
-      find_command = { 'fd', '--type=f', '--strip-cwd-prefix' },
+      find_command = {
+        'fd',
+        '--hidden',
+        '--type=f',
+        '--strip-cwd-prefix',
+        '--exclude=*.lock',
+        '--exclude=.cache',
+        '--exclude=.git',
+        '--exclude=.next',
+        '--exclude=build',
+        '--exclude=dist',
+        '--exclude=node_modules',
+        '--exclude=vendor',
+      },
     },
     oldfiles = {
       prompt_prefix = Icons.directory,
