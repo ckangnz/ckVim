@@ -68,3 +68,33 @@ vim.lsp.config('ts_ls', {
     end, {})
   end,
 })
+
+vim.lsp.config('eslint', {
+  capabilities = lsp_capabilities,
+  settings = {
+    eslint = {
+      format = { enable = false },
+    },
+  },
+  on_attach = function(client, bufnr)
+    vim.api.nvim_buf_create_user_command(bufnr, 'EslintFixAll', function()
+      local params = {
+        command = 'eslint.applyAllFixes',
+        arguments = {
+          {
+            uri = vim.uri_from_bufnr(bufnr),
+            version = vim.lsp.util.buf_versions[bufnr],
+          },
+        },
+      }
+      client.request('workspace/executeCommand', params, nil, bufnr)
+    end, { desc = 'Fix all ESLint issues' })
+
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      buffer = bufnr,
+      callback = function()
+        vim.cmd('EslintFixAll')
+      end,
+    })
+  end,
+})
