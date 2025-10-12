@@ -35,6 +35,8 @@ local function apply_custom_highlights()
     fg = Colors.green,
     bold = true,
   })
+  vim.api.nvim_set_hl(0, 'LazyDimmed', { link = 'Comment' })
+
   vim.api.nvim_set_hl(0, 'NormalFloat', {
     fg = Colors.white,
     bg = Colors.dark_grey,
