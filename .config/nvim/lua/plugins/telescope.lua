@@ -193,14 +193,21 @@ local function is_git_repo()
 end
 
 local function get_git_root()
-  local dot_git_path = vim.fn.finddir('.git', '.;')
-  return vim.fn.fnamemodify(dot_git_path, ':h')
+  local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
+  if vim.v.shell_error ~= 0 then
+    return vim.fn.getcwd()
+  end
+  return git_root
 end
 
 local function live_grep_git_root()
   local opts = {}
   if is_git_repo() then
-    opts.cwd = get_git_root()
+    local git_root = get_git_root()
+    opts.cwd = git_root
+    opts.prompt_title = 'Live Grep (Git Root: ' .. vim.fn.fnamemodify(git_root, ':t') .. ')'
+  else
+    opts.prompt_title = 'Live Grep (Git Root)'
   end
   builtin.live_grep(opts)
 end
@@ -217,7 +224,12 @@ end
 vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Find files' })
 vim.keymap.set('n', '<C-e>', builtin.oldfiles, { desc = 'Recent files' })
 
-vim.keymap.set('n', '<leader>f', live_grep_git_root, { desc = 'Live grep (git root)' })
+vim.keymap.set('n', '<leader>ff', function()
+  local cwd = vim.fn.getcwd()
+  local dir_name = vim.fn.fnamemodify(cwd, ':t')
+  builtin.live_grep({ prompt_title = 'Live Grep (Current Directory: ' .. dir_name .. ')' })
+end, { desc = 'Live grep (current dir)' })
+vim.keymap.set('n', '<leader>fg', live_grep_git_root, { desc = 'Live grep (git root)' })
 vim.keymap.set('v', '<leader>f', find_visual_selection, { desc = 'Grep selection' })
 vim.keymap.set('n', '<leader>F', builtin.grep_string, { desc = 'Grep string under cursor' })
 
