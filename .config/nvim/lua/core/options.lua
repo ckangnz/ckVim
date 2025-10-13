@@ -142,10 +142,11 @@ opt.foldlevelstart = 99
 -- Custom fold text function
 vim.cmd([[
   function! StyliseFold()
+    let indent = indent(v:foldstart)
     let line = '' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
     let lines_count = v:foldend - v:foldstart + 1
     let lines_count_text = '|' . printf(" %10s", lines_count . ' lines' .. ' ◂') . ' |'
-    let foldtextstart = strpart('▸' . repeat(' ', v:foldlevel*2). line, 0, (winwidth(0)*2)/3)
+    let foldtextstart = strpart(repeat(' ', indent > 0 ? indent - 1 : 0) . '▸' . line, 0, (winwidth(0)*2)/3)
     let foldtextend = lines_count_text
     let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
     return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) .. foldtextend
