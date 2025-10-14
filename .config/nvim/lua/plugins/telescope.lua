@@ -230,6 +230,7 @@ vim.keymap.set('n', '<leader>ff', function()
   builtin.live_grep({ prompt_title = 'Live Grep (Current Directory: ' .. dir_name .. ')' })
 end, { desc = 'Live grep (current dir)' })
 vim.keymap.set('n', '<leader>fg', live_grep_git_root, { desc = 'Live grep (git root)' })
+vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Resume last search' })
 vim.keymap.set('v', '<leader>f', find_visual_selection, { desc = 'Grep selection' })
 vim.keymap.set('n', '<leader>F', builtin.grep_string, { desc = 'Grep string under cursor' })
 
