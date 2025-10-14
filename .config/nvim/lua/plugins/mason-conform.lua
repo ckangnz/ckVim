@@ -4,24 +4,23 @@ require('conform').setup({
   formatters_by_ft = {
     lua = { 'stylua' },
     zsh = { 'shfmt' },
-    javascript = { 'prettierd', 'prettier' },
-    typescript = { 'prettierd', 'prettier' },
-    javascriptreact = { 'prettierd', 'prettier' },
-    typescriptreact = { 'prettierd', 'prettier' },
+    javascript = { 'prettier' },
+    typescript = { 'prettier' },
+    javascriptreact = { 'prettier' },
+    typescriptreact = { 'prettier' },
     json = { 'prettier' },
     html = { 'prettier' },
     css = { 'prettier' },
     scss = { 'prettier' },
     yaml = { 'prettier' },
-    markdown = { 'prettierd' },
+    markdown = { 'prettier' },
     ['_'] = { 'trim_whitespace' },
   },
   default_format_opts = {
-    lsp_format = 'fallback',
+    lsp_format = 'prefer',
     stop_after_first = true,
   },
   format_on_save = {
-    lsp_format = 'fallback',
     timeout_ms = 500,
   },
   notify_on_error = true,
@@ -38,6 +37,12 @@ require('conform').setup({
         '--quote-style',
         'ForceSingle',
         '-',
+      },
+    },
+    shfmt = {
+      args = {
+        '-ln',
+        'bash',
       },
     },
     prettier = {

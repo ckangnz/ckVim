@@ -73,7 +73,7 @@ vim.lsp.config('eslint', {
   capabilities = lsp_capabilities,
   settings = {
     eslint = {
-      format = { enable = false },
+      format = { enable = true },
     },
   },
   on_attach = function(client, bufnr)
