@@ -7,6 +7,7 @@ echo ""
 # Install Homebrew packages
 packages=(
   "lazydocker"
+  "meetingbar"
   # "awscli"
   # "kubectl"
   # "k9s"
@@ -30,6 +31,7 @@ cask_packages=(
   "itsycal"
   "rectangle"
   "maccy"
+  "hiddenbar"
   # "postman-agent"
   #"azure-data-studio"
   #"session-manager-plugin"
