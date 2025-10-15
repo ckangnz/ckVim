@@ -272,10 +272,10 @@ local function setup_telescope_colors()
     TelescopeMatching = { bold = true, underline = true },
     TelescopeSelection = { fg = Colors.black, bg = Colors.light_green, bold = true },
 
-    TelescopePromptTitle = { bg = Colors.dark_grey, fg = Colors.white },
-    TelescopePromptPrefix = { bg = Colors.dark_grey },
-    TelescopePromptCounter = { bg = Colors.dark_grey },
-    TelescopePromptNormal = { bg = Colors.dark_grey },
+    TelescopePromptTitle = { bg = Colors.dark_grey, fg = Colors.yellow },
+    TelescopePromptPrefix = { bg = Colors.dark_grey, fg = Colors.cyan },
+    TelescopePromptCounter = { bg = Colors.dark_grey, fg = Colors.yellow },
+    TelescopePromptNormal = { bg = Colors.dark_grey, fg = Colors.white },
     TelescopePromptBorder = { bg = Colors.dark_grey, fg = Colors.grey },
 
     TelescopeResultsTitle = { fg = Colors.white },
