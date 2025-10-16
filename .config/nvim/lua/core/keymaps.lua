@@ -92,7 +92,13 @@ map('t', '<C-k>', '<C-\\><C-n><C-w>k', { desc = 'Terminal up window nav' })
 map('t', '<C-l>', '<C-\\><C-n><C-w>l', { desc = 'Terminal right window nav' })
 
 -- Search utilities
-map('v', '//', 'y/<C-R>"<CR>N', { desc = 'Search for selected text' })
+map('v', '//', function()
+  vim.cmd('normal! y')
+  local search_term = vim.fn.getreg('"')
+  search_term = vim.fn.escape(search_term, '/\\^$.*~[]')
+  vim.fn.setreg('/', search_term)
+  vim.cmd('normal! N')
+end, { desc = 'Search for selected text' })
 map('v', '/', '<Esc>/\\%V', { desc = 'Search within selection' })
 map('v', '?', '<Esc>?\\%V', { desc = 'Reverse search within selection' })
 
@@ -180,15 +186,13 @@ local function create_menu(items, prompt)
   end)
 end
 
-vim.cmd([[
-  func GenerateGUID()
-  let l:new_uuid=system('uuidgen')[:-2]
-  let l:nuuid_case = "lower"
-  let l:id= l:nuuid_case == "lower" ? tolower(l:new_uuid) : toupper(l:new_uuid)
-  let @"=l:id
-  echo "NEW GUID: " . l:id
-endfunc
-]])
+GenerateGUID = function()
+  local new_uuid = vim.fn.system('uuidgen'):gsub('\n', '')
+  local nuuid_case = "lower"
+  local id = nuuid_case == "lower" and new_uuid:lower() or new_uuid:upper()
+  vim.fn.setreg('"', id)
+  print("NEW GUID: " .. id)
+end
 
 local function utility_menu()
   local utilContent = {
