@@ -83,6 +83,7 @@ alias p10="p10k configure"
 alias gas="gh auth switch"
 alias gcnv='gc --no-verify'
 gdf() {
+  # example: gdf "test\.tsx$"
   local pattern="${1}"
   if [[ -z "$pattern" ]]; then
     gd --name-only --relative "$(git_main_branch)...HEAD"
