@@ -125,16 +125,17 @@ autocmd('TermOpen', {
 local function toggle_whitespace_match(mode)
   local excluded_filetypes = {
     '',
-    'ctrlsf',
-    'help',
-    'codecompanion',
-    'mcphub',
-    'lazy',
-    'mason',
-    'alpha',
+    'TelescopePreview',
     'TelescopePrompt',
     'TelescopeResults',
-    'TelescopePreview',
+    'alpha',
+    'codecompanion',
+    'ctrlsf',
+    'fugitive',
+    'help',
+    'lazy',
+    'mason',
+    'mcphub',
   }
   local current_filetype = vim.bo.filetype
 
