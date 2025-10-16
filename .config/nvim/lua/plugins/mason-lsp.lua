@@ -18,7 +18,8 @@ require('mason-lspconfig').setup({
 })
 
 local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
-lsp_capabilities = vim.tbl_deep_extend('force', lsp_capabilities, require('cmp_nvim_lsp').default_capabilities())
+lsp_capabilities =
+  vim.tbl_deep_extend('force', lsp_capabilities, require('cmp_nvim_lsp').default_capabilities())
 
 vim.lsp.config('*', {
   root_markers = { '.git' },
@@ -37,12 +38,6 @@ vim.lsp.config('lua_ls', {
   capabilities = lsp_capabilities,
   settings = {
     Lua = {
-      format = {
-        enable = true,
-        defaultConfig = {
-          quote_style = 'single',
-        },
-      },
       diagnostics = {
         globals = { 'vim' },
       },
@@ -95,12 +90,5 @@ vim.lsp.config('eslint', {
       }
       client.request('workspace/executeCommand', params, nil, bufnr)
     end, { desc = 'Fix all ESLint issues' })
-
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      buffer = bufnr,
-      callback = function()
-        vim.cmd('EslintFixAll')
-      end,
-    })
   end,
 })
