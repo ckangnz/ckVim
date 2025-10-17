@@ -6,7 +6,7 @@ require('mason').setup({
       package_uninstalled = Icons.error_slanted,
     },
     keymaps = {
-      apply_language_filter = '/',
+      apply_language_filter = '?',
     },
     check_outdated_packages_on_open = true,
     border = nil,
