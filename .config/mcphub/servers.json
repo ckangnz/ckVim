@@ -2,6 +2,27 @@
   "mcpServers": {
     "atlassian": {
       "args": ["-y", "mcp-remote", "https://mcp.atlassian.com/v1/sse"],
+      "autoApprove": [
+        "getAccessibleAtlassianResources",
+        "getConfluencePage",
+        "getConfluencePageDescendants",
+        "getConfluencePageFooterComments",
+        "getConfluencePageInlineComments",
+        "getConfluenceSpaces",
+        "getJiraIssue",
+        "getJiraIssueRemoteIssueLinks",
+        "getJiraIssueTypeMetaWithFields",
+        "getJiraProjectIssueTypesMetadata",
+        "getPagesInConfluenceSpace",
+        "getTransitionsForJiraIssue",
+        "getVisibleJiraProjects",
+        "lookupJiraAccountId",
+        "searchConfluenceUsingCql",
+        "searchJiraIssuesUsingJql",
+        "search",
+        "fetch",
+        "atlassianUserInfo"
+      ],
       "command": "npx",
       "disabled": false
     },
