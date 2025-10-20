@@ -32,6 +32,24 @@
       "command": "npx",
       "disabled": false
     },
+    "git": {
+      "args": ["mcp-server-git"],
+      "autoApprove": [
+        "git_status",
+        "git_diff_unstaged",
+        "git_diff_staged",
+        "git_diff",
+        "git_commit",
+        "git_add",
+        "git_reset",
+        "git_log",
+        "git_create_branch",
+        "git_checkout",
+        "git_show",
+        "git_branch"
+      ],
+      "command": "uvx"
+    },
     "github": {
       "autoApprove": [
         "assign_copilot_to_issue",
