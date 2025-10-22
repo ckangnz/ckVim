@@ -91,8 +91,8 @@ codecompanion.setup({
     history = {
       enabled = true,
       opts = {
-        keymap = 'gho', -- Open history
-        save_chat_keymap = 'ghi', -- Save current chat
+        save_chat_keymap = 'gsh', -- Save hitory
+        keymap = 'glh', -- Load history
         auto_save = false,
         expiration_days = 0,
         picker = 'telescope',
@@ -115,8 +115,8 @@ codecompanion.setup({
         dir_to_save = vim.fn.stdpath('data') .. '/codecompanion-history',
         enable_logging = false,
         summary = {
-          create_summary_keymap = 'ghs', -- Save Summary
-          browse_summaries_keymap = 'ghb', --Open Summary
+          create_summary_keymap = 'gss', -- Save Summary
+          browse_summaries_keymap = 'gls', --Load Summary
           generation_opts = {
             adapter = nil,
             model = nil,
