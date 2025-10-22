@@ -178,25 +178,26 @@ local plugins = {
     event = { 'BufReadPre', 'BufNewFile' },
     cmd = { 'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll', 'MasonLog' },
     keys = { { '<leader>pm', ':Mason<cr>', desc = 'Open Mason', silent = true } },
-    dependencies = { 'stevearc/dressing.nvim' },
+    dependencies = {
+      'stevearc/dressing.nvim',
+    },
     config = function()
       require('plugins.mason')
     end,
   },
   {
-    'mason-org/mason-lspconfig.nvim', -- lsp
+    'mason-org/mason-lspconfig.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'mason-org/mason.nvim',
       'neovim/nvim-lspconfig',
-      'stevearc/dressing.nvim',
     },
     config = function()
       require('plugins.mason-lsp')
     end,
   },
   {
-    'rshkarin/mason-nvim-lint', -- linter
+    'rshkarin/mason-nvim-lint',
     event = { 'BufReadPost', 'BufNewFile' },
     dependencies = {
       'mason-org/mason.nvim',
@@ -207,11 +208,11 @@ local plugins = {
     end,
   },
   {
-    'zapling/mason-conform.nvim', -- formatter
+    'zapling/mason-conform.nvim',
     event = { 'BufReadPost', 'BufNewFile' },
     dependencies = {
       'mason-org/mason.nvim',
-      { 'stevearc/conform.nvim' },
+      'stevearc/conform.nvim',
     },
     config = function()
       require('plugins.mason-conform')
@@ -250,15 +251,12 @@ local plugins = {
       require('plugins.nvim-cmp')
     end,
   },
+  {
+    'andrewstuart/vim-kubernetes',
+    ft = 'yaml',
+  },
 
   -- Language Specific
-  {
-    'MeanderingProgrammer/render-markdown.nvim',
-    ft = { 'markdown', 'md', 'codecompanion' },
-    config = function()
-      require('plugins.render-markdown')
-    end,
-  },
   {
     'nvim-treesitter/nvim-treesitter',
     event = 'BufReadPre',
@@ -268,14 +266,21 @@ local plugins = {
     end,
   },
   {
+    'MeanderingProgrammer/render-markdown.nvim',
+    ft = { 'markdown', 'md', 'codecompanion' },
+    config = function()
+      require('plugins.render-markdown')
+    end,
+  },
+  {
+    'jannis-baum/vivify.vim',
+    ft = 'markdown',
+  },
+  {
     'davidmh/mdx.nvim',
     config = true,
     ft = 'mdx',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-  },
-  {
-    'pedrohdz/vim-yaml-folds',
-    ft = 'yaml',
   },
 
   -- Git Tools
@@ -300,7 +305,38 @@ local plugins = {
     ft = 'CODEOWNERS',
   },
 
-  -- Pairing
+  -- Search Tool
+  {
+    'nvim-telescope/telescope.nvim',
+    branch = 'master',
+    event = 'VeryLazy',
+    cmd = 'Telescope',
+    keys = { { '<leader>T', '<cmd>Telescope<cr>', desc = 'Open Telescope', silent = true } },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'make',
+      },
+      'nvim-telescope/telescope-project.nvim',
+      'tom-anders/telescope-vim-bookmarks.nvim',
+    },
+    config = function()
+      require('plugins.telescope')
+    end,
+  },
+
+  -- Functionality
+  {
+    'skywind3000/asyncrun.vim',
+    dependencies = {
+      'rcarriga/nvim-notify',
+    },
+    cmd = { 'AsyncRun', 'AsyncStop' },
+    config = function()
+      require('plugins.asyncrun')
+    end,
+  },
   {
     'machakann/vim-sandwich',
     keys = {
@@ -325,45 +361,12 @@ local plugins = {
     end,
   },
   {
-    'tpope/vim-repeat',
-  },
-  {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     config = function()
       require('plugins.autopairs')
     end,
   },
-
-  -- Database
-  {
-    'kristijanhusak/vim-dadbod-completion',
-    ft = { 'sql', 'mysql', 'plsql' },
-    dependencies = 'tpope/vim-dadbod',
-  },
-
-  -- Search Tool
-  {
-    'nvim-telescope/telescope.nvim',
-    branch = 'master',
-    event = 'VeryLazy',
-    cmd = 'Telescope',
-    keys = { { '<leader>T', '<cmd>Telescope<cr>', desc = 'Open Telescope', silent = true } },
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-      },
-      'nvim-telescope/telescope-project.nvim',
-      'tom-anders/telescope-vim-bookmarks.nvim',
-    },
-    config = function()
-      require('plugins.telescope')
-    end,
-  },
-
-  -- Functionality
   {
     'AndrewRadev/switch.vim',
     cmd = { 'Switch', 'SwitchReverse' },
@@ -444,18 +447,6 @@ local plugins = {
     end,
   },
   {
-    'jannis-baum/vivify.vim',
-    ft = 'markdown',
-  },
-  {
-    'kkvh/vim-docker-tools',
-    cmd = 'DockerToolsToggle',
-    keys = {
-      { '<leader>dc', ':DockerToolsToggle<cr>', desc = 'Toggle Docker tools', silent = true },
-    },
-  },
-  { 'markonm/traces.vim' },
-  {
     'mattesGroeger/vim-bookmarks',
     keys = { 'mm', 'mi', 'mn', 'mp', 'ma', 'mc', 'mx' },
     config = function()
@@ -476,23 +467,6 @@ local plugins = {
     config = function()
       vim.g.undotree_SetFocusWhenToggle = 1
       vim.g.undotree_WindowLayout = 3
-    end,
-  },
-  {
-    'mistweaverco/kulala.nvim',
-    ft = { 'http', 'rest' },
-    config = function()
-      require('plugins.kulala')
-    end,
-  },
-  {
-    'skywind3000/asyncrun.vim',
-    dependencies = {
-      'rcarriga/nvim-notify',
-    },
-    cmd = { 'AsyncRun', 'AsyncStop' },
-    config = function()
-      require('plugins.asyncrun')
     end,
   },
   {
@@ -525,27 +499,39 @@ local plugins = {
     end,
   },
 
-  -- DB
+  -- Backend
   {
-    'tpope/vim-dadbod',
+    'kkvh/vim-docker-tools',
+    cmd = 'DockerToolsToggle',
     keys = {
-      {
-        '<leader>db',
-        ':DBUI<cr>',
-        desc = 'Open database UI',
-        silent = true,
-      },
-    },
-    cmd = { 'DB', 'DBUI' },
-    dependencies = {
-      'kristijanhusak/vim-dadbod-ui',
+      { '<leader>dc', ':DockerToolsToggle<cr>', desc = 'Toggle Docker tools', silent = true },
     },
   },
-
-  -- Snippets
   {
-    'andrewstuart/vim-kubernetes',
-    ft = 'yaml',
+    'mistweaverco/kulala.nvim',
+    ft = { 'http', 'rest' },
+    config = function()
+      require('plugins.kulala')
+    end,
+  },
+  {
+    'kristijanhusak/vim-dadbod-completion',
+    ft = { 'sql', 'mysql', 'plsql' },
+    dependencies = {
+      'tpope/vim-dadbod',
+      keys = {
+        {
+          '<leader>db',
+          ':DBUI<cr>',
+          desc = 'Open database UI',
+          silent = true,
+        },
+      },
+      cmd = { 'DB', 'DBUI' },
+      dependencies = {
+        'kristijanhusak/vim-dadbod-ui',
+      },
+    },
   },
 }
 
