@@ -64,7 +64,7 @@ opt.laststatus = 2 -- Always show status line
 opt.autoindent = true -- Copy indent from previous line
 opt.smartindent = true -- Smart indenting when { is used
 opt.tabstop = 2 -- Default tabs
-opt.expandtab = true -- Use space as tab
+opt.expandtab = false -- Use space as tab
 opt.softtabstop = 2 -- Width applied by tab
 opt.shiftwidth = 2 -- Width of tab in normal mode
 
