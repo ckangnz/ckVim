@@ -14,6 +14,7 @@ require('conform').setup({
     scss = { 'prettier' },
     yaml = { 'prettier' },
     markdown = { 'prettier' },
+    mdx = { 'prettier' },
     ['_'] = { 'trim_whitespace' },
   },
   default_format_opts = { timeout_ms = 500 },
