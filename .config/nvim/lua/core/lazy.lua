@@ -282,6 +282,13 @@ local plugins = {
     ft = 'mdx',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
+  {
+    'mattn/emmet-vim',
+    ft = { 'html', 'css', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    config = function()
+      vim.g.user_emmet_install_global = 1
+    end,
+  },
 
   -- Git Tools
   {

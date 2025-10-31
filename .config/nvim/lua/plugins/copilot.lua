@@ -27,9 +27,8 @@ require('copilot').setup({
       ratio = 0.4,
     },
   },
-
   suggestion = {
-    enabled = true,
+    enabled = false,
     auto_trigger = false,
     hide_during_completion = true,
     debounce = 75,
@@ -43,7 +42,6 @@ require('copilot').setup({
       dismiss = '<M-x>',
     },
   },
-
   filetypes = {
     codecompanion = false,
     markdown = false,

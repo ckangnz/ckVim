@@ -5,7 +5,6 @@ require('mason-lspconfig').setup({
     'bashls',
     'marksman',
 
-    'emmet_ls',
     'html',
     'cssls',
     'ts_ls',
