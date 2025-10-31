@@ -122,13 +122,13 @@ end
 opt.list = true
 opt.listchars = {
   space = ' ',
-  tab = Icons.tabs:rep(2),
+  tab = Icons.tabs,
   lead = Icons.lead,
   trail = Icons.lead,
   nbsp = Icons.nbsp,
   extends = Icons.triangle_right,
   precedes = Icons.triangle_left,
-  multispace = Icons.tabs:rep(4),
+  multispace = Icons.lead:rep(4),
 }
 
 -- Fill characters
