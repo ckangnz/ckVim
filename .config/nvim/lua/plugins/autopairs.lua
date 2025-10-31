@@ -75,12 +75,6 @@ npairs.add_rules({
 })
 
 npairs.add_rules({
-  Rule('%(.*%)%s*%=>$', ' {  }', { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' })
-    :use_regex(true)
-    :set_end_pair_length(2),
-})
-
-npairs.add_rules({
   Rule('`', '`', { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' }),
 })
 
