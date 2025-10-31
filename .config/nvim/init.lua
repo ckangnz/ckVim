@@ -20,3 +20,5 @@ require('core.diagnostics')
 require('core.autocmds')
 
 require('core.lazy')
+
+require('gui.neovide')
