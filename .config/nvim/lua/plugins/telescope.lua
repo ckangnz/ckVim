@@ -117,18 +117,7 @@ telescope.setup({
     grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
     qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
     mappings = {
-      i = {
-        ['<CR>'] = select_one_or_multi,
-        ['<C-n>'] = actions.move_selection_next,
-        ['<C-p>'] = actions.move_selection_previous,
-        ['<C-j>'] = 'preview_scrolling_down',
-        ['<C-k>'] = 'preview_scrolling_up',
-        ['<C-d>'] = false, -- Disable preview scroll down
-        ['<C-u>'] = false, -- Disable preview scroll up
-        ['<C-h>'] = 'preview_scrolling_left',
-        ['<C-l>'] = 'preview_scrolling_right',
-        ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
-        ['<C-/>'] = 'which_key',
+      n = {
         ['<LeftMouse>'] = {
           actions.mouse_click,
           type = 'action',
@@ -139,6 +128,53 @@ telescope.setup({
           type = 'action',
           opts = { expr = true },
         },
+        ['<esc>'] = actions.close,
+        ['<CR>'] = select_one_or_multi,
+        ['<C-x>'] = actions.select_horizontal,
+        ['<C-v>'] = actions.select_vertical,
+        ['<C-t>'] = actions.select_tab,
+        ['j'] = actions.move_selection_next,
+        ['k'] = actions.move_selection_previous,
+
+        ['<C-k>'] = actions.preview_scrolling_up,
+        ['<C-j>'] = actions.preview_scrolling_down,
+        ['<C-l>'] = actions.preview_scrolling_left,
+        ['<C-h>'] = actions.preview_scrolling_right,
+
+        ['gg'] = actions.move_to_top,
+        ['G'] = actions.move_to_bottom,
+
+        ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
+        ['?'] = actions.which_key,
+      },
+      i = {
+        ['<LeftMouse>'] = {
+          actions.mouse_click,
+          type = 'action',
+          opts = { expr = true },
+        },
+        ['<2-LeftMouse>'] = {
+          actions.double_mouse_click,
+          type = 'action',
+          opts = { expr = true },
+        },
+        ['<C-c>'] = actions.close,
+        ['<CR>'] = select_one_or_multi,
+        ['<C-x>'] = actions.select_horizontal,
+        ['<C-v>'] = actions.select_vertical,
+        ['<C-t>'] = actions.select_tab,
+        ['<C-n>'] = actions.move_selection_next,
+        ['<C-p>'] = actions.move_selection_previous,
+
+        ['<C-j>'] = 'preview_scrolling_down',
+        ['<C-k>'] = 'preview_scrolling_up',
+        ['<C-d>'] = false, -- Disable preview scroll down
+        ['<C-u>'] = false, -- Disable preview scroll up
+        ['<C-h>'] = 'preview_scrolling_left',
+        ['<C-l>'] = 'preview_scrolling_right',
+
+        ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
+        ['<C-/>'] = 'which_key',
       },
     },
     vimgrep_arguments = {
