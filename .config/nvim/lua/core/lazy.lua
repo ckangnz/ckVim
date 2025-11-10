@@ -308,6 +308,22 @@ local plugins = {
     end,
   },
   {
+    'gbrowse',
+    dir = vim.fn.stdpath('config'),
+    keys = {
+      { ',gog', desc = 'Open git repo in browser' },
+      { ',gof', desc = 'Open current file in browser', mode = { 'n', 'v' } },
+      { ',goi', desc = 'Open repo issues' },
+      { ',gor', desc = 'Open PR for current branch' },
+      { ',gop', desc = 'Open pull requests' },
+      { ',goc', desc = 'Open commit under cursor' },
+      { ',gob', desc = 'Open current branch' },
+    },
+    config = function()
+      require('plugins.gbrowse')
+    end,
+  },
+  {
     'rhysd/vim-syntax-codeowners',
     ft = 'CODEOWNERS',
   },
