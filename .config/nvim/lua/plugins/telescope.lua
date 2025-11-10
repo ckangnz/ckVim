@@ -14,6 +14,91 @@ local select_one_or_multi = function(prompt_bufnr)
   end
 end
 
+-- Centralized git repo detection with caching
+local git_repo_cache = {}
+
+-- Clear cache when dir changed
+vim.api.nvim_create_autocmd('DirChanged', {
+  callback = function()
+    local bufname = vim.api.nvim_buf_get_name(0)
+    if bufname:match('^oil://') then
+      return
+    end
+    git_repo_cache = {}
+  end,
+})
+
+local function is_git_repo()
+  local cwd = vim.fn.getcwd()
+
+  if git_repo_cache[cwd] == nil then
+    vim.fn.system('git -C "' .. cwd .. '" rev-parse --is-inside-work-tree')
+    git_repo_cache[cwd] = vim.v.shell_error == 0
+  end
+
+  return git_repo_cache[cwd]
+end
+
+local function get_git_root()
+  if not is_git_repo() then
+    return vim.fn.getcwd()
+  end
+
+  local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
+  if vim.v.shell_error ~= 0 then
+    return vim.fn.getcwd()
+  end
+  return git_root
+end
+
+local function get_cwd_prompt_title_opt(title, cwd)
+  cwd = cwd or vim.fn.getcwd()
+  local dir_name = vim.fn.fnamemodify(cwd, ':~:p')
+  return {
+    prompt_title = title .. dir_name,
+    cwd = cwd,
+  }
+end
+
+local function get_find_command()
+  if is_git_repo() then
+    return { 'git', 'ls-files', '--cached', '--others', '--exclude-standard' }
+  else
+    return {
+      'fd',
+      '--hidden',
+      '--type=f',
+      '--strip-cwd-prefix',
+      '--exclude=*.lock',
+      '--exclude=.cache',
+      '--exclude=.git',
+      '--exclude=.next',
+      '--exclude=build',
+      '--exclude=dist',
+      '--exclude=node_modules',
+      '--exclude=vendor',
+    }
+  end
+end
+
+local function live_grep_git_root()
+  local opts = {}
+  if is_git_repo() then
+    opts = get_cwd_prompt_title_opt('Live Grep in ', get_git_root())
+  else
+    opts.prompt_title = 'Live Grep'
+  end
+  builtin.live_grep(opts)
+end
+
+local function find_visual_selection()
+  vim.cmd('noau normal! "vy"')
+  local text = vim.fn.getreg('v')
+  vim.fn.setreg('v', {})
+  text = string.gsub(text, '\n', '')
+  builtin.grep_string({ search = text })
+end
+
 telescope.setup({
   defaults = {
     initial_mode = 'insert',
@@ -114,20 +199,7 @@ telescope.setup({
   pickers = {
     find_files = {
       prompt_prefix = Icons.directory,
-      find_command = {
-        'fd',
-        '--hidden',
-        '--type=f',
-        '--strip-cwd-prefix',
-        '--exclude=*.lock',
-        '--exclude=.cache',
-        '--exclude=.git',
-        '--exclude=.next',
-        '--exclude=build',
-        '--exclude=dist',
-        '--exclude=node_modules',
-        '--exclude=vendor',
-      },
+      find_command = get_find_command,
     },
     oldfiles = {
       prompt_prefix = Icons.directory,
@@ -186,48 +258,13 @@ load_extension('vim_bookmarks')
 load_extension('project')
 load_extension('notify')
 
--- Helper functions for git integration
-local function is_git_repo()
-  vim.fn.system('git rev-parse --is-inside-work-tree')
-  return vim.v.shell_error == 0
-end
-
-local function get_git_root()
-  local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
-  if vim.v.shell_error ~= 0 then
-    return vim.fn.getcwd()
-  end
-  return git_root
-end
-
-local function live_grep_git_root()
-  local opts = {}
-  if is_git_repo() then
-    local git_root = get_git_root()
-    opts.cwd = git_root
-    opts.prompt_title = 'Live Grep (Git Root: ' .. vim.fn.fnamemodify(git_root, ':t') .. ')'
-  else
-    opts.prompt_title = 'Live Grep (Git Root)'
-  end
-  builtin.live_grep(opts)
-end
-
-local function find_visual_selection()
-  vim.cmd('noau normal! "vy"')
-  local text = vim.fn.getreg('v')
-  vim.fn.setreg('v', {})
-  text = string.gsub(text, '\n', '')
-  builtin.grep_string({ search = text })
-end
-
 -- Telescope keymaps
-vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Find files' })
+vim.keymap.set('n', '<C-p>', function()
+  builtin.find_files(get_cwd_prompt_title_opt('Find files in '))
+end, { desc = 'Find files (current dir)' })
 vim.keymap.set('n', '<C-e>', builtin.oldfiles, { desc = 'Recent files' })
-
 vim.keymap.set('n', '<leader>ff', function()
-  local cwd = vim.fn.getcwd()
-  local dir_name = vim.fn.fnamemodify(cwd, ':t')
-  builtin.live_grep({ prompt_title = 'Live Grep (Current Directory: ' .. dir_name .. ')' })
+  builtin.live_grep(get_cwd_prompt_title_opt('Live Grep in '))
 end, { desc = 'Live grep (current dir)' })
 vim.keymap.set('n', '<leader>fg', live_grep_git_root, { desc = 'Live grep (git root)' })
 vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Resume last search' })
