@@ -1,0 +1,56 @@
+# BEGIN_KITTY_FONTS
+font_family      family="FiraCode Nerd Font Mono"
+bold_font        auto
+italic_font      auto
+bold_italic_font auto
+# END_KITTY_FONTS
+font_size 12.0
+force_ltr yes
+symbol_map U+E0A0-U+E0A3,U+E0C0-U+E0C7 PowerlineSymbols
+narrow_symbols U+E0A0-U+E0A3,U+E0C0-U+E0C7 1
+font_features FiraCodeNF-Reg +zero +onum
+
+modify_font cell_height 105%
+modify_font baseline 1.0
+
+# Cursor
+cursor_trail 3
+cursor_trail_decay 0.1 0.4
+cursor_trail_start_threshold 2
+
+# Window Appearance
+hide_window_decorations yes
+
+background_opacity 0.9
+background_blur 30
+dynamic_background_opacity yes
+
+macos_titlebar_color system
+macos_option_as_alt yes
+macos_hide_from_tasks no
+
+
+# KEY MAPPINGS
+clear_all_shortcuts yes
+
+# Copy Paste
+map kitty_mod+c copy_to_clipboard
+map cmd+c copy_or_noop
+map kitty_mod+v paste_from_clipboard
+map cmd+v       paste_from_clipboard
+
+# Reload config
+map ctrl+cmd+,   load_config_file
+
+# Quit Kitty
+map cmd+q quit
+
+# Open kitty shell
+map ctrl+shift+escape kitty_shell window
+
+# BEGIN_KITTY_THEME
+# One Dark
+include current-theme.conf
+# END_KITTY_THEME
+
+

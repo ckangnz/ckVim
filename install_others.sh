@@ -25,13 +25,14 @@ cask_packages=(
   "dotnet-sdk" # sudo apt update && sudo apt install dotnet dotnet8
   "dotnet-sdk8:isen-ng/dotnet-sdk-versions"
 
+  "kitty"
   "arc"
-  "iterm2"
   "docker"
   "itsycal"
   "rectangle"
   "maccy"
   "hiddenbar"
+  # "iterm2"
   # "postman-agent"
   #"azure-data-studio"
   #"session-manager-plugin"

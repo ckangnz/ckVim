@@ -125,18 +125,18 @@ local plugins = {
       require('plugins.dressing')
     end,
   },
-  {
-    'sphamba/smear-cursor.nvim',
-    event = 'VeryLazy',
-    opts = {
-      normal_bg = nil,
-      smear_between_buffers = true,
-      smear_between_neighbor_lines = true,
-      scroll_buffer_space = true,
-      legacy_computing_symbols_support = false,
-      smear_insert_mode = true,
-    },
-  },
+  -- {
+  --   'sphamba/smear-cursor.nvim',
+  --   event = 'VeryLazy',
+  --   opts = {
+  --     normal_bg = nil,
+  --     smear_between_buffers = true,
+  --     smear_between_neighbor_lines = true,
+  --     scroll_buffer_space = true,
+  --     legacy_computing_symbols_support = false,
+  --     smear_insert_mode = true,
+  --   },
+  -- },
   {
     'rcarriga/nvim-notify',
     event = 'VimEnter',

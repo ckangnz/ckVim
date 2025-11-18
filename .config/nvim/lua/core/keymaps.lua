@@ -137,6 +137,7 @@ map(
 )
 map('n', '<leader>ez', '<cmd>vsp $HOME/.zshrc<cr>', { desc = 'Edit .zshrc' })
 map('n', '<leader>ea', '<cmd>vsp $HOME/.extraAlias.zsh<cr>', { desc = 'Edit .extraAlias.zsh' })
+map('n', '<leader>eK', '<cmd>vsp $HOME/.config/kitty/kitty.conf<cr>', { desc = 'Edit tmux.conf' })
 map('n', '<leader>et', '<cmd>vsp $HOME/.config/tmux/tmux.conf<cr>', { desc = 'Edit tmux.conf' })
 
 map('n', '<leader>eP', '<cmd>vsp $HOME/.vim/plugins.zsh<cr>', { desc = 'Edit plugins.zsh' })
@@ -188,10 +189,10 @@ end
 
 GenerateGUID = function()
   local new_uuid = vim.fn.system('uuidgen'):gsub('\n', '')
-  local nuuid_case = "lower"
-  local id = nuuid_case == "lower" and new_uuid:lower() or new_uuid:upper()
+  local nuuid_case = 'lower'
+  local id = nuuid_case == 'lower' and new_uuid:lower() or new_uuid:upper()
   vim.fn.setreg('"', id)
-  print("NEW GUID: " .. id)
+  print('NEW GUID: ' .. id)
 end
 
 local function utility_menu()

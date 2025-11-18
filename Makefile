@@ -21,6 +21,7 @@ zsh: fonts
 	echo "Installing ZSH..." && \
 	bash $(VIM_DIR)/install_zsh.sh && \
 	create_symlink ~/.vim/.zshrc ~/.zshrc && \
+	create_symlink ~/.vim/.config/kitty ~/.config/kitty && \
 	create_symlink ~/.vim/.config/tmux ~/.config/tmux
 
 ## Install other tools (Docker, AWS CLI, etc.)
@@ -43,6 +44,7 @@ symlink:
 	create_symlink ~/.vim/.vimrc ~/.vimrc && \
 	create_symlink ~/.vim/.config/nvim ~/.config/nvim && \
 	create_symlink ~/.vim/.config/mcphub ~/.config/mcphub && \
+	create_symlink ~/.vim/.config/kitty ~/.config/kitty && \
 	create_symlink ~/.vim/.config/tmux ~/.config/tmux
 
 
