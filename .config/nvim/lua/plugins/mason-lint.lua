@@ -24,6 +24,13 @@ lint.linters.shellcheck.args = {
   '--exclude=SC1091,SC2034,SC1090,SC2207',
 }
 
+lint.linters.checkmake.args = {
+  '--format',
+  '{{.LineNumber}}:{{.Rule}}:{{.Violation}}',
+  '--disable',
+  'maxbodylength', -- Disable max body length enforcement for Makefile targets
+}
+
 lint.linters.markdownlint.args = {
   '--disable',
   'MD013', -- Line length (disables max line length enforcement)

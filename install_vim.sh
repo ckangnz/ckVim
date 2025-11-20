@@ -11,19 +11,19 @@ echo ""
 
 # Install Homebrew packages
 packages=(
-  "python3"
-  "node"
+	"python3"
+	"node"
 
-  "nvim"
-  "vim"
+	"nvim"
+	"vim"
 
-  "uv"
-  "fd"
-  "ripgrep"
-  "fzf"
-  "catimg"
+	"uv"
+	"fd"
+	"ripgrep"
+	"fzf"
+	"catimg"
 
-  "jannis-baum/tap/vivify"
+	"jannis-baum/tap/vivify"
 )
 echo "Installing brew packages..."
 brew_install "${packages[@]}"

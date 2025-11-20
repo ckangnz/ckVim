@@ -11,23 +11,23 @@ echo ""
 
 # Install Homebrew packages
 packages=(
-  "zsh"
-  "tmux"
+	"zsh"
+	"tmux"
 
-  "python3"
-  "node"
-  "fnm"
+	"python3"
+	"node"
+	"fnm"
 
-  "gh"
-  "bat"
+	"gh"
+	"bat"
 
-  "fd"
-  "ripgrep"
-  "fzf"
+	"fd"
+	"ripgrep"
+	"fzf"
 
-  "lsd"
+	"lsd"
 
-  "jannis-baum/tap/vivify"
+	"jannis-baum/tap/vivify"
 )
 echo "Installing brew packages..."
 brew_install "${packages[@]}"
@@ -40,10 +40,10 @@ echo ""
 echo ""
 
 if [[ "$(basename "$SHELL")" != "zsh" ]]; then
-  echo "Changing default shell to zsh..."
-  chsh -s "$(which zsh)"
+	echo "Changing default shell to zsh..."
+	chsh -s "$(which zsh)"
 else
-  echo "Default shell is already zsh."
+	echo "Default shell is already zsh."
 fi
 
 echo "."

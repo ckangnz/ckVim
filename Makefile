@@ -9,20 +9,20 @@ all: vim zsh others
 ## Install Vim + Neovim config
 vim: fonts
 	@source $(VIM_DIR)/install_methods.sh && \
-	echo "Installing Vim/Neovim..." && \
-	bash $(VIM_DIR)/install_vim.sh && \
-	create_symlink ~/.vim/.vimrc ~/.vimrc && \
-	create_symlink ~/.vim/.config/nvim ~/.config/nvim && \
-	create_symlink ~/.vim/.config/mcphub ~/.config/mcphub
+		echo "Installing Vim/Neovim..." && \
+		bash $(VIM_DIR)/install_vim.sh && \
+		create_symlink ~/.vim/.vimrc ~/.vimrc && \
+		create_symlink ~/.vim/.config/nvim ~/.config/nvim && \
+		create_symlink ~/.vim/.config/mcphub ~/.config/mcphub
 
 ## Install Zsh + Zap config
 zsh: fonts
 	@source $(VIM_DIR)/install_methods.sh && \
-	echo "Installing ZSH..." && \
-	bash $(VIM_DIR)/install_zsh.sh && \
-	create_symlink ~/.vim/.zshrc ~/.zshrc && \
-	create_symlink ~/.vim/.config/kitty ~/.config/kitty && \
-	create_symlink ~/.vim/.config/tmux ~/.config/tmux
+		echo "Installing ZSH..." && \
+		bash $(VIM_DIR)/install_zsh.sh && \
+		create_symlink ~/.vim/.zshrc ~/.zshrc && \
+		create_symlink ~/.vim/.config/kitty ~/.config/kitty && \
+		create_symlink ~/.vim/.config/tmux ~/.config/tmux
 
 ## Install other tools (Docker, AWS CLI, etc.)
 others:
@@ -40,12 +40,12 @@ fonts:
 
 symlink:
 	@source $(VIM_DIR)/install_methods.sh && \
-	create_symlink ~/.vim/.zshrc ~/.zshrc && \
-	create_symlink ~/.vim/.vimrc ~/.vimrc && \
-	create_symlink ~/.vim/.config/nvim ~/.config/nvim && \
-	create_symlink ~/.vim/.config/mcphub ~/.config/mcphub && \
-	create_symlink ~/.vim/.config/kitty ~/.config/kitty && \
-	create_symlink ~/.vim/.config/tmux ~/.config/tmux
+		create_symlink ~/.vim/.zshrc ~/.zshrc && \
+		create_symlink ~/.vim/.vimrc ~/.vimrc && \
+		create_symlink ~/.vim/.config/nvim ~/.config/nvim && \
+		create_symlink ~/.vim/.config/mcphub ~/.config/mcphub && \
+		create_symlink ~/.vim/.config/kitty ~/.config/kitty && \
+		create_symlink ~/.vim/.config/tmux ~/.config/tmux
 
 
 ## Show this help message
