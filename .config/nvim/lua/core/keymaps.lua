@@ -178,11 +178,11 @@ vim.lsp.inlay_hint.enable(false)
 
 local function create_menu(items, prompt)
   local options = {}
-  local commands = {}
+  local actions = {}
 
   for i, item in ipairs(items) do
     table.insert(options, item[1])
-    commands[i] = item[2]
+    actions[i] = item[2]
   end
 
   vim.ui.select(options, {
@@ -192,9 +192,14 @@ local function create_menu(items, prompt)
     end,
   }, function(choice, idx)
     if choice and idx then
-      local command = commands[idx]
-      if command then
-        vim.cmd(command)
+      local action = actions[idx]
+      if action then
+        -- Check if it's a function or a string command
+        if type(action) == 'function' then
+          action()
+        else
+          vim.cmd(action)
+        end
       end
     end
   end)
@@ -208,14 +213,32 @@ GenerateGUID = function()
   print('NEW GUID: ' .. id)
 end
 
+CopyCurrentFilePathToClipboard = function()
+  local filepath = vim.fn.expand('%:p')
+  if filepath == '' then
+    print('No file in current buffer')
+    return
+  end
+  vim.fn.setreg('+', filepath)
+  print('Copied to clipboard: ' .. filepath)
+end
+
+CopyYankToClipboard = function()
+  vim.fn.setreg('+', vim.fn.getreg('"'))
+  print('Yanked text copied to clipboard!')
+end
+
 local function utility_menu()
   local utilContent = {
-    { 'Generate GUID', 'call GenerateGUID()' },
     { 'Render Markdown toggle', 'RenderMarkdown toggle' },
     { 'Vivify (Markdown Renderer)', 'Vivify' },
+    { 'Copy yanked text to clipboard', CopyYankToClipboard },
+    { 'Copy current file path to clipboard', CopyCurrentFilePathToClipboard },
+    { 'Generate GUID', GenerateGUID },
   }
   create_menu(utilContent, 'Utility:')
 end
+
 vim.keymap.set('n', '<leader>m', utility_menu, {
   desc = 'Utility menu',
   silent = true,
