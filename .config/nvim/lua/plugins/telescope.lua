@@ -138,8 +138,8 @@ telescope.setup({
 
         ['<C-k>'] = actions.preview_scrolling_up,
         ['<C-j>'] = actions.preview_scrolling_down,
-        ['<C-l>'] = actions.preview_scrolling_left,
-        ['<C-h>'] = actions.preview_scrolling_right,
+        ['<C-h>'] = actions.preview_scrolling_left,
+        ['<C-l>'] = actions.preview_scrolling_right,
 
         ['gg'] = actions.move_to_top,
         ['G'] = actions.move_to_bottom,
