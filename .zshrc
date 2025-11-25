@@ -73,6 +73,7 @@ fi
 
 #alias
 alias neo="neovide --fork"
+alias icat="kitten icat"
 
 alias bu="brew update"
 alias bup="brew upgrade"
