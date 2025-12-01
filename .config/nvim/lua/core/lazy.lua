@@ -57,6 +57,7 @@ local plugins = {
   },
   {
     'olimorris/codecompanion.nvim',
+    tag = 'v17.33.0',
     cmd = { 'CodeCompanion', 'CodeCompanionChat', 'CodeCompanionAction' },
     keys = {
       { '<BS>', desc = 'Toggle CodeCompanion chat', mode = { 'n', 'v' } },
