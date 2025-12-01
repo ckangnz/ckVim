@@ -108,6 +108,7 @@ alias dcup="docker compose up"
 alias dcdn="docker compose down"
 alias dczsh="docker compose run --rm web zsh"
 alias dcbash="docker compose run --rm web bash"
+alias lzg="lazygit"
 alias lzd="lazydocker"
 
 function dcupp() {
@@ -149,3 +150,4 @@ bindkey -v
 bindkey -M viins '^P' up-line-or-history
 bindkey -M viins '^N' down-line-or-history
 bindkey -M viins '^E' end-of-line
+if [ -f "$HOME/.afm-bin-path-manager.zsh" ]; then source "$HOME/.afm-bin-path-manager.zsh"; fi
