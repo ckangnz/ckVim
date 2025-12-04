@@ -74,10 +74,10 @@ vim.api.nvim_set_hl(0, 'BookmarkSign', {
 })
 
 vim.api.nvim_set_hl(0, 'BookmarkLine', {
-  bg = Colors.dark_grey,
+  bg = Colors.medium_grey,
   fg = 'NONE',
 })
 vim.api.nvim_set_hl(0, 'BookmarkAnnotationLine', {
-  bg = Colors.dark_grey,
+  bg = Colors.medium_grey,
   fg = 'NONE',
 })

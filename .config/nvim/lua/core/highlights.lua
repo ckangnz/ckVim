@@ -7,7 +7,7 @@ local function apply_custom_highlights()
 
   -- Visual Highlights
   vim.api.nvim_set_hl(0, 'Visual', {
-    bg = Colors.dark_grey,
+    bg = Colors.medium_grey,
     bold = true,
   })
 

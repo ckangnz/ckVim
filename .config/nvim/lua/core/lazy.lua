@@ -167,7 +167,7 @@ local plugins = {
     'norcalli/nvim-colorizer.lua',
     event = 'VeryLazy',
     config = function()
-      require('colorizer').setup({
+      require('colorizer').setup(nil, {
         exclude_filetypes = { 'GV' },
       })
     end,

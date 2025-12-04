@@ -1,8 +1,10 @@
 Colors = {
   black = '#1d1f21',
-  dark_grey = '#404347',
-  grey = '#5c6370',
-  light_grey = '#969896',
+  dark_grey = '#353739',
+  medium_grey = '#4d4f52',
+  grey = '#65676a',
+  light_grey = '#9d9e9f',
+  lighter_grey = '#c6c7c7',
   white = '#e0e0e0',
 
   red = '#cc6666',
