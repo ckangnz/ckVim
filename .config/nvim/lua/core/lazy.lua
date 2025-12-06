@@ -158,19 +158,11 @@ local plugins = {
   {
     'rcarriga/nvim-notify',
     event = 'VimEnter',
+    keys = {
+      { '<leader><tab>', desc = 'Show notifications history' },
+    },
     config = function()
-      require('notify').setup({
-        stages = 'fade_in_slide_out',
-        timeout = 3000,
-        max_height = 10,
-        max_width = 80,
-        top_down = true,
-        render = 'default',
-        minimum_width = 50,
-        fps = 30,
-        level = 2,
-      })
-      vim.notify = require('notify')
+      require('plugins.notify')
     end,
   },
   {

@@ -246,34 +246,3 @@ vim.api.nvim_create_user_command(
   fzf.registers,
   { desc = 'Show registers with fzf-lua' }
 )
-
-local function setup_fzf_colors()
-  local FzfLuaColor = {
-    FzfLuaSearch = { bold = true, underline = true },
-    FzfLuaCursorLine = { fg = Colors.black, bg = Colors.light_green, bold = true },
-    FzfLuaCursorLineNr = { fg = Colors.black, bg = Colors.light_green, bold = true },
-
-    FzfLuaPromptPrefix = { bg = Colors.dark_grey, fg = Colors.cyan },
-    FzfLuaPromptNormal = { bg = Colors.dark_grey, fg = Colors.white },
-    FzfLuaPromptBorder = { bg = Colors.dark_grey, fg = Colors.grey },
-
-    FzfLuaTitle = { bg = Colors.dark_grey, fg = Colors.yellow, bold = true },
-    FzfLuaHeaderText = { bg = Colors.dark_grey, fg = Colors.yellow },
-
-    FzfLuaNormal = { fg = Colors.white, bg = Colors.black },
-    FzfLuaBorder = { bg = Colors.dark_grey, fg = Colors.dark_grey },
-
-    FzfLuaPreviewNormal = { bg = Colors.black },
-    FzfLuaPreviewBorder = { bg = Colors.dark_grey, fg = Colors.dark_grey },
-    FzfLuaPreviewTitle = { bg = Colors.dark_grey, fg = Colors.white },
-  }
-
-  for hl, col in pairs(FzfLuaColor) do
-    vim.api.nvim_set_hl(0, hl, col)
-  end
-end
-vim.defer_fn(setup_fzf_colors, 100)
-vim.api.nvim_create_autocmd('ColorScheme', {
-  callback = setup_fzf_colors,
-  desc = 'Setup fzf-lua colors',
-})
