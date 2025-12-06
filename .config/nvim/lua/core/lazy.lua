@@ -84,7 +84,24 @@ local plugins = {
     cmd = { 'MCPHub' },
     build = 'npm install -g mcp-hub@latest',
     config = function()
-      require('mcphub').setup()
+      require('mcphub').setup({
+        auto_toggle_mcp_servers = true,
+        builtin_tools = {
+          edit_file = {
+            ui = {
+              go_to_origin_on_complete = true,
+              keybindings = {
+                accept = '.',
+                reject = ',',
+                next = 'n',
+                prev = 'N',
+                accept_all = '>',
+                reject_all = '<',
+              },
+            },
+          },
+        },
+      })
     end,
   },
 
