@@ -70,7 +70,7 @@ local plugins = {
       'nvim-tree/nvim-web-devicons',
       'nvim-treesitter/nvim-treesitter',
       'hrsh7th/nvim-cmp',
-      'nvim-telescope/telescope.nvim',
+
       'ravitemer/codecompanion-history.nvim',
       'stevearc/dressing.nvim',
     },
@@ -331,22 +331,30 @@ local plugins = {
 
   -- Search Tool
   {
-    'nvim-telescope/telescope.nvim',
-    branch = 'master',
+    'ibhagwan/fzf-lua',
     event = 'VeryLazy',
-    cmd = 'Telescope',
-    keys = { { '<leader>T', '<cmd>Telescope<cr>', desc = 'Open Telescope', silent = true } },
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-      },
-      'nvim-telescope/telescope-project.nvim',
-      'tom-anders/telescope-vim-bookmarks.nvim',
+    cmd = 'FzfLua',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    keys = {
+      { '<C-p>', desc = 'Find files' },
+      { '<C-e>', desc = 'Recent files' },
+      { '<leader>ff', desc = 'Live grep (current dir)' },
+      { '<leader>fg', desc = 'Live grep (git root)' },
+      { '<leader>fr', desc = 'Resume last search' },
+      { '<leader>f', desc = 'Grep selection', mode = 'v' },
+      { '<leader>F', desc = 'Grep string under cursor' },
+      { '<leader>b', desc = 'Switch buffers' },
+      { 'gh', desc = 'Help tags' },
+      { '<leader>/', desc = 'Search in current buffer' },
+      { ']D', desc = 'Workspace diagnostics' },
+      { 'grr', desc = 'LSP references' },
+      { 'gi', desc = 'LSP implementations' },
+      { 'gy', desc = 'LSP type definitions' },
+      { 'gO', desc = 'LSP document symbols' },
+      { '<leader>T', desc = 'FzfLua pickers' },
     },
     config = function()
-      require('plugins.telescope')
+      require('plugins.fzf-lua')
     end,
   },
 

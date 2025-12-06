@@ -79,32 +79,9 @@ return {
     },
     select = {
       enabled = true,
-      backend = { 'telescope', 'fzf_lua', 'fzf', 'builtin', 'nui' },
+      backend = { 'fzf_lua', 'builtin', 'nui' },
       trim_prompt = true,
-      telescope = require('telescope.themes').get_dropdown({
-        winblend = 10,
-        width = 0.5,
-        previewer = false,
-        prompt_title = false,
-        results_title = false,
-        sorting_strategy = 'ascending',
-        layout_strategy = 'center',
-        layout_config = {
-          preview_cutoff = 1, -- Preview should never show up
-          width = function(_, max_columns, _)
-            return math.min(max_columns, 80)
-          end,
-          height = function(_, _, max_lines)
-            return math.min(max_lines, 15)
-          end,
-        },
-        border = true,
-        borderchars = {
-          prompt = { '─', '│', ' ', '│', '╭', '╮', '│', '│' },
-          results = { '─', '│', '─', '│', '├', '┤', '╯', '╰' },
-          preview = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-        },
-      }),
+
       fzf = {
         window = {
           width = 0.5,
@@ -112,10 +89,10 @@ return {
         },
       },
       fzf_lua = {
-        -- winopts = {
-        --   height = 0.5,
-        --   width = 0.5,
-        -- },
+        winopts = {
+          height = 0.5,
+          width = 0.5,
+        },
       },
       nui = {
         position = '50%',
@@ -167,10 +144,14 @@ return {
       get_config = function(opts)
         if opts.kind == 'codeaction' then
           return {
-            backend = 'telescope',
-            telescope = require('telescope.themes').get_cursor({
-              prompt_title = 'Code Actions',
-            }),
+            backend = 'fzf_lua',
+            fzf_lua = {
+              winopts = {
+                relative = 'cursor',
+                width = 0.5,
+                height = 0.4,
+              },
+            },
           }
         end
       end,

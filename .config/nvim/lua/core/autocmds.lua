@@ -125,9 +125,7 @@ autocmd('TermOpen', {
 local function toggle_whitespace_match(mode)
   local excluded_filetypes = {
     '',
-    'TelescopePreview',
-    'TelescopePrompt',
-    'TelescopeResults',
+    'fzf',
     'alpha',
     'codecompanion',
     'ctrlsf',

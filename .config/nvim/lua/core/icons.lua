@@ -48,6 +48,7 @@ Icons = {
   forbidden = ' ',
   func = '󰊕',
   globe = '󰖟 ',
+  git = ' ',
   heart = ' ',
   hearts = '󰩖 ',
   hint = '󰌶 ',

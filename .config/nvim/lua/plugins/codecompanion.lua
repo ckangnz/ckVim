@@ -95,7 +95,7 @@ codecompanion.setup({
         keymap = ',lc', -- Load chat
         auto_save = false,
         expiration_days = 0,
-        picker = 'telescope',
+        picker = 'fzf-lua',
         chat_filter = nil,
         picker_keymaps = {
           rename = { n = 'r', i = '<C-r>' },

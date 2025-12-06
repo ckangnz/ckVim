@@ -19,7 +19,7 @@ vim.keymap.set('v', '<leader>2', ':GV!<CR>', { silent = true, desc = 'Git log fo
 -- Git branches
 vim.keymap.set('n', '<leader>3', function()
   if vim.fn.FugitiveHead() ~= '' then
-    vim.cmd('Telescope git_branches')
+    vim.cmd('FzfLua git_branches')
   else
     vim.notify('Not in a git repo', vim.log.levels.ERROR)
   end
