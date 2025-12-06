@@ -161,7 +161,20 @@ map('n', '<leader>er', '<cmd>vsp $HOME/.vim/README.md<cr>', { desc = 'Edit readm
 map('n', '<leader>ee', '<cmd>vsp $HOME/.vim<cr>', { desc = 'Open ~/.vim directory' })
 
 -- LSP
-map('n', 'K', vim.lsp.buf.hover, { silent = true, desc = 'Show hover' })
+local function smart_K()
+  local ft = vim.bo.filetype
+  local word = vim.fn.expand('<cword>')
+  if ft == 'help' then
+    vim.cmd('help ' .. word)
+  else
+    -- Try to open help for the word under cursor
+    local ok = pcall(vim.cmd, 'help ' .. word)
+    if not ok then
+      vim.lsp.buf.hover()
+    end
+  end
+end
+map('n', 'K', smart_K, { silent = true, desc = 'Smart help/LSP hover' })
 map('n', 'grn', vim.lsp.buf.rename, { silent = true, desc = 'Rename' })
 map('n', '[d', vim.diagnostic.goto_prev, { silent = true, desc = 'Previous Diagnostic' })
 map('n', ']d', vim.diagnostic.goto_next, { silent = true, desc = 'Next Diagnostic' })
