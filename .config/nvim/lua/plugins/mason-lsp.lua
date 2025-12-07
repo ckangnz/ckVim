@@ -7,7 +7,7 @@ require('mason-lspconfig').setup({
 
     'html',
     'cssls',
-    'ts_ls',
+    'tsgo',
     'eslint',
 
     'jsonls',
@@ -44,7 +44,7 @@ vim.lsp.config('lua_ls', {
   },
 })
 
-vim.lsp.config('ts_ls', {
+vim.lsp.config('tsgo', {
   capabilities = lsp_capabilities,
   on_attach = function(client, bufnr)
     vim.api.nvim_create_user_command('OrganizeImports', function()
