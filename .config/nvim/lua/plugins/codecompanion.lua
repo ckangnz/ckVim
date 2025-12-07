@@ -22,6 +22,19 @@ codecompanion.setup({
         sticky = false,
       },
     },
+    diff = {
+      provider_opts = {
+        inline = {
+          layout = 'buffer',
+          opts = {
+            context_lines = 3,
+            full_width_removed = true,
+            show_keymap_hints = true,
+            show_removed = true,
+          },
+        },
+      },
+    },
   },
   strategies = {
     chat = {
@@ -36,8 +49,9 @@ codecompanion.setup({
         user = 'You (User)',
       },
       opts = {
-        goto_file_action = 'tabnew', -- press gR to go to file in new tab
+        goto_file_action = 'tabnew',
         completion_provider = 'cmp',
+        show_diff = true,
       },
       slash_commands = {
         ['file'] = {
@@ -58,6 +72,17 @@ codecompanion.setup({
         model = vim.g.copilot_model,
       },
       opts = { completion_provider = 'cmp' },
+      keymaps = {
+        accept_change = {
+          modes = { n = '.' },
+        },
+        reject_change = {
+          modes = { n = ',' },
+        },
+        always_accept = {
+          modes = { n = '>' },
+        },
+      },
     },
     cmd = {
       adapter = {
