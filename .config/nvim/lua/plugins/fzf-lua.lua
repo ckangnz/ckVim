@@ -1,4 +1,5 @@
 local fzf = require('fzf-lua')
+fzf.register_ui_select()
 local actions = require('fzf-lua.actions')
 
 -- Git repo detection (similar to your telescope setup)
@@ -76,8 +77,10 @@ fzf.setup({
     },
   },
   fzf_opts = {
+    ['--ansi'] = true,
     ['--layout'] = 'reverse',
-    ['--info'] = 'inline',
+    ['--info'] = 'right',
+    ['--highlight-line'] = true,
   },
   keymap = {
     builtin = true,
@@ -89,10 +92,6 @@ fzf.setup({
     },
   },
   files = {
-    prompt = Icons.directory
-      .. ' Find Files ['
-      .. vim.fn.fnamemodify(vim.fn.getcwd(), ':~')
-      .. '] ❯ ',
     multiprocess = true,
     git_icons = false,
     file_icons = true,
@@ -115,7 +114,6 @@ fzf.setup({
   },
   git = {
     files = {
-      prompt = Icons.git .. ' Git Files [' .. vim.fn.fnamemodify(get_git_root(), ':~') .. '] ❯ ',
       cmd = 'git ls-files --exclude-standard',
       multiprocess = true,
       git_icons = true,
@@ -123,7 +121,7 @@ fzf.setup({
       color_icons = true,
     },
     branches = {
-      prompt = 'Branches ❯ ',
+      prompt = 'Branches❯ ',
       cmd = 'git branch --all --color',
       preview = 'git log --graph --pretty=oneline --abbrev-commit --color {1}',
       remotes = 'local', -- "detach|local", switch behavior for remotes
@@ -137,7 +135,6 @@ fzf.setup({
     },
   },
   grep = {
-    prompt = Icons.magnify .. ' Live Grep [' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':~') .. '] > ',
     multiprocess = true,
     file_icons = true,
     color_icons = true,
@@ -156,7 +153,6 @@ fzf.setup({
     },
   },
   oldfiles = {
-    prompt = Icons.directory .. ' Recent ❯ ',
     cwd_only = false,
     stat_file = true,
     include_current_session = true,
@@ -168,7 +164,7 @@ fzf.setup({
     },
   },
   buffers = {
-    prompt = Icons.file_default .. ' Buffers ❯ ',
+    prompt = Icons.file_default .. ' Buffers❯ ',
     file_icons = true,
     color_icons = true,
     sort_lastused = true,
@@ -201,6 +197,20 @@ fzf.setup({
   },
 })
 
+local function shorten_path(path, max_len)
+  max_len = max_len or 40
+  -- replace home with '~' for brevity
+  local home = vim.fn.expand('~')
+  if path:sub(1, #home) == home then
+    path = '~' .. path:sub(#home + 1)
+  end
+  if #path <= max_len then
+    return path
+  end
+  local keep = math.floor((max_len - 1) / 2)
+  return path:sub(1, keep) .. '…' .. path:sub(-keep)
+end
+
 local function grep_visual_selection()
   vim.cmd('noau normal! "vy"')
   local text = vim.fn.getreg('v')
@@ -209,29 +219,60 @@ local function grep_visual_selection()
   if text ~= '' then
     fzf.grep({
       search = text,
-      prompt = Icons.magnify .. ' Visual Grep "' .. text:sub(1, 30) .. '" ❯ ',
+      prompt = Icons.magnify .. ' Visual Grep "' .. text:sub(1, 30) .. '"' .. ' [' .. shorten_path(
+        vim.fn.getcwd(),
+        30
+      ) .. ']❯ ',
+      cwd = vim.fn.getcwd(),
     })
   end
 end
 
 vim.keymap.set('n', '<leader>T', fzf.builtin, { desc = 'FzfLua pickers' })
-vim.keymap.set('n', '<C-p>', fzf.files, { desc = 'Find files (current dir)' })
-vim.keymap.set('n', '<C-e>', fzf.oldfiles, { desc = 'Recent files' })
-vim.keymap.set('n', '<leader>fG', fzf.git_files, { desc = 'Git files' })
+vim.keymap.set('n', '<C-p>', function()
+  fzf.files({
+    prompt = Icons.directory .. ' Find Files [' .. shorten_path(vim.fn.getcwd(), 30) .. ']❯ ',
+  })
+end, { desc = 'Find files (current dir)' })
+vim.keymap.set('n', '<C-e>', function()
+  fzf.oldfiles({
+    prompt = Icons.directory .. ' Recent❯ ',
+  })
+end, { desc = 'Recent files' })
+vim.keymap.set('n', '<leader>fG', function()
+  fzf.git_files({
+    prompt = Icons.git .. ' Git Files [' .. vim.fn.fnamemodify(get_git_root(), ':~') .. ']❯ ',
+  })
+end, { desc = 'Git files' })
 vim.keymap.set('n', '<leader>ff', function()
-  local cwd = vim.fn.fnamemodify(vim.fn.getcwd())
-  fzf.live_grep({ cwd })
+  fzf.live_grep({
+    prompt = Icons.magnify .. ' Live Grep [' .. shorten_path(vim.fn.getcwd(), 30) .. '] > ',
+    cwd = vim.fn.getcwd(),
+  })
 end, { desc = 'Live grep (current dir)' })
 vim.keymap.set('n', '<leader>fg', function()
   local git_root = get_git_root()
   fzf.live_grep({
-    prompt = Icons.git .. ' Git Grep [' .. vim.fn.fnamemodify(git_root, ':~') .. '] ❯ ',
+    prompt = Icons.git .. ' Git Grep [' .. shorten_path(git_root, 30) .. ']❯ ',
     cwd = git_root,
   })
 end, { desc = 'Live grep from Git' })
 vim.keymap.set('n', '<leader>fr', fzf.resume, { desc = 'Resume last search' })
 vim.keymap.set('v', '<leader>f', grep_visual_selection, { desc = 'Grep selection' })
-vim.keymap.set('n', '<leader>F', fzf.grep_cword, { desc = 'Grep string under cursor' })
+vim.keymap.set('n', '<leader>F', function()
+  local cword = vim.fn.expand('<cword>') or ''
+  if cword == '' then
+    cword = '<no-word>'
+  end
+
+  fzf.grep_cword({
+    prompt = Icons.magnify .. ' Grep "' .. cword .. '"' .. ' [' .. vim.fn.fnamemodify(
+      vim.fn.getcwd(),
+      ':~'
+    ) .. ']❯ ',
+    cwd = vim.fn.getcwd(),
+  })
+end, { desc = 'Grep string under cursor' })
 
 vim.keymap.set('n', '<leader>b', fzf.buffers, { desc = 'Switch buffers' })
 vim.keymap.set('n', '<leader>q', fzf.quickfix, { desc = 'List quickfix items' })
