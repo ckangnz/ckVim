@@ -240,6 +240,11 @@ vim.keymap.set('n', '<leader>/', fzf.blines, { desc = 'Search in current buffer'
 
 vim.keymap.set('n', ']D', fzf.diagnostics_workspace, { desc = 'Workspace diagnostics' })
 vim.keymap.set('n', 'grr', fzf.lsp_references, { desc = 'LSP references' })
+vim.keymap.set('n', 'ga', function()
+  fzf.lsp_code_actions({ winopts = { height = 0.4, width = 0.5 } })
+end, { desc = 'LSP implementations' })
+vim.keymap.set('n', 'gd', fzf.lsp_definitions, { desc = 'LSP implementations' })
+vim.keymap.set('n', '<C-]>', fzf.lsp_definitions, { desc = 'LSP implementations' })
 vim.keymap.set('n', 'gi', fzf.lsp_implementations, { desc = 'LSP implementations' })
 vim.keymap.set('n', 'gt', fzf.lsp_typedefs, { desc = 'LSP type definitions' })
 vim.keymap.set('n', 'gO', fzf.lsp_document_symbols, { desc = 'LSP document symbols' })
