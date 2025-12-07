@@ -1,5 +1,5 @@
 -- Set this in ZSHRC
--- export COPILOT_MODEL="claude-sonnet-4"
+-- export LLM_MODEL="claude-sonnet-4.5"
 
 vim.api.nvim_create_user_command(
   'ToggleCopilot',
@@ -11,7 +11,7 @@ vim.keymap.set('n', '<leader>ct', ':ToggleCopilot<CR>', { desc = 'Toggle Copilot
 vim.keymap.set('n', '<leader>cp', ':Copilot panel<CR>', { desc = 'Open Copilot panel' })
 
 require('copilot').setup({
-  copilot_model = vim.g.copilot_model,
+  copilot_model = vim.g.LLM_MODEL,
   panel = {
     enabled = true,
     auto_refresh = false,

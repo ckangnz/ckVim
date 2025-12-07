@@ -7,9 +7,14 @@ if vim.fn.has('termguicolors') == 1 then
   vim.env.COLORTERM = 'truecolor'
 end
 
--- Copilot Model
--- export COPILOT_MODEL="claude-sonnet-4"
-g.copilot_model = os.getenv('COPILOT_MODEL') or 'gpt-5-mini'
+-- <-- CODE COMPANION -->
+-- Configure your custom agent in plugins/codecompanion_adapters.lua
+-- export CODE_COMPANION_AGENT="copilot" or "rovodev"
+g.CODE_COMPANION_AGENT = os.getenv('CODE_COMPANION_AGENT') or 'copilot'
+
+-- export LLM_MODEL="claude-sonnet-4"
+g.LLM_MODEL = os.getenv('LLM_MODEL') or 'gpt-5-mini'
+-- <--END CODE COMPANION -->
 
 -- ANSI colors for terminal
 g.terminal_ansi_colors = {

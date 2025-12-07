@@ -1,6 +1,11 @@
 -- Set this in ZSHRC
--- export COPILOT_MODEL="claude-sonnet-4"
+-- export LLM_MODEL="claude-sonnet-4"
 local codecompanion = require('codecompanion')
+
+local ok, custom_adapters = pcall(require, 'plugins.codecompanion_adapters')
+if not ok or type(custom_adapters) ~= 'table' then
+  custom_adapters = {}
+end
 
 codecompanion.setup({
   display = {
@@ -36,11 +41,12 @@ codecompanion.setup({
       },
     },
   },
+  adapters = custom_adapters,
   strategies = {
     chat = {
       adapter = {
-        name = 'copilot',
-        model = vim.g.copilot_model,
+        name = vim.g.CODE_COMPANION_AGENT,
+        model = vim.g.LLM_MODEL,
       },
       roles = {
         llm = function(adapter)
@@ -68,8 +74,8 @@ codecompanion.setup({
     },
     inline = {
       adapter = {
-        name = 'copilot',
-        model = vim.g.copilot_model,
+        name = vim.g.CODE_COMPANION_AGENT,
+        model = vim.g.LLM_MODEL,
       },
       opts = { completion_provider = 'cmp' },
       keymaps = {
@@ -86,8 +92,8 @@ codecompanion.setup({
     },
     cmd = {
       adapter = {
-        name = 'copilot',
-        model = vim.g.copilot_model,
+        name = vim.g.CODE_COMPANION_AGENT,
+        model = vim.g.LLM_MODEL,
       },
       opts = { completion_provider = 'cmp' },
     },

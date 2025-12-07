@@ -1,10 +1,6 @@
-/plugged/
-/autoload/plug.vim
-.config/nvim/autoload/coc/source/codecompanion.vim
 /notes/Personal_notes
 /notes/todo.md
 /.config/tmux/plugins
-/view/
 .DS_Store
 .netrwhist
 lazy-lock.json
