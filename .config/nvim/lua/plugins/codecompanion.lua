@@ -13,9 +13,17 @@ codecompanion.setup({
       show_context = true, -- Show context (from slash commands and variables) in the chat buffer?
       show_settings = false, -- Show LLM settings at the top of the chat buffer?
       show_token_count = true, -- Show the token count for each response?
+      fold_reasoning = false,
+      show_reasoning = true,
       icons = {
-        buffer_pin = Icons.pin,
-        buffer_watch = Icons.watch,
+        buffer_sync_all = Icons.added_multiple,
+        buffer_sync_diff = Icons.diff,
+        chat_context = Icons.link,
+        chat_fold = Icons.fold,
+        tool_pending = Icons.circle,
+        tool_in_progress = Icons.loading,
+        tool_failure = Icons.error_circle,
+        tool_success = Icons.check_circle,
       },
       window = {
         layout = 'vertical', -- float|vertical|horizontal|buffer
@@ -42,7 +50,7 @@ codecompanion.setup({
     },
   },
   adapters = custom_adapters,
-  strategies = {
+  interactions = {
     chat = {
       adapter = {
         name = vim.g.CODE_COMPANION_AGENT,
@@ -105,7 +113,32 @@ codecompanion.setup({
       },
     },
   },
-
+  rules = {
+    default = {
+      description = 'Collection of common files for all projects',
+      files = {
+        '.clinerules',
+        '.cursorrules',
+        '.goosehints',
+        '.rules',
+        '.windsurfrules',
+        '.github/copilot-instructions.md',
+        '.agent.md',
+        'AGENT.md',
+        'AGENTS.md',
+        { path = 'CLAUDE.md', parser = 'claude' },
+        { path = 'CLAUDE.local.md', parser = 'claude' },
+        { path = '~/.claude/CLAUDE.md', parser = 'claude' },
+      },
+      is_preset = true,
+    },
+    opts = {
+      chat = {
+        enabled = true,
+        default_rules = 'default', -- The rule groups to load
+      },
+    },
+  },
   extensions = {
     mcphub = {
       callback = 'mcphub.extensions.codecompanion',
@@ -135,6 +168,8 @@ codecompanion.setup({
         },
         auto_generate_title = true,
         title_generation_opts = {
+          adapter = "copilot",  -- Use an HTTP-based adapter (copilot, openai, anthropic, etc.)
+          model = nil,  -- Uses the default model for the adapter
           refresh_every_n_prompts = 0,
           max_refreshes = 3,
           format_title = function(original_title)
