@@ -17,6 +17,7 @@ packages=(
 	"python3"
 	"node"
 	"fnm"
+	"uv"
 
 	"gh"
 	"bat"
