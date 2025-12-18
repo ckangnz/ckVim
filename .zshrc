@@ -38,37 +38,39 @@ else
 fi
 
 #------Source Brew plugins--------
-export HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-$(brew --prefix)}
-export HOMEBREW_NO_AUTO_UPDATE=1
-export HOMEBREW_NO_INSTALL_CLEANUP=
-export HOMEBREW_NO_ENV_HINTS=1
+if command -v brew >/dev/null 2>&1; then
+	export HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-$(brew --prefix)}
+	export HOMEBREW_NO_AUTO_UPDATE=1
+	export HOMEBREW_NO_INSTALL_CLEANUP=
+	export HOMEBREW_NO_ENV_HINTS=1
 
-# FNM
-if [[ -e "$HOMEBREW_PREFIX/bin/fnm" ]]; then
-	PATH="$FNM_MULTISHELL_PATH:$PATH"
-fi
-# Python3
-if [[ -e "$HOMEBREW_PREFIX/opt/python3/bin" ]]; then
-	PATH="$HOMEBREW_PREFIX/opt/python3/bin:$PATH"
-fi
-# Java
-if [[ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]]; then
-	JDK_HOME=$HOMEBREW_PREFIX/opt/openjdk
-	PATH="$JDK_HOME/bin:$PATH"
-fi
-# FZF
-if [[ -f ~/.fzf.zsh ]]; then
-	FZF_HOME="$HOMEBREW_PREFIX/opt/fzf"
-	source ~/.fzf.zsh
-	source <(fzf --zsh)
-elif [[ -d "$HOMEBREW_PREFIX/opt/fzf/bin" ]]; then
-	"$HOMEBREW_PREFIX/opt/fzf/install"
-fi
-#lsd
-if [[ -d "$HOMEBREW_PREFIX/opt/lsd/bin" ]]; then
-	alias ls="lsd --group-directories-first"
-	alias la="lsd -la --group-directories-first"
-	alias lt="lsd --tree"
+	# FNM
+	if [[ -e "$HOMEBREW_PREFIX/bin/fnm" ]]; then
+		PATH="$FNM_MULTISHELL_PATH:$PATH"
+	fi
+	# Python3
+	if [[ -e "$HOMEBREW_PREFIX/opt/python3/bin" ]]; then
+		PATH="$HOMEBREW_PREFIX/opt/python3/bin:$PATH"
+	fi
+	# Java
+	if [[ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]]; then
+		JDK_HOME=$HOMEBREW_PREFIX/opt/openjdk
+		PATH="$JDK_HOME/bin:$PATH"
+	fi
+	# FZF
+	if [[ -f ~/.fzf.zsh ]]; then
+		FZF_HOME="$HOMEBREW_PREFIX/opt/fzf"
+		source ~/.fzf.zsh
+		source <(fzf --zsh)
+	elif [[ -d "$HOMEBREW_PREFIX/opt/fzf/bin" ]]; then
+		"$HOMEBREW_PREFIX/opt/fzf/install"
+	fi
+	#lsd
+	if [[ -d "$HOMEBREW_PREFIX/opt/lsd/bin" ]]; then
+		alias ls="lsd --group-directories-first"
+		alias la="lsd -la --group-directories-first"
+		alias lt="lsd --tree"
+	fi
 fi
 
 #alias
@@ -150,3 +152,4 @@ bindkey -v
 bindkey -M viins '^P' up-line-or-history
 bindkey -M viins '^N' down-line-or-history
 bindkey -M viins '^E' end-of-line
+if [ -f "$HOME/.afm-bin-path-manager.zsh" ]; then source "$HOME/.afm-bin-path-manager.zsh"; fi
