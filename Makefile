@@ -46,6 +46,7 @@ symlink:
 		create_symlink ~/.vim/.config/mcphub ~/.config/mcphub && \
 		create_symlink ~/.vim/.config/kitty ~/.config/kitty && \
 		create_symlink ~/.vim/.config/tmux ~/.config/tmux
+		create_symlink ~/.vim/.config/lazygit ~.config/lazygit
 
 
 ## Show this help message

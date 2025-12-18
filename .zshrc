@@ -73,6 +73,10 @@ if command -v brew >/dev/null 2>&1; then
 	fi
 fi
 
+# XDG Configs
+export TMUX_CONF_DIR="$HOME/.config/tmux"
+export LAZYGIT_CONFIG_DIR="$HOME/.config/lazygit"
+
 #alias
 alias neo="neovide --fork"
 alias icat="kitten icat"
@@ -103,7 +107,7 @@ alias zl="zap list"
 alias zu="zap update all"
 alias zc="zap clean"
 
-alias tR="tmux source ~/.config/tmux/tmux.conf"
+alias tR="tmux source $TMUX_CONF_DIR/tmux.conf"
 alias tA="tmux attach"
 
 alias dcup="docker compose up"
