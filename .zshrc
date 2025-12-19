@@ -92,6 +92,7 @@ alias gas="gh auth switch"
 alias gcnv='gc --no-verify'
 alias gcnva='gc --no-verify --amend'
 alias gcnvan='gc --no-verify --amend --no-edit'
+alias gfom='gfo $(git_main_branch) --prune --prune-tags --no-tags && g branch -f $(git_main_branch) origin/$(git_main_branch)'
 
 gdf() {
 	# example: gdf "test\.tsx$"
