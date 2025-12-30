@@ -75,7 +75,10 @@ codecompanion.setup({
         },
         ['buffer'] = {
           keymaps = {
-            modes = { n = { '<C-b>', '<leader>b' } },
+            modes = {
+              i = { '<C-b>' },
+              n = { '<C-b>', '<leader>b' },
+            },
           },
         },
       },
@@ -168,8 +171,8 @@ codecompanion.setup({
         },
         auto_generate_title = true,
         title_generation_opts = {
-          adapter = "copilot",  -- Use an HTTP-based adapter (copilot, openai, anthropic, etc.)
-          model = nil,  -- Uses the default model for the adapter
+          adapter = 'copilot', -- Use an HTTP-based adapter (copilot, openai, anthropic, etc.)
+          model = nil, -- Uses the default model for the adapter
           refresh_every_n_prompts = 0,
           max_refreshes = 3,
           format_title = function(original_title)

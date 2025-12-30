@@ -1,4 +1,4 @@
-local M = {}
+local M = require('codecompanion.adapters')
 
 M.acp = {
   rovodev = function()
