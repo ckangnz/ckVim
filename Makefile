@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 VIM_DIR := $(HOME)/.vim
 
-.PHONY: all vim zsh others reset fonts symlink help
+.PHONY: all vim zsh others reset fonts brew symlink help
 
 ## Default
 all: vim zsh others
@@ -35,7 +35,25 @@ reset:
 	@rm -f ~/.zshrc ~/.vimrc
 	@rm -rf ~/.config/nvim ~/.config/tmux ~/.config/mcphub
 
-fonts:
+## Install Homebrew if not present
+brew:
+	@if ! command -v brew &> /dev/null; then \
+		echo "Homebrew not found. Installing Homebrew..."; \
+		NONINTERACTIVE=1 /bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
+		echo "Configuring Homebrew in PATH..."; \
+		if [ -f /opt/homebrew/bin/brew ]; then \
+			eval "$$(/opt/homebrew/bin/brew shellenv)"; \
+		elif [ -f /usr/local/bin/brew ]; then \
+			eval "$$(/usr/local/bin/brew shellenv)"; \
+		elif [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then \
+			eval "$$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; \
+		fi; \
+		echo "Homebrew installed successfully!"; \
+	else \
+		echo "Homebrew is already installed."; \
+	fi
+
+fonts: brew
 	@brew install --cask font-fira-code-nerd-font
 
 symlink:
