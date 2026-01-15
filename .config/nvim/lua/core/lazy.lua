@@ -268,7 +268,7 @@ local plugins = {
   -- Language Specific
   {
     'nvim-treesitter/nvim-treesitter',
-    event = 'BufReadPre',
+    lazy = false,
     build = ':TSUpdate',
     branch = 'main',
     config = function()
