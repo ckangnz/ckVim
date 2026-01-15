@@ -120,7 +120,9 @@ codecompanion.setup({
     default = {
       description = 'Collection of common files for all projects',
       files = {
+        '.codelassian',
         '.clinerules',
+        '.cursor',
         '.cursorrules',
         '.goosehints',
         '.rules',
