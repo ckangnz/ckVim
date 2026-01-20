@@ -77,14 +77,6 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
 })
 autocmd({ 'BufRead', 'BufNewFile' }, {
   group = filetype_specific,
-  desc = 'Set filetype for mdx files',
-  pattern = { '*.mdx' },
-  callback = function()
-    vim.bo.filetype = 'mdx'
-  end,
-})
-autocmd({ 'BufRead', 'BufNewFile' }, {
-  group = filetype_specific,
   desc = 'Set filetype for env files',
   pattern = { '.env', '.env.local', '.env.development', '.env.production' },
   callback = function()

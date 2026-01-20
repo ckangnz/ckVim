@@ -90,15 +90,22 @@ end
 vim.api.nvim_create_autocmd('FileType', {
   pattern = '*',
   callback = function()
-    local ok, has_parser = pcall(require('nvim-treesitter.parsers').has_parser)
-    if ok and has_parser then
-      vim.wo.foldmethod = 'expr'
-      vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-      vim.defer_fn(function()
-        if vim.api.nvim_buf_is_valid(0) then
-          pcall(vim.cmd, 'normal! zx')
-        end
-      end, 100)
+    local bufnr = vim.api.nvim_get_current_buf()
+    local ft = vim.bo[bufnr].filetype
+
+    local lang = vim.treesitter.language.get_lang(ft)
+
+    if lang then
+      local ok = pcall(vim.treesitter.start, bufnr, lang)
+      if ok then
+        vim.wo.foldmethod = 'expr'
+        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        vim.defer_fn(function()
+          if vim.api.nvim_buf_is_valid(bufnr) then
+            pcall(vim.cmd, 'normal! zx')
+          end
+        end, 100)
+      end
     end
   end,
   desc = 'Setup treesitter folding for supported filetypes',

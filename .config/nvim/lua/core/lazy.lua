@@ -271,6 +271,14 @@ local plugins = {
     lazy = false,
     build = ':TSUpdate',
     branch = 'main',
+    dependencies = {
+      {
+        'davidmh/mdx.nvim',
+        config = function()
+          vim.treesitter.language.register('markdown', 'mdx')
+        end,
+      },
+    },
     config = function()
       require('plugins.nvim-treesitter')
     end,
@@ -285,12 +293,6 @@ local plugins = {
   {
     'jannis-baum/vivify.vim',
     ft = 'markdown',
-  },
-  {
-    'davidmh/mdx.nvim',
-    config = true,
-    ft = 'mdx',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'mattn/emmet-vim',
