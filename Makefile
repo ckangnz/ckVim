@@ -1,73 +1,87 @@
 SHELL := /bin/bash
 VIM_DIR := $(HOME)/.vim
+SCRIPTS_DIR := $(VIM_DIR)/scripts
 
-.PHONY: all vim zsh others reset fonts brew symlink help
+.PHONY: all vim zsh others reset fonts brew check_brew install_brew symlink vim_symlink zsh_symlink help
 
-## Default
-all: vim zsh others
+## Default - Interactive selection
+all:
+	@run_targets=$$(bash $(SCRIPTS_DIR)/interactive_menu.sh); \
+	if [ -n "$$run_targets" ]; then \
+		for target in $$run_targets; do \
+			$(MAKE) $$target || exit 1; \
+		done; \
+	fi
 
 ## Install Vim + Neovim config
-vim: fonts
-	@source $(VIM_DIR)/install_methods.sh && \
-		echo "Installing Vim/Neovim..." && \
-		bash $(VIM_DIR)/install_vim.sh && \
+vim: check_brew fonts vim_symlink
+	@bash $(SCRIPTS_DIR)/install_vim.sh
+
+## Install Zsh + Zap config
+zsh: check_brew fonts zsh_symlink
+	@bash $(SCRIPTS_DIR)/install_zsh.sh
+
+## Create Vim symlinks
+vim_symlink:
+	@source $(SCRIPTS_DIR)/install_methods.sh && \
 		create_symlink ~/.vim/.vimrc ~/.vimrc && \
 		create_symlink ~/.vim/.config/nvim ~/.config/nvim && \
 		create_symlink ~/.vim/.config/mcphub ~/.config/mcphub
 
-## Install Zsh + Zap config
-zsh: fonts
-	@source $(VIM_DIR)/install_methods.sh && \
-		echo "Installing ZSH..." && \
-		bash $(VIM_DIR)/install_zsh.sh && \
+## Create Zsh symlinks
+zsh_symlink:
+	@source $(SCRIPTS_DIR)/install_methods.sh && \
 		create_symlink ~/.vim/.zshrc ~/.zshrc && \
 		create_symlink ~/.vim/.config/kitty ~/.config/kitty && \
+		create_symlink ~/.vim/.config/lazygit ~/.config/lazygit && \
 		create_symlink ~/.vim/.config/tmux ~/.config/tmux
 
 ## Install other tools (Docker, AWS CLI, etc.)
 others:
-	@echo "Installing other software..."
-	@bash $(VIM_DIR)/install_others.sh
+	@bash $(SCRIPTS_DIR)/install_others.sh
 
-## Remove symlinks and reset environment
 reset:
 	@echo "Cleaning symlinks..."
 	@rm -f ~/.zshrc ~/.vimrc
-	@rm -rf ~/.config/nvim ~/.config/tmux ~/.config/mcphub
+	@rm -rf ~/.config/nvim ~/.config/tmux ~/.config/mcphub ~/.config/kitty ~/.config/lazygit
 
-## Install Homebrew if not present
-brew:
+check_brew:
 	@if ! command -v brew &> /dev/null; then \
-		echo "Homebrew not found. Installing Homebrew..."; \
-		NONINTERACTIVE=1 /bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
-		echo "Configuring Homebrew in PATH..."; \
-		if [ -f /opt/homebrew/bin/brew ]; then \
-			eval "$$(/opt/homebrew/bin/brew shellenv)"; \
-		elif [ -f /usr/local/bin/brew ]; then \
-			eval "$$(/usr/local/bin/brew shellenv)"; \
-		elif [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then \
-			eval "$$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; \
-		fi; \
-		echo "Homebrew installed successfully!"; \
+		echo "Homebrew not found. Installing..."; \
+		$(MAKE) install_brew; \
 	else \
-		echo "Homebrew is already installed."; \
+		if [ "$(VERBOSE)" = "1" ]; then \
+			echo "Homebrew is already installed. Skipping installation."; \
+		fi; \
 	fi
 
-fonts: brew
-	@brew install --cask font-fira-code-nerd-font
+install_brew:
+	@echo "Installing Homebrew..."; \
+	echo -n "Do you want to run in non-interactive mode? [y/N]: " > /dev/tty; \
+	read -r answer < /dev/tty; \
+	if [ "$$answer" = "y" ] || [ "$$answer" = "Y" ]; then \
+		NONINTERACTIVE=1 /bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
+	else \
+		/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
+	fi; \
+	echo "Configuring Homebrew in PATH..."; \
+	if [ -f /opt/homebrew/bin/brew ]; then \
+		eval "$$(/opt/homebrew/bin/brew shellenv)"; \
+	elif [ -f /usr/local/bin/brew ]; then \
+		eval "$$(/usr/local/bin/brew shellenv)"; \
+	elif [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then \
+		eval "$$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; \
+	fi; \
+	echo "Homebrew installed successfully!"
 
-symlink:
-	@source $(VIM_DIR)/install_methods.sh && \
-		create_symlink ~/.vim/.zshrc ~/.zshrc && \
-		create_symlink ~/.vim/.vimrc ~/.vimrc && \
-		create_symlink ~/.vim/.config/nvim ~/.config/nvim && \
-		create_symlink ~/.vim/.config/mcphub ~/.config/mcphub && \
-		create_symlink ~/.vim/.config/kitty ~/.config/kitty && \
-		create_symlink ~/.vim/.config/lazygit ~/.config/lazygit && \
-		create_symlink ~/.vim/.config/tmux ~/.config/tmux \
-		create_symlink ~/.vim/.config/lazygit ~.config/lazygit
+brew:
+	@$(MAKE) check_brew VERBOSE=1
 
+## Install fonts
+fonts: check_brew
+	@brew install --cask font-fira-code-nerd-font || true
 
-## Show this help message
+symlink: vim_symlink zsh_symlink
+
 help:
 	@grep -E '^##' Makefile | sed -E 's/## //'

@@ -142,18 +142,28 @@ map('n', '<leader>et', '<cmd>vsp $HOME/.config/tmux/tmux.conf<cr>', { desc = 'Ed
 
 map('n', '<leader>eP', '<cmd>vsp $HOME/.vim/plugins.zsh<cr>', { desc = 'Edit plugins.zsh' })
 map('n', '<leader>em', '<cmd>vsp $HOME/.vim/Makefile<cr>', { desc = 'Edit Makefile' })
-map('n', '<leader>eiv', '<cmd>vsp $HOME/.vim/install_vim.sh<cr>', { desc = 'Edit install_vim.sh' })
-map('n', '<leader>eiz', '<cmd>vsp $HOME/.vim/install_zsh.sh<cr>', { desc = 'Edit install_zsh.sh' })
+map(
+  'n',
+  '<leader>eiv',
+  '<cmd>vsp $HOME/.vim/scripts/install_vim.sh<cr>',
+  { desc = 'Edit install_vim.sh' }
+)
+map(
+  'n',
+  '<leader>eiz',
+  '<cmd>vsp $HOME/.vim/scripts/install_zsh.sh<cr>',
+  { desc = 'Edit install_zsh.sh' }
+)
 map(
   'n',
   '<leader>eim',
-  '<cmd>vsp $HOME/.vim/install_methods.sh<cr>',
+  '<cmd>vsp $HOME/.vim/scripts/install_methods.sh<cr>',
   { desc = 'Edit install_methods.sh' }
 )
 map(
   'n',
   '<leader>eio',
-  '<cmd>vsp $HOME/.vim/install_others.sh<cr>',
+  '<cmd>vsp $HOME/.vim/scripts/install_others.sh<cr>',
   { desc = 'Edit install_others.sh' }
 )
 map('n', '<leader>en', '<cmd>vsp $HOME/.vim/notes<cr>', { desc = 'Open notes directory' })

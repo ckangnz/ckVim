@@ -1,3 +1,8 @@
+#!/bin/bash
+
+# Trap signals for graceful exit (allows Ctrl+C to stop installation)
+trap 'echo -e "\n${RED}Installation interrupted by user.${RESET}"; exit 130' INT TERM
+
 # Define colors
 GREEN="\033[32m"
 YELLOW="\033[33m"

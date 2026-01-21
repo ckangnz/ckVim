@@ -1,5 +1,8 @@
+#!/bin/bash
+
 # Load install methods
-. ./install_methods.sh --source-only
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+. "$SCRIPT_DIR/install_methods.sh" --source-only
 
 echo "LET'S INSTALL CK-OTHERS!!!!!!!"
 echo ""
