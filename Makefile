@@ -2,6 +2,17 @@ SHELL := /bin/bash
 VIM_DIR := $(HOME)/.vim
 SCRIPTS_DIR := $(VIM_DIR)/scripts
 
+# Helper function to source brew environment
+define SETUP_BREW
+	if [ -f /opt/homebrew/bin/brew ]; then \
+		eval "$$(/opt/homebrew/bin/brew shellenv)"; \
+	elif [ -f /usr/local/bin/brew ]; then \
+		eval "$$(/usr/local/bin/brew shellenv)"; \
+	elif [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then \
+		eval "$$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; \
+	fi
+endef
+
 .PHONY: all vim zsh others reset fonts brew check_brew install_brew symlink vim_symlink zsh_symlink help
 
 ## Default - Interactive selection
@@ -14,12 +25,14 @@ all:
 	fi
 
 ## Install Vim + Neovim config
-vim: check_brew fonts vim_symlink
-	@bash $(SCRIPTS_DIR)/install_vim.sh
+vim: fonts vim_symlink
+	@$(SETUP_BREW); \
+	bash $(SCRIPTS_DIR)/install_vim.sh
 
 ## Install Zsh + Zap config
-zsh: check_brew fonts zsh_symlink
-	@bash $(SCRIPTS_DIR)/install_zsh.sh
+zsh: fonts zsh_symlink
+	@$(SETUP_BREW); \
+	bash $(SCRIPTS_DIR)/install_zsh.sh
 
 ## Create Vim symlinks
 vim_symlink:
@@ -79,7 +92,8 @@ brew:
 
 ## Install fonts
 fonts: check_brew
-	@brew install --cask font-fira-code-nerd-font || true
+	@$(SETUP_BREW); \
+	brew install --cask font-fira-code-nerd-font
 
 symlink: vim_symlink zsh_symlink
 
