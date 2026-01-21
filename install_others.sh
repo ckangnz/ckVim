@@ -6,8 +6,6 @@ echo ""
 
 # Install Homebrew packages
 packages=(
-	"lazygit"
-	"lazydocker"
 	"meetingbar"
 	# "awscli"
 	# "kubectl"

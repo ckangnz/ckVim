@@ -28,6 +28,9 @@ packages=(
 
 	"lsd"
 
+	"lazygit"
+	"lazydocker"
+
 	"jannis-baum/tap/vivify"
 )
 echo "Installing brew packages..."
