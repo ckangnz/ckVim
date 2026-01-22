@@ -292,7 +292,7 @@ local plugins = {
   },
   {
     'jannis-baum/vivify.vim',
-    ft = 'markdown',
+    cmd = 'Vivify',
   },
   {
     'mattn/emmet-vim',

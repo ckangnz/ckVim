@@ -31,6 +31,11 @@ brew_install "${packages[@]}"
 echo ""
 echo ""
 
+echo "Installing pynvim for Neovim..."
+python3 -m pip install --user --break-system-packages pynvim 2>/dev/null || python3 -m pip install --user pynvim
+echo ""
+echo ""
+
 echo " ██████╗██╗  ██╗██╗   ██╗██╗███╗   ███╗",
 echo "██╔════╝██║ ██╔╝██║   ██║██║████╗ ████║",
 echo "██║     █████╔╝ ██║   ██║██║██╔████╔██║",
