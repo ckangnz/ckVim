@@ -270,7 +270,7 @@ local plugins = {
     'nvim-treesitter/nvim-treesitter',
     lazy = false,
     build = ':TSUpdate',
-    branch = 'main',
+    branch = 'master',
     dependencies = {
       {
         'davidmh/mdx.nvim',

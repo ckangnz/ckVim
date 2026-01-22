@@ -1,32 +1,11 @@
-require('nvim-treesitter.config').setup({
-  modules = {},
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-    disable = function(_, buf)
-      local max_filesize = 100 * 1024 -- 100 KB
-      local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-      if ok and stats and stats.size > max_filesize then
-        return true
-      end
-      -- Disable for very large files or problematic filetypes
-      local lines = vim.api.nvim_buf_line_count(buf)
-      if lines > 10000 then
-        return true
-      end
-    end,
-  },
-  sync_install = false,
-  auto_install = true,
+require('nvim-treesitter.configs').setup({
   ensure_installed = {
-    -- Version control
     'gitignore',
     'git_config',
     'git_rebase',
     'gitcommit',
     'gitattributes',
 
-    -- Editor and documentation
     'vim',
     'vimdoc',
     'lua',
@@ -34,7 +13,6 @@ require('nvim-treesitter.config').setup({
     'markdown',
     'markdown_inline',
 
-    -- Web technologies
     'html',
     'css',
     'scss',
@@ -42,87 +20,64 @@ require('nvim-treesitter.config').setup({
     'typescript',
     'tsx',
     'json',
-    'jsonc',
 
-    -- Programming languages
     'java',
     'python',
     'c',
     'c_sharp',
-    'kotlin',
-    'dart',
-    'go',
-    'rust',
-    'ruby',
-    'php',
+    -- 'kotlin',
+    -- 'dart',
+    -- 'go',
+    -- 'rust',
+    -- 'ruby',
+    -- 'php',
 
-    -- Configuration and data
     'yaml',
-    'toml',
+    -- 'toml',
     'xml',
     'dockerfile',
     'regex',
     'http',
 
-    -- Infrastructure as Code
     'hcl',
     'terraform',
 
-    -- Shell scripting
     'bash',
-    'fish',
+    -- 'fish',
 
-    -- Other
     'sql',
     'comment',
   },
-  ignore_install = {},
+
+  auto_install = false,
+  sync_install = false,
+
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+
   indent = {
     enable = true,
   },
-  incremental_selection = { enable = false },
 })
-
-if vim.fn.has('unix') == 1 and vim.fn.has('mac') == 1 then
-  require('nvim-treesitter.install').compilers = { 'gcc' }
-end
 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = '*',
-  callback = function()
-    local bufnr = vim.api.nvim_get_current_buf()
-    local ft = vim.bo[bufnr].filetype
-
-    local lang = vim.treesitter.language.get_lang(ft)
-
-    if lang then
-      local ok = pcall(vim.treesitter.start, bufnr, lang)
-      if ok then
-        vim.wo.foldmethod = 'expr'
-        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-        vim.defer_fn(function()
-          if vim.api.nvim_buf_is_valid(bufnr) then
-            pcall(vim.cmd, 'normal! zx')
-          end
-        end, 100)
-      end
+  callback = function(args)
+    local bufnr = args.buf
+    local lang = vim.treesitter.language.get_lang(vim.bo[bufnr].filetype)
+    if lang and pcall(vim.treesitter.start, bufnr, lang) then
+      vim.wo.foldmethod = 'expr'
+      vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+      vim.defer_fn(function()
+        if vim.api.nvim_buf_is_valid(bufnr) then
+          pcall(vim.cmd, 'normal! zx')
+        end
+      end, 100)
     end
   end,
   desc = 'Setup treesitter folding for supported filetypes',
-})
-
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'TSHighlightError',
-  callback = function()
-    local bufnr = vim.api.nvim_get_current_buf()
-    vim.defer_fn(function()
-      if vim.api.nvim_buf_is_valid(bufnr) then
-        vim.treesitter.stop(bufnr)
-        vim.treesitter.start(bufnr)
-      end
-    end, 50)
-  end,
-  desc = 'Auto-reset treesitter on highlighting errors',
 })
 
 vim.api.nvim_create_user_command('TSReset', function()
@@ -131,7 +86,7 @@ vim.api.nvim_create_user_command('TSReset', function()
   vim.defer_fn(function()
     if vim.api.nvim_buf_is_valid(bufnr) then
       vim.treesitter.start(bufnr)
-      print('Treesitter reset for buffer ' .. bufnr)
+      vim.notify('Treesitter reset for buffer ' .. bufnr, vim.log.levels.INFO)
     end
   end, 100)
 end, { desc = 'Reset treesitter for current buffer' })
