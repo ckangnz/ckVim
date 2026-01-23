@@ -40,10 +40,8 @@ vim.keymap.set('n', '<leader>gd', ':Gdiff<CR>', { silent = true, desc = 'Git dif
 vim.keymap.set(
   'n',
   '<leader>gD',
-  -- ':Gdiffsplit!<CR>',
-  ':Git mergetool <CR>',
-  -- { silent = true, desc = 'Git diff split (3-way)' }
-  { silent = true, desc = 'Git mergetool' }
+  ':Gdiffsplit!<CR>',
+  { silent = true, desc = 'Git diff split (3-way)' }
 )
 
 -- Git file operations
