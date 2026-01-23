@@ -2,20 +2,8 @@ SHELL := /bin/bash
 VIM_DIR := $(HOME)/.vim
 SCRIPTS_DIR := $(VIM_DIR)/scripts
 
-# Helper function to source brew environment
-define SETUP_BREW
-	if [ -f /opt/homebrew/bin/brew ]; then \
-		eval "$$(/opt/homebrew/bin/brew shellenv)"; \
-	elif [ -f /usr/local/bin/brew ]; then \
-		eval "$$(/usr/local/bin/brew shellenv)"; \
-	elif [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then \
-		eval "$$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; \
-	fi
-endef
-
 .PHONY: all vim zsh others reset fonts brew check_brew install_brew symlink vim_symlink zsh_symlink help
 
-## Default - Interactive selection
 all:
 	@run_targets=$$(bash $(SCRIPTS_DIR)/interactive_menu.sh); \
 	if [ -n "$$run_targets" ]; then \
@@ -24,24 +12,18 @@ all:
 		done; \
 	fi
 
-## Install Vim + Neovim config
-vim: fonts vim_symlink
-	@$(SETUP_BREW); \
-	bash $(SCRIPTS_DIR)/install_vim.sh
+vim: check_brew vim_symlink
+	@bash $(SCRIPTS_DIR)/install_vim.sh
 
-## Install Zsh + Zap config
-zsh: fonts zsh_symlink
-	@$(SETUP_BREW); \
-	bash $(SCRIPTS_DIR)/install_zsh.sh
+zsh: check_brew zsh_symlink
+	@bash $(SCRIPTS_DIR)/install_zsh.sh
 
-## Create Vim symlinks
 vim_symlink:
 	@source $(SCRIPTS_DIR)/install_methods.sh && \
 		create_symlink ~/.vim/.vimrc ~/.vimrc && \
 		create_symlink ~/.vim/.config/nvim ~/.config/nvim && \
 		create_symlink ~/.vim/.config/mcphub ~/.config/mcphub
 
-## Create Zsh symlinks
 zsh_symlink:
 	@source $(SCRIPTS_DIR)/install_methods.sh && \
 		create_symlink ~/.vim/.zshrc ~/.zshrc && \
@@ -49,7 +31,6 @@ zsh_symlink:
 		create_symlink ~/.vim/.config/lazygit ~/.config/lazygit && \
 		create_symlink ~/.vim/.config/tmux ~/.config/tmux
 
-## Install other tools (Docker, AWS CLI, etc.)
 others:
 	@bash $(SCRIPTS_DIR)/install_others.sh
 
@@ -60,40 +41,50 @@ reset:
 
 check_brew:
 	@if ! command -v brew &> /dev/null; then \
-		echo "Homebrew not found. Installing..."; \
-		$(MAKE) install_brew; \
-	else \
-		if [ "$(VERBOSE)" = "1" ]; then \
-			echo "Homebrew is already installed. Skipping installation."; \
+		echo ""; \
+		echo "❌ Error: Homebrew is not installed or not in PATH!"; \
+		echo ""; \
+		echo "Please either:"; \
+		echo "  1. Run 'make brew' to install Homebrew, then follow the eval instructions"; \
+		echo "  2. If already installed, run the eval command for your system:"; \
+		echo ""; \
+		if [ -f /opt/homebrew/bin/brew ]; then \
+			echo "     eval \"\$$(/opt/homebrew/bin/brew shellenv)\""; \
+		elif [ -f /usr/local/bin/brew ]; then \
+			echo "     eval \"\$$(/usr/local/bin/brew shellenv)\""; \
+		elif [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then \
+			echo "     eval \"\$$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\""; \
 		fi; \
+		echo ""; \
+		exit 1; \
 	fi
 
+## Install/Reinstall Homebrew
 install_brew:
 	@echo "Installing Homebrew..."; \
-	echo -n "Do you want to run in non-interactive mode? [y/N]: " > /dev/tty; \
-	read -r answer < /dev/tty; \
-	if [ "$$answer" = "y" ] || [ "$$answer" = "Y" ]; then \
-		NONINTERACTIVE=1 /bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
-	else \
-		/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
-	fi; \
-	echo "Configuring Homebrew in PATH..."; \
+	NONINTERACTIVE=1 /bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
+	echo ""; \
+	echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+	echo "✅ Homebrew installed successfully!"; \
+	echo ""; \
+	echo "⚠️  IMPORTANT: Add Homebrew to your PATH by running:"; \
+	echo ""; \
 	if [ -f /opt/homebrew/bin/brew ]; then \
-		eval "$$(/opt/homebrew/bin/brew shellenv)"; \
+		echo "   eval \"\$$(/opt/homebrew/bin/brew shellenv)\""; \
 	elif [ -f /usr/local/bin/brew ]; then \
-		eval "$$(/usr/local/bin/brew shellenv)"; \
+		echo "   eval \"\$$(/usr/local/bin/brew shellenv)\""; \
 	elif [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then \
-		eval "$$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; \
+		echo "   eval \"\$$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\""; \
 	fi; \
-	echo "Homebrew installed successfully!"
+	echo ""; \
+	echo "Or restart your terminal, then run 'make all' again."; \
+	echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+	echo ""
 
-brew:
-	@$(MAKE) check_brew VERBOSE=1
+brew: install_brew
 
-## Install fonts
 fonts: check_brew
-	@$(SETUP_BREW); \
-	brew install --cask font-fira-code-nerd-font
+	@brew install --cask font-fira-code-nerd-font
 
 symlink: vim_symlink zsh_symlink
 

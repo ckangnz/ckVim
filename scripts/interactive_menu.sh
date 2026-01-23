@@ -12,10 +12,22 @@ GRAY='\033[0;90m'
 BLUE='\033[1;34m'
 RESET='\033[0m'
 
-sel_brew=1
-sel_vim=1
-sel_zsh=1
-sel_others=0
+# Smart defaults based on whether brew is installed
+if command -v brew &> /dev/null; then
+	# Brew exists - default to vim, zsh, fonts
+	sel_brew=0
+	sel_vim=1
+	sel_zsh=1
+	sel_fonts=1
+	sel_others=0
+else
+	# No brew - default to brew only
+	sel_brew=1
+	sel_vim=0
+	sel_zsh=0
+	sel_fonts=0
+	sel_others=0
+fi
 
 while true; do
 	clear > /dev/tty
@@ -26,10 +38,11 @@ while true; do
 	[ $sel_brew -eq 1 ] && echo -e "  ${GREEN}[1]${RESET} ${GREEN}◉${RESET} ${GREEN}brew${RESET}" > /dev/tty || echo -e "  ${GRAY}[1]${RESET} ${GRAY}○${RESET} ${GRAY}brew${RESET}" > /dev/tty
 	[ $sel_vim -eq 1 ] && echo -e "  ${GREEN}[2]${RESET} ${GREEN}◉${RESET} ${GREEN}vim${RESET}" > /dev/tty || echo -e "  ${GRAY}[2]${RESET} ${GRAY}○${RESET} ${GRAY}vim${RESET}" > /dev/tty
 	[ $sel_zsh -eq 1 ] && echo -e "  ${GREEN}[3]${RESET} ${GREEN}◉${RESET} ${GREEN}zsh${RESET}" > /dev/tty || echo -e "  ${GRAY}[3]${RESET} ${GRAY}○${RESET} ${GRAY}zsh${RESET}" > /dev/tty
-	[ $sel_others -eq 1 ] && echo -e "  ${GREEN}[4]${RESET} ${GREEN}◉${RESET} ${GREEN}others${RESET}" > /dev/tty || echo -e "  ${GRAY}[4]${RESET} ${GRAY}○${RESET} ${GRAY}others${RESET}" > /dev/tty
+	[ $sel_fonts -eq 1 ] && echo -e "  ${GREEN}[4]${RESET} ${GREEN}◉${RESET} ${GREEN}fonts${RESET}" > /dev/tty || echo -e "  ${GRAY}[4]${RESET} ${GRAY}○${RESET} ${GRAY}fonts${RESET}" > /dev/tty
+	[ $sel_others -eq 1 ] && echo -e "  ${GREEN}[5]${RESET} ${GREEN}◉${RESET} ${GREEN}others${RESET}" > /dev/tty || echo -e "  ${GRAY}[5]${RESET} ${GRAY}○${RESET} ${GRAY}others${RESET}" > /dev/tty
 	echo "" > /dev/tty
 	echo -e "${CYAN}────────────────────────────────────────────${RESET}" > /dev/tty
-	echo -e "${YELLOW}Press 1-4 to toggle, a for all, Enter to confirm${RESET}" > /dev/tty
+	echo -e "${YELLOW}Press 1-5 to toggle, a for all, Enter to confirm${RESET}" > /dev/tty
 	echo -e "${CYAN}────────────────────────────────────────────${RESET}" > /dev/tty
 	read -n1 -r input < /dev/tty
 	echo "" > /dev/tty
@@ -37,12 +50,13 @@ while true; do
 		1) sel_brew=$((1 - sel_brew)) ;;
 		2) sel_vim=$((1 - sel_vim)) ;;
 		3) sel_zsh=$((1 - sel_zsh)) ;;
-		4) sel_others=$((1 - sel_others)) ;;
+		4) sel_fonts=$((1 - sel_fonts)) ;;
+		5) sel_others=$((1 - sel_others)) ;;
 		a|A)
-			if [ $sel_brew -eq 1 ] && [ $sel_vim -eq 1 ] && [ $sel_zsh -eq 1 ] && [ $sel_others -eq 1 ]; then
-				sel_brew=0; sel_vim=0; sel_zsh=0; sel_others=0
+			if [ $sel_brew -eq 1 ] && [ $sel_vim -eq 1 ] && [ $sel_zsh -eq 1 ] && [ $sel_fonts -eq 1 ] && [ $sel_others -eq 1 ]; then
+				sel_brew=0; sel_vim=0; sel_zsh=0; sel_fonts=0; sel_others=0
 			else
-				sel_brew=1; sel_vim=1; sel_zsh=1; sel_others=1
+				sel_brew=1; sel_vim=1; sel_zsh=1; sel_fonts=1; sel_others=1
 			fi
 			;;
 		"") break ;;
@@ -56,11 +70,13 @@ run_targets=""
 [ $sel_brew -eq 1 ] && run_targets="$run_targets brew"
 [ $sel_vim -eq 1 ] && run_targets="$run_targets vim"
 [ $sel_zsh -eq 1 ] && run_targets="$run_targets zsh"
+[ $sel_fonts -eq 1 ] && run_targets="$run_targets fonts"
 [ $sel_others -eq 1 ] && run_targets="$run_targets others"
 
 if [ -z "$run_targets" ]; then
-	echo -e "${RED}No targets selected. Exiting.${RESET}" > /dev/tty
-	exit 0
+	echo -e "${RED}✗ No targets selected. Exiting.${RESET}" > /dev/tty
+	echo "" > /dev/tty
+	exit 1
 fi
 
 echo -e "${GREEN}✓ Running:${RESET}${BLUE}$run_targets${RESET}" > /dev/tty
