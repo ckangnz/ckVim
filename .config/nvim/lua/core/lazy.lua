@@ -320,6 +320,14 @@ local plugins = {
     end,
   },
   {
+    'lewis6991/gitsigns.nvim',
+    event = 'VeryLazy',
+    dependencies = { 'tpope/vim-fugitive' },
+    config = function()
+      require('plugins.gitsigns')
+    end,
+  },
+  {
     'gbrowse',
     dir = vim.fn.stdpath('config'),
     keys = {

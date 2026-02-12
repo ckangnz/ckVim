@@ -27,16 +27,11 @@ end, { silent = true, desc = 'Git branches' })
 
 -- Git commit
 vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', { silent = true, desc = 'Git commit' })
-vim.keymap.set(
-  'n',
-  '<leader>gr',
-  ':Gread<CR>',
-  { silent = true, desc = 'Git read (checkout file)' }
-)
-vim.keymap.set('n', '<leader>gw', ':Gwrite<CR>', { silent = true, desc = 'Git write (stage file)' })
 
--- Git diff
-vim.keymap.set('n', '<leader>gd', ':Gdiff<CR>', { silent = true, desc = 'Git diff' })
+-- REPLACED WITH GITSIGNS
+-- vim.keymap.set( 'n', '<leader>gr', ':Gread<CR>', { silent = true, desc = 'Git read (checkout file)' })
+-- vim.keymap.set('n', '<leader>gw', ':Gwrite<CR>', { silent = true, desc = 'Git write (stage file)' })
+-- vim.keymap.set('n', '<leader>gd', ':Gdiff<CR>', { silent = true, desc = 'Git diff' })
 vim.keymap.set(
   'n',
   '<leader>gD',
