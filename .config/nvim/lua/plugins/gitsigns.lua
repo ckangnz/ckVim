@@ -48,10 +48,10 @@ gitsigns.setup({
     col = 1,
   },
   on_attach = function(bufnr)
-    local function map(mode, l, r, opts)
-      opts = opts or {}
+    local function map(mode, l, r, description)
+      local opts = {}
       opts.buffer = bufnr
-      vim.keymap.set(mode, l, r, opts)
+      vim.keymap.set(mode, l, r, opts, description)
     end
 
     map('n', ']c', function()
@@ -70,28 +70,20 @@ gitsigns.setup({
       end
     end)
 
-    map('n', '<leader>hs', gitsigns.stage_hunk)
-    map('n', '<leader>hr', gitsigns.reset_hunk)
-    map('v', '<leader>hs', function()
-      gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-    end)
-    map('v', '<leader>hr', function()
-      gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-    end)
-    map('n', '<leader>gw', gitsigns.stage_buffer)
-    map('n', '<leader>gr', gitsigns.reset_buffer)
-    map('n', '<leader>gd', gitsigns.diffthis)
-    map('n', '<leader>hp', gitsigns.preview_hunk)
-    map('n', '<leader>hi', gitsigns.preview_hunk_inline)
-    map('n', '<leader>hb', function()
-      gitsigns.blame_line({ full = true })
-    end)
-    map('n', '<leader>hQ', function()
-      gitsigns.setqflist('all')
-    end)
-    map('n', '<leader>hq', gitsigns.setqflist)
-    map('n', '<leader>htb', gitsigns.toggle_current_line_blame)
-    map('n', '<leader>htw', gitsigns.toggle_word_diff)
-    map({ 'o', 'x' }, 'ih', gitsigns.select_hunk)
+    map('n', '<leader>hs', '<cmd>Gitsigns stage_hunk<CR>')
+    map('v', '<leader>hs', '<cmd>Gitsigns stage_hunk<CR>')
+    map('n', '<leader>hr', '<cmd>Gitsigns reset_hunk<CR>')
+    map('v', '<leader>hr', '<cmd>Gitsigns reset_hunk<CR>')
+    map('n', '<leader>gw', '<cmd>Gitsigns stage_buffer<CR>')
+    map('n', '<leader>gr', '<cmd>Gitsigns reset_buffer<CR>')
+    map('n', '<leader>hp', '<cmd>Gitsigns preview_hunk<CR>')
+    map('n', '<leader>hi', '<cmd>Gitsigns preview_hunk_inline<CR>')
+    map('n', '<leader>gd', '<cmd>Gitsigns diffthis<CR>')
+    map('n', '<leader>hb', '<cmd>Gitsigns blame_line<CR>')
+    map('n', '<leader>hq', '<cmd>Gitsigns setqflist<CR>')
+    map('n', '<leader>htb', '<cmd>Gitsigns toggle_current_line_blame<CR>')
+    map('n', '<leader>htw', '<cmd>Gitsigns toggle_word_diff<CR>')
+    map('n', '<leader>htd', '<cmd>Gitsigns toggle_deleted<CR>')
+    map({ 'o', 'x' }, 'ih', '<cmd>Gitsigns select_hunk<CR>')
   end,
 })
