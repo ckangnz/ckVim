@@ -15,8 +15,9 @@ dashboard.section.header.val = {
 
 -- keys
 dashboard.section.buttons.val = {
-  dashboard.button('C-e', Icons.files .. 'Recent files', ':Telescope oldfiles <CR>'),
-  dashboard.button('C-p', Icons.file_find .. 'Find file', ':Telescope find_files <CR>'),
+  dashboard.button('C-e', Icons.files .. 'Recent files', ':FzfLua oldfiles <CR>'),
+  dashboard.button('C-p', Icons.file_find .. 'Find file', ':FzfLua find_files <CR>'),
+  dashboard.button('<leader>1', Icons.git .. 'Git status', ':Git<CR><C-w>k<cmd>q<CR>'),
   dashboard.button(
     '<leader>ev',
     Icons.setting .. 'Init.lua',
