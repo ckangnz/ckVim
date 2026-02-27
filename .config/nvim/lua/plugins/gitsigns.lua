@@ -79,7 +79,14 @@ gitsigns.setup({
     map('n', '<leader>hp', '<cmd>Gitsigns preview_hunk<CR>')
     map('n', '<leader>hi', '<cmd>Gitsigns preview_hunk_inline<CR>')
     map('n', '<leader>gdf', '<cmd>Gitsigns diffthis<CR>')
-    map('n', '<leader>gdF', ':Gitsigns diffthis ')
+    map('n', '<leader>gdm', function()
+      local main_branch =
+        vim.fn.system('git branch -l main master | sed \'s/^[* ]*//\' | head -1'):gsub('%s+', '')
+      if main_branch == '' then
+        main_branch = 'main'
+      end
+      vim.cmd('Gitsigns diffthis ' .. main_branch)
+    end, { desc = 'Diff against main branch' })
     map('n', '<leader>hb', '<cmd>Gitsigns blame_line<CR>')
     map('n', '<leader>hq', '<cmd>Gitsigns setqflist<CR>')
     map('n', '<leader>htb', '<cmd>Gitsigns toggle_current_line_blame<CR>')
