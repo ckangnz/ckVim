@@ -227,3 +227,6 @@ local function show_notifications()
 end
 
 vim.keymap.set('n', '<leader><tab>', show_notifications, { desc = 'Show notifications history' })
+vim.keymap.set('n', '<leader>c<tab>', function()
+  require('notify').dismiss({ silent = true, pending = true })
+end, { desc = 'Clear notifications' })
