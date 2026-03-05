@@ -55,7 +55,7 @@ require('todo-comments').setup({
   },
 })
 
-vim.keymap.set('n', '<leader>n', ':TodoTelescope<cr>', {
+vim.keymap.set('n', '<leader>n', ':TodoFzfLua<cr>', {
   desc = 'Search TODO comments',
   silent = true,
   nowait = true,
