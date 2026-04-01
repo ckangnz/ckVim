@@ -171,12 +171,10 @@ local plugins = {
     end,
   },
   {
-    'norcalli/nvim-colorizer.lua',
+    'catgoose/nvim-colorizer.lua',
     event = 'VeryLazy',
     config = function()
-      require('colorizer').setup(nil, {
-        exclude_filetypes = { 'GV' },
-      })
+      require('colorizer').setup()
     end,
   },
 
