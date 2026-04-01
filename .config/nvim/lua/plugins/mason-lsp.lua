@@ -48,7 +48,7 @@ vim.lsp.config('ts_ls', {
   capabilities = lsp_capabilities,
   on_attach = function(client, bufnr)
     vim.api.nvim_create_user_command('OrganizeImports', function()
-      vim.lsp.buf_request(0, 'workspace/executeCommand', {
+      vim.lsp.buf.execute_command({
         command = '_typescript.organizeImports',
         arguments = { vim.api.nvim_buf_get_name(0) },
       })

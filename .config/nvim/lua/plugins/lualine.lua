@@ -1,5 +1,5 @@
 local function get_spinner(icons, duration)
-  local ms = vim.loop.hrtime() / 1e6
+  local ms = vim.uv.hrtime() / 1e6
   local frame = math.floor(ms / (duration or 150)) % #icons + 1
   return icons[frame]
 end
@@ -105,15 +105,27 @@ require('lualine').setup({
     },
     lualine_x = {
       {
-        'diagnostics',
-        always_visible = false,
-        sources = { 'nvim_lsp' },
-        symbols = {
-          error = Icons.error_circle,
-          warn = Icons.warn,
-          info = Icons.info,
-          hint = Icons.hint,
-        },
+        function()
+          return vim.diagnostic.status()
+        end,
+        cond = function()
+          return vim.diagnostic.status() ~= ''
+        end,
+        color = function()
+          local d = vim.diagnostic.get(0)
+          for _, diag in ipairs(d) do
+            if diag.severity == vim.diagnostic.severity.ERROR then
+              return { fg = Colors.red }
+            end
+          end
+          for _, diag in ipairs(d) do
+            if diag.severity == vim.diagnostic.severity.WARN then
+              return { fg = Colors.yellow }
+            end
+          end
+          return { fg = Colors.light_grey }
+        end,
+        separator = Icons.separator.empty,
       },
       {
         'filetype',

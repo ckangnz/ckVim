@@ -55,7 +55,6 @@ opt.showmode = false -- Hide --INSERT-- at the bottom
 opt.compatible = false -- Latest Vim settings
 opt.encoding = 'utf-8'
 opt.termguicolors = true
-opt.syntax = 'on'
 
 -- Display settings
 opt.display:append('lastline') -- Show long lines
