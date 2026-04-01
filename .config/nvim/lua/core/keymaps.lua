@@ -277,6 +277,12 @@ vim.keymap.set('n', '<leader>m', utility_menu, {
   nowait = true,
 })
 
+-- Built-in undotree (0.12.0+)
+vim.keymap.set('n', '<leader>u', function()
+  vim.cmd('packadd nvim.undotree')
+  vim.cmd('Undotree')
+end, { silent = true, desc = 'Toggle undo tree (built-in)' })
+
 local function toggle_quickfix()
   local qf_exists = false
   for _, win in pairs(vim.fn.getwininfo()) do

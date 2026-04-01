@@ -500,22 +500,8 @@ local plugins = {
       require('plugins.vim-bookmarks')
     end,
   },
-  {
-    'mbbill/undotree',
-    keys = {
-      {
-        '<leader>u',
-        ':UndotreeToggle<cr>',
-        desc = 'Toggle undo tree',
-        silent = true,
-      },
-    },
-    cmd = 'UndotreeToggle',
-    config = function()
-      vim.g.undotree_SetFocusWhenToggle = 1
-      vim.g.undotree_WindowLayout = 3
-    end,
-  },
+  -- mbbill/undotree replaced by built-in nvim.undotree (0.12.0+)
+  -- loaded on demand via packadd, no lazy entry needed
   {
     'wesQ3/vim-windowswap',
     keys = {
