@@ -100,6 +100,19 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
   end,
 })
 
+-- Auto-cd to project root (replaces vim-rooter)
+local rooter = augroup('Rooter', { clear = true })
+autocmd('BufEnter', {
+  group = rooter,
+  desc = 'Auto-cd to project root',
+  callback = function()
+    local root = vim.fs.root(0, { '.vscode', '.git', '.nvmrc', '.npmrc' })
+    if root then
+      vim.fn.chdir(root)
+    end
+  end,
+})
+
 -- Terminal augroup
 local terminal = augroup('Terminal', { clear = true })
 autocmd('TermOpen', {

@@ -445,13 +445,7 @@ local plugins = {
       }
     end,
   },
-  {
-    'airblade/vim-rooter',
-    event = 'VeryLazy',
-    config = function()
-      require('plugins.vim-rooter')
-    end,
-  },
+  -- airblade/vim-rooter replaced by built-in vim.fs.root() (see autocmds.lua)
   {
     'dominikduda/vim_current_word',
     event = 'VeryLazy',
