@@ -265,7 +265,7 @@ local plugins = {
   -- Language Specific
   {
     'nvim-treesitter/nvim-treesitter',
-    lazy = false,
+    event = { 'BufReadPre', 'BufNewFile' },
     build = ':TSUpdate',
     branch = 'master',
     dependencies = {
@@ -500,8 +500,6 @@ local plugins = {
       require('plugins.vim-bookmarks')
     end,
   },
-  -- mbbill/undotree replaced by built-in nvim.undotree (0.12.0+)
-  -- loaded on demand via packadd, no lazy entry needed
   {
     'wesQ3/vim-windowswap',
     keys = {
@@ -513,7 +511,7 @@ local plugins = {
       },
     },
     config = function()
-      vim.g.windowswap_map_keys = 0 -- Prevent default bindings
+      vim.g.windowswap_map_keys = 0
     end,
   },
 

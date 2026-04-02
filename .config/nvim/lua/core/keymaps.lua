@@ -132,7 +132,7 @@ map(
 map(
   'n',
   '<leader>ep',
-  '<cmd>vsp $HOME/.config/nvim/lua/plugins/<cr>',
+  '<cmd>Oil $HOME/.config/nvim/lua/plugins/<cr>',
   { desc = 'Open plugins directory' }
 )
 map('n', '<leader>ez', '<cmd>vsp $HOME/.zshrc<cr>', { desc = 'Edit .zshrc' })
@@ -277,11 +277,12 @@ vim.keymap.set('n', '<leader>m', utility_menu, {
   nowait = true,
 })
 
--- Built-in undotree (0.12.0+)
 vim.keymap.set('n', '<leader>u', function()
   vim.cmd('packadd nvim.undotree')
   vim.cmd('Undotree')
 end, { silent = true, desc = 'Toggle undo tree (built-in)' })
+
+vim.cmd('packadd cfilter')
 
 local function toggle_quickfix()
   local qf_exists = false
