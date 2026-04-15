@@ -24,6 +24,7 @@ local plugins = {
   },
   {
     'stevearc/oil.nvim',
+    event = 'VeryLazy',
     cmd = 'Oil',
     keys = { { '-', '<cmd>Oil<cr>', desc = 'Open parent directory' } },
     config = function()
@@ -348,6 +349,7 @@ local plugins = {
   -- Search Tool
   {
     'ibhagwan/fzf-lua',
+    event = 'UIEnter',
     cmd = 'FzfLua',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     keys = {

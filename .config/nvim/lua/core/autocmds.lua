@@ -126,6 +126,18 @@ autocmd('TermOpen', {
   end,
 })
 
+autocmd('FileType', {
+  group = filetype_specific,
+  desc = 'Disable C-j/k/h/l window nav inside fzf-lua',
+  pattern = 'fzf',
+  callback = function()
+    local keys = { '<C-j>', '<C-k>', '<C-h>', '<C-l>' }
+    for _, key in ipairs(keys) do
+      vim.keymap.set('t', key, '<Nop>', { buffer = true, silent = true })
+    end
+  end,
+})
+
 -- ExtraWhitespace highlights
 local function toggle_whitespace_match(mode)
   local excluded_filetypes = {

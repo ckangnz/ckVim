@@ -132,7 +132,7 @@ map(
 map(
   'n',
   '<leader>ep',
-  '<cmd>Oil $HOME/.config/nvim/lua/plugins/<cr>',
+  '<cmd>vsp $HOME/.config/nvim/lua/plugins<cr>',
   { desc = 'Open plugins directory' }
 )
 map('n', '<leader>ez', '<cmd>vsp $HOME/.zshrc<cr>', { desc = 'Edit .zshrc' })
