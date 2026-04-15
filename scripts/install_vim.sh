@@ -23,6 +23,7 @@ packages=(
 	"ripgrep"
 	"fzf"
 	"catimg"
+	"tree-sitter-cli"
 
 	"jannis-baum/tap/vivify"
 )

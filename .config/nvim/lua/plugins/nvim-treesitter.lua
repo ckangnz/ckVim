@@ -1,65 +1,51 @@
-require('nvim-treesitter.configs').setup({
-  ensure_installed = {
-    'gitignore',
-    'git_config',
-    'git_rebase',
-    'gitcommit',
-    'gitattributes',
+require('nvim-treesitter').install({
+  'gitignore',
+  'git_config',
+  'git_rebase',
+  'gitcommit',
+  'gitattributes',
 
-    'vim',
-    'vimdoc',
-    'lua',
-    'luadoc',
-    'markdown',
-    'markdown_inline',
+  'vim',
+  'vimdoc',
+  'lua',
+  'luadoc',
+  'markdown',
+  'markdown_inline',
 
-    'html',
-    'css',
-    'scss',
-    'javascript',
-    'typescript',
-    'tsx',
-    'json',
+  'html',
+  'css',
+  'scss',
+  'javascript',
+  'typescript',
+  'tsx',
+  'json',
 
-    'java',
-    'python',
-    'c',
-    'c_sharp',
-    -- 'kotlin',
-    -- 'dart',
-    -- 'go',
-    -- 'rust',
-    -- 'ruby',
-    -- 'php',
+  'java',
+  'python',
+  'c',
+  'c_sharp',
+  -- 'kotlin',
+  -- 'dart',
+  -- 'go',
+  -- 'rust',
+  -- 'ruby',
+  -- 'php',
 
-    'yaml',
-    -- 'toml',
-    'xml',
-    'dockerfile',
-    'regex',
-    'http',
+  'yaml',
+  -- 'toml',
+  'xml',
+  'dockerfile',
+  'regex',
+  'http',
 
-    'hcl',
-    'terraform',
+  'hcl',
+  'terraform',
 
-    'bash',
-    -- 'fish',
+  'bash',
+  -- 'fish',
 
-    'sql',
-    'comment',
-  },
-
-  auto_install = false,
-  sync_install = false,
-
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-
-  indent = {
-    enable = true,
-  },
+  'sql',
+  'comment',
 })
 
 vim.api.nvim_create_autocmd('FileType', {
@@ -70,6 +56,7 @@ vim.api.nvim_create_autocmd('FileType', {
     if lang and pcall(vim.treesitter.start, bufnr, lang) then
       vim.wo.foldmethod = 'expr'
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+      vim.bo[bufnr].indentexpr = 'v:lua.require\'nvim-treesitter\'.indentexpr()'
       vim.defer_fn(function()
         if vim.api.nvim_buf_is_valid(bufnr) then
           pcall(vim.cmd, 'normal! zx')

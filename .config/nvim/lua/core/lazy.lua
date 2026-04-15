@@ -24,7 +24,7 @@ local plugins = {
   },
   {
     'stevearc/oil.nvim',
-    event = 'VeryLazy',
+    lazy = false,
     cmd = 'Oil',
     keys = { { '-', '<cmd>Oil<cr>', desc = 'Open parent directory' } },
     config = function()
@@ -266,9 +266,9 @@ local plugins = {
   -- Language Specific
   {
     'nvim-treesitter/nvim-treesitter',
-    event = { 'BufReadPre', 'BufNewFile' },
+    lazy = false,
     build = ':TSUpdate',
-    branch = 'master',
+    branch = 'main',
     dependencies = {
       {
         'davidmh/mdx.nvim',
