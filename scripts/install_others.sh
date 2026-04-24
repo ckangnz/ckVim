@@ -29,7 +29,7 @@ cask_packages=(
 	# "dotnet-sdk9:isen-ng/dotnet-sdk-versions"
 
 	"kitty"
-	"arc"
+	"thebrowsercompany-dia"
 	"docker"
 	"itsycal"
 	"rectangle"
