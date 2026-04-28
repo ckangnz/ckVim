@@ -39,15 +39,15 @@ local function apply_custom_highlights()
 
   vim.api.nvim_set_hl(0, 'NormalFloat', {
     fg = Colors.white,
-    bg = Colors.dark_grey,
+    bg = 'NONE',
   })
   vim.api.nvim_set_hl(0, 'FloatBorder', {
     fg = Colors.light_grey,
-    bg = Colors.dark_grey,
+    bg = 'NONE',
   })
   vim.api.nvim_set_hl(0, 'FloatTitle', {
     fg = Colors.yellow,
-    bg = Colors.dark_grey,
+    bg = 'NONE',
     bold = true,
   })
 

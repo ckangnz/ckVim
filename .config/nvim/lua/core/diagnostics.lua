@@ -22,5 +22,6 @@ vim.diagnostic.config({
   },
   jump = {
     wrap = true,
+    float = true,
   },
 })
