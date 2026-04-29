@@ -20,6 +20,7 @@ if command -v brew &> /dev/null; then
 	sel_zsh=1
 	sel_fonts=1
 	sel_others=0
+	sel_gitignore=1
 else
 	# No brew - default to brew only
 	sel_brew=1
@@ -27,6 +28,7 @@ else
 	sel_zsh=0
 	sel_fonts=0
 	sel_others=0
+	sel_gitignore=0
 fi
 
 while true; do
@@ -40,9 +42,10 @@ while true; do
 	[ $sel_zsh -eq 1 ] && echo -e "  ${GREEN}[3]${RESET} ${GREEN}◉${RESET} ${GREEN}zsh${RESET}" > /dev/tty || echo -e "  ${GRAY}[3]${RESET} ${GRAY}○${RESET} ${GRAY}zsh${RESET}" > /dev/tty
 	[ $sel_fonts -eq 1 ] && echo -e "  ${GREEN}[4]${RESET} ${GREEN}◉${RESET} ${GREEN}fonts${RESET}" > /dev/tty || echo -e "  ${GRAY}[4]${RESET} ${GRAY}○${RESET} ${GRAY}fonts${RESET}" > /dev/tty
 	[ $sel_others -eq 1 ] && echo -e "  ${GREEN}[5]${RESET} ${GREEN}◉${RESET} ${GREEN}others${RESET}" > /dev/tty || echo -e "  ${GRAY}[5]${RESET} ${GRAY}○${RESET} ${GRAY}others${RESET}" > /dev/tty
+	[ $sel_gitignore -eq 1 ] && echo -e "  ${GREEN}[6]${RESET} ${GREEN}◉${RESET} ${GREEN}gitignore${RESET}" > /dev/tty || echo -e "  ${GRAY}[6]${RESET} ${GRAY}○${RESET} ${GRAY}gitignore${RESET}" > /dev/tty
 	echo "" > /dev/tty
 	echo -e "${CYAN}────────────────────────────────────────────${RESET}" > /dev/tty
-	echo -e "${YELLOW}Press 1-5 to toggle, a for all, Enter to confirm${RESET}" > /dev/tty
+	echo -e "${YELLOW}Press 1-6 to toggle, a for all, Enter to confirm${RESET}" > /dev/tty
 	echo -e "${CYAN}────────────────────────────────────────────${RESET}" > /dev/tty
 	read -n1 -r input < /dev/tty
 	echo "" > /dev/tty
@@ -52,11 +55,12 @@ while true; do
 		3) sel_zsh=$((1 - sel_zsh)) ;;
 		4) sel_fonts=$((1 - sel_fonts)) ;;
 		5) sel_others=$((1 - sel_others)) ;;
+		6) sel_gitignore=$((1 - sel_gitignore)) ;;
 		a|A)
-			if [ $sel_brew -eq 1 ] && [ $sel_vim -eq 1 ] && [ $sel_zsh -eq 1 ] && [ $sel_fonts -eq 1 ] && [ $sel_others -eq 1 ]; then
-				sel_brew=0; sel_vim=0; sel_zsh=0; sel_fonts=0; sel_others=0
+			if [ $sel_brew -eq 1 ] && [ $sel_vim -eq 1 ] && [ $sel_zsh -eq 1 ] && [ $sel_fonts -eq 1 ] && [ $sel_others -eq 1 ] && [ $sel_gitignore -eq 1 ]; then
+				sel_brew=0; sel_vim=0; sel_zsh=0; sel_fonts=0; sel_others=0; sel_gitignore=0
 			else
-				sel_brew=1; sel_vim=1; sel_zsh=1; sel_fonts=1; sel_others=1
+				sel_brew=1; sel_vim=1; sel_zsh=1; sel_fonts=1; sel_others=1; sel_gitignore=1
 			fi
 			;;
 		"") break ;;
@@ -72,6 +76,7 @@ run_targets=""
 [ $sel_zsh -eq 1 ] && run_targets="$run_targets zsh"
 [ $sel_fonts -eq 1 ] && run_targets="$run_targets fonts"
 [ $sel_others -eq 1 ] && run_targets="$run_targets others"
+[ $sel_gitignore -eq 1 ] && run_targets="$run_targets gitignore"
 
 if [ -z "$run_targets" ]; then
 	echo -e "${RED}✗ No targets selected. Exiting.${RESET}" > /dev/tty

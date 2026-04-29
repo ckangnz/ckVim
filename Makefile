@@ -2,7 +2,7 @@ SHELL := /bin/bash
 VIM_DIR := $(HOME)/.vim
 SCRIPTS_DIR := $(VIM_DIR)/scripts
 
-.PHONY: all vim zsh others reset fonts brew check_brew install_brew symlink vim_symlink zsh_symlink help
+.PHONY: all vim zsh others reset fonts brew check_brew install_brew symlink vim_symlink zsh_symlink help gitignore
 
 all:
 	@run_targets=$$(bash $(SCRIPTS_DIR)/interactive_menu.sh); \
@@ -12,10 +12,10 @@ all:
 		done; \
 	fi
 
-vim: check_brew vim_symlink
+vim: check_brew gitignore vim_symlink
 	@bash $(SCRIPTS_DIR)/install_vim.sh
 
-zsh: check_brew zsh_symlink
+zsh: check_brew gitignore zsh_symlink
 	@bash $(SCRIPTS_DIR)/install_zsh.sh
 
 vim_symlink:
@@ -90,3 +90,15 @@ symlink: vim_symlink zsh_symlink
 
 help:
 	@grep -E '^##' Makefile | sed -E 's/## //'
+
+## Setup global gitignore for personal ck_* working directories
+gitignore:
+	@GLOBAL_GITIGNORE="$$HOME/.gitignore"; \
+	if ! grep -qx "ck_\*" "$$GLOBAL_GITIGNORE" 2>/dev/null; then \
+		echo "ck_*" >> "$$GLOBAL_GITIGNORE"; \
+		echo "✓ Added ck_* to ~/.gitignore"; \
+	else \
+		echo "ℹ ck_* already in ~/.gitignore — skipping"; \
+	fi; \
+	git config --global core.excludesfile "$$GLOBAL_GITIGNORE"; \
+	echo "✓ Set git core.excludesfile to ~/.gitignore"
