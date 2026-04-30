@@ -47,11 +47,35 @@ function select_pane() {
     # NOTE: --print-query is intentionally omitted here. With --print-query, fzf always
     # writes at least one line (the query string) to stdout even on ESC, which caused
     # the modal to reopen. Without it, ESC produces no output and the script exits cleanly.
-    pane=$(tmux list-panes -aF "${4}" |
-        eval fzf --exit-0 --reverse --tmux "${2}" --with-nth=2.. "${border_styling}" "${preview}")
+    #
+    # Tmux format string uses TAB (\t) between fields so window names with spaces stay
+    # in a single column. We then pipe through awk to pad each column to the widest
+    # value (so columns line up visually), keeping TAB as the in-row separator. fzf
+    # delimits on TAB, hides field 1 (pane_id used internally), and only matches/searches
+    # against the visible fields (2..).
+    pane=$(tmux list-panes -aF "${4}" \
+        | awk -F'\t' '
+            {
+                for (i=1; i<=NF; i++) { rows[NR,i]=$i; if (length($i) > w[i]) w[i]=length($i) }
+                nf=NF
+            }
+            END {
+                # Pad each non-last column to the widest value in that column.
+                # Add an extra GAP of spaces before the last column to visually separate
+                # the command from the window-name without trying to fully right-align
+                # (which is brittle since fzf reserves space for the hidden pane_id field).
+                gap = 6
+                for (r=1; r<=NR; r++) {
+                    out = rows[r,1]
+                    for (c=2; c<=nf-1; c++) out = out "\t" sprintf("%-" w[c] "s", rows[r,c])
+                    out = out "\t" sprintf("%" gap "s", "") rows[r,nf]
+                    print out
+                }
+            }' \
+        | eval fzf --exit-0 --reverse --tmux "${2}" --delimiter="'\t'" --with-nth=2.. --nth=2.. "${border_styling}" "${preview}")
 
-    # Set pane_id to first part of fzf output
-    pane_id=$(echo "${pane}" | awk '{print $1}')
+    # Set pane_id to first TAB-separated field of fzf output
+    pane_id=$(printf '%s' "${pane}" | awk -F'\t' '{print $1}')
 
     # If pane_id is empty (ESC or no selection), exit without changing pane
     if [[ -z "${pane_id}" ]]; then
@@ -103,6 +127,8 @@ fzf_window_position="${2}"
 fzf_preview_window_position="${3}"
 # TMUX list-panes format
 read -r -a list_panes_format_overrides <<< "${4}"
-list_panes_formatted_overrides=$(printf '#{%s} ' "${list_panes_format_overrides[@]}")
+# Use TAB as the field separator so window names containing spaces stay in one column
+list_panes_formatted_overrides=$(printf '#{%s}\t' "${list_panes_format_overrides[@]}")
+list_panes_formatted_overrides="${list_panes_formatted_overrides%$'\t'}"
 
-select_pane "${preview_pane}" "${fzf_window_position}" "${fzf_preview_window_position}" "#{pane_id} ${list_panes_formatted_overrides}"
+select_pane "${preview_pane}" "${fzf_window_position}" "${fzf_preview_window_position}" "#{pane_id}	${list_panes_formatted_overrides}"
