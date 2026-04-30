@@ -1,3 +1,6 @@
+# wt completions — must be before compinit
+[[ -d "$HOME/.vim/wt" ]] && fpath=("$HOME/.vim/wt" $fpath)
+
 # Load zsh + bash completions
 autoload -U +X bashcompinit && bashcompinit
 autoload -U +X compinit

@@ -1,3 +1,6 @@
+# wt — worktree workspace manager
+[[ -d "$HOME/.vim/wt" ]] && source "$HOME/.vim/wt/wt.zsh"
+
 # Github CLI
 if [[ -x "${HOMEBREW_PREFIX}/bin/gh" ]]; then
   eval "$(gh completion -s zsh)"
