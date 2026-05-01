@@ -72,7 +72,7 @@ function select_pane() {
                     print out
                 }
             }' \
-        | eval fzf --exit-0 --reverse --tmux "${2}" --delimiter="'\t'" --with-nth=2.. --nth=2.. "${border_styling}" "${preview}")
+        | eval fzf --exit-0 --reverse --tmux "${2}" --delimiter="'\t'" --with-nth=2.. "${border_styling}" "${preview}")
 
     # Set pane_id to first TAB-separated field of fzf output
     pane_id=$(printf '%s' "${pane}" | awk -F'\t' '{print $1}')
