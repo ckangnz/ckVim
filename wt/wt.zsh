@@ -120,6 +120,28 @@ _wt_create_layout() {
     tmux select-pane -t top-left
 }
 
+# Apply the triptych layout to the current tmux window using the current
+# pane's working directory. Refuses to run if the window already has more
+# than one pane (to avoid clobbering an existing layout).
+_wt_layout() {
+    if [[ -z "$TMUX" ]]; then
+        _wt_err "Not running inside tmux."
+        return 1
+    fi
+
+    local panes
+    panes=$(tmux display-message -p '#{window_panes}')
+    if [[ "$panes" -gt 1 ]]; then
+        _wt_warn "Current window has ${panes} panes — refusing to overwrite layout."
+        echo "   Close other panes first (or run from a single-pane window)."
+        return 1
+    fi
+
+    local cwd
+    cwd=$(tmux display-message -p '#{pane_current_path}')
+    _wt_create_layout "$cwd"
+}
+
 # ── error/info helpers ────────────────────────────────────────────────────────
 
 _wt_err()  { echo "❌ $*" >&2 }
@@ -165,6 +187,8 @@ COMMANDS
     wt close [repo-num]               Close tmux window for a worktree
                                         Omit arg to auto-detect from current directory
                                         e.g. wt close afm-1
+    wt layout                         Apply the triptych layout to the CURRENT
+                                        tmux window (only if window has 1 pane)
 
   Workspace switching (tmux)
     wt <repo> "<title>"               Open tmux window on next unused agent worktree
@@ -830,6 +854,7 @@ wt() {
         list)    _wt_list    "${@:2}" ;;
         sync)    _wt_sync    "${@:2}" ;;
         close)   _wt_close   "${@:2}" ;;
+        layout)  _wt_layout  "${@:2}" ;;
         *)
             _wt_open "$cmd" "${2:-}"
             ;;
