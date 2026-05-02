@@ -860,7 +860,11 @@ _wt_close() {
         fi
         local agents_dir
         agents_dir=$(_wt_agents_dir "$repo")
-        target_path="${agents_dir}/agent-${num}"
+        if [[ "$num" == "0" ]]; then
+            target_path=$(_wt_master_dir "$agents_dir")
+        else
+            target_path="${agents_dir}/agent-${num}"
+        fi
     fi
 
     local pane_map tmux_win
@@ -875,6 +879,81 @@ _wt_close() {
     tmux kill-window -t "$tmux_win" 2>/dev/null \
         && _wt_ok "Closed tmux window '$tmux_win' ($repo${num:+ agent-$num})" \
         || _wt_err "Failed to close window '$tmux_win'"
+}
+
+_wt_pick() {
+    if [[ -z "${TMUX:-}" ]]; then
+        _wt_err "Not inside a tmux session."
+        return 1
+    fi
+    command -v fzf >/dev/null 2>&1 || { _wt_err "fzf not found"; return 1 }
+
+    local pane_map
+    pane_map=$(tmux list-panes -a -F '#{session_name}:#{window_index}|#{pane_current_path}' 2>/dev/null)
+
+    local rows=()
+    local name p kind branch wt_status tmux_win wt_path agent_short id
+
+    while read -r name p kind; do
+        if [[ "$kind" == "single" ]]; then
+            branch=$(git -C "$p" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "(unknown)")
+            tmux_win=$(echo "$pane_map" | /usr/bin/awk -F'|' -v p2="$p" '$2 == p2 {print $1; exit}')
+            wt_status="${tmux_win:-free}"
+            local branch_display="${branch:0:25}"
+            [[ "${#branch}" -gt 25 ]] && branch_display="${branch:0:22}..."
+            rows+=("${tmux_win:-}"$'\t'"$(printf '%-12s %-12s %-27s %-8s' "$name" "—" "$branch_display" "${tmux_win:+open}")")
+            continue
+        fi
+        local master_dir_p
+        master_dir_p=$(_wt_master_dir "$p")
+        if [[ -d "$master_dir_p" ]]; then
+            branch=$(git -C "$master_dir_p" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "(unknown)")
+            tmux_win=$(echo "$pane_map" | /usr/bin/awk -F'|' -v p2="$master_dir_p" '$2 == p2 {print $1; exit}')
+            local branch_display="${branch:0:25}"
+            [[ "${#branch}" -gt 25 ]] && branch_display="${branch:0:22}..."
+            rows+=("${tmux_win:-}"$'\t'"$(printf '%-12s %-12s %-27s %-8s' "${name}-0" "master" "$branch_display" "${tmux_win:+open}")")
+        fi
+        for wt_path in "${p}"/agent-*(N); do
+            [[ ! -d "$wt_path" ]] && continue
+            agent_short=$(( 10#${wt_path:t:s/agent-//} ))
+            id="${name}-${agent_short}"
+            branch=$(git -C "$wt_path" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "(unknown)")
+            tmux_win=$(echo "$pane_map" | /usr/bin/awk -F'|' -v p2="$wt_path" '$2 == p2 {print $1; exit}')
+            local branch_display="${branch:0:25}"
+            [[ "${#branch}" -gt 25 ]] && branch_display="${branch:0:22}..."
+            rows+=("${tmux_win:-}"$'\t'"$(printf '%-12s %-12s %-27s %-8s' "$id" "${wt_path:t}" "$branch_display" "${tmux_win:+open}")")
+        done
+    done <<< "$(_wt_repos)"
+
+    if [[ ${#rows[@]} -eq 0 ]]; then
+        _wt_info "No workspaces registered."
+        return 0
+    fi
+
+    local selected
+    selected=$(printf '%s\n' "${rows[@]}" \
+        | fzf --exit-0 --reverse --tmux "center,60%,50%" \
+              --delimiter=$'\t' --with-nth=2 \
+              --header="$(printf '%-12s %-12s %-27s %s' 'WT' 'DIR' 'BRANCH' 'STATUS')" \
+              --no-multi)
+
+    [[ -z "$selected" ]] && return 0
+
+    local target_win
+    target_win=$(echo "$selected" | cut -d$'\t' -f1)
+
+    if [[ -z "$target_win" ]]; then
+        local wt_id
+        wt_id=$(echo "$selected" | cut -d$'\t' -f2 | awk '{print $1}')
+        _wt_info "Opening '$wt_id'..."
+        wt "$wt_id"
+        return
+    fi
+
+    local win_idx
+    win_idx=$(echo "$target_win" | cut -d: -f2)
+    tmux select-window -t "$target_win" 2>/dev/null \
+        && tmux switch-client -t "$target_win" 2>/dev/null
 }
 
 _wt_window_name() {
@@ -1057,6 +1136,7 @@ wt() {
         sync)    _wt_sync    "${@:2}" ;;
         close)   _wt_close   "${@:2}" ;;
         layout)  _wt_layout  "${@:2}" ;;
+        pick)    _wt_pick   "${@:2}" ;;
         *)
             _wt_open "$cmd" "${2:-}"
             ;;
