@@ -619,6 +619,18 @@ _wt_list() {
                 "$name" "—" "$branch_display" "$wt_status"
             continue
         fi
+        local master_dir_l
+        master_dir_l=$(_wt_master_dir "$p")
+        if [[ -d "$master_dir_l" ]]; then
+            branch=$(git -C "$master_dir_l" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "(unknown)")
+            local branch_display="${branch:0:27}"
+            [[ "${#branch}" -gt 27 ]] && branch_display="${branch:0:24}..."
+            tmux_win=$(echo "$pane_map" | /usr/bin/awk -F'|' -v p2="$master_dir_l" '$2 == p2 {print $1; exit}')
+            wt_status="free"
+            [[ -n "$tmux_win" ]] && wt_status="in use"
+            printf "%-12s %-12s %-28s %s\n" \
+                "${name}-0" "master" "$branch_display" "$wt_status"
+        fi
         for wt_path in "${p}"/agent-*(N); do
             [[ ! -d "$wt_path" ]] && continue
             agent_short=$(( 10#${wt_path:t:s/agent-//} ))
