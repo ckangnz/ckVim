@@ -213,6 +213,8 @@ COMMANDS
                                         single:   '<repo>: <title>'
                                       If already open: focus AND rename to new title.
     wt <repo>-<num> ["<title>"]       (worktree) target a specific agent worktree.
+                                        <num> = 0  opens the master/ directory.
+                                        <num> = 1+ opens agents/agent-NNN/.
 
   Help
     wt --help | -h                    Show this help
@@ -924,18 +926,29 @@ _wt_open() {
     local repo num wt_path
     if [[ "$arg" =~ ^(.+)-([0-9]+)$ ]]; then
         repo="${match[1]}"
-        num=$(_wt_pad "${match[2]}")
-        local agents_dir
+        local raw_num="${match[2]}"
+        local agents_dir master_dir
         agents_dir=$(_wt_agents_dir "$repo")
         if [[ -z "$agents_dir" ]]; then
             _wt_err "Repo '$repo' not registered."
             return 1
         fi
-        wt_path="${agents_dir}/agent-${num}"
-        if [[ ! -d "$wt_path" ]]; then
-            _wt_err "Worktree not found: $wt_path"
-            echo "  Run: wt new $repo"
-            return 1
+        if [[ "$raw_num" == "0" ]]; then
+            master_dir=$(_wt_master_dir "$agents_dir")
+            if [[ ! -d "$master_dir" ]]; then
+                _wt_err "master/ not found at: $master_dir"
+                return 1
+            fi
+            wt_path="$master_dir"
+            num="0"
+        else
+            num=$(_wt_pad "$raw_num")
+            wt_path="${agents_dir}/agent-${num}"
+            if [[ ! -d "$wt_path" ]]; then
+                _wt_err "Worktree not found: $wt_path"
+                echo "  Run: wt new $repo"
+                return 1
+            fi
         fi
     else
         repo="$arg"
@@ -973,7 +986,12 @@ _wt_open() {
         fi
     fi
 
-    local agent_short=$(( 10#${wt_path:t:s/agent-//} ))
+    local agent_short
+    if [[ "$num" == "0" ]]; then
+        agent_short="0"
+    else
+        agent_short=$(( 10#${wt_path:t:s/agent-//} ))
+    fi
     local id="${repo}-${agent_short}"
 
     local pane_map existing_win

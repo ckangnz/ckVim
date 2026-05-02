@@ -218,6 +218,24 @@ test_repo_list_shows_kind_column() {
     rm -rf "$repo_dir" "$root"
 }
 
+test_wt_open_zero_resolves_to_master_dir() {
+    local root
+    root=$(_mktemp_resolved wt-root-XXXXXX)
+    mkdir -p "${root}/master" "${root}/agents"
+    git -C "${root}/master" init -q
+    _wt_repo_register "mrepo" "$root" >/dev/null 2>&1
+
+    local master_dir
+    master_dir=$(_wt_master_dir "$(_wt_agents_dir mrepo)")
+    _assert_eq "${root}/master" "$master_dir" "master_dir should be <root>/master" || return 1
+
+    local agents_dir
+    agents_dir=$(_wt_agents_dir "mrepo")
+    _assert_eq "${root}/agents" "$agents_dir" || return 1
+
+    rm -rf "$root"
+}
+
 test_window_name_no_title_returns_id_only() {
     _assert_eq "rr"     "$(_wt_window_name rr "")"     || return 1
     _assert_eq "afm-1"  "$(_wt_window_name afm-1 "")"  || return 1
@@ -256,6 +274,7 @@ _run_test "wt rm <repo>: rejects single-mode repo (bulk)"                     te
 _run_test "wt rm <repo-num>: rejects single-mode repo"                        test_wt_rm_rejects_single_mode_repo_with_num
 _run_test "wt sync <repo-num>: rejects num for single-mode repo"              test_wt_sync_rejects_num_for_single_mode
 _run_test "wt repo list: shows KIND column"                                   test_repo_list_shows_kind_column
+_run_test "wt afm-0: resolves to master/ directory"                             test_wt_open_zero_resolves_to_master_dir
 _run_test "_wt_window_name: no title returns just the id"                     test_window_name_no_title_returns_id_only
 _run_test "_wt_window_name: with title returns 'id: title'"                   test_window_name_with_title_returns_id_colon_title
 _run_test "wt repo unregister: removes the repo"                              test_unregister_removes_repo
