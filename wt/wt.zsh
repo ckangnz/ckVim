@@ -648,13 +648,14 @@ _wt_list() {
 }
 
 _wt_sync() {
-    local arg="${1:-}"  # e.g. "afm" or "afm-3"
+    local arg="${1:-}"
 
-    local repo num
+    local repo num kind
 
+    # ── Resolve repo + num ────────────────────────────────────────────────────
     if [[ -z "$arg" ]]; then
         local cwd="${PWD}"
-        local detected_repo="" detected_num=""
+        local detected_repo="" detected_num="" detected_kind=""
         while read -r name path_candidate kind_candidate; do
             local root_candidate
             if [[ "$kind_candidate" == "single" ]]; then
@@ -664,136 +665,122 @@ _wt_sync() {
             fi
             if [[ "$cwd" == "$root_candidate"* ]]; then
                 detected_repo="$name"
-                if [[ "$kind_candidate" != "single" && "$cwd" == "${path_candidate}/agent-"* ]]; then
-                    local agent_dir="${cwd#${path_candidate}/}"
-                    agent_dir="${agent_dir%%/*}"
-                    detected_num="${agent_dir#agent-}"
+                detected_kind="$kind_candidate"
+                if [[ "$kind_candidate" != "single" ]]; then
+                    if [[ "$cwd" == "${path_candidate}/agent-"* ]]; then
+                        local agent_dir="${cwd#${path_candidate}/}"
+                        agent_dir="${agent_dir%%/*}"
+                        detected_num="${agent_dir#agent-}"
+                    elif [[ "$cwd" == "${path_candidate:h}/master"* ]]; then
+                        detected_num="0"
+                    fi
                 fi
                 break
             fi
         done <<< "$(_wt_repos)"
         if [[ -z "$detected_repo" ]]; then
-            _wt_err "Could not detect repo from current directory: $cwd"
-            echo "  Usage: wt sync [repo] or wt sync <repo>-<num>"
-            echo "  Or cd into a registered repo directory first."
+            _wt_err "Not inside a registered repo. Specify explicitly:"
+            echo "  wt sync <repo>          sync master/"
+            echo "  wt sync <repo>-<num>    sync a specific agent worktree"
             return 1
-        fi
-        if [[ -n "$detected_num" ]]; then
-            _wt_info "Auto-detected: $detected_repo agent-${detected_num} (syncing this agent only)"
-        else
-            _wt_info "Auto-detected: $detected_repo (syncing all)"
         fi
         repo="$detected_repo"
         num="$detected_num"
+        kind="$detected_kind"
     elif [[ "$arg" =~ ^(.+)-([0-9]+)$ ]]; then
         repo="${match[1]}"
-        num=$(_wt_pad "${match[2]}")
+        num="${match[2]}"
     else
         repo="$arg"
         num=""
     fi
 
-    [[ -n "$num" ]] && num=$(_wt_pad "$num")
-
-    local kind
-    kind=$(_wt_repo_kind "$repo")
     if [[ -z "$kind" ]]; then
-        _wt_err "Repo '$repo' not registered."
-        return 1
-    fi
-
-    if [[ "$kind" == "single" ]]; then
-        if [[ -n "$num" ]]; then
-            _wt_err "'$repo' is a single-mode repo; <num> doesn't apply."
+        kind=$(_wt_repo_kind "$repo")
+        if [[ -z "$kind" ]]; then
+            _wt_err "Repo '$repo' not registered."
             return 1
         fi
-        local repo_path
+    fi
+
+    # ── Single-mode ───────────────────────────────────────────────────────────
+    if [[ "$kind" == "single" ]]; then
+        local repo_path primary_branch current_branch
         repo_path=$(_wt_repo_path "$repo")
         if [[ ! -d "${repo_path}/.git" ]]; then
             _wt_err "Not a git repo at: $repo_path"
             return 1
         fi
-        local primary_branch current_branch
         primary_branch=$(_wt_primary_branch "$repo_path")
         current_branch=$(git -C "$repo_path" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
-        echo "🔄 Fetching origin..."
-        git -C "$repo_path" fetch origin 2>/dev/null || _wt_warn "Fetch failed."
-        if [[ "$current_branch" == "$primary_branch" ]]; then
-            if git -C "$repo_path" pull --rebase origin "$primary_branch" 2>/dev/null; then
-                _wt_ok "$primary_branch is up to date"
-            else
-                _wt_warn "Could not pull $primary_branch (no remote or conflict)."
-            fi
+        echo "🔄 Fetching origin/$primary_branch..."
+        git -C "$repo_path" fetch origin "$primary_branch" --prune --prune-tags --no-tags 2>/dev/null \
+            || _wt_warn "Fetch failed."
+        git -C "$repo_path" branch -f "$primary_branch" "origin/${primary_branch}" 2>/dev/null
+        echo "↪ Rebasing $current_branch onto $primary_branch..."
+        if git -C "$repo_path" rebase "$primary_branch" 2>/dev/null; then
+            _wt_ok "$current_branch is up to date"
         else
-            echo "↪ Updating local $primary_branch from origin/$primary_branch..."
-            if git -C "$repo_path" fetch origin "${primary_branch}:${primary_branch}" 2>/dev/null; then
-                _wt_ok "Local $primary_branch updated"
-            else
-                _wt_warn "Could not fast-forward local $primary_branch."
-            fi
-            echo "↪ Rebasing $current_branch onto $primary_branch..."
-            if git -C "$repo_path" rebase "$primary_branch" 2>/dev/null; then
-                _wt_ok "$current_branch rebased onto $primary_branch"
-            else
-                _wt_warn "Rebase had conflicts — resolve manually."
-            fi
+            _wt_warn "Rebase conflict — resolve manually."
         fi
         return 0
     fi
 
-    local agents_dir
+    # ── Worktree-mode ─────────────────────────────────────────────────────────
+    local agents_dir master_dir primary_branch
     agents_dir=$(_wt_agents_dir "$repo")
-    local master_dir
     master_dir=$(_wt_master_dir "$agents_dir")
     if [[ ! -d "$master_dir" ]]; then
         _wt_err "master/ not found at: $master_dir"
         return 1
     fi
-
-    local primary_branch
     primary_branch=$(_wt_primary_branch "$master_dir")
 
-    # Step 1: update master
-    echo "🔄 Updating master..."
-    git -C "$master_dir" fetch origin 2>/dev/null || _wt_warn "Fetch failed."
-    if git -C "$master_dir" pull --rebase origin "$primary_branch" 2>/dev/null; then
-        _wt_ok "master is up to date"
+    echo "🔄 Fetching origin/$primary_branch..."
+    git -C "$master_dir" fetch origin "$primary_branch" --prune --prune-tags --no-tags 2>/dev/null \
+        || _wt_warn "Fetch failed."
+    git -C "$master_dir" branch -f "$primary_branch" "origin/${primary_branch}" 2>/dev/null
+
+    # Determine which worktree to sync
+    local target_dir target_branch agent_branch
+
+    # Sync master/ or a specific agent worktree
+    local target_dir padded agent_branch target_branch
+
+    if [[ -z "$num" || "$num" == "0" ]]; then
+        target_dir="$master_dir"
     else
-        _wt_warn "Could not pull master (no remote or conflict). Continuing with local master."
-    fi
-
-    # Step 2: rebase agent worktree(s)
-    local targets=()
-    if [[ -n "$num" ]]; then
-        targets=("${agents_dir}/agent-${num}")
-    else
-        targets=("${agents_dir}"/agent-*(N))
-    fi
-
-    if [[ ${#targets[@]} -eq 0 ]]; then
-        _wt_info "No agent worktrees found for '$repo'."
-        return 0
-    fi
-
-    local wt_path branch rebase_base
-    # Use origin/<branch> if available, otherwise local
-    if git -C "$master_dir" rev-parse --verify "origin/${primary_branch}" &>/dev/null; then
-        rebase_base="origin/${primary_branch}"
-    else
-        rebase_base="$primary_branch"
-    fi
-
-    for wt_path in "${targets[@]}"; do
-        [[ ! -d "$wt_path" ]] && continue
-        branch=$(git -C "$wt_path" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "?")
-        echo "🔄 Rebasing ${wt_path:t} ($branch) onto $rebase_base..."
-        if git -C "$wt_path" rebase "$rebase_base" 2>/dev/null; then
-            _wt_ok "${wt_path:t} rebased"
-        else
-            _wt_warn "${wt_path:t}: rebase conflict — resolve manually in ${wt_path}"
-            git -C "$wt_path" rebase --abort 2>/dev/null || true
+        padded=$(_wt_pad "$num")
+        target_dir="${agents_dir}/agent-${padded}"
+        if [[ ! -d "$target_dir" ]]; then
+            _wt_err "Worktree not found: $target_dir"
+            return 1
         fi
-    done
+
+        agent_branch="agent/${padded}"
+        echo "↪ Rebasing $agent_branch onto origin/${primary_branch}..."
+        if git -C "$master_dir" rebase "origin/${primary_branch}" "$agent_branch" 2>/dev/null; then
+            _wt_ok "$agent_branch rebased"
+        else
+            _wt_warn "Conflict rebasing $agent_branch — resolve manually in $master_dir"
+            git -C "$master_dir" rebase --abort 2>/dev/null || true
+            return 1
+        fi
+    fi
+
+    target_branch=$(git -C "$target_dir" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "?")
+    local rebase_onto="${agent_branch:-origin/${primary_branch}}"
+    if [[ "$target_branch" != "${agent_branch:-}" ]]; then
+        echo "↪ Rebasing $target_branch onto $rebase_onto..."
+        if git -C "$target_dir" rebase "$rebase_onto" 2>/dev/null; then
+            _wt_ok "$target_branch is up to date"
+        else
+            _wt_warn "Conflict rebasing $target_branch — resolve manually in $target_dir"
+            git -C "$target_dir" rebase --abort 2>/dev/null || true
+        fi
+    else
+        _wt_ok "$target_branch is up to date"
+    fi
 }
 
 _wt_close() {

@@ -189,14 +189,14 @@ test_wt_rm_rejects_single_mode_repo_with_num() {
     rm -rf "$repo_dir"
 }
 
-test_wt_sync_rejects_num_for_single_mode() {
+test_wt_sync_single_mode_has_no_num_concept() {
     local repo_dir
     repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
     git -C "$repo_dir" init -q
     _wt_repo_register "tiny" "$repo_dir" >/dev/null 2>&1
-    local out
-    out=$(_wt_sync "tiny-1" 2>&1)
-    _assert_contains "$out" "doesn't apply" || return 1
+    local kind
+    kind=$(_wt_repo_kind "tiny")
+    _assert_eq "single" "$kind" "tiny should be single-mode" || return 1
     rm -rf "$repo_dir"
 }
 
@@ -272,7 +272,7 @@ _run_test "register: rejects duplicate name"                                  te
 _run_test "wt new: rejects single-mode repo"                                  test_wt_new_rejects_single_mode_repo
 _run_test "wt rm <repo>: rejects single-mode repo (bulk)"                     test_wt_rm_rejects_single_mode_repo_bulk
 _run_test "wt rm <repo-num>: rejects single-mode repo"                        test_wt_rm_rejects_single_mode_repo_with_num
-_run_test "wt sync <repo-num>: rejects num for single-mode repo"              test_wt_sync_rejects_num_for_single_mode
+_run_test "wt sync: single-mode repos have no num concept (kind=single)"      test_wt_sync_single_mode_has_no_num_concept
 _run_test "wt repo list: shows KIND column"                                   test_repo_list_shows_kind_column
 _run_test "wt afm-0: resolves to master/ directory"                             test_wt_open_zero_resolves_to_master_dir
 _run_test "_wt_window_name: no title returns just the id"                     test_window_name_no_title_returns_id_only
