@@ -741,10 +741,6 @@ _wt_sync() {
         || _wt_warn "Fetch failed."
     git -C "$master_dir" branch -f "$primary_branch" "origin/${primary_branch}" 2>/dev/null
 
-    # Determine which worktree to sync
-    local target_dir target_branch agent_branch
-
-    # Sync master/ or a specific agent worktree
     local target_dir padded agent_branch target_branch
 
     if [[ -z "$num" || "$num" == "0" ]]; then
