@@ -35,12 +35,8 @@ function select_pane() {
 
     # Check if we're using the fzf preview pane
     if [[ "${1}" = 'true' ]]; then
-        preview="--preview '"
-        preview+="tmux capture-pane -ep -S -\$(( \${FZF_PREVIEW_LINES:-30} )) -t {1} | "
-        # The awk below removes trailing empty/whitespace-only lines by finding the last non-empty line and printing up to that point
-        preview+="awk \"{a[NR]=\\\$0} END{for(i=NR;i>0;i--) if(a[i]~/[^ \\t]/){for(j=1;j<=i;j++) print a[j]; exit}}\" | "
-        preview+="tail -n \$(( \${FZF_PREVIEW_LINES:-30} ))"
-        preview+="' --preview-window=${3}"
+        preview="--preview 'sh ~/.config/tmux/scripts/fzf-pane-preview.sh {1} \${FZF_PREVIEW_LINES:-30}'"
+        preview+=" --preview-window=${3}"
     fi
 
     # Launch switcher
@@ -53,40 +49,51 @@ function select_pane() {
     # value (so columns line up visually), keeping TAB as the in-row separator. fzf
     # delimits on TAB, hides field 1 (pane_id used internally), and only matches/searches
     # against the visible fields (2..).
-    pane=$(tmux list-panes -aF "${4}" \
+    pane=$(tmux list-windows -aF "${4}" \
         | awk -F'\t' '
             {
+                # field layout: window_id, session_index, session_name, window_index, window_name
                 for (i=1; i<=NF; i++) { rows[NR,i]=$i; if (length($i) > w[i]) w[i]=length($i) }
                 nf=NF
             }
             END {
-                # Pad each non-last column to the widest value in that column.
-                # Add an extra GAP of spaces before the last column to visually separate
-                # the command from the window-name without trying to fully right-align
-                # (which is brittle since fzf reserves space for the hidden pane_id field).
-                gap = 6
+                cur_session = ""
                 for (r=1; r<=NR; r++) {
+                    sess = rows[r,3]
+                    if (sess != cur_session) {
+                        cur_session = sess
+                        sess_idx = rows[r,2]
+                        if (sess == sess_idx) {
+                            printf "SESSION:%s\t── Session %s ──\n", sess, sess_idx
+                        } else {
+                            printf "SESSION:%s\t── Session %s: %s ──\n", sess, sess_idx, sess
+                        }
+                    }
+                    # visible: window_index (col 4), window_name (col 5)
                     out = rows[r,1]
-                    for (c=2; c<=nf-1; c++) out = out "\t" sprintf("%-" w[c] "s", rows[r,c])
-                    out = out "\t" sprintf("%" gap "s", "") rows[r,nf]
+                    out = out "\t" sprintf("%-" w[4] "s", rows[r,4])
+                    out = out "\t" rows[r,5]
                     print out
                 }
             }' \
-        | eval fzf --exit-0 --reverse --tmux "${2}" --delimiter="'\t'" --with-nth=2.. "${border_styling}" "${preview}")
+        | eval fzf --exit-0 --reverse --tmux "${2}" --delimiter="'\t'" --with-nth=2.. \
+            --no-sort \
+            "${border_styling}" "${preview}")
 
     # Set pane_id to first TAB-separated field of fzf output
     pane_id=$(printf '%s' "${pane}" | awk -F'\t' '{print $1}')
 
-    # If pane_id is empty (ESC or no selection), exit without changing pane
+    # If pane_id is empty (ESC), exit
     if [[ -z "${pane_id}" ]]; then
         return
-    # Check if pane exists
-    elif tmux has-session -t "${pane_id}" >/dev/null 2>&1; then
-        tmux switch-client -t "${pane_id}"
+    # Session header selected — switch to that session's last active window
+    elif [[ "${pane_id}" == SESSION:* ]]; then
+        local sess_name="${pane_id#SESSION:}"
+        tmux switch-client -t "${sess_name}"
+    elif tmux display-message -t "${pane_id}" -p "" >/dev/null 2>&1; then
         tmux select-window -t "${pane_id}"
-        tmux select-pane -t "${pane_id}"
+        tmux switch-client -t "${pane_id}"
     else
-        # Pane not found, let's create it.
         tmux command-prompt -b -p "Press ENTER to create a new window in the current session [${pane}]" "new-window -n \"${pane}\""
     fi
 }
@@ -132,4 +139,4 @@ read -r -a list_panes_format_overrides <<< "${4}"
 list_panes_formatted_overrides=$(printf '#{%s}\t' "${list_panes_format_overrides[@]}")
 list_panes_formatted_overrides="${list_panes_formatted_overrides%$'\t'}"
 
-select_pane "${preview_pane}" "${fzf_window_position}" "${fzf_preview_window_position}" "#{pane_id}	${list_panes_formatted_overrides}"
+select_pane "${preview_pane}" "${fzf_window_position}" "${fzf_preview_window_position}" "#{window_id}	${list_panes_formatted_overrides}"
