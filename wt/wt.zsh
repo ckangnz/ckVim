@@ -199,6 +199,10 @@ COMMANDS
                                         worktree: master + all agents
                                         single:   local primary + current branch
     wt sync <repo>-<num>              (worktree) sync one agent worktree
+    wt clean                          Reset worktree to its base branch + sync
+                                        master/: checkout primary, delete old branch
+                                        agent-N/: checkout agent/N, delete old branch
+                                        Then runs wt sync automatically.
     wt close [repo|repo-num]          Close tmux window for a workspace
                                         Omit arg to auto-detect from current dir
     wt layout                         Apply triptych layout to CURRENT tmux window
@@ -754,12 +758,11 @@ _wt_sync() {
         fi
 
         agent_branch="agent/${padded}"
-        echo "↪ Rebasing $agent_branch onto origin/${primary_branch}..."
-        if git -C "$master_dir" rebase "origin/${primary_branch}" "$agent_branch" 2>/dev/null; then
-            _wt_ok "$agent_branch rebased"
+        echo "↪ Fast-forwarding $agent_branch to origin/${primary_branch}..."
+        if git -C "$master_dir" branch -f "$agent_branch" "origin/${primary_branch}" 2>/dev/null; then
+            _wt_ok "$agent_branch updated"
         else
-            _wt_warn "Conflict rebasing $agent_branch — resolve manually in $master_dir"
-            git -C "$master_dir" rebase --abort 2>/dev/null || true
+            _wt_warn "Could not fast-forward $agent_branch — resolve manually in $master_dir"
             return 1
         fi
     fi
@@ -777,6 +780,81 @@ _wt_sync() {
     else
         _wt_ok "$target_branch is up to date"
     fi
+}
+
+_wt_clean() {
+    local cwd="${PWD}"
+
+    # Auto-detect repo + worktree from cwd
+    local repo="" num="" kind="" wt_dir="" base_branch=""
+    while read -r name path_candidate kind_candidate; do
+        if [[ "$kind_candidate" == "single" ]]; then
+            if [[ "$cwd" == "$path_candidate"* ]]; then
+                repo="$name"; kind="single"; wt_dir="$path_candidate"
+                base_branch=$(_wt_primary_branch "$wt_dir")
+                break
+            fi
+        else
+            local master_candidate="${path_candidate:h}/master"
+            if [[ "$cwd" == "${path_candidate}/agent-"* ]]; then
+                repo="$name"; kind="worktree"; wt_dir="$path_candidate"
+                local agent_dir="${cwd#${path_candidate}/}"
+                agent_dir="${agent_dir%%/*}"
+                local padded="${agent_dir#agent-}"
+                base_branch="agent/${padded}"
+                break
+            elif [[ "$cwd" == "${master_candidate}"* ]]; then
+                repo="$name"; kind="worktree"; wt_dir="$master_candidate"
+                base_branch=$(_wt_primary_branch "$master_candidate")
+                break
+            fi
+        fi
+    done <<< "$(_wt_repos)"
+
+    if [[ -z "$repo" ]]; then
+        _wt_err "Not inside a registered repo. Run wt clean from inside a worktree."
+        return 1
+    fi
+
+    local current_branch
+    current_branch=$(git -C "$cwd" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
+
+    if [[ -z "$current_branch" ]]; then
+        _wt_err "Could not determine current branch."
+        return 1
+    fi
+
+    if [[ "$current_branch" == "$base_branch" ]]; then
+        _wt_info "Already on base branch '$base_branch'. Running sync..."
+        _wt_sync
+        return
+    fi
+
+    echo "🧹 Cleaning '$current_branch' → resetting to '$base_branch'..."
+    echo -n "   Delete branch '$current_branch' and sync? [y/N] "
+    read -r confirm
+    [[ "$confirm" != "y" && "$confirm" != "Y" ]] && { echo "Aborted."; return 0 }
+
+    # agent/NNN branches are tied to their worktree and can't be checked out normally.
+    # Instead: switch to detached HEAD at base_branch tip, delete the feature branch,
+    # then re-attach to base_branch.
+    local base_sha
+    base_sha=$(git -C "$cwd" rev-parse "$base_branch" 2>/dev/null)
+    if [[ -z "$base_sha" ]]; then
+        _wt_err "Cannot resolve '$base_branch' — does it exist?"
+        return 1
+    fi
+    git -C "$cwd" checkout --detach "$base_sha" 2>/dev/null \
+        || { _wt_err "Failed to detach HEAD."; return 1 }
+    git -C "$cwd" branch -D "$current_branch" 2>/dev/null \
+        || _wt_warn "Could not delete '$current_branch'."
+    # agent/NNN is locked to its worktree in master/ — recreate the ref here
+    # pointing to base_sha so this worktree is back on its base branch
+    git -C "$cwd" checkout -B "$base_branch" "$base_sha" 2>/dev/null \
+        || { _wt_err "Failed to recreate '$base_branch'."; return 1 }
+    _wt_ok "Deleted '$current_branch', now on '$base_branch'"
+
+    _wt_sync
 }
 
 _wt_close() {
@@ -1117,6 +1195,7 @@ wt() {
         rm)      _wt_rm      "${@:2}" ;;
         list)    _wt_list    "${@:2}" ;;
         sync)    _wt_sync    "${@:2}" ;;
+        clean)   _wt_clean   "${@:2}" ;;
         close)   _wt_close   "${@:2}" ;;
         layout)  _wt_layout  "${@:2}" ;;
         pick)    _wt_pick   "${@:2}" ;;
