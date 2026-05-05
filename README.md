@@ -189,6 +189,21 @@ Install Nerd Font:
   compaudit | xargs chmod g-w
   ```
 
+- Tmux not starting zsh in linux
+
+```bash
+# Add this snippet at the top of .bashrc
+if [ -t 1 ]; then
+  if [ -x "/home/linuxbrew/.linuxbrew/bin/zsh" ]; then
+    export SHELL="/home/linuxbrew/.linuxbrew/bin/zsh"
+    exec /home/linuxbrew/.linuxbrew/bin/zsh -l
+  elif command -v zsh >/dev/null 2>&1; then
+    export SHELL=$(command -v zsh)
+    exec $(command -v zsh) -l
+  fi
+fi
+```
+
 - **Node.js issues**
 
   ```bash
@@ -228,8 +243,32 @@ Install Nerd Font:
 - **Linux clipboard issues**
 
   ```bash
+  # Ubuntu
+  sudo apt install xsel xclip -y
+
+  # Arch Linux
   sudo pacman -S xsel
   ```
+
+- Linux (Ubuntu) Programs
+  - CopyQ (Clipboard Manager) : `sudo apt install copyq`
+  - Window management
+    - Install `Extension Manager` and add `Tiling Assistant`
+      `sudo apt install gnome-shell-extension-manager`
+    - Enable window size with `Super + right click`: `gsettings set org.gnome.desktop.wm.preferences resize-with-right-button true`
+  - Korean `sudo apt install ibus-hangul` and set it in Settings > Keyboard
+  - GPU Driver: `sudo ubuntu-drivers autoinstall`
+  - Font issue with brew:
+    ```bash
+    mkdir -p ~/.local/share/fonts
+    ln -sfn $(brew --prefix)/share/fonts ~/.local/share/fonts/brewfonts
+    fc-cache -fv
+    ```
+  - Key repeat interval
+    ```bash
+    gsettings set org.gnome.desktop.peripherals.keyboard delay 200
+    gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 20
+    ```
 
 - **WSL Docker completions error**
   ```bash
