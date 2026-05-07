@@ -871,12 +871,18 @@ _wt_close() {
                     break
                 fi
             else
+                local master_candidate="${path_candidate:h}/master"
                 if [[ "$cwd" == "${path_candidate}/agent-"* ]]; then
                     detected_repo="$name"
                     detected_kind="worktree"
                     local agent_dir="${cwd#${path_candidate}/}"
                     agent_dir="${agent_dir%%/*}"
                     detected_num="${agent_dir#agent-}"
+                    break
+                elif [[ "$cwd" == "${master_candidate}"* ]]; then
+                    detected_repo="$name"
+                    detected_kind="worktree"
+                    detected_num="0"
                     break
                 fi
             fi
@@ -892,10 +898,11 @@ _wt_close() {
         fi
     fi
 
-    local repo num kind
+    local repo num kind raw_num
     if [[ "$arg" =~ ^(.+)-([0-9]+)$ ]]; then
         repo="${match[1]}"
-        num=$(_wt_pad "${match[2]}")
+        raw_num="${match[2]}"
+        num=$([ "$raw_num" = "0" ] && echo "0" || _wt_pad "$raw_num")
     else
         repo="$arg"
         num=""
@@ -922,7 +929,9 @@ _wt_close() {
         local agents_dir
         agents_dir=$(_wt_agents_dir "$repo")
         if [[ "$num" == "0" ]]; then
-            target_path=$(_wt_master_dir "$agents_dir")
+            local _master_dir
+            _master_dir=$(_wt_master_dir "$agents_dir")
+            target_path="${_master_dir:A}"
         else
             target_path="${agents_dir}/agent-${num}"
         fi
