@@ -255,6 +255,77 @@ test_unregister_removes_repo() {
     rm -rf "$repo_dir"
 }
 
+test_pad_zero_pads_to_three_digits() {
+    _assert_eq "001" "$(_wt_pad 1)"   || return 1
+    _assert_eq "042" "$(_wt_pad 42)"  || return 1
+    _assert_eq "100" "$(_wt_pad 100)" || return 1
+    _assert_eq "999" "$(_wt_pad 999)" || return 1
+}
+
+test_pad_zero_stays_as_zero() {
+    _assert_eq "000" "$(_wt_pad 0)" || return 1
+}
+
+test_primary_branch_detects_main() {
+    local repo_dir
+    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
+    git -C "$repo_dir" init -q -b main 2>/dev/null || git -C "$repo_dir" init -q
+    git -C "$repo_dir" commit -q --allow-empty -m "init" 2>/dev/null
+    _assert_eq "main" "$(_wt_primary_branch "$repo_dir")" || { rm -rf "$repo_dir"; return 1 }
+    rm -rf "$repo_dir"
+}
+
+test_primary_branch_falls_back_to_master() {
+    local repo_dir
+    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
+    git -C "$repo_dir" init -q -b master 2>/dev/null || git -C "$repo_dir" init -q
+    _assert_eq "master" "$(_wt_primary_branch "$repo_dir")" || { rm -rf "$repo_dir"; return 1 }
+    rm -rf "$repo_dir"
+}
+
+test_next_agent_num_returns_one_when_empty() {
+    local agents_dir
+    agents_dir=$(_mktemp_resolved wt-agents-XXXXXX)
+    _assert_eq "001" "$(_wt_next_agent_num "$agents_dir")" || { rm -rf "$agents_dir"; return 1 }
+    rm -rf "$agents_dir"
+}
+
+test_next_agent_num_fills_gap() {
+    local agents_dir
+    agents_dir=$(_mktemp_resolved wt-agents-XXXXXX)
+    mkdir -p "$agents_dir/agent-001" "$agents_dir/agent-003"
+    _assert_eq "002" "$(_wt_next_agent_num "$agents_dir")" || { rm -rf "$agents_dir"; return 1 }
+    rm -rf "$agents_dir"
+}
+
+test_next_agent_num_appends_after_last() {
+    local agents_dir
+    agents_dir=$(_mktemp_resolved wt-agents-XXXXXX)
+    mkdir -p "$agents_dir/agent-001" "$agents_dir/agent-002"
+    _assert_eq "003" "$(_wt_next_agent_num "$agents_dir")" || { rm -rf "$agents_dir"; return 1 }
+    rm -rf "$agents_dir"
+}
+
+test_unregister_errors_on_unknown_repo() {
+    local out
+    out=$(_wt_repo_unregister "nonexistent-xyz" 2>&1)
+    _assert_contains "$out" "not found" || return 1
+}
+
+test_dispatcher_errors_on_unknown_command() {
+    local out
+    out=$(wt _nonexistent_command_xyz_ 2>&1)
+    [[ -n "$out" ]] || return 1
+}
+
+test_dispatcher_routes_repo_register() {
+    local repo_dir
+    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
+    wt repo register "dispatch-test" "$repo_dir" >/dev/null 2>&1 || return 1
+    _assert_eq "single" "$(_wt_repo_kind "dispatch-test")" || { rm -rf "$repo_dir"; return 1 }
+    rm -rf "$repo_dir"
+}
+
 # ── runner ───────────────────────────────────────────────────────────────────
 
 echo "Running wt tests..."
@@ -277,6 +348,16 @@ _run_test "wt repo list: shows KIND column"                                   te
 _run_test "wt afm-0: resolves to master/ directory"                             test_wt_open_zero_resolves_to_master_dir
 _run_test "_wt_window_name: no title returns just the id"                     test_window_name_no_title_returns_id_only
 _run_test "_wt_window_name: with title returns 'id: title'"                   test_window_name_with_title_returns_id_colon_title
+_run_test "_wt_pad: zero-pads to 3 digits"                                     test_pad_zero_pads_to_three_digits
+_run_test "_wt_pad: 0 pads to 000"                                            test_pad_zero_stays_as_zero
+_run_test "_wt_primary_branch: detects main branch"                           test_primary_branch_detects_main
+_run_test "_wt_primary_branch: falls back to master"                          test_primary_branch_falls_back_to_master
+_run_test "_wt_next_agent_num: returns 001 when no agents"                    test_next_agent_num_returns_one_when_empty
+_run_test "_wt_next_agent_num: fills gap in sequence"                         test_next_agent_num_fills_gap
+_run_test "_wt_next_agent_num: appends after last"                            test_next_agent_num_appends_after_last
+_run_test "_wt_repo_unregister: errors on unknown repo"                       test_unregister_errors_on_unknown_repo
+_run_test "wt dispatcher: routes repo register"                                test_dispatcher_routes_repo_register
+_run_test "wt dispatcher: errors on unknown command"                           test_dispatcher_errors_on_unknown_command
 _run_test "wt repo unregister: removes the repo"                              test_unregister_removes_repo
 
 echo
