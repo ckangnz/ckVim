@@ -87,3 +87,11 @@ Any repository set up with the `wt` CLI uses this **git worktree layout**:
 | `wt clean` | Reset worktree to base branch (`agent/NNN`), delete feature branch |
 | `wt close` | Close the tmux window for this worktree |
 | `wt list` | Show all worktrees and their status |
+
+### ⚠️ Hard rules for wt repos — NEVER break these
+
+- **NEVER** run `git fetch`, `git pull`, `git rebase`, or `git merge` directly in a worktree repo. **ALWAYS** use `wt sync` instead.
+- **NEVER** commit directly to `agent/NNN`. It is a base branch — always create a feature branch first.
+- **ALWAYS** check `git branch` before starting work. If on `agent/NNN`, run `git checkout -b issue/TICKET-short-description` first.
+- **ALWAYS** use `wt clean` (not manual git commands) to discard a feature branch and reset the worktree.
+- `wt` is a real executable at `~/.vim/wt/wt` — you CAN run it directly. Do not tell the user to run it themselves unless there's an interactive prompt required.
