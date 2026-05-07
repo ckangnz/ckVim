@@ -1091,7 +1091,7 @@ _wt_open() {
                 _wt_err "master/ not found at: $master_dir"
                 return 1
             fi
-            wt_path="$master_dir"
+            wt_path="${master_dir:A}"
             num="0"
         else
             num=$(_wt_pad "$raw_num")

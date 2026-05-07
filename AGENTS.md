@@ -2,15 +2,16 @@
 
 These are my personal conventions for working with AI coding agents. They apply regardless of which tool I'm using (Rovo Dev, Claude Code, Gemini CLI, etc.).
 
-## 1. Planning — Use `ck_*/` Directories
+## 1. Planning — Use `~/.memory/ck_*/` Directories
 
-- When starting a non-trivial task, create a `ck_*/` plan directory (e.g., `ck_my-feature/`).
-- These directories are **git-ignored globally** via `~/.gitignore` (`ck_*`) — they persist locally but are never committed. They are personal working space.
+- When starting a non-trivial task, create a `ck_*/` plan directory **inside `~/.memory/`** (e.g., `~/.memory/ck_my-feature/` or `~/.memory/ck_DSP-1234/`).
+- **Never create `ck_*/` directories inside a repository** — they pollute the working tree and may not be git-ignored in all repos.
+- `~/.memory/` is the single home for all local agent working memory — plans, session logs, and notes.
 - Keep them after the task is complete — they serve as future reference.
 
 **Structure:**
 ```
-ck_feature/
+~/.memory/ck_feature/
 ├── progress.md               # Running log: decisions, progress, blockers, evidence. Keep updating.
 ├── 01-overview.md            # Problem statement, scope
 ├── 02-architecture.md        # Diagrams, data flows
