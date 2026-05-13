@@ -41,13 +41,21 @@ These are my personal conventions for working with AI coding agents. They apply 
 
 - If you accidentally violate any of these rules, acknowledge it immediately, stop, and ask how I want to proceed.
 
-## 6. Code Formatting
+## 6. Code Comments
+
+- **Do not add comments to code you write or edit** unless the logic is genuinely non-obvious and requires explanation.
+- Never add comments that just describe what the code does (e.g. `// increment counter`, `// call the API`).
+- Never add section divider comments or labels when editing existing files.
+- If existing comments are already present, leave them as-is — do not add more.
+- Prefer self-documenting code (clear variable/function names) over comments.
+
+## 7. Code Formatting
 
 - Before editing or creating any file, look for the nearest formatter config (`.prettierrc`, `prettier.config.js`, etc.) — starting from the file's directory and walking up to the repo root.
 - Apply those formatting rules manually. Do not assume defaults.
 - Prefer the config closest to the file being edited.
 
-## 7. Git Worktree Structure
+## 8. Git Worktree Structure
 
 Any repository set up with the `wt` CLI uses this **git worktree layout**:
 
