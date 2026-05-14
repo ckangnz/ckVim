@@ -95,7 +95,41 @@ alias gas="gh auth switch"
 alias gcnv='gc --no-verify'
 alias gcnva='gc --no-verify --amend'
 alias gcnvan='gc --no-verify --amend --no-edit'
-alias gfom='gfo $(git_main_branch) --prune --prune-tags --no-tags && g branch -f $(git_main_branch) origin/$(git_main_branch)'
+_wt_base_branch() {
+  local main=$(git_main_branch)
+  local toplevel=$(git rev-parse --show-toplevel 2>/dev/null)
+  local worktrees=$(git worktree list --porcelain 2>/dev/null | awk '/^worktree / {print $2}')
+  local main_worktree=$(echo "$worktrees" | head -1)
+  if [[ "$toplevel" != "$main_worktree" ]]; then
+    local num=$(basename "$toplevel" | grep -oE '[0-9]+$')
+    if [[ -n "$num" ]]; then
+      local padded=$(printf "%03d" "$num")
+      echo "agent/${padded}"
+      return
+    fi
+  fi
+  echo "$main"
+}
+
+alias gfom='(){
+  local main=$(git_main_branch)
+  gfo "$main" --prune --prune-tags --no-tags
+  g branch -f "$main" "origin/$main"
+}'
+
+alias gsom='(){
+  local main=$(git_main_branch)
+  local base=$(_wt_base_branch)
+  if [[ "$base" != "$main" ]]; then
+    g branch -f "$base" "$main"
+  else
+    g branch -f "$main" "origin/$main"
+  fi
+}'
+
+alias grbom='grb origin/$(git_main_branch)'
+
+alias gmom='gm origin/$(git_main_branch)'
 
 gdf() {
 	# example: gdf "test\.tsx$"

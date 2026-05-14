@@ -721,8 +721,8 @@ _wt_sync() {
         git -C "$repo_path" fetch origin "$primary_branch" --prune --prune-tags --no-tags 2>/dev/null \
             || _wt_warn "Fetch failed."
         git -C "$repo_path" branch -f "$primary_branch" "origin/${primary_branch}" 2>/dev/null
-        echo "↪ Rebasing $current_branch onto $primary_branch..."
-        if git -C "$repo_path" rebase "$primary_branch" 2>/dev/null; then
+        echo "↪ Rebasing $current_branch onto origin/${primary_branch}..."
+        if git -C "$repo_path" rebase "origin/${primary_branch}"; then
             _wt_ok "$current_branch is up to date"
         else
             _wt_warn "Rebase conflict — resolve manually."
@@ -768,14 +768,13 @@ _wt_sync() {
     fi
 
     target_branch=$(git -C "$target_dir" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "?")
-    local rebase_onto="${agent_branch:-origin/${primary_branch}}"
+    local rebase_onto="origin/${primary_branch}"
     if [[ "$target_branch" != "${agent_branch:-}" ]]; then
         echo "↪ Rebasing $target_branch onto $rebase_onto..."
-        if git -C "$target_dir" rebase "$rebase_onto" 2>/dev/null; then
+        if git -C "$target_dir" rebase "$rebase_onto"; then
             _wt_ok "$target_branch is up to date"
         else
             _wt_warn "Conflict rebasing $target_branch — resolve manually in $target_dir"
-            git -C "$target_dir" rebase --abort 2>/dev/null || true
         fi
     else
         _wt_ok "$target_branch is up to date"
