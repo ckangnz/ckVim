@@ -78,7 +78,7 @@ local plugins = {
     end,
   },
   {
-    'ravitemer/mcphub.nvim',
+    'bahaaza/mcphub.nvim',
     keys = { { '<leader>ph', ':MCPHub<cr>', desc = 'Open MCPHub', silent = true } },
     cmd = { 'MCPHub' },
     build = 'npm install -g mcp-hub@latest',
