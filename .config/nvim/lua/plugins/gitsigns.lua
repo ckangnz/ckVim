@@ -80,8 +80,7 @@ gitsigns.setup({
     map('n', '<leader>hi', '<cmd>Gitsigns preview_hunk_inline<CR>')
     map('n', '<leader>gdf', '<cmd>Gitsigns diffthis<CR>')
     map('n', '<leader>gdm', function()
-      local main_branch =
-        vim.fn.system('git branch -l main master | sed \'s/^[* ]*//\' | head -1'):gsub('%s+', '')
+      local main_branch = vim.fn.system('git rev-parse --verify --quiet main >/dev/null 2>&1 && echo main || echo master'):gsub('%s+', '')
       if main_branch == '' then
         main_branch = 'main'
       end
