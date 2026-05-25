@@ -45,7 +45,7 @@ while true; do
 	[ $sel_gitignore -eq 1 ] && echo -e "  ${GREEN}[6]${RESET} ${GREEN}◉${RESET} ${GREEN}gitignore${RESET}" > /dev/tty || echo -e "  ${GRAY}[6]${RESET} ${GRAY}○${RESET} ${GRAY}gitignore${RESET}" > /dev/tty
 	echo "" > /dev/tty
 	echo -e "${CYAN}────────────────────────────────────────────${RESET}" > /dev/tty
-	echo -e "${YELLOW}Press 1-6 to toggle, a for all, Enter to confirm${RESET}" > /dev/tty
+	echo -e "${YELLOW}Press 1-6 to toggle, a for all, Enter to confirm, q to quit${RESET}" > /dev/tty
 	echo -e "${CYAN}────────────────────────────────────────────${RESET}" > /dev/tty
 	read -n1 -r input < /dev/tty
 	echo "" > /dev/tty
@@ -63,6 +63,7 @@ while true; do
 				sel_brew=1; sel_vim=1; sel_zsh=1; sel_fonts=1; sel_others=1; sel_gitignore=1
 			fi
 			;;
+		q|Q) clear > /dev/tty; echo -e "${RED}✗ Quit.${RESET}" > /dev/tty; exit 1 ;;
 		"") break ;;
 	esac
 done

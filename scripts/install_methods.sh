@@ -57,6 +57,41 @@ brew_install_cask() {
 	done
 }
 
+linux_install_snap() {
+	if ! command -v snap &> /dev/null; then
+		echo -e "${RED}ERROR:${RESET} snap is not installed. Skipping snap packages."
+		return
+	fi
+	local packages=("$@")
+	for package in "${packages[@]}"; do
+		if snap list "$package" &> /dev/null 2>&1; then
+			echo -e "${GREEN}FOUND:${RESET} ${package} is already installed!"
+		else
+			echo -e "${CYAN}INSTALL:${RESET} ${package}..."
+			sudo snap install "$package"
+			echo -e "${GREEN}DONE:${RESET} ${package} is installed!"
+		fi
+	done
+}
+
+linux_install_apt() {
+	if ! command -v apt &> /dev/null; then
+		echo -e "${RED}ERROR:${RESET} apt is not available. Skipping apt packages."
+		return
+	fi
+	sudo apt update -qq
+	local packages=("$@")
+	for package in "${packages[@]}"; do
+		if dpkg -s "$package" &> /dev/null 2>&1; then
+			echo -e "${GREEN}FOUND:${RESET} ${package} is already installed!"
+		else
+			echo -e "${CYAN}INSTALL:${RESET} ${package}..."
+			sudo apt install -y "$package"
+			echo -e "${GREEN}DONE:${RESET} ${package} is installed!"
+		fi
+	done
+}
+
 create_symlink() {
 	local target=$1
 	local link_name=$2
