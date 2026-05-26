@@ -5,10 +5,10 @@ SELF="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]
 
 _find_target() {
     local all_panes pid match
-    all_panes=$(tmux list-panes -a -F '#{pane_pid} #{session_name}:#{window_index}' 2>/dev/null) || return 1
+    all_panes=$(tmux list-panes -a -F '#{pane_pid} #{session_name}:#{window_index} #{pane_id}' 2>/dev/null) || return 1
     pid="${PPID:-$$}"
     while [[ "$pid" -gt 1 ]]; do
-        match=$(echo "$all_panes" | /usr/bin/awk -v p="$pid" '$1 == p {print $2; exit}')
+        match=$(echo "$all_panes" | /usr/bin/awk -v p="$pid" '$1 == p {print $2, $3; exit}')
         if [[ -n "$match" ]]; then
             echo "$match"
             return 0
@@ -17,6 +17,11 @@ _find_target() {
         [[ -z "$pid" ]] && break
     done
     return 1
+}
+
+_set_pane_status() {
+    local pane_id="$1" status="$2"
+    tmux set-option -p -t "$pane_id" @agent_status "$status" >/dev/null 2>&1 || true
 }
 
 _strip_icon() {
@@ -90,7 +95,9 @@ case "$cmd" in
     set)
         icon="${1:-}"
         _install_hooks
-        target=$(_find_target) || exit 0
+        read -r target pane_id <<< "$(_find_target)" || exit 0
+        [[ -z "$target" ]] && exit 0
+        _set_pane_status "$pane_id" "$icon"
         if [[ -z "$icon" ]]; then
             _set_window "$target" ""
         elif [[ "$icon" == "🟢" ]] && _target_is_focused "$target"; then
@@ -101,7 +108,9 @@ case "$cmd" in
         ;;
     clear)
         _install_hooks
-        target=$(_find_target) || exit 0
+        read -r target pane_id <<< "$(_find_target)" || exit 0
+        [[ -z "$target" ]] && exit 0
+        _set_pane_status "$pane_id" ""
         _set_window "$target" ""
         ;;
     notify)
