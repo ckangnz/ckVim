@@ -7,6 +7,30 @@ if not ok or type(custom_adapters) ~= 'table' then
   custom_adapters = {}
 end
 
+local function selected_adapter()
+  local agent = vim.g.CODE_COMPANION_AGENT
+  local model = vim.g.CODE_COMPANION_MODEL
+
+  if custom_adapters.http and custom_adapters.http[agent] then
+    local adapter = custom_adapters.http[agent]()
+    if model and model ~= '' then
+      adapter.schema = adapter.schema or {}
+      adapter.schema.model = adapter.schema.model or {}
+      adapter.schema.model.default = model
+    end
+    return adapter
+  end
+
+  if model and model ~= '' then
+    return {
+      name = agent,
+      model = model,
+    }
+  end
+
+  return agent
+end
+
 codecompanion.setup({
   display = {
     chat = {
@@ -52,10 +76,7 @@ codecompanion.setup({
   adapters = custom_adapters,
   interactions = {
     chat = {
-      adapter = {
-        name = vim.g.CODE_COMPANION_AGENT,
-        model = vim.g.LLM_MODEL,
-      },
+      adapter = selected_adapter(),
       roles = {
         llm = function(adapter)
           return 'CodeCompanion (' .. adapter.formatted_name .. ')'
@@ -84,10 +105,7 @@ codecompanion.setup({
       },
     },
     inline = {
-      adapter = {
-        name = vim.g.CODE_COMPANION_AGENT,
-        model = vim.g.LLM_MODEL,
-      },
+      adapter = selected_adapter(),
       opts = { completion_provider = 'cmp' },
       keymaps = {
         accept_change = {
@@ -102,10 +120,7 @@ codecompanion.setup({
       },
     },
     cmd = {
-      adapter = {
-        name = vim.g.CODE_COMPANION_AGENT,
-        model = vim.g.LLM_MODEL,
-      },
+      adapter = selected_adapter(),
       opts = { completion_provider = 'cmp' },
     },
   },
