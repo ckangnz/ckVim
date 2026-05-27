@@ -283,16 +283,16 @@ require('lualine').setup({
           status = {
             icons = {
               enabled = Icons.copilot_enabled .. 'ON',
-              sleep = Icons.zzz .. 'SLP',
+              sleep = Icons.copilot_enabled .. 'CMP',
               disabled = Icons.copilot_disabled .. 'OFF',
               warning = Icons.copilot_warning .. 'WRN',
               unknown = Icons.forbidden .. 'UNK',
             },
             hl = {
               enabled = Colors.white,
+              sleep = Colors.white,
               disabled = Colors.light_grey,
               warning = Colors.light_red,
-              sleep = Colors.grey,
               unknown = Colors.grey,
             },
           },
