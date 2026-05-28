@@ -13,6 +13,8 @@ _get_branch() {
         || echo "?"
 }
 
+AGENT_STATUS_API="$HOME/.config/tmux/scripts/agent-status.sh"
+
 _get_status_icon() {
     local pane_id="$1" wname="$2"
     local icon
@@ -25,14 +27,7 @@ _get_status_icon() {
         elif [[ "$wname" == *"🟣"* ]]; then icon="🟣"
         fi
     fi
-    case "$icon" in
-        🟡) echo "🟡 working" ;;
-        🟢) echo "🟢 done"    ;;
-        ❗)  echo "❗ error"   ;;
-        🔵) echo "🔵 waiting" ;;
-        🟣) echo "🟣 paused"  ;;
-        *)   echo "⚪ idle"    ;;
-    esac
+    bash "$AGENT_STATUS_API" label "$icon"
 }
 
 _get_ai_name() {
@@ -56,13 +51,15 @@ _build_rows() {
             *) continue ;;
         esac
 
-        local branch ai_name status_str label
+        local branch ai_name status_str label tab_name
         branch=$(_get_branch "$path")
         ai_name=$(_get_ai_name "$cmd")
         status_str=$(_get_status_icon "$pane_id" "$wname")
+        tab_name=$(printf '%s' "$wname" | sed 's/ *[🟡🟢❗🔵🟣]$//')
 
-        # Columns: AI, Branch, Status (no session:win)
-        label=$(printf "%-10s  %-30s  %s" \
+        # Columns: Tab, AI, Branch, Status
+        label=$(printf "%-20s  %-10s  %-30s  %s" \
+            "$tab_name" \
             "$ai_name" \
             "$branch" \
             "$status_str")
@@ -83,7 +80,14 @@ _run_dashboard() {
     fi
 
     local header
-    header=$(printf "%-10s  %-30s  %s" "AI" "Branch" "Status")
+    header=$(printf "%-20s  %-10s  %-30s  %s" "Tab" "AI" "Branch" "Status")
+
+    local row_count
+    row_count=$(printf '%s\n' "$rows" | wc -l | tr -d ' ')
+    # header(1) + input border(2) + list border(2) + rows + 1 padding
+    local fzf_height=$(( row_count + 6 ))
+    [[ $fzf_height -lt 8  ]] && fzf_height=8
+    [[ $fzf_height -gt 20 ]] && fzf_height=20
 
     local -a fzf_args=(
         --exit-0
@@ -97,6 +101,7 @@ _run_dashboard() {
         --info=inline-right
         --list-border
         --list-label=' AI Agents '
+        --height="$fzf_height"
     )
 
     local selected

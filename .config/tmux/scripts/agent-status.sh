@@ -88,6 +88,17 @@ _on_focus() {
     done < <(tmux list-clients -F '#{client_session}|#{session_attached}|#{window_index}|#{window_name}' 2>/dev/null || true)
 }
 
+_icon_label() {
+    case "${1:-}" in
+        🟡) echo "🟡 working" ;;
+        🟢) echo "🟢 done"    ;;
+        ❗)  echo "❗ input"   ;;
+        🔵) echo "🔵 waiting" ;;
+        🟣) echo "🟣 paused"  ;;
+        *)   echo "⚪ idle"    ;;
+    esac
+}
+
 cmd="${1:-}"
 shift || true
 
@@ -117,6 +128,9 @@ case "$cmd" in
         title="${1:-Agent}"
         printf '\033]99;i=1:d=0;title=%s\007' "$title" 2>/dev/null || true
         ;;
+    label)
+        _icon_label "${1:-}"
+        ;;
     install-hooks)
         _install_hooks
         ;;
@@ -124,10 +138,11 @@ case "$cmd" in
         _on_focus
         ;;
     *)
-        echo "usage: $(basename "$0") {set <icon>|clear|notify <title>|install-hooks}" >&2
+        echo "usage: $(basename "$0") {set <icon>|clear|label <icon>|notify <title>|install-hooks}" >&2
         echo "  set <icon>      set status icon on the calling pane's window" >&2
         echo "                  (special: 🟢 is suppressed if window already focused)" >&2
         echo "  clear           remove any status icon" >&2
+        echo "  label <icon>    print the human-readable label for an icon" >&2
         echo "  notify <title>  send OSC 99 bell notification" >&2
         echo "  install-hooks   register tmux focus hooks (auto-runs on set/clear)" >&2
         exit 2
