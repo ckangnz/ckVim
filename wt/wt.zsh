@@ -752,11 +752,18 @@ _wt_sync() {
     _wt_ok "Fetched origin/$primary_branch"
 
     echo "⏩ Fast-forwarding $primary_branch → origin/${primary_branch}..."
-    local _gsm_ref
-    _gsm_ref=$(git -C "$master_dir" rev-parse "origin/${primary_branch}" 2>/dev/null) \
-        && git -C "$master_dir" update-ref "refs/heads/${primary_branch}" "$_gsm_ref" \
-        && _wt_ok "$primary_branch up to date" \
-        || _wt_warn "Could not update $primary_branch"
+    local _gsm_ref _gsm_current
+    _gsm_ref=$(git -C "$master_dir" rev-parse "origin/${primary_branch}" 2>/dev/null)
+    _gsm_current=$(git -C "$master_dir" rev-parse --abbrev-ref HEAD 2>/dev/null)
+    if [[ "$_gsm_current" == "$primary_branch" ]]; then
+        git -C "$master_dir" reset --hard "$_gsm_ref" 2>/dev/null \
+            && _wt_ok "$primary_branch up to date" \
+            || _wt_warn "Could not update $primary_branch"
+    else
+        git -C "$master_dir" update-ref "refs/heads/${primary_branch}" "$_gsm_ref" 2>/dev/null \
+            && _wt_ok "$primary_branch up to date" \
+            || _wt_warn "Could not update $primary_branch"
+    fi
 
     local target_dir padded agent_branch target_branch
 
@@ -774,7 +781,16 @@ _wt_sync() {
         echo "⏩ Fast-forwarding $agent_branch → origin/${primary_branch}..."
         local _gswt_ref
         _gswt_ref=$(git -C "$master_dir" rev-parse "origin/${primary_branch}" 2>/dev/null)
-        if git -C "$master_dir" update-ref "refs/heads/${agent_branch}" "$_gswt_ref" 2>/dev/null; then
+        local current_wt_branch
+        current_wt_branch=$(git -C "$target_dir" rev-parse --abbrev-ref HEAD 2>/dev/null)
+        if [[ "$current_wt_branch" == "$agent_branch" ]]; then
+            if git -C "$target_dir" reset --hard "$_gswt_ref" 2>/dev/null; then
+                _wt_ok "$agent_branch up to date"
+            else
+                _wt_warn "Could not fast-forward $agent_branch — resolve manually in $target_dir"
+                return 1
+            fi
+        elif git -C "$master_dir" update-ref "refs/heads/${agent_branch}" "$_gswt_ref" 2>/dev/null; then
             _wt_ok "$agent_branch up to date"
         else
             _wt_warn "Could not fast-forward $agent_branch — resolve manually in $master_dir"
