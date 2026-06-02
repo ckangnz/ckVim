@@ -720,7 +720,13 @@ _wt_sync() {
         echo "🔄 Fetching origin/$primary_branch..."
         git -C "$repo_path" fetch origin "$primary_branch" --prune --prune-tags --no-tags 2>/dev/null \
             || _wt_warn "Fetch failed."
-        git -C "$repo_path" branch -f "$primary_branch" "origin/${primary_branch}" 2>/dev/null
+        _wt_ok "Fetched origin/$primary_branch"
+        echo "⏩ Fast-forwarding $primary_branch → origin/${primary_branch}..."
+        local _sm_ref
+        _sm_ref=$(git -C "$repo_path" rev-parse "origin/${primary_branch}" 2>/dev/null) \
+            && git -C "$repo_path" update-ref "refs/heads/${primary_branch}" "$_sm_ref" \
+            && _wt_ok "$primary_branch up to date" \
+            || _wt_warn "Could not update $primary_branch"
         echo "↪ Rebasing $current_branch onto origin/${primary_branch}..."
         if git -C "$repo_path" rebase "origin/${primary_branch}"; then
             _wt_ok "$current_branch is up to date"
@@ -743,7 +749,14 @@ _wt_sync() {
     echo "🔄 Fetching origin/$primary_branch..."
     git -C "$master_dir" fetch origin "$primary_branch" --prune --prune-tags --no-tags 2>/dev/null \
         || _wt_warn "Fetch failed."
-    git -C "$master_dir" branch -f "$primary_branch" "origin/${primary_branch}" 2>/dev/null
+    _wt_ok "Fetched origin/$primary_branch"
+
+    echo "⏩ Fast-forwarding $primary_branch → origin/${primary_branch}..."
+    local _gsm_ref
+    _gsm_ref=$(git -C "$master_dir" rev-parse "origin/${primary_branch}" 2>/dev/null) \
+        && git -C "$master_dir" update-ref "refs/heads/${primary_branch}" "$_gsm_ref" \
+        && _wt_ok "$primary_branch up to date" \
+        || _wt_warn "Could not update $primary_branch"
 
     local target_dir padded agent_branch target_branch
 
@@ -758,9 +771,11 @@ _wt_sync() {
         fi
 
         agent_branch="agent/${padded}"
-        echo "↪ Fast-forwarding $agent_branch to origin/${primary_branch}..."
-        if git -C "$master_dir" branch -f "$agent_branch" "origin/${primary_branch}" 2>/dev/null; then
-            _wt_ok "$agent_branch updated"
+        echo "⏩ Fast-forwarding $agent_branch → origin/${primary_branch}..."
+        local _gswt_ref
+        _gswt_ref=$(git -C "$master_dir" rev-parse "origin/${primary_branch}" 2>/dev/null)
+        if git -C "$master_dir" update-ref "refs/heads/${agent_branch}" "$_gswt_ref" 2>/dev/null; then
+            _wt_ok "$agent_branch up to date"
         else
             _wt_warn "Could not fast-forward $agent_branch — resolve manually in $master_dir"
             return 1
@@ -772,12 +787,12 @@ _wt_sync() {
     if [[ "$target_branch" != "${agent_branch:-}" ]]; then
         echo "↪ Rebasing $target_branch onto $rebase_onto..."
         if git -C "$target_dir" rebase "$rebase_onto"; then
-            _wt_ok "$target_branch is up to date"
+            _wt_ok "$target_branch up to date"
         else
             _wt_warn "Conflict rebasing $target_branch — resolve manually in $target_dir"
         fi
     else
-        _wt_ok "$target_branch is up to date"
+        _wt_ok "$target_branch up to date"
     fi
 }
 

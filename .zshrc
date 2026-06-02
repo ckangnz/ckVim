@@ -111,21 +111,30 @@ _wt_base_branch() {
   echo "$main"
 }
 
-alias gfom='(){
+gfom() {
   local main=$(git_main_branch)
-  gfo "$main" --prune --prune-tags --no-tags
-  g branch -f "$main" "origin/$main"
-}'
+  echo "🔄 Fetching origin/$main..."
+  gfo "$main" --prune --prune-tags --no-tags && echo "✅ Fetched origin/$main"
+}
 
-alias gsom='(){
+gsm() {
+  local main=$(git_main_branch)
+  echo "⏩ Fast-forwarding $main → origin/$main..."
+  local ref=$(git rev-parse "origin/$main" 2>/dev/null) || { echo "❌ origin/$main not found" >&2; return 1 }
+  git update-ref "refs/heads/$main" "$ref" && echo "✅ $main up to date"
+}
+
+gswt() {
   local main=$(git_main_branch)
   local base=$(_wt_base_branch)
-  if [[ "$base" != "$main" ]]; then
-    g branch -f "$base" "$main"
-  else
-    g branch -f "$main" "origin/$main"
+  if [[ "$base" == "$main" ]]; then
+    echo "❌ Not in a worktree — use gsm instead." >&2
+    return 1
   fi
-}'
+  echo "⏩ Fast-forwarding $base → origin/$main..."
+  local ref=$(git rev-parse "origin/$main" 2>/dev/null) || { echo "❌ origin/$main not found" >&2; return 1 }
+  git update-ref "refs/heads/$base" "$ref" && echo "✅ $base up to date"
+}
 
 alias grbom='grb origin/$(git_main_branch)'
 
