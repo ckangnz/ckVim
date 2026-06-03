@@ -186,6 +186,12 @@ function fixCompaudits() {
 	echo "✅ Compaudit issues fixed."
 }
 
+function killport() {
+	local -a pids
+	pids=("${(@f)$(lsof -ti :"$1")}")
+	(( ${#pids[@]} )) && kill -9 "${pids[@]}"
+}
+
 # Extra Alias
 [[ -f $HOME/.extraAlias.zsh ]] && source $HOME/.extraAlias.zsh
 
