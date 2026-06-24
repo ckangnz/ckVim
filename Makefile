@@ -2,7 +2,7 @@ SHELL := /bin/bash
 VIM_DIR := $(HOME)/.vim
 SCRIPTS_DIR := $(VIM_DIR)/scripts
 
-.PHONY: all vim zsh others reset fonts brew check_brew install_brew symlink vim_symlink zsh_symlink help gitignore
+.PHONY: all vim zsh others reset fonts brew check_brew install_brew symlink vim_symlink zsh_symlink agent_hooks help gitignore
 
 all:
 	@run_targets=$$(bash $(SCRIPTS_DIR)/interactive_menu.sh); \
@@ -15,8 +15,11 @@ all:
 vim: check_brew gitignore vim_symlink
 	@bash $(SCRIPTS_DIR)/install_vim.sh
 
-zsh: check_brew gitignore zsh_symlink
+zsh: check_brew gitignore zsh_symlink agent_hooks
 	@bash $(SCRIPTS_DIR)/install_zsh.sh
+
+agent_hooks:
+	@bash $(VIM_DIR)/.config/tmux/scripts/install-agent-hooks.sh
 
 vim_symlink:
 	@source $(SCRIPTS_DIR)/install_methods.sh && \
@@ -59,7 +62,6 @@ check_brew:
 		exit 1; \
 	fi
 
-## Install/Reinstall Homebrew
 install_brew:
 	@echo "Installing Homebrew..."; \
 	NONINTERACTIVE=1 /bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
@@ -91,7 +93,6 @@ symlink: vim_symlink zsh_symlink
 help:
 	@grep -E '^##' Makefile | sed -E 's/## //'
 
-## Setup global gitignore for personal ck_* working directories
 gitignore:
 	@GLOBAL_GITIGNORE="$$HOME/.gitignore"; \
 	if ! grep -qx "ck_\*" "$$GLOBAL_GITIGNORE" 2>/dev/null; then \
