@@ -19,12 +19,16 @@ make all
 
 This will show an interactive menu where you can select which components to install:
 
-- **brew** - Homebrew package manager (pre-selected)
-- **vim** - Vim/Neovim configuration (pre-selected)
-- **zsh** - Zsh shell with plugins (pre-selected)
-- **others** - Additional tools (optional)
+- **brew** - Homebrew package manager
+- **vim** - Vim/Neovim configuration
+- **zsh** - Zsh shell with plugins (also installs tmux agent hooks + AGENTS.md symlinks)
+- **fonts** - FiraCode Nerd Font
+- **others** - Additional tools (optional, macOS)
+- **gitignore** - Add `ck_*` to global gitignore + set `core.excludesfile`
 
-Use **1-4** to toggle selections, **a** to select/deselect all, **Enter** to confirm.
+Defaults adapt to your machine: if Homebrew is already installed, **vim**, **zsh**, **fonts**, and **gitignore** are pre-selected; otherwise only **brew** is.
+
+Use **1-6** to toggle selections, **a** to select/deselect all, **Enter** to confirm, **q** to quit.
 
 > **Note:** You can press **Ctrl+C** at any time to stop the installation.
 
@@ -134,16 +138,25 @@ Install Nerd Font:
 ~/.vim/
 ├── Makefile              # Main installation orchestrator
 ├── scripts/              # Installation scripts
-│   ├── interactive_menu.sh   # Interactive target selection
-│   ├── install_methods.sh    # Shared installation functions
-│   ├── install_vim.sh        # Vim/Neovim setup
-│   ├── install_zsh.sh        # Zsh setup
-│   └── install_others.sh     # Additional tools setup
+│   ├── interactive_menu.sh    # Interactive target selection
+│   ├── install_methods.sh     # Shared installation functions
+│   ├── install_vim.sh         # Vim/Neovim setup
+│   ├── install_zsh.sh         # Zsh setup
+│   ├── install_others.sh      # Additional tools entrypoint
+│   └── install_others_menu.sh # Interactive additional-tools picker
 ├── .vimrc                # Vim configuration
-├── .zshrc                # Zsh configuration
+├── .zshrc                # Zsh entrypoint (PATH, plugins, sources below)
+├── aliases.zsh           # Shell aliases (sourced by .zshrc)
+├── functions.zsh         # Shell functions (sourced by .zshrc)
+├── plugins.zsh           # Zap plugin list
+├── completions.zsh       # Completion setup (gh, terraform, dotnet, make)
+├── AGENTS.md             # AI-agent conventions (symlinked to Claude/Codex)
+├── wt/                   # `wt` git-worktree workspace manager + tests
+├── settings/             # App configs (iTerm2, Rectangle, IdeaVim)
+├── WSL_Settings/         # Windows Terminal settings
 ├── .config/
-│   ├── nvim/             # Neovim configuration
-│   ├── tmux/             # Tmux configuration
+│   ├── nvim/             # Neovim configuration (init.lua + lua/core, lua/plugins)
+│   ├── tmux/             # Tmux configuration + agent-status scripts
 │   ├── kitty/            # Kitty terminal configuration
 │   └── lazygit/          # LazyGit configuration
 └── notes/                # Documentation and notes
@@ -294,10 +307,12 @@ make help
 
 - `make all` - Interactive installation menu
 - `make vim` - Install Vim/Neovim
-- `make zsh` - Install Zsh configuration
+- `make zsh` - Install Zsh configuration (+ agent hooks + AGENTS.md symlinks)
 - `make others` - Install additional tools
 - `make brew` - Install Homebrew
-- `make fonts` - Install Nerd Fonts
+- `make fonts` - Install FiraCode Nerd Font
+- `make agents` - Symlink `AGENTS.md` into Claude Code (`~/.claude/CLAUDE.md`) and Codex (`~/.codex/AGENTS.md`)
+- `make gitignore` - Add `ck_*` to global gitignore + set `core.excludesfile`
 - `make symlink` - Create all symlinks
 - `make reset` - Remove all symlinks
 - `make help` - Show help message

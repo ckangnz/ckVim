@@ -2,9 +2,9 @@ SHELL := /bin/bash
 VIM_DIR := $(HOME)/.vim
 SCRIPTS_DIR := $(VIM_DIR)/scripts
 
-.PHONY: all vim zsh others reset fonts brew check_brew install_brew symlink vim_symlink zsh_symlink agent_hooks help gitignore
+.PHONY: all vim zsh others reset fonts brew check_brew install_brew symlink vim_symlink zsh_symlink agent_hooks agents help gitignore
 
-all:
+all: ## Interactive installation menu
 	@run_targets=$$(bash $(SCRIPTS_DIR)/interactive_menu.sh); \
 	if [ -n "$$run_targets" ]; then \
 		for target in $$run_targets; do \
@@ -12,32 +12,38 @@ all:
 		done; \
 	fi
 
-vim: check_brew gitignore vim_symlink
+vim: check_brew gitignore vim_symlink ## Install Vim/Neovim config + packages
 	@bash $(SCRIPTS_DIR)/install_vim.sh
 
-zsh: check_brew gitignore zsh_symlink agent_hooks
+zsh: check_brew gitignore zsh_symlink agent_hooks agents ## Install Zsh config + packages + agent hooks
 	@bash $(SCRIPTS_DIR)/install_zsh.sh
 
-agent_hooks:
+agent_hooks: ## Install tmux AI-agent status hooks
 	@bash $(VIM_DIR)/.config/tmux/scripts/install-agent-hooks.sh
 
-vim_symlink:
+agents: ## Symlink AGENTS.md into Claude Code + Codex
+	@mkdir -p ~/.claude ~/.codex
+	@source $(SCRIPTS_DIR)/install_methods.sh && \
+		create_symlink ~/.vim/AGENTS.md ~/.claude/CLAUDE.md && \
+		create_symlink ~/.vim/AGENTS.md ~/.codex/AGENTS.md
+
+vim_symlink: ## Symlink Vim/Neovim config only
 	@source $(SCRIPTS_DIR)/install_methods.sh && \
 		create_symlink ~/.vim/.vimrc ~/.vimrc && \
 		create_symlink ~/.vim/.config/nvim ~/.config/nvim && \
 		create_symlink ~/.vim/.config/mcphub ~/.config/mcphub
 
-zsh_symlink:
+zsh_symlink: ## Symlink Zsh/tmux/kitty/lazygit config only
 	@source $(SCRIPTS_DIR)/install_methods.sh && \
 		create_symlink ~/.vim/.zshrc ~/.zshrc && \
 		create_symlink ~/.vim/.config/kitty ~/.config/kitty && \
 		create_symlink ~/.vim/.config/lazygit ~/.config/lazygit && \
 		create_symlink ~/.vim/.config/tmux ~/.config/tmux
 
-others:
+others: ## Install additional tools (macOS)
 	@bash $(SCRIPTS_DIR)/install_others.sh
 
-reset:
+reset: ## Remove all symlinks
 	@echo "Cleaning symlinks..."
 	@rm -f ~/.zshrc ~/.vimrc
 	@rm -rf ~/.config/nvim ~/.config/tmux ~/.config/mcphub ~/.config/kitty ~/.config/lazygit
@@ -83,17 +89,17 @@ install_brew:
 	echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
 	echo ""
 
-brew: install_brew
+brew: install_brew ## Install Homebrew
 
-fonts: check_brew
+fonts: check_brew ## Install FiraCode Nerd Font
 	@brew install --cask font-fira-code-nerd-font
 
-symlink: vim_symlink zsh_symlink
+symlink: vim_symlink zsh_symlink ## Create all symlinks (vim + zsh)
 
-help:
-	@grep -E '^##' Makefile | sed -E 's/## //'
+help: ## Show this help message
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-13s\033[0m %s\n", $$1, $$2}'
 
-gitignore:
+gitignore: ## Add ck_* to global gitignore + set excludesfile
 	@GLOBAL_GITIGNORE="$$HOME/.gitignore"; \
 	if ! grep -qx "ck_\*" "$$GLOBAL_GITIGNORE" 2>/dev/null; then \
 		echo "ck_*" >> "$$GLOBAL_GITIGNORE"; \
