@@ -1,9 +1,12 @@
 #!/usr/bin/env zsh
 # ~/.vim/wt/wt.zsh
-# wt — worktree workspace manager
+# wt — ephemeral worktree workspace manager
 #
-# Manages git worktrees + tmux windows for parallel agent workflows.
-# Generic: works with any git repo. No Atlassian/AFM specific logic.
+# Thin ergonomic layer over `git worktree` + tmux + an APFS cp -c warm-seed.
+# Every registered repo is a plain git clone. Create per-feature worktrees on
+# demand and remove them when merged (vanilla git worktree; no "agents" layout).
+# `git worktree list` is the source of truth, so wt also sees worktrees created
+# by other tools (e.g. Claude Code's .claude/worktrees/).
 #
 # Config: ~/.wt/repos  (auto-created on first use)
 # Source this file from ~/.zshrc:
@@ -13,82 +16,62 @@
 
 : ${WT_CONFIG_DIR:="${HOME}/.wt"}
 : ${WT_REPOS_FILE:="${WT_CONFIG_DIR}/repos"}
+: ${WT_DEFAULT_SEEDS:="node_modules,.yarn"}
 
-# ── helpers ───────────────────────────────────────────────────────────────────
+# ── error/info helpers ──────────────────────────────────────────────────────────
+
+_wt_err()  { echo "❌ $*" >&2 }
+_wt_ok()   { echo "✅ $*" }
+_wt_info() { echo "ℹ️  $*" }
+_wt_warn() { echo "⚠️  $*" }
+
+# ── registry ────────────────────────────────────────────────────────────────────
 
 _wt_ensure_config() {
     [[ -d "$WT_CONFIG_DIR" ]] || mkdir -p "$WT_CONFIG_DIR"
     if [[ ! -f "$WT_REPOS_FILE" ]]; then
         cat > "$WT_REPOS_FILE" << 'EOF'
 # ~/.wt/repos — wt repo registry
-# Format: <name> <path> <kind>
-#   kind = worktree  (path is <root>/agents/, expects sibling <root>/master/)
-#   kind = single    (path is the actual repo dir; no worktrees)
-#   (kind defaults to "worktree" if omitted, for backwards compatibility)
+# Format: <name> <path> <kind> [seed-globs-csv]
+#   <path>          a plain git clone
+#   <kind>          vestigial ("repo"); older single/worktree values still parse
+#   seed-globs-csv  dirs to cp -c warm-seed into new worktrees, default: node_modules,.yarn
 #
-# Examples:
-#   multi-worktree-project  /Users/me/code/proj/agents      worktree
-#   non-worktree-project    /Users/me/code/small-app        single
-#
-# Managed by: wt repo register / wt repo unregister
+# Managed by: wt register / wt unregister
 EOF
     fi
 }
 
+# Emit: <name> <path> <kind> <seeds>  (defaults applied; kind kept for column shape only)
 _wt_repos() {
     _wt_ensure_config
-    /usr/bin/awk '!/^[[:space:]]*#/ && !/^[[:space:]]*$/ { kind = ($3 == "" ? "worktree" : $3); print $1, $2, kind }' "$WT_REPOS_FILE"
+    /usr/bin/awk -v ds="$WT_DEFAULT_SEEDS" \
+        '!/^[[:space:]]*#/ && !/^[[:space:]]*$/ {
+            kind = ($3 == "" ? "repo" : $3)
+            seeds = ($4 == "" ? ds : $4)
+            print $1, $2, kind, seeds
+        }' "$WT_REPOS_FILE"
 }
 
-_wt_agents_dir() {
-    local name="$1"
-    _wt_repos | /usr/bin/awk -v n="$name" '$1 == n {print $2}'
-}
+_wt_field()        { _wt_repos | /usr/bin/awk -v n="$1" -v f="$2" '$1 == n {print $f; exit}' }
+_wt_repo_seeds()   { _wt_field "$1" 4 }
+_wt_repo_rawpath() { _wt_field "$1" 2 }
+_wt_is_repo()      { _wt_repos | /usr/bin/awk -v n="$1" '$1 == n {f=1} END {exit !f}' }
 
-_wt_repo_kind() {
-    local name="$1"
-    _wt_repos | /usr/bin/awk -v n="$name" '$1 == n {print $3}'
-}
-
-_wt_repo_path() {
-    local name="$1"
-    _wt_repos | /usr/bin/awk -v n="$name" '$1 == n {print $2}'
-}
-
-_wt_repo_root() {
-    local name="$1"
-    local kind p
-    kind=$(_wt_repo_kind "$name")
-    p=$(_wt_repo_path "$name")
-    if [[ "$kind" == "single" ]]; then
-        echo "$p"
+# Resolve a repo's main clone. Auto-maps a legacy ".../agents" entry to its
+# sibling ".../master" so old registrations keep working.
+_wt_clone_path() {
+    local p; p=$(_wt_repo_rawpath "$1")
+    [[ -z "$p" ]] && return 1
+    if [[ "${p:t}" == "agents" && -d "${p:h}/master" ]]; then
+        echo "${p:h}/master"
     else
-        echo "${p:h}"
+        echo "$p"
     fi
 }
 
-_wt_master_dir() {
-    local agents_dir="$1"
-    echo "${agents_dir:h}/master"
-}
+# ── git worktree helpers ─────────────────────────────────────────────────────────
 
-# Zero-pad agent number: 3 → 003
-_wt_pad() {
-    printf "%03d" "$((10#$1))"
-}
-
-# Find next available agent number — fills gaps first
-_wt_next_agent_num() {
-    local agents_dir="$1"
-    local n=1
-    while true; do
-        local candidate="${agents_dir}/agent-$(_wt_pad $n)"
-        [[ ! -d "$candidate" ]] && { _wt_pad $n; return }
-        (( n++ ))
-    done
-}
-
-# Get primary branch name (main or master)
 _wt_primary_branch() {
     local dir="$1"
     if git -C "$dir" rev-parse --verify main &>/dev/null; then
@@ -98,1148 +81,501 @@ _wt_primary_branch() {
     fi
 }
 
-# List tmux windows and their current paths
-_wt_tmux_windows() {
-    tmux list-windows -a \
-        -F '#{session_name}:#{window_index} #{window_name} #{pane_current_path}' \
-        2>/dev/null
+# Emit "<path>\t<branch>" for each real worktree of a clone (skips the bare entry).
+_wt_worktrees() {
+    local clone="$1"
+    git -C "$clone" worktree list --porcelain </dev/null 2>/dev/null | /usr/bin/awk '
+        /^worktree /{ path=substr($0,10); branch=""; bare=0 }
+        /^bare/     { bare=1 }
+        /^branch /  { branch=substr($0,8); sub(/^refs\/heads\//,"",branch) }
+        /^detached/ { branch="(detached)" }
+        /^$/        { if (path!="" && !bare) print path"\t"branch; path=""; branch=""; bare=0 }
+        END         { if (path!="" && !bare) print path"\t"branch }
+    '
 }
 
-# Find which tmux window is using a given path (exact match on any pane)
+# Echo the worktree path for an id. Accepts the forms shown by `wt list`:
+#   <basename>            e.g. agent-002
+#   <repo>/<basename>     e.g. afm/agent-002
+_wt_resolve_target() {
+    local id="$1" name rp kind seeds clone p b wtl
+    while read -r name rp kind seeds; do
+        clone=$(_wt_clone_path "$name") || continue
+        wtl=$(_wt_worktrees "$clone")
+        while IFS=$'\t' read -r p b; do
+            [[ -z "$p" ]] && continue
+            [[ "${p:t}" == "$id" || "${name}/${p:t}" == "$id" ]] && { print -r -- "$p"; return 0 }
+        done <<< "$wtl"
+    done <<< "$(_wt_repos)"
+    return 1
+}
+
+# Echo "<clone>\t<name>" for the repo that owns a given worktree path.
+_wt_owner_of_path() {
+    local target="$1" name rp kind seeds clone p b wtl
+    while read -r name rp kind seeds; do
+        clone=$(_wt_clone_path "$name") || continue
+        wtl=$(_wt_worktrees "$clone")
+        while IFS=$'\t' read -r p b; do
+            [[ -z "$p" ]] && continue
+            [[ "$p" == "$target" ]] && { print -r -- "$clone"$'\t'"$name"; return 0 }
+        done <<< "$wtl"
+    done <<< "$(_wt_repos)"
+    return 1
+}
+
+# "Feature Title!" → "feature-title"
+_wt_slugify() {
+    local s="${(L)1}"
+    s="${s//[^a-z0-9]/-}"
+    while [[ "$s" == *--* ]]; do s="${s//--/-}"; done
+    s="${s#-}"; s="${s%-}"
+    print -r -- "$s"
+}
+
+# ── warm-seed (APFS cp -c, background) ───────────────────────────────────────────
+
+_wt_seed_run() {
+    local clone="$1" wt="$2"; shift 2
+    local g d
+    for g in "$@"; do
+        if [[ "$g" == "node_modules" ]]; then
+            (cd "$clone" && find . -type d -name node_modules -prune 2>/dev/null) | while IFS= read -r d; do
+                mkdir -p "$wt/${d:h}" 2>/dev/null
+                cp -cR "$clone/$d" "$wt/$d" 2>/dev/null
+            done
+        elif [[ -e "$clone/$g" ]]; then
+            [[ "${g:h}" != "." ]] && mkdir -p "$wt/${g:h}" 2>/dev/null
+            cp -cR "$clone/$g" "$wt/$g" 2>/dev/null
+        fi
+    done
+}
+
+_wt_start_seed() {
+    local clone="$1" wt="$2"; shift 2
+    local -a globs=("$@")
+    local label="${wt:t}"
+    (
+        _wt_seed_run "$clone" "$wt" "${globs[@]}"
+        rm -f "$wt/.wt-seeding" 2>/dev/null
+        : > "$wt/.wt-ready" 2>/dev/null
+        tmux display-message "wt: warm-seed ready — ${label}" 2>/dev/null
+    ) &!
+    echo "$!" > "$wt/.wt-seeding" 2>/dev/null
+}
+
+_wt_kill_seed() {
+    local wt="$1"
+    [[ -f "$wt/.wt-seeding" ]] || return 0
+    local spid; spid=$(cat "$wt/.wt-seeding" 2>/dev/null)
+    if [[ -n "$spid" ]]; then
+        pkill -9 -P "$spid" 2>/dev/null
+        kill -9 "$spid" 2>/dev/null
+    fi
+    pkill -9 -f "cp -cR.*${wt}/" 2>/dev/null
+    sleep 1
+    rm -f "$wt/.wt-seeding" 2>/dev/null
+}
+
+# ── tmux layout ──────────────────────────────────────────────────────────────────
+
 _wt_window_for_path() {
     local p="$1"
-    tmux list-panes -a \
-        -F '#{session_name}:#{window_index}|#{pane_current_path}' \
-        2>/dev/null | /usr/bin/awk -F'|' -v p="$p" '$2 == p {print $1; exit}'
+    tmux list-panes -a -F '#{session_name}:#{window_index}|#{pane_current_path}' 2>/dev/null \
+        | /usr/bin/awk -F'|' -v p="$p" '$2 == p {print $1; exit}'
 }
 
-# Create the triptych tmux layout in current window:
-#   ┌──────────────┬──────────────┐  70% height
-#   │  pane 1      │  pane 2      │
-#   ├──────────────┴──────────────┤  30% height
-#   │  pane 3 (full width)        │
-#   └─────────────────────────────┘
 _wt_create_layout() {
     local cwd="$1"
-    # Start with a single pane in cwd
-    # Split bottom 30% horizontally
     tmux split-window -v -p 30 -c "$cwd"
-    # Go back to top pane, split right 50%
     tmux select-pane -t top
     tmux split-window -h -p 50 -c "$cwd"
-    # Focus top-left (pane 1 — where user will start rovo)
     tmux select-pane -t top-left
 }
 
-# Apply the triptych layout to the current tmux window using the current
-# pane's working directory. Refuses to run if the window already has more
-# than one pane (to avoid clobbering an existing layout).
 _wt_layout() {
-    if [[ -z "$TMUX" ]]; then
-        _wt_err "Not running inside tmux."
-        return 1
-    fi
-
-    local panes
-    panes=$(tmux display-message -p '#{window_panes}')
+    [[ -z "$TMUX" ]] && { _wt_err "Not running inside tmux."; return 1 }
+    local panes; panes=$(tmux display-message -p '#{window_panes}')
     if [[ "$panes" -gt 1 ]]; then
         _wt_warn "Current window has ${panes} panes — refusing to overwrite layout."
-        echo "   Close other panes first (or run from a single-pane window)."
         return 1
     fi
-
-    local cwd
-    cwd=$(tmux display-message -p '#{pane_current_path}')
-    _wt_create_layout "$cwd"
-}
-
-# ── error/info helpers ────────────────────────────────────────────────────────
-
-_wt_err()  { echo "❌ $*" >&2 }
-_wt_ok()   { echo "✅ $*" }
-_wt_info() { echo "ℹ️  $*" }
-_wt_warn() { echo "⚠️  $*" }
-
-# ── subcommands ───────────────────────────────────────────────────────────────
-
-_wt_help() {
-    cat << 'EOF'
-wt — workspace manager
-
-USAGE
-  wt <command> [args]
-
-REPO KINDS
-  worktree   <root>/master/ + <root>/agents/agent-NNN/   (multi-worktree)
-  single     <repo-dir>                                  (no worktrees)
-
-  The kind is auto-detected at registration time:
-    if <path>/master AND <path>/agents both exist  -> worktree
-    otherwise                                       -> single
-
-COMMANDS
-
-  Repo management
-    wt repo register <name> <path>    Register a repo (kind auto-detected)
-    wt repo unregister <name>         Unregister a repo
-    wt repo list                      List registered repos (with KIND column)
-
-  Worktree-only setup
-    wt init <url> <root-dir>          Clone repo into worktree structure
-    wt convert <dir>                  Convert existing repo to worktree structure
-
-  Worktree-only commands         (single-mode repos error with hint)
-    wt new  [repo] [count]            Create N agent worktrees (default: 1)
-    wt rm   <repo>-<num>              Remove one worktree + branch
-    wt rm   <repo>                    Remove ALL worktrees for a repo
-
-  Common commands         (work for both worktree and single)
-    wt list [repo]                    List worktrees + single-mode repos
-    wt sync [repo]                    Fetch + rebase
-                                        worktree: master + all agents
-                                        single:   local primary + current branch
-    wt sync <repo>-<num>              (worktree) sync one agent worktree
-    wt clean                          Reset worktree to its base branch + sync
-                                        master/: checkout primary, delete old branch
-                                        agent-N/: checkout agent/N, delete old branch
-                                        Then runs wt sync automatically.
-    wt close [repo|repo-num]          Close tmux window for a workspace
-                                        Omit arg to auto-detect from current dir
-    wt layout                         Apply triptych layout to CURRENT tmux window
-
-  Workspace switching (tmux)
-    wt <repo>                         No-title open / focus
-                                        worktree: next free agent (window: '<repo>-N')
-                                        single:   the repo dir   (window: '<repo>')
-                                      If already open, just focus.
-    wt <repo> "<title>"               Open / focus + rename
-                                        worktree: '<repo>-N: <title>'
-                                        single:   '<repo>: <title>'
-                                      If already open: focus AND rename to new title.
-    wt <repo>-<num> ["<title>"]       (worktree) target a specific agent worktree.
-                                        <num> = 0  opens the master/ directory.
-                                        <num> = 1+ opens agents/agent-NNN/.
-
-  Help
-    wt --help | -h                    Show this help
-
-LAYOUT
-  Each workspace opens a triptych layout:
-    ┌──────────────┬──────────────┐  ← 70% height
-    │  pane 1      │  pane 2      │
-    ├──────────────┴──────────────┤  ← 30% height
-    │  pane 3 (full width)        │
-    └─────────────────────────────┘
-
-CONFIG
-  ~/.wt/repos   Repo registry: <name> <path> <kind>
-                Managed by 'wt repo register' / 'wt repo unregister'.
-
-EOF
-}
-
-_wt_repo_register() {
-    local name="$1" p="$2"
-    if [[ -z "$name" || -z "$p" ]]; then
-        _wt_err "Usage: wt repo register <name> <path>"
-        return 1
-    fi
-    p="${p:A}"
-    _wt_ensure_config
-    if _wt_repos | /usr/bin/awk -v n="$name" '$1 == n { found=1 } END { exit !found }'; then
-        _wt_err "Repo '$name' is already registered."
-        _wt_info "Use 'wt repo unregister $name' first if you want to update it."
-        return 1
-    fi
-
-    local kind
-    if [[ -d "${p}/master" && -d "${p}/agents" ]]; then
-        kind="worktree"
-        local agents_dir="${p}/agents"
-        echo "${name}  ${agents_dir}  ${kind}" >> "$WT_REPOS_FILE"
-        _wt_ok "Registered repo '$name' (worktree) → $agents_dir"
-    elif [[ "${p:t}" == "agents" && -d "${p:h}/master" ]]; then
-        kind="worktree"
-        echo "${name}  ${p}  ${kind}" >> "$WT_REPOS_FILE"
-        _wt_ok "Registered repo '$name' (worktree) → $p"
-    else
-        kind="single"
-        if [[ ! -d "$p" ]]; then
-            _wt_err "Path does not exist: $p"
-            return 1
-        fi
-        if [[ ! -d "${p}/.git" ]]; then
-            _wt_warn "Path is not a git repo (no .git dir found): $p"
-            _wt_info "Registering anyway as single-mode."
-        fi
-        echo "${name}  ${p}  ${kind}" >> "$WT_REPOS_FILE"
-        _wt_ok "Registered repo '$name' (single) → $p"
-    fi
-}
-
-_wt_repo_unregister() {
-    local name="$1"
-    if [[ -z "$name" ]]; then
-        _wt_err "Usage: wt repo unregister <name>"
-        return 1
-    fi
-    _wt_ensure_config
-    if ! _wt_repos | /usr/bin/awk -v n="$name" '$1 == n { found=1 } END { exit !found }'; then
-        _wt_err "Repo '$name' not found in registry."
-        return 1
-    fi
-    local tmpfile="${WT_REPOS_FILE}.tmp"
-    /usr/bin/awk -v n="$name" '$1 != n' "$WT_REPOS_FILE" > "$tmpfile" && mv "$tmpfile" "$WT_REPOS_FILE"
-    _wt_ok "Removed repo '$name' from registry."
-}
-
-_wt_repo_list() {
-    _wt_ensure_config
-    local repos
-    repos=$(_wt_repos)
-    if [[ -z "$repos" ]]; then
-        _wt_info "No repos registered. Use 'wt repo register <name> <path>'."
-        return 0
-    fi
-    printf "%-20s %-10s %s\n" "NAME" "KIND" "PATH"
-    printf "%-20s %-10s %s\n" "----" "----" "----"
-    echo "$repos" | while read -r name p kind; do
-        local extra=""
-        if [[ "$kind" == "worktree" ]]; then
-            local count=0
-            [[ -d "$p" ]] && count=$(ls -d "${p}"/agent-*(N) 2>/dev/null | wc -l | tr -d ' ')
-            extra="  (${count} worktrees)"
-        fi
-        printf "%-20s %-10s %s%s\n" "$name" "$kind" "$p" "$extra"
-    done
-}
-
-_wt_init() {
-    local url="$1" root_dir="$2"
-    if [[ -z "$url" || -z "$root_dir" ]]; then
-        _wt_err "Usage: wt init <url> <root-dir>"
-        return 1
-    fi
-    root_dir="${root_dir:A}"
-    if [[ -d "$root_dir" ]]; then
-        _wt_err "Directory already exists: $root_dir"
-        _wt_info "Use 'wt convert $root_dir' if you have an existing checkout."
-        return 1
-    fi
-    echo "🔧 Cloning into worktree structure..."
-    echo "   URL:  $url"
-    echo "   Root: $root_dir"
-    mkdir -p "$root_dir"
-    # Clone into master/
-    git clone "$url" "${root_dir}/master" || { _wt_err "Clone failed."; return 1 }
-    mkdir -p "${root_dir}/agents"
-    _wt_ok "Cloned into ${root_dir}/master/"
-    _wt_ok "Created ${root_dir}/agents/"
-    echo ""
-    # Prompt to register
-    local suggested="${root_dir:t}"
-    echo -n "   Register as repo name [$suggested]: "
-    read -r reg_name
-    [[ -z "$reg_name" ]] && reg_name="$suggested"
-    _wt_repo_register "$reg_name" "${root_dir}/agents"
-    echo ""
-    _wt_info "Next: wt new $reg_name [count]"
-}
-
-_wt_convert() {
-    local dir="${1:-.}"
-    dir="${dir:A}"  # resolve absolute path
-
-    if [[ ! -d "$dir" ]]; then
-        _wt_err "Directory not found: $dir"
-        return 1
-    fi
-    if [[ ! -d "${dir}/.git" ]]; then
-        _wt_err "Not a git repository: $dir"
-        return 1
-    fi
-    if [[ -d "${dir}/master" && -d "${dir}/agents" ]]; then
-        _wt_err "Already looks like a worktree structure (master/ and agents/ exist)."
-        return 1
-    fi
-
-    local parent="${dir:h}"
-    local dirname="${dir:t}"
-
-    echo "🔧 Converting $dir to worktree structure..."
-    echo ""
-    echo "   This will:"
-    echo "   1. Create ${dir}/master/"
-    echo "   2. Move all contents of $dir into ${dir}/master/"
-    echo "   3. Create ${dir}/agents/"
-    echo ""
-    echo -n "   Continue? [y/N] "
-    read -r confirm
-    [[ "$confirm" != "y" && "$confirm" != "Y" ]] && { echo "Aborted."; return 0 }
-
-    # Create a temp dir alongside, move contents in, then rename back
-    local tmp_master="${parent}/.wt-convert-tmp-$$"
-    mkdir -p "$tmp_master"
-
-    # Move everything from dir into tmp_master
-    # Use find to handle dotfiles
-    (cd "$dir" && find . -maxdepth 1 ! -name '.' -exec mv {} "$tmp_master/" \;) \
-        || { _wt_err "Failed to move files."; rm -rf "$tmp_master"; return 1 }
-
-    # Create master/ subdir inside dir and move tmp there
-    mkdir -p "${dir}/master"
-    (cd "$tmp_master" && find . -maxdepth 1 ! -name '.' -exec mv {} "${dir}/master/" \;) \
-        || { _wt_err "Failed to move into master/."; return 1 }
-    rm -rf "$tmp_master"
-
-    # Create agents/
-    mkdir -p "${dir}/agents"
-
-    _wt_ok "Converted! Structure:"
-    echo "   ${dir}/"
-    echo "   ├── master/   ← your existing checkout"
-    echo "   └── agents/   ← ready for wt new"
-    echo ""
-    # Prompt to register
-    local suggested="${dir:t}"
-    echo -n "   Register as repo name [$suggested]: "
-    read -r reg_name
-    [[ -z "$reg_name" ]] && reg_name="$suggested"
-    _wt_repo_register "$reg_name" "${dir}/agents"
-    echo ""
-    _wt_info "Next: wt new $reg_name [count]"
-}
-
-_wt_new() {
-    local repo="$1" count="${2:-1}"
-
-    # If no repo given, auto-detect from current directory
-    if [[ -z "$repo" ]]; then
-        local cwd="${PWD}"
-        local detected=""
-        while read -r name path_candidate kind_candidate; do
-            local root_candidate
-            if [[ "$kind_candidate" == "single" ]]; then
-                root_candidate="$path_candidate"
-            else
-                root_candidate="${path_candidate:h}"
-            fi
-            if [[ "$cwd" == "$root_candidate"* ]]; then
-                detected="$name"
-                break
-            fi
-        done <<< "$(_wt_repos)"
-        if [[ -z "$detected" ]]; then
-            _wt_err "Could not detect repo from current directory: $cwd"
-            echo "  Usage: wt new <repo> [count]"
-            echo "  Or cd into a registered repo directory first."
-            return 1
-        fi
-        _wt_info "Auto-detected repo: $detected"
-        repo="$detected"
-    fi
-
-    local kind
-    kind=$(_wt_repo_kind "$repo")
-    if [[ -z "$kind" ]]; then
-        _wt_err "Repo '$repo' not registered."
-        echo "  Run: wt repo register $repo <path>"
-        return 1
-    fi
-    if [[ "$kind" == "single" ]]; then
-        _wt_err "'$repo' is a single-mode repo and has no worktrees."
-        echo "  Use: wt $repo \"<title>\"   to open the repo in a tmux window."
-        return 1
-    fi
-
-    local agents_dir
-    agents_dir=$(_wt_agents_dir "$repo")
-    if [[ ! -d "$agents_dir" ]]; then
-        _wt_err "Agents dir does not exist: $agents_dir"
-        echo "  Run 'wt init' or 'wt convert' first."
-        return 1
-    fi
-    local master_dir
-    master_dir=$(_wt_master_dir "$agents_dir")
-    if [[ ! -d "$master_dir" ]]; then
-        _wt_err "master/ not found at: $master_dir"
-        echo "  Run 'wt init' or 'wt convert' first."
-        return 1
-    fi
-    local primary_branch
-    primary_branch=$(_wt_primary_branch "$master_dir")
-
-    # Branch from origin/<branch> if available, else local branch
-    local base_ref
-    if git -C "$master_dir" rev-parse --verify "origin/${primary_branch}" &>/dev/null; then
-        base_ref="origin/${primary_branch}"
-    else
-        base_ref="$primary_branch"
-    fi
-
-    local i num wt_path branch
-    for (( i=1; i<=count; i++ )); do
-        num=$(_wt_next_agent_num "$agents_dir")
-        wt_path="${agents_dir}/agent-${num}"
-        branch="agent/${num}"
-        echo "📁 Creating worktree: agent-${num}  (branch: ${branch}, base: ${base_ref})"
-        git -C "$master_dir" worktree add -b "$branch" "$wt_path" "$base_ref" \
-            || { _wt_err "Failed to create worktree agent-${num}"; return 1 }
-        _wt_ok "Created ${wt_path}"
-    done
-}
-
-_wt_rm_one() {
-    local repo="$1" num="$2"  # num already zero-padded
-    local agents_dir master_dir wt_path branch
-    agents_dir=$(_wt_agents_dir "$repo")
-    master_dir=$(_wt_master_dir "$agents_dir")
-    wt_path="${agents_dir}/agent-${num}"
-    branch="agent/${num}"
-
-    if [[ ! -d "$wt_path" ]]; then
-        _wt_err "Worktree not found: $wt_path"
-        return 1
-    fi
-
-    # Close tmux window if open
-    local pane_map tmux_win
-    pane_map=$(tmux list-panes -a -F '#{session_name}:#{window_index}|#{pane_current_path}' 2>/dev/null)
-    tmux_win=$(echo "$pane_map" | /usr/bin/awk -F'|' -v p="$wt_path" '$2 == p {print $1; exit}')
-    if [[ -n "$tmux_win" ]]; then
-        _wt_info "Closing tmux window: $tmux_win"
-        tmux kill-window -t "$tmux_win" 2>/dev/null || true
-    fi
-
-    git -C "$master_dir" worktree remove --force "$wt_path" 2>/dev/null \
-        || { _wt_err "git worktree remove failed for agent-${num}"; return 1 }
-    git -C "$master_dir" branch -D "$branch" 2>/dev/null \
-        || _wt_warn "Could not delete branch '$branch' (may not exist locally)."
-
-    # Clean up saved title
-    rm -f "${WT_STATE_DIR}/${repo}-$(( 10#$num ))" 2>/dev/null || true
-
-    _wt_ok "Removed agent-${num} (branch: ${branch})"
-}
-
-_wt_rm() {
-    local arg="$1"
-    if [[ -z "$arg" ]]; then
-        _wt_err "Usage: wt rm <repo>-<num>   remove one worktree"
-        echo "       wt rm <repo>          remove ALL worktrees for a repo"
-        return 1
-    fi
-
-    # Check if arg is just a repo name (no number) → remove all
-    if ! [[ "$arg" =~ ^(.+)-([0-9]+)$ ]]; then
-        local repo="$arg"
-        local kind
-        kind=$(_wt_repo_kind "$repo")
-        if [[ -z "$kind" ]]; then
-            _wt_err "Repo '$repo' not registered. Did you mean wt rm <repo>-<num>?"
-            return 1
-        fi
-        if [[ "$kind" == "single" ]]; then
-            _wt_err "'$repo' is a single-mode repo and has no worktrees to remove."
-            echo "  Use: wt repo unregister $repo   to remove its registration."
-            return 1
-        fi
-        local agents_dir
-        agents_dir=$(_wt_agents_dir "$repo")
-        local worktrees=("${agents_dir}"/agent-*(N))
-        if [[ ${#worktrees[@]} -eq 0 ]]; then
-            _wt_info "No worktrees found for '$repo'."
-            return 0
-        fi
-        echo "🗑  Removing ALL ${#worktrees[@]} worktrees for '$repo':"
-        for wt_path in "${worktrees[@]}"; do
-            echo "   ${wt_path:t}"
-        done
-        echo -n "   Continue? [y/N] "
-        read -r confirm
-        [[ "$confirm" != "y" && "$confirm" != "Y" ]] && { echo "Aborted."; return 0 }
-        local master_dir
-        master_dir=$(_wt_master_dir "$agents_dir")
-        for wt_path in "${worktrees[@]}"; do
-            local num="${wt_path:t:s/agent-//}"
-            _wt_rm_one "$repo" "$num"
-        done
-        git -C "$master_dir" worktree prune 2>/dev/null || true
-        _wt_ok "Removed all worktrees for '$repo'."
-        return 0
-    fi
-
-    local repo="${match[1]}" num
-    num=$(_wt_pad "${match[2]}")
-    local kind
-    kind=$(_wt_repo_kind "$repo")
-    if [[ -z "$kind" ]]; then
-        _wt_err "Repo '$repo' not registered."
-        return 1
-    fi
-    if [[ "$kind" == "single" ]]; then
-        _wt_err "'$repo' is a single-mode repo and has no worktrees to remove."
-        return 1
-    fi
-    local agents_dir
-    agents_dir=$(_wt_agents_dir "$repo")
-
-    echo "🗑  Removing worktree: ${repo} agent-${num}"
-    echo -n "   Continue? [y/N] "
-    read -r confirm
-    [[ "$confirm" != "y" && "$confirm" != "Y" ]] && { echo "Aborted."; return 0 }
-
-    _wt_rm_one "$repo" "$num"
-    git -C "$(_wt_master_dir "$agents_dir")" worktree prune 2>/dev/null || true
-}
-
-_wt_list() {
-    local filter_repo="$1"
-    _wt_ensure_config
-    local repos
-    repos=$(_wt_repos)
-    if [[ -z "$repos" ]]; then
-        _wt_info "No repos registered. Use 'wt repo register <name> <path>'."
-        return 0
-    fi
-
-    printf "%-12s %-12s %-28s %s\n" "WT" "DIR" "BRANCH" "STATUS"
-    printf "%-12s %-12s %-28s %s\n" "--" "---" "------" "------"
-
-    local pane_map
-    pane_map=$(tmux list-panes -a -F '#{session_name}:#{window_index}|#{pane_current_path}' 2>/dev/null)
-
-    local name p kind branch tmux_win wt_status wt_path agent_short id
-    while read -r name p kind; do
-        [[ -n "$filter_repo" && "$name" != "$filter_repo" ]] && continue
-        if [[ "$kind" == "single" ]]; then
-            branch=$(git -C "$p" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "(unknown)")
-            local branch_display="${branch:0:27}"
-            [[ "${#branch}" -gt 27 ]] && branch_display="${branch:0:24}..."
-            tmux_win=$(echo "$pane_map" | /usr/bin/awk -F'|' -v p2="$p" '$2 == p2 {print $1; exit}')
-            wt_status="free"
-            [[ -n "$tmux_win" ]] && wt_status="in use"
-            printf "%-12s %-12s %-28s %s\n" \
-                "$name" "—" "$branch_display" "$wt_status"
-            continue
-        fi
-        local master_dir_l
-        master_dir_l=$(_wt_master_dir "$p")
-        if [[ -d "$master_dir_l" ]]; then
-            branch=$(git -C "$master_dir_l" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "(unknown)")
-            local branch_display="${branch:0:27}"
-            [[ "${#branch}" -gt 27 ]] && branch_display="${branch:0:24}..."
-            tmux_win=$(echo "$pane_map" | /usr/bin/awk -F'|' -v p2="$master_dir_l" '$2 == p2 {print $1; exit}')
-            wt_status="free"
-            [[ -n "$tmux_win" ]] && wt_status="in use"
-            printf "%-12s %-12s %-28s %s\n" \
-                "${name}-0" "master" "$branch_display" "$wt_status"
-        fi
-        for wt_path in "${p}"/agent-*(N); do
-            [[ ! -d "$wt_path" ]] && continue
-            agent_short=$(( 10#${wt_path:t:s/agent-//} ))
-            id="${name}-${agent_short}"
-            branch=$(git -C "$wt_path" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "(unknown)")
-            local branch_display="${branch:0:27}"
-            [[ "${#branch}" -gt 27 ]] && branch_display="${branch:0:24}..."
-            tmux_win=$(echo "$pane_map" | /usr/bin/awk -F'|' -v p2="$wt_path" '$2 == p2 {print $1; exit}')
-            wt_status="free"
-            [[ -n "$tmux_win" ]] && wt_status="in use"
-            printf "%-12s %-12s %-28s %s\n" \
-                "$id" "${wt_path:t}" "$branch_display" "$wt_status"
-        done
-    done <<< "$repos"
-}
-
-_wt_sync() {
-    local arg="${1:-}"
-
-    local repo num kind
-
-    # ── Resolve repo + num ────────────────────────────────────────────────────
-    if [[ -z "$arg" ]]; then
-        local cwd="${PWD}"
-        local detected_repo="" detected_num="" detected_kind=""
-        while read -r name path_candidate kind_candidate; do
-            local root_candidate
-            if [[ "$kind_candidate" == "single" ]]; then
-                root_candidate="$path_candidate"
-            else
-                root_candidate="${path_candidate:h}"
-            fi
-            if [[ "$cwd" == "$root_candidate"* ]]; then
-                detected_repo="$name"
-                detected_kind="$kind_candidate"
-                if [[ "$kind_candidate" != "single" ]]; then
-                    if [[ "$cwd" == "${path_candidate}/agent-"* ]]; then
-                        local agent_dir="${cwd#${path_candidate}/}"
-                        agent_dir="${agent_dir%%/*}"
-                        detected_num="${agent_dir#agent-}"
-                    elif [[ "$cwd" == "${path_candidate:h}/master"* ]]; then
-                        detected_num="0"
-                    fi
-                fi
-                break
-            fi
-        done <<< "$(_wt_repos)"
-        if [[ -z "$detected_repo" ]]; then
-            _wt_err "Not inside a registered repo. Specify explicitly:"
-            echo "  wt sync <repo>          sync master/"
-            echo "  wt sync <repo>-<num>    sync a specific agent worktree"
-            return 1
-        fi
-        repo="$detected_repo"
-        num="$detected_num"
-        kind="$detected_kind"
-    elif [[ "$arg" =~ ^(.+)-([0-9]+)$ ]]; then
-        repo="${match[1]}"
-        num="${match[2]}"
-    else
-        repo="$arg"
-        num=""
-    fi
-
-    if [[ -z "$kind" ]]; then
-        kind=$(_wt_repo_kind "$repo")
-        if [[ -z "$kind" ]]; then
-            _wt_err "Repo '$repo' not registered."
-            return 1
-        fi
-    fi
-
-    # ── Single-mode ───────────────────────────────────────────────────────────
-    if [[ "$kind" == "single" ]]; then
-        local repo_path primary_branch current_branch
-        repo_path=$(_wt_repo_path "$repo")
-        if [[ ! -d "${repo_path}/.git" ]]; then
-            _wt_err "Not a git repo at: $repo_path"
-            return 1
-        fi
-        primary_branch=$(_wt_primary_branch "$repo_path")
-        current_branch=$(git -C "$repo_path" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
-        echo "🔄 Fetching origin/$primary_branch..."
-        git -C "$repo_path" fetch origin "$primary_branch" --prune --prune-tags --no-tags 2>/dev/null \
-            || _wt_warn "Fetch failed."
-        _wt_ok "Fetched origin/$primary_branch"
-        echo "⏩ Fast-forwarding $primary_branch → origin/${primary_branch}..."
-        local _sm_ref
-        _sm_ref=$(git -C "$repo_path" rev-parse "origin/${primary_branch}" 2>/dev/null) \
-            && git -C "$repo_path" update-ref "refs/heads/${primary_branch}" "$_sm_ref" \
-            && _wt_ok "$primary_branch up to date" \
-            || _wt_warn "Could not update $primary_branch"
-        echo "↪ Rebasing $current_branch onto origin/${primary_branch}..."
-        if git -C "$repo_path" rebase "origin/${primary_branch}"; then
-            _wt_ok "$current_branch is up to date"
-        else
-            _wt_warn "Rebase conflict — resolve manually."
-        fi
-        return 0
-    fi
-
-    # ── Worktree-mode ─────────────────────────────────────────────────────────
-    local agents_dir master_dir primary_branch
-    agents_dir=$(_wt_agents_dir "$repo")
-    master_dir=$(_wt_master_dir "$agents_dir")
-    if [[ ! -d "$master_dir" ]]; then
-        _wt_err "master/ not found at: $master_dir"
-        return 1
-    fi
-    primary_branch=$(_wt_primary_branch "$master_dir")
-
-    echo "🔄 Fetching origin/$primary_branch..."
-    git -C "$master_dir" fetch origin "$primary_branch" --prune --prune-tags --no-tags 2>/dev/null \
-        || _wt_warn "Fetch failed."
-    _wt_ok "Fetched origin/$primary_branch"
-
-    echo "⏩ Fast-forwarding $primary_branch → origin/${primary_branch}..."
-    local _gsm_ref _gsm_current
-    _gsm_ref=$(git -C "$master_dir" rev-parse "origin/${primary_branch}" 2>/dev/null)
-    _gsm_current=$(git -C "$master_dir" rev-parse --abbrev-ref HEAD 2>/dev/null)
-    if [[ "$_gsm_current" == "$primary_branch" ]]; then
-        git -C "$master_dir" reset --hard "$_gsm_ref" 2>/dev/null \
-            && _wt_ok "$primary_branch up to date" \
-            || _wt_warn "Could not update $primary_branch"
-    else
-        git -C "$master_dir" update-ref "refs/heads/${primary_branch}" "$_gsm_ref" 2>/dev/null \
-            && _wt_ok "$primary_branch up to date" \
-            || _wt_warn "Could not update $primary_branch"
-    fi
-
-    local target_dir padded agent_branch target_branch
-
-    if [[ -z "$num" || "$num" == "0" ]]; then
-        target_dir="$master_dir"
-    else
-        padded=$(_wt_pad "$num")
-        target_dir="${agents_dir}/agent-${padded}"
-        if [[ ! -d "$target_dir" ]]; then
-            _wt_err "Worktree not found: $target_dir"
-            return 1
-        fi
-
-        agent_branch="agent/${padded}"
-        echo "⏩ Fast-forwarding $agent_branch → origin/${primary_branch}..."
-        local _gswt_ref
-        _gswt_ref=$(git -C "$master_dir" rev-parse "origin/${primary_branch}" 2>/dev/null)
-        local current_wt_branch
-        current_wt_branch=$(git -C "$target_dir" rev-parse --abbrev-ref HEAD 2>/dev/null)
-        if [[ "$current_wt_branch" == "$agent_branch" ]]; then
-            if git -C "$target_dir" reset --hard "$_gswt_ref" 2>/dev/null; then
-                _wt_ok "$agent_branch up to date"
-            else
-                _wt_warn "Could not fast-forward $agent_branch — resolve manually in $target_dir"
-                return 1
-            fi
-        elif git -C "$master_dir" update-ref "refs/heads/${agent_branch}" "$_gswt_ref" 2>/dev/null; then
-            _wt_ok "$agent_branch up to date"
-        else
-            _wt_warn "Could not fast-forward $agent_branch — resolve manually in $master_dir"
-            return 1
-        fi
-    fi
-
-    target_branch=$(git -C "$target_dir" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "?")
-    local rebase_onto="origin/${primary_branch}"
-    if [[ "$target_branch" != "${agent_branch:-}" ]]; then
-        echo "↪ Rebasing $target_branch onto $rebase_onto..."
-        if git -C "$target_dir" rebase "$rebase_onto"; then
-            _wt_ok "$target_branch up to date"
-        else
-            _wt_warn "Conflict rebasing $target_branch — resolve manually in $target_dir"
-        fi
-    else
-        _wt_ok "$target_branch up to date"
-    fi
-}
-
-_wt_clean() {
-    local cwd="${PWD}"
-
-    # Auto-detect repo + worktree from cwd
-    local repo="" num="" kind="" wt_dir="" base_branch=""
-    while read -r name path_candidate kind_candidate; do
-        if [[ "$kind_candidate" == "single" ]]; then
-            if [[ "$cwd" == "$path_candidate"* ]]; then
-                repo="$name"; kind="single"; wt_dir="$path_candidate"
-                base_branch=$(_wt_primary_branch "$wt_dir")
-                break
-            fi
-        else
-            local master_candidate="${path_candidate:h}/master"
-            if [[ "$cwd" == "${path_candidate}/agent-"* ]]; then
-                repo="$name"; kind="worktree"; wt_dir="$path_candidate"
-                local agent_dir="${cwd#${path_candidate}/}"
-                agent_dir="${agent_dir%%/*}"
-                local padded="${agent_dir#agent-}"
-                base_branch="agent/${padded}"
-                break
-            elif [[ "$cwd" == "${master_candidate}"* ]]; then
-                repo="$name"; kind="worktree"; wt_dir="$master_candidate"
-                base_branch=$(_wt_primary_branch "$master_candidate")
-                break
-            fi
-        fi
-    done <<< "$(_wt_repos)"
-
-    if [[ -z "$repo" ]]; then
-        _wt_err "Not inside a registered repo. Run wt clean from inside a worktree."
-        return 1
-    fi
-
-    local current_branch
-    current_branch=$(git -C "$cwd" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
-
-    if [[ -z "$current_branch" ]]; then
-        _wt_err "Could not determine current branch."
-        return 1
-    fi
-
-    if [[ "$current_branch" == "$base_branch" ]]; then
-        _wt_info "Already on base branch '$base_branch'. Running sync..."
-        _wt_sync
-        return
-    fi
-
-    echo "🧹 Cleaning '$current_branch' → resetting to '$base_branch'..."
-    echo -n "   Delete branch '$current_branch' and sync? [y/N] "
-    read -r confirm
-    [[ "$confirm" != "y" && "$confirm" != "Y" ]] && { echo "Aborted."; return 0 }
-
-    # agent/NNN branches are tied to their worktree and can't be checked out normally.
-    # Instead: switch to detached HEAD at base_branch tip, delete the feature branch,
-    # then re-attach to base_branch.
-    local base_sha
-    base_sha=$(git -C "$cwd" rev-parse "$base_branch" 2>/dev/null)
-    if [[ -z "$base_sha" ]]; then
-        _wt_err "Cannot resolve '$base_branch' — does it exist?"
-        return 1
-    fi
-    git -C "$cwd" checkout --detach "$base_sha" 2>/dev/null \
-        || { _wt_err "Failed to detach HEAD."; return 1 }
-    git -C "$cwd" branch -D "$current_branch" 2>/dev/null \
-        || _wt_warn "Could not delete '$current_branch'."
-    # agent/NNN is locked to its worktree in master/ — recreate the ref here
-    # pointing to base_sha so this worktree is back on its base branch
-    git -C "$cwd" checkout -B "$base_branch" "$base_sha" 2>/dev/null \
-        || { _wt_err "Failed to recreate '$base_branch'."; return 1 }
-    _wt_ok "Deleted '$current_branch', now on '$base_branch'"
-
-    _wt_sync
-}
-
-_wt_close() {
-    local arg="${1:-}"
-
-    if [[ -z "$arg" ]]; then
-        local cwd="${PWD}"
-        local detected_repo="" detected_num="" detected_kind=""
-        while read -r name path_candidate kind_candidate; do
-            if [[ "$kind_candidate" == "single" ]]; then
-                if [[ "$cwd" == "$path_candidate"* ]]; then
-                    detected_repo="$name"
-                    detected_kind="single"
-                    break
-                fi
-            else
-                local master_candidate="${path_candidate:h}/master"
-                if [[ "$cwd" == "${path_candidate}/agent-"* ]]; then
-                    detected_repo="$name"
-                    detected_kind="worktree"
-                    local agent_dir="${cwd#${path_candidate}/}"
-                    agent_dir="${agent_dir%%/*}"
-                    detected_num="${agent_dir#agent-}"
-                    break
-                elif [[ "$cwd" == "${master_candidate}"* ]]; then
-                    detected_repo="$name"
-                    detected_kind="worktree"
-                    detected_num="0"
-                    break
-                fi
-            fi
-        done <<< "$(_wt_repos)"
-        if [[ -z "$detected_repo" ]]; then
-            _wt_err "Not inside a registered repo directory. Usage: wt close <repo>-<num> | wt close <single-repo>"
-            return 1
-        fi
-        if [[ "$detected_kind" == "single" ]]; then
-            arg="$detected_repo"
-        else
-            arg="${detected_repo}-${detected_num}"
-        fi
-    fi
-
-    local repo num kind raw_num
-    if [[ "$arg" =~ ^(.+)-([0-9]+)$ ]]; then
-        repo="${match[1]}"
-        raw_num="${match[2]}"
-        num=$([ "$raw_num" = "0" ] && echo "0" || _wt_pad "$raw_num")
-    else
-        repo="$arg"
-        num=""
-    fi
-
-    kind=$(_wt_repo_kind "$repo")
-    if [[ -z "$kind" ]]; then
-        _wt_err "Repo '$repo' not registered."
-        return 1
-    fi
-
-    local target_path
-    if [[ "$kind" == "single" ]]; then
-        if [[ -n "$num" ]]; then
-            _wt_err "'$repo' is a single-mode repo; <num> doesn't apply."
-            return 1
-        fi
-        target_path=$(_wt_repo_path "$repo")
-    else
-        if [[ -z "$num" ]]; then
-            _wt_err "Usage: wt close <repo>-<num>"
-            return 1
-        fi
-        local agents_dir
-        agents_dir=$(_wt_agents_dir "$repo")
-        if [[ "$num" == "0" ]]; then
-            local _master_dir
-            _master_dir=$(_wt_master_dir "$agents_dir")
-            target_path="${_master_dir:A}"
-        else
-            target_path="${agents_dir}/agent-${num}"
-        fi
-    fi
-
-    local pane_map tmux_win
-    pane_map=$(tmux list-panes -a -F '#{session_name}:#{window_index}|#{pane_current_path}' 2>/dev/null)
-    tmux_win=$(echo "$pane_map" | /usr/bin/awk -F'|' -v p="$target_path" '$2 == p {print $1; exit}')
-
-    if [[ -z "$tmux_win" ]]; then
-        _wt_info "No tmux window is currently using $repo${num:+-$num}."
-        return 0
-    fi
-
-    tmux kill-window -t "$tmux_win" 2>/dev/null \
-        && _wt_ok "Closed tmux window '$tmux_win' ($repo${num:+ agent-$num})" \
-        || _wt_err "Failed to close window '$tmux_win'"
-}
-
-_wt_pick() {
-    if [[ -z "${TMUX:-}" ]]; then
-        _wt_err "Not inside a tmux session."
-        return 1
-    fi
-    command -v fzf >/dev/null 2>&1 || { _wt_err "fzf not found"; return 1 }
-
-    local pane_map
-    pane_map=$(tmux list-panes -a -F '#{session_name}:#{window_index}|#{pane_current_path}' 2>/dev/null)
-
-    local rows=()
-    local name p kind branch wt_status tmux_win wt_path agent_short id
-
-    while read -r name p kind; do
-        if [[ "$kind" == "single" ]]; then
-            branch=$(git -C "$p" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "(unknown)")
-            tmux_win=$(echo "$pane_map" | /usr/bin/awk -F'|' -v p2="$p" '$2 == p2 {print $1; exit}')
-            wt_status="${tmux_win:-free}"
-            local branch_display="${branch:0:25}"
-            [[ "${#branch}" -gt 25 ]] && branch_display="${branch:0:22}..."
-            rows+=("${tmux_win:-}"$'\t'"$(printf '%-12s %-12s %-27s %-8s' "$name" "—" "$branch_display" "${tmux_win:+open}")")
-            continue
-        fi
-        local master_dir_p
-        master_dir_p=$(_wt_master_dir "$p")
-        if [[ -d "$master_dir_p" ]]; then
-            branch=$(git -C "$master_dir_p" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "(unknown)")
-            tmux_win=$(echo "$pane_map" | /usr/bin/awk -F'|' -v p2="$master_dir_p" '$2 == p2 {print $1; exit}')
-            local branch_display="${branch:0:25}"
-            [[ "${#branch}" -gt 25 ]] && branch_display="${branch:0:22}..."
-            rows+=("${tmux_win:-}"$'\t'"$(printf '%-12s %-12s %-27s %-8s' "${name}-0" "master" "$branch_display" "${tmux_win:+open}")")
-        fi
-        for wt_path in "${p}"/agent-*(N); do
-            [[ ! -d "$wt_path" ]] && continue
-            agent_short=$(( 10#${wt_path:t:s/agent-//} ))
-            id="${name}-${agent_short}"
-            branch=$(git -C "$wt_path" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "(unknown)")
-            tmux_win=$(echo "$pane_map" | /usr/bin/awk -F'|' -v p2="$wt_path" '$2 == p2 {print $1; exit}')
-            local branch_display="${branch:0:25}"
-            [[ "${#branch}" -gt 25 ]] && branch_display="${branch:0:22}..."
-            rows+=("${tmux_win:-}"$'\t'"$(printf '%-12s %-12s %-27s %-8s' "$id" "${wt_path:t}" "$branch_display" "${tmux_win:+open}")")
-        done
-    done <<< "$(_wt_repos)"
-
-    if [[ ${#rows[@]} -eq 0 ]]; then
-        _wt_info "No workspaces registered."
-        return 0
-    fi
-
-    local selected
-    selected=$(printf '%s\n' "${rows[@]}" \
-        | fzf --exit-0 --reverse --tmux "center,60%,50%" \
-              --delimiter=$'\t' --with-nth=2 \
-              --header="$(printf '%-12s %-12s %-27s %s' 'WT' 'DIR' 'BRANCH' 'STATUS')" \
-              --no-multi)
-
-    [[ -z "$selected" ]] && return 0
-
-    local target_win
-    target_win=$(echo "$selected" | cut -d$'\t' -f1)
-
-    if [[ -z "$target_win" ]]; then
-        local wt_id
-        wt_id=$(echo "$selected" | cut -d$'\t' -f2 | awk '{print $1}')
-        _wt_info "Opening '$wt_id'..."
-        wt "$wt_id"
-        return
-    fi
-
-    local win_idx
-    win_idx=$(echo "$target_win" | cut -d: -f2)
-    tmux select-window -t "$target_win" 2>/dev/null \
-        && tmux switch-client -t "$target_win" 2>/dev/null
+    _wt_create_layout "$(tmux display-message -p '#{pane_current_path}')"
 }
 
 _wt_window_name() {
     local id="$1" title="$2"
-    if [[ -z "$title" ]]; then
-        echo "$id"
-    else
-        echo "${id}: ${title}"
+    [[ -z "$title" ]] && echo "$id" || echo "${id}: ${title}"
+}
+
+# ── subcommands ──────────────────────────────────────────────────────────────────
+
+_wt_help() {
+    cat << 'EOF'
+wt — ephemeral worktree workspace manager
+
+USAGE
+  wt <command> [args]
+
+REGISTRY
+  wt register <name> <path> [--seed a,b]   Register a repo (a plain git clone)
+  wt unregister <name>                     Unregister a repo
+
+WORKSPACES
+  wt <repo> "Feature title"   Create (or focus) a feature worktree:
+                                git worktree add + background warm-seed + tmux window
+  wt <repo>                   Open/focus the repo's main workspace (the clone itself)
+
+  Single-use repos: just don't create worktrees — use branches in the main clone.
+  You still CAN `wt <repo> "title"` on any repo; it uses vanilla `git worktree`.
+
+MANAGE
+  wt list [repo]              List worktrees (from `git worktree list`) + status
+  wt open                     fzf-select a worktree → open it in a new named tab
+                                (focuses the existing tab if already open;
+                                 bind `prefix C-o` to a popup running this)
+  wt rm                       Remove the worktree you're in (cwd)
+  wt rm <repo> <id>           Remove a worktree of <repo> (tab-completes ids)
+  wt rm <repo> --all          Remove all merged worktrees of <repo>
+  wt rm ... --force | -f      Also remove unmerged worktrees
+  wt close                    Close the current tmux window
+  wt layout                   Apply the triptych layout to the current window
+
+  wt help | --help            Show this help
+
+Rebase a worktree with plain git (e.g. gfom && grbom). There is no `wt sync`.
+EOF
+}
+
+_wt_register() {
+    local seeds="$WT_DEFAULT_SEEDS"
+    local -a pos=()
+    while (( $# )); do
+        case "$1" in
+            --seed) shift; seeds="${1:-}" ;;
+            *)      pos+=("$1") ;;
+        esac
+        shift
+    done
+    local name="${pos[1]:-}" p="${pos[2]:-}"
+    if [[ -z "$name" || -z "$p" ]]; then
+        _wt_err "Usage: wt register <name> <path> [--seed a,b]"
+        return 1
     fi
+    p="${p:A}"
+    _wt_ensure_config
+    if _wt_is_repo "$name"; then
+        _wt_err "Repo '$name' already registered. Use 'wt unregister $name' first."
+        return 1
+    fi
+    if [[ ! -d "$p" ]]; then
+        _wt_err "Path does not exist: $p"
+        return 1
+    fi
+    if [[ ! ( -d "$p/.git" || -f "$p/.git" ) ]]; then
+        _wt_err "Not a git repo: $p"
+        return 1
+    fi
+    echo "${name}  ${p}  repo  ${seeds}" >> "$WT_REPOS_FILE"
+    _wt_ok "Registered '$name' → $p"
+    _wt_info "Worktrees (optional): wt ${name} \"Title\"  →  ${p:h}/${name}-<slug>   seed: ${seeds}"
+    return 0
+}
+
+_wt_unregister() {
+    local name="$1"
+    [[ -z "$name" ]] && { _wt_err "Usage: wt unregister <name>"; return 1 }
+    _wt_ensure_config
+    if ! _wt_is_repo "$name"; then
+        _wt_err "Repo '$name' not found in registry."
+        return 1
+    fi
+    local tmp="${WT_REPOS_FILE}.tmp"
+    /usr/bin/awk -v n="$name" '$1 != n' "$WT_REPOS_FILE" > "$tmp" && mv "$tmp" "$WT_REPOS_FILE"
+    _wt_ok "Unregistered '$name'."
 }
 
 _wt_open() {
     local arg="$1"
     local title_given=0 title=""
-    if (( $# >= 2 )); then
-        title_given=1
-        title="$2"
-    fi
+    (( $# >= 2 )) && { title_given=1; title="$2" }
 
-    if [[ -z "${TMUX:-}" ]]; then
-        _wt_err "Not inside a tmux session. Start tmux first."
+    [[ -z "$TMUX" ]] && { _wt_err "Not inside a tmux session. Start tmux first."; return 1 }
+
+    if ! _wt_is_repo "$arg"; then
+        _wt_err "Repo '$arg' not registered."
+        echo "  Run: wt register $arg <path>"
         return 1
     fi
 
-    local repo_kind=""
-    if [[ ! "$arg" =~ ^(.+)-([0-9]+)$ ]]; then
-        repo_kind=$(_wt_repo_kind "$arg")
+    local clone; clone=$(_wt_clone_path "$arg") || { _wt_err "No clone path for '$arg'."; return 1 }
+    if [[ ! ( -d "$clone/.git" || -f "$clone/.git" ) ]]; then
+        _wt_err "Main clone is not a git repo: $clone"
+        return 1
     fi
 
-    if [[ "$repo_kind" == "single" ]]; then
-        local repo="$arg"
-        local repo_path
-        repo_path=$(_wt_repo_path "$repo")
-        if [[ ! -d "$repo_path" ]]; then
-            _wt_err "Repo path does not exist: $repo_path"
-            return 1
-        fi
+    local target_path id window_name slug=""
+    if (( ! title_given )); then
+        target_path="$clone"; id="$arg"; window_name="$arg"
+    else
+        slug=$(_wt_slugify "$title")
+        [[ -z "$slug" ]] && { _wt_err "Could not derive a slug from '$title'."; return 1 }
+        target_path="${clone:h}/${arg}-${slug}"; id="${arg}-${slug}"
+        window_name=$(_wt_window_name "$id" "$title")
 
-        local pane_map existing_win
-        pane_map=$(tmux list-panes -a -F '#{session_name}:#{window_index}|#{pane_current_path}' 2>/dev/null)
-        existing_win=$(echo "$pane_map" | /usr/bin/awk -F'|' -v p2="$repo_path" '$2 == p2 {print $1; exit}')
-        if [[ -n "$existing_win" ]]; then
-            if (( title_given )); then
-                local window_name=$(_wt_window_name "$repo" "$title")
-                tmux rename-window -t "$existing_win" "$window_name" 2>/dev/null
-                _wt_info "Focused '${existing_win}' (renamed to '${window_name}')"
-            else
-                _wt_info "Focused existing window '${existing_win}' for ${repo}"
-            fi
-            tmux switch-client -t "$existing_win" 2>/dev/null || tmux select-window -t "$existing_win" 2>/dev/null
+        if [[ ! -d "$target_path" ]]; then
+            # Open the tab first, then run the slow `git worktree add` + seed INSIDE it,
+            # so the current pane returns immediately instead of blocking on the checkout.
+            tmux new-window -a -n "$window_name" -c "$clone"
+            local newwin; newwin=$(tmux display-message -p '#{session_name}:#{window_index}')
+            tmux send-keys -t "$newwin" "wt _create ${(q)arg} ${(q)slug} ${(q)title}" Enter
+            _wt_ok "Opening '${window_name}' — worktree checkout + warm-seed run in that tab."
             return 0
         fi
-
-        local window_name=$(_wt_window_name "$repo" "$title")
-        tmux new-window -a -n "$window_name" -c "$repo_path"
-        _wt_create_layout "$repo_path"
-        _wt_ok "Opened '${window_name}' [$(git -C "$repo_path" rev-parse --abbrev-ref HEAD 2>/dev/null)]"
-        return 0
     fi
 
-    local repo num wt_path
-    if [[ "$arg" =~ ^(.+)-([0-9]+)$ ]]; then
-        repo="${match[1]}"
-        local raw_num="${match[2]}"
-        local agents_dir master_dir
-        agents_dir=$(_wt_agents_dir "$repo")
-        if [[ -z "$agents_dir" ]]; then
-            _wt_err "Repo '$repo' not registered."
-            return 1
-        fi
-        if [[ "$raw_num" == "0" ]]; then
-            master_dir=$(_wt_master_dir "$agents_dir")
-            if [[ ! -d "$master_dir" ]]; then
-                _wt_err "master/ not found at: $master_dir"
-                return 1
-            fi
-            wt_path="${master_dir:A}"
-            num="0"
-        else
-            num=$(_wt_pad "$raw_num")
-            wt_path="${agents_dir}/agent-${num}"
-            if [[ ! -d "$wt_path" ]]; then
-                _wt_err "Worktree not found: $wt_path"
-                echo "  Run: wt new $repo"
-                return 1
-            fi
-        fi
-    else
-        repo="$arg"
-        local agents_dir
-        agents_dir=$(_wt_agents_dir "$repo")
-        if [[ -z "$agents_dir" ]]; then
-            _wt_err "Repo '$repo' not registered."
-            echo "  Run: wt repo register $repo <path>"
-            return 1
-        fi
-        if [[ ! -d "$agents_dir" ]]; then
-            _wt_err "Agents dir does not exist: $agents_dir"
-            echo "  Run 'wt init' or 'wt convert' first, then 'wt new $repo'."
-            return 1
-        fi
-
-        local pane_map_open
-        pane_map_open=$(tmux list-panes -a -F '#{session_name}:#{window_index}|#{pane_current_path}' 2>/dev/null)
-        wt_path=""
-        for candidate in "${agents_dir}"/agent-*(N); do
-            [[ ! -d "$candidate" ]] && continue
-            local in_use
-            in_use=$(echo "$pane_map_open" | /usr/bin/awk -F'|' -v p2="$candidate" '$2 == p2 {print $1; exit}')
-            if [[ -z "$in_use" ]]; then
-                wt_path="$candidate"
-                break
-            fi
-        done
-
-        if [[ -z "$wt_path" ]]; then
-            _wt_err "No free agent worktrees available for '$repo'."
-            echo "  All worktrees are currently in use by a tmux window."
-            echo "  Create more with: wt new $repo"
-            return 1
-        fi
-    fi
-
-    local agent_short
-    if [[ "$num" == "0" ]]; then
-        agent_short="0"
-    else
-        agent_short=$(( 10#${wt_path:t:s/agent-//} ))
-    fi
-    local id="${repo}-${agent_short}"
-
-    local pane_map existing_win
-    pane_map=$(tmux list-panes -a -F '#{session_name}:#{window_index}|#{pane_current_path}' 2>/dev/null)
-    existing_win=$(echo "$pane_map" | /usr/bin/awk -F'|' -v p2="$wt_path" '$2 == p2 {print $1; exit}')
+    # Existing worktree, or the repo's main workspace: focus or open (instant).
+    local existing_win; existing_win=$(_wt_window_for_path "$target_path")
     if [[ -n "$existing_win" ]]; then
-        if (( title_given )); then
-            local window_name=$(_wt_window_name "$id" "$title")
-            tmux rename-window -t "$existing_win" "$window_name" 2>/dev/null
-            _wt_info "Focused '${existing_win}' (renamed to '${window_name}')"
-        else
-            _wt_info "Focused existing window '${existing_win}' for ${id}"
-        fi
+        (( title_given )) && tmux rename-window -t "$existing_win" "$window_name" 2>/dev/null
         tmux switch-client -t "$existing_win" 2>/dev/null || tmux select-window -t "$existing_win" 2>/dev/null
+        _wt_info "Focused existing window '${existing_win}' for ${id}"
         return 0
     fi
 
-    local window_name=$(_wt_window_name "$id" "$title")
-    tmux new-window -a -n "$window_name" -c "$wt_path"
-    _wt_create_layout "$wt_path"
-    _wt_ok "Opened '${window_name}' [$(git -C "$wt_path" rev-parse --abbrev-ref HEAD 2>/dev/null)]"
+    tmux new-window -a -n "$window_name" -c "$target_path"
+    _wt_create_layout "$target_path"
+    _wt_ok "Opened '${window_name}' [$(git -C "$target_path" rev-parse --abbrev-ref HEAD 2>/dev/null)]"
 }
 
-# ── main entrypoint ───────────────────────────────────────────────────────────
+# Internal: runs inside the freshly-opened tab to do the checkout + seed + layout.
+_wt__create() {
+    local repo="$1" slug="$2" title="${3:-}"
+    local clone; clone=$(_wt_clone_path "$repo") || { _wt_err "Unknown repo '$repo'."; return 1 }
+    local target="${clone:h}/${repo}-${slug}"
+    if [[ ! -d "$target" ]]; then
+        local primary base
+        primary=$(_wt_primary_branch "$clone")
+        if git -C "$clone" rev-parse --verify "origin/${primary}" &>/dev/null; then
+            base="origin/${primary}"
+        else
+            base="$primary"
+        fi
+        echo "📁 Creating worktree ${repo}-${slug}  (branch: ${slug}, base: ${base})"
+        git -C "$clone" worktree add "$target" -b "$slug" "$base" \
+            || { _wt_err "git worktree add failed."; return 1 }
+        _wt_start_seed "$clone" "$target" ${(s:,:)$(_wt_repo_seeds "$repo")}
+        _wt_ok "Worktree ready. Warm-seed (node_modules, …) running in background."
+    fi
+    cd "$target"
+    _wt_create_layout "$target"
+}
+
+# Remove one worktree by path (guard + kill seed + close window + prune branch).
+_wt_rm_path() {
+    local clone="$1" wt="$2" force="$3"
+    if [[ "$wt" == "$clone" ]]; then
+        _wt_err "Refusing to remove the main clone: $wt"
+        return 1
+    fi
+    local branch; branch=$(git -C "$wt" rev-parse --abbrev-ref HEAD 2>/dev/null)
+
+    if [[ "$force" != "1" ]]; then
+        local primary base
+        primary=$(_wt_primary_branch "$clone")
+        base="origin/${primary}"
+        git -C "$clone" rev-parse --verify "$base" &>/dev/null || base="$primary"
+        local dirty; dirty=$(git -C "$wt" status --porcelain --untracked-files=no 2>/dev/null | head -1)
+        local unmerged=0
+        [[ -n "$dirty" ]] && unmerged=1
+        git -C "$wt" merge-base --is-ancestor HEAD "$base" 2>/dev/null || unmerged=1
+        if (( unmerged )); then
+            local ahead; ahead=$(git -C "$wt" rev-list --count "${base}..HEAD" 2>/dev/null)
+            _wt_warn "'${wt:t}' has unmerged work (${ahead:-?} commit(s) ahead of ${base}$([[ -n $dirty ]] && echo ', uncommitted changes')."
+            echo "   Branch: ${branch}"
+            echo "   Not removed. Push/merge first, or re-run with --force to discard."
+            return 1
+        fi
+    fi
+
+    _wt_kill_seed "$wt"
+    local win; win=$(_wt_window_for_path "$wt")
+    [[ -n "$win" ]] && { tmux kill-window -t "$win" 2>/dev/null; _wt_info "Closed tmux window ${win}" }
+    git -C "$clone" worktree remove --force "$wt" 2>/dev/null || rm -rf "$wt"
+    [[ -n "$branch" && "$branch" != "HEAD" ]] && git -C "$clone" branch -D "$branch" 2>/dev/null
+    _wt_ok "Removed ${wt:t} (branch: ${branch:-?})"
+}
+
+_wt_rm() {
+    local force=0 all=0
+    local -a rest=()
+    local a
+    for a in "$@"; do
+        case "$a" in
+            --force|-f) force=1 ;;
+            --all)      all=1 ;;
+            *)          rest+=("$a") ;;
+        esac
+    done
+    local repo="${rest[1]:-}" wtid="${rest[2]:-}"
+
+    # No positionals and not --all: remove the worktree you're in (cwd).
+    if (( ! all )) && [[ -z "$repo" ]]; then
+        local top; top=$(git -C "$PWD" rev-parse --show-toplevel 2>/dev/null)
+        [[ -z "$top" ]] && { _wt_err "Not inside a git worktree. Usage: wt rm <repo> <id> | wt rm <repo> --all"; return 1 }
+        local owner; owner=$(_wt_owner_of_path "$top") \
+            || { _wt_err "'$top' is not a registered wt worktree."; return 1 }
+        local clone="${owner%%$'\t'*}"
+        [[ "$top" == "$clone" ]] && { _wt_err "That's the main clone — not removable."; return 1 }
+        _wt_rm_path "$clone" "$top" "$force" && git -C "$clone" worktree prune 2>/dev/null
+        return
+    fi
+
+    # First positional is not a registered repo → treat it as a worktree id (or repo/id).
+    if [[ -n "$repo" ]] && ! _wt_is_repo "$repo"; then
+        local wtp; wtp=$(_wt_resolve_target "$repo") \
+            || { _wt_err "'$repo' is not a registered repo or a worktree id."
+                 echo "  Usage: wt rm <repo> <id> | wt rm <repo> --all | wt rm  (inside a worktree)"
+                 return 1 }
+        local owner; owner=$(_wt_owner_of_path "$wtp"); local clone="${owner%%$'\t'*}"
+        _wt_rm_path "$clone" "$wtp" "$force" && git -C "$clone" worktree prune 2>/dev/null
+        return
+    fi
+
+    [[ -z "$repo" ]] && { _wt_err "Usage: wt rm <repo> <id> | wt rm <repo> --all"; return 1 }
+    local clone; clone=$(_wt_clone_path "$repo")
+
+    # wt rm <repo> --all  → remove all feature worktrees (merged; --force also unmerged)
+    if (( all )); then
+        local -a wts=()
+        local p b wtl; wtl=$(_wt_worktrees "$clone")
+        while IFS=$'\t' read -r p b; do
+            [[ -z "$p" || "$p" == "$clone" ]] && continue
+            wts+=("$p")
+        done <<< "$wtl"
+        (( ${#wts} == 0 )) && { _wt_info "No feature worktrees for '$repo'."; return 0 }
+        echo "🗑  Removing ${#wts} worktree(s) for '$repo'$( (( force )) && echo ' (force)' ):"
+        printf '   %s\n' "${wts[@]:t}"
+        echo -n "   Continue? [y/N] "; read -r a
+        [[ "$a" != "y" && "$a" != "Y" ]] && { echo "Aborted."; return 0 }
+        for p in "${wts[@]}"; do _wt_rm_path "$clone" "$p" "$force"; done
+        git -C "$clone" worktree prune 2>/dev/null
+        return 0
+    fi
+
+    # wt rm <repo> <id>
+    [[ -z "$wtid" ]] && { _wt_err "Usage: wt rm $repo <worktree-id>  (tab-completes)  |  wt rm $repo --all"; return 1 }
+    local wtp="" p b wtl; wtl=$(_wt_worktrees "$clone")
+    while IFS=$'\t' read -r p b; do
+        [[ -z "$p" || "$p" == "$clone" ]] && continue
+        [[ "${p:t}" == "$wtid" || "${repo}/${p:t}" == "$wtid" ]] && { wtp="$p"; break }
+    done <<< "$wtl"
+    [[ -z "$wtp" ]] && { _wt_err "No worktree '$wtid' in '$repo'. See: wt list $repo"; return 1 }
+    _wt_rm_path "$clone" "$wtp" "$force"
+    git -C "$clone" worktree prune 2>/dev/null
+}
+
+_wt_close() {
+    [[ -z "$TMUX" ]] && { _wt_err "Not inside a tmux session."; return 1 }
+    local cur; cur=$(tmux display-message -p '#{session_name}:#{window_index}')
+    tmux kill-window -t "$cur" 2>/dev/null \
+        && _wt_ok "Closed current window '${cur}'" \
+        || _wt_err "Failed to close window '${cur}'"
+}
+
+_wt_list() {
+    local filter="$1"
+    _wt_ensure_config
+    local repos; repos=$(_wt_repos)
+    [[ -z "$repos" ]] && { _wt_info "No repos registered. Use 'wt register <name> <path>'."; return 0 }
+
+    local pane_map; pane_map=$(tmux list-panes -a -F '#{session_name}:#{window_index}|#{pane_current_path}' 2>/dev/null)
+    printf "%-24s %-28s %s\n" "WORKSPACE" "BRANCH" "STATUS"
+    printf "%-24s %-28s %s\n" "---------" "------" "------"
+
+    local name rp kind seeds clone p b tag win st wtl
+    while read -r name rp kind seeds; do
+        [[ -n "$filter" && "$name" != "$filter" ]] && continue
+        clone=$(_wt_clone_path "$name") || continue
+        wtl=$(_wt_worktrees "$clone")
+        while IFS=$'\t' read -r p b; do
+            [[ -z "$p" ]] && continue
+            if [[ "$p" == "$clone" ]]; then
+                tag="${name} (main)"
+            else
+                tag="${name}/${p:t}"
+            fi
+            win=$(echo "$pane_map" | /usr/bin/awk -F'|' -v x="$p" '$2 == x {print $1; exit}')
+            st=""
+            [[ -n "$win" ]] && st="in tmux"
+            [[ -f "$p/.wt-seeding" ]] && st="${st:+$st, }seeding"
+            [[ -f "$p/.wt-ready" ]]   && st="${st:+$st, }warm"
+            printf "%-24s %-28s %s\n" "${tag:0:24}" "${b:0:28}" "$st"
+        done <<< "$wtl"
+    done <<< "$repos"
+}
+
+_wt_open_pick() {
+    command -v fzf >/dev/null 2>&1 || { _wt_err "fzf not found"; return 1 }
+    local rows=() name rp kind seeds clone p b tag st wtl
+    while read -r name rp kind seeds; do
+        clone=$(_wt_clone_path "$name") || continue
+        wtl=$(_wt_worktrees "$clone")
+        while IFS=$'\t' read -r p b; do
+            [[ -z "$p" ]] && continue
+            [[ "$p" == "$clone" ]] && tag="${name} (main)" || tag="${name}/${p:t}"
+            st="wt"
+            [[ -f "$p/.wt-seeding" ]] && st="seeding"
+            [[ -f "$p/.wt-ready" ]]   && st="warm"
+            rows+=("$p"$'\t'"$(printf '%-24s %-6s %s' "${tag:0:24}" "$st" "$b")")
+        done <<< "$wtl"
+    done <<< "$(_wt_repos)"
+
+    (( ${#rows} == 0 )) && { _wt_info "No worktrees registered."; return 0 }
+
+    local sel
+    sel=$(printf '%s\n' "${rows[@]}" \
+        | fzf --reverse --exit-0 --no-multi \
+              --delimiter=$'\t' --with-nth=2 \
+              --header="$(printf '%-24s %-6s %s' 'WORKSPACE' 'STATE' 'BRANCH')")
+    [[ -z "$sel" ]] && return 0
+    local dir="${sel%%$'\t'*}"
+    if [[ -z "$TMUX" ]]; then
+        cd "$dir" && _wt_ok "cd → $dir"
+        return
+    fi
+    # Focus the worktree's window if it already has one, else open a new named tab.
+    local existing; existing=$(_wt_window_for_path "$dir")
+    if [[ -n "$existing" ]]; then
+        tmux select-window -t "$existing" 2>/dev/null
+        tmux switch-client -t "$existing" 2>/dev/null
+        return 0
+    fi
+    tmux new-window -a -n "${dir:t}" -c "$dir"
+    _wt_create_layout "$dir"
+}
+
+# ── main entrypoint ──────────────────────────────────────────────────────────────
 
 wt() {
     local cmd="${1:-}"
-
     case "$cmd" in
-        --help|-h|help|"")
-            _wt_help
-            ;;
-        repo)
-            local subcmd="${2:-}"
-            case "$subcmd" in
-                register)   _wt_repo_register   "${@:3}" ;;
-                unregister) _wt_repo_unregister  "${@:3}" ;;
-                list)       _wt_repo_list ;;
-                *)
-                    _wt_err "Unknown repo subcommand: '$subcmd'"
-                    echo "  Available: register, unregister, list"
-                    return 1
-                    ;;
-            esac
-            ;;
-        init)    _wt_init    "${@:2}" ;;
-        convert) _wt_convert "${@:2}" ;;
-        new)     _wt_new     "${@:2}" ;;
-        rm)      _wt_rm      "${@:2}" ;;
-        list)    _wt_list    "${@:2}" ;;
-        sync)    _wt_sync    "${@:2}" ;;
-        clean)   _wt_clean   "${@:2}" ;;
-        close)   _wt_close   "${@:2}" ;;
-        layout)  _wt_layout  "${@:2}" ;;
-        pick)    _wt_pick   "${@:2}" ;;
-        *)
-            _wt_open "$cmd" "${2:-}"
-            ;;
+        --help|-h|help|"")     _wt_help ;;
+        register)              _wt_register   "${@:2}" ;;
+        unregister)            _wt_unregister "${@:2}" ;;
+        init)                  _wt_register   "${@:2}" ;;   # alias
+        uninit)                _wt_unregister "${@:2}" ;;   # alias
+        list)                  _wt_list       "${@:2}" ;;
+        rm)                    _wt_rm         "${@:2}" ;;
+        close)                 _wt_close      "${@:2}" ;;
+        layout)                _wt_layout     "${@:2}" ;;
+        open|search|pick)      _wt_open_pick  "${@:2}" ;;
+        _create)               _wt__create    "${@:2}" ;;
+        new|sync|clean|convert|repo)
+            _wt_err "'wt $cmd' was removed in the ephemeral redesign."
+            echo "  Worktrees are created per-feature (wt <repo> \"title\") and"
+            echo "  rebased with plain git (gfom && grbom). See: wt --help"
+            return 1 ;;
+        *)                     _wt_open       "$cmd" "${@:2}" ;;
     esac
 }

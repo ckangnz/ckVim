@@ -55,51 +55,52 @@ These are my personal conventions for working with AI coding agents. They apply 
 - Apply those formatting rules manually. Do not assume defaults.
 - Prefer the config closest to the file being edited.
 
-## 8. Git Worktree Structure
+## 8. Git Worktrees (`wt`)
 
-Any repository set up with the `wt` CLI uses this **git worktree layout**:
+I use **ephemeral git worktrees** for parallel work — one per feature, created on
+demand and deleted when the PR merges. There is **no** long-lived
+`master/`+`agents/agent-NNN/` pool and **no** `agent/NNN` base branches anymore.
 
-```
-<repo-root>/
-├── master/          ← main worktree — always on the primary branch (e.g. `master` or `main`)
-└── agents/
-    ├── agent-001/   ← worktree for agent 1 — base branch: `agent/001`
-    ├── agent-002/   ← worktree for agent 2 — base branch: `agent/002`
-    ├── agent-003/   ← worktree for agent 3 — base branch: `agent/003`
-    └── ...
-```
+### The model
 
-### Rules when working inside `agents/agent-NNN/`
+- Every registered repo is a plain git clone. Worktrees are ordinary `git worktree`
+  worktrees (git-default layout), created per-feature and thrown away after merge.
+  There is no single-vs-worktree distinction: "single-use" repos just use branches
+  and never create worktrees, but any repo *can* via vanilla `git worktree`.
+- `wt` is a thin layer over `git worktree` + tmux + an APFS `cp -c` warm-seed of
+  build state (node_modules, etc.). It uses `git worktree list` as its source of
+  truth, so it also sees worktrees created by other tools (e.g. Claude Code's
+  `.claude/worktrees/`).
 
-- The worktree's **base branch** is `agent/NNN` (e.g. `agent/001`, `agent/003`).
-- **Treat `agent/NNN` as the equivalent of `master`** for this worktree.
-- **Always create a feature branch off `agent/NNN`**, never work directly on `agent/NNN`.
-- Before starting any work: check `git branch` — if you're on `agent/NNN`, create a feature branch first:
-  ```bash
-  git checkout -b <feature-branch-name>
-  ```
-- Feature branch naming: follow the repo convention (e.g. `issue/TICKET-123-short-description`).
-- Never commit directly to `agent/NNN` — it is a base branch managed by `wt sync`.
+### Rules when working inside a worktree
 
-### Rules when working inside `master/`
-
-- The worktree is on the primary branch (e.g. `master` or `main`).
-- Treat it the same as a normal repo root — create feature branches off `master` as usual.
-- This worktree is used for: PR reviews, syncing, git operations across all worktrees.
+- You're on a normal feature branch — treat it like any branch.
+- Rebase onto the latest primary branch with **plain git** (`gfom && grbom`, i.e.
+  `git fetch origin master` + `git rebase origin/master`). There is no `wt sync`.
+- Never work directly on the primary branch; keep a feature branch.
+- Standard commit/push rules (§3) still apply — never commit/push without approval.
 
 ### `wt` CLI reference
 
 | Command | What it does |
 |---|---|
-| `wt sync` | Fetch + fast-forward `agent/NNN` + rebase feature branch |
-| `wt clean` | Reset worktree to base branch (`agent/NNN`), delete feature branch |
-| `wt close` | Close the tmux window for this worktree |
-| `wt list` | Show all worktrees and their status |
+| `wt register <name> <path> [--seed a,b]` | Register a repo (a plain git clone) |
+| `wt unregister <name>` | Unregister a repo |
+| `wt <repo> "Feature title"` | Create a worktree for the feature (+ background warm-seed) and open its tmux window; focus it if it already exists |
+| `wt <repo>` | Open/focus the repo's main workspace (the clone itself) |
+| `wt list [repo]` | List worktrees (from `git worktree list`) + status |
+| `wt open` | fzf-select a worktree and open it in a new named tab (bind `prefix C-o` to a popup running this) |
+| `wt seed [path]` | Warm-seed an existing worktree's build state (works on any worktree, incl. Claude's) |
+| `wt rm` | Remove the worktree you're in (cwd); refuses unmerged work unless `--force` |
+| `wt rm <repo>` | fzf-select worktree(s) of `<repo>` to remove |
+| `wt rm <worktree-id>` | Remove a specific worktree (id from `wt list`, e.g. `afm/foo` or `foo`) |
+| `wt rm --all <repo>` | Remove all feature worktrees for a repo |
+| `wt close` | Close the current tmux window |
+| `wt layout` | Apply the triptych layout to the current tmux window |
 
-### ⚠️ Hard rules for wt repos — NEVER break these
+### Notes
 
-- **NEVER** run `git fetch`, `git pull`, `git rebase`, or `git merge` directly in a worktree repo. **ALWAYS** use `wt sync` instead.
-- **NEVER** commit directly to `agent/NNN`. It is a base branch — always create a feature branch first.
-- **ALWAYS** check `git branch` before starting work. If on `agent/NNN`, run `git checkout -b issue/TICKET-short-description` first.
-- **ALWAYS** use `wt clean` (not manual git commands) to discard a feature branch and reset the worktree.
-- `wt` is a real executable at `~/.vim/wt/wt` — you CAN run it directly. Do not tell the user to run it themselves unless there's an interactive prompt required.
+- `wt` is a real executable at `~/.vim/wt/wt` — you CAN run it directly. Do not tell
+  the user to run it themselves unless there's an interactive prompt required.
+- A new worktree is warm-seeded in the background: editable immediately, but it may
+  take a few minutes before it can build — wait for the "warm-seed ready" notice.

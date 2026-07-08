@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-# Tests for wt — run with: zsh wt/test_wt.zsh
+# Tests for wt (ephemeral worktree model) — run with: zsh wt/test_wt.zsh
 # Exits non-zero on failure. Each test runs against an isolated WT_CONFIG_DIR.
 
 set -u
@@ -12,48 +12,46 @@ FAIL=0
 FAILED_TESTS=()
 
 _setup() {
-    WT_CONFIG_DIR=$(mktemp -d -t wt-test-XXXXXX)
+    WT_CONFIG_DIR=$(mktemp -d -t wt-test-XXXXXX 2>/dev/null)
     WT_CONFIG_DIR="${WT_CONFIG_DIR:A}"
+    if [[ -z "$WT_CONFIG_DIR" || ! -d "$WT_CONFIG_DIR" || "$WT_CONFIG_DIR" == "/" ]]; then
+        echo "FATAL: could not create a temp dir (mktemp failed) — aborting to avoid touching the real repo." >&2
+        exit 2
+    fi
     WT_REPOS_FILE="${WT_CONFIG_DIR}/repos"
-    WT_TITLES_FILE="${WT_CONFIG_DIR}/.titles"
-    export WT_CONFIG_DIR WT_REPOS_FILE WT_TITLES_FILE
+    export WT_CONFIG_DIR WT_REPOS_FILE
     export PATH="/usr/bin:/bin:/usr/sbin:/sbin:${PATH}"
+    cd "$WT_CONFIG_DIR" || exit 2
     source "${SCRIPT_DIR}/wt.zsh"
 }
 
-_mktemp_resolved() {
-    local d
-    d=$(mktemp -d -t "$1")
-    echo "${d:A}"
-}
-
 _teardown() {
-    [[ -n "${WT_CONFIG_DIR:-}" && "$WT_CONFIG_DIR" == /tmp/* ]] && rm -rf "$WT_CONFIG_DIR"
-    unset WT_CONFIG_DIR WT_REPOS_FILE WT_TITLES_FILE
+    [[ -n "${WT_CONFIG_DIR:-}" && "$WT_CONFIG_DIR" == *wt-test-* ]] && rm -rf "$WT_CONFIG_DIR"
+    unset WT_CONFIG_DIR WT_REPOS_FILE
 }
 
 _assert_eq() {
     local expected="$1" actual="$2" msg="${3:-}"
-    if [[ "$expected" == "$actual" ]]; then
-        return 0
-    else
-        echo "    expected: '$expected'"
-        echo "    actual:   '$actual'"
-        [[ -n "$msg" ]] && echo "    note:     $msg"
-        return 1
-    fi
+    [[ "$expected" == "$actual" ]] && return 0
+    echo "    expected: '$expected'"
+    echo "    actual:   '$actual'"
+    [[ -n "$msg" ]] && echo "    note:     $msg"
+    return 1
 }
 
 _assert_contains() {
     local haystack="$1" needle="$2" msg="${3:-}"
-    if [[ "$haystack" == *"$needle"* ]]; then
-        return 0
-    else
-        echo "    expected to contain: '$needle'"
-        echo "    actual:              '$haystack'"
-        [[ -n "$msg" ]] && echo "    note:                $msg"
-        return 1
-    fi
+    [[ "$haystack" == *"$needle"* ]] && return 0
+    echo "    expected to contain: '$needle'"
+    echo "    actual:              '$haystack'"
+    [[ -n "$msg" ]] && echo "    note:                $msg"
+    return 1
+}
+
+_assert_absent() {
+    [[ ! -e "$1" ]] && return 0
+    echo "    expected path to be gone: '$1'"
+    return 1
 }
 
 _run_test() {
@@ -70,303 +68,222 @@ _run_test() {
     _teardown
 }
 
+# Build a fixture clone with (gitignored) node_modules + .yarn. Echoes its path.
+_mk_clone() {
+    local d
+    d=$(mktemp -d -t wt-clone-XXXXXX 2>/dev/null); d="${d:A}"
+    [[ -n "$d" && -d "$d" && "$d" != "/" ]] || return 1
+    git -C "$d" init -q -b master >/dev/null 2>&1
+    git -C "$d" config user.email t@t; git -C "$d" config user.name t
+    mkdir -p "$d/node_modules/foo" "$d/pkg/node_modules/bar" "$d/.yarn"
+    echo x > "$d/node_modules/foo/i.js"
+    echo y > "$d/pkg/node_modules/bar/b.js"
+    echo z > "$d/.yarn/c.txt"
+    echo hi > "$d/README.md"
+    echo s > "$d/pkg/app.js"
+    printf 'node_modules/\n.yarn/\n' > "$d/.gitignore"
+    git -C "$d" add README.md pkg/app.js .gitignore >/dev/null 2>&1
+    git -C "$d" commit -qm init >/dev/null 2>&1
+    echo "$d"
+}
+
 # ── tests ────────────────────────────────────────────────────────────────────
 
-test_register_single_mode_when_no_master_or_agents() {
-    local repo_dir
-    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
-    git -C "$repo_dir" init -q
-
-    _wt_repo_register "tiny" "$repo_dir" >/dev/null 2>&1 || return 1
-    _assert_eq "single" "$(_wt_repo_kind tiny)" "kind should be single" || return 1
-    _assert_eq "$repo_dir" "$(_wt_repo_path tiny)" "path should be repo_dir" || return 1
-    rm -rf "$repo_dir"
+test_slugify() {
+    _assert_eq "feature-a-foo" "$(_wt_slugify 'Feature A!  Foo')" "basic" || return 1
+    _assert_eq "dsp-123-bar" "$(_wt_slugify '  --DSP-123 Bar-- ')" "trim/collapse" || return 1
 }
 
-test_register_worktree_mode_when_master_and_agents_exist() {
-    local root
-    root=$(_mktemp_resolved wt-root-XXXXXX)
-    mkdir -p "${root}/master" "${root}/agents"
-
-    _wt_repo_register "multi" "$root" >/dev/null 2>&1 || return 1
-    _assert_eq "worktree" "$(_wt_repo_kind multi)" "kind should be worktree" || return 1
-    _assert_eq "${root}/agents" "$(_wt_agents_dir multi)" "agents_dir should be <root>/agents" || return 1
-    rm -rf "$root"
+test_register_and_clone_path() {
+    local c; c=$(_mk_clone)
+    wt register proj "$c" >/dev/null 2>&1 || return 1
+    _wt_is_repo proj || { echo "    proj not registered"; rm -rf "$c"; return 1; }
+    _assert_eq "$c" "$(_wt_clone_path proj)" "clone path" || { rm -rf "$c"; return 1; }
+    rm -rf "$c"
 }
 
-test_register_worktree_mode_when_path_is_agents_dir_directly() {
-    local root
-    root=$(_mktemp_resolved wt-root-XXXXXX)
-    mkdir -p "${root}/master" "${root}/agents"
-
-    _wt_repo_register "multi2" "${root}/agents" >/dev/null 2>&1 || return 1
-    _assert_eq "worktree" "$(_wt_repo_kind multi2)" || return 1
-    _assert_eq "${root}/agents" "$(_wt_repo_path multi2)" || return 1
-    rm -rf "$root"
-}
-
-test_repos_file_writes_three_columns() {
-    local repo_dir
-    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
-    _wt_repo_register "tiny" "$repo_dir" >/dev/null 2>&1
-    local last_line
-    last_line=$(grep -v '^\s*#' "$WT_REPOS_FILE" | grep -v '^\s*$' | tail -1)
-    local cols
-    cols=$(echo "$last_line" | awk '{print NF}')
-    _assert_eq "3" "$cols" "row should have 3 columns: name path kind" || return 1
-    rm -rf "$repo_dir"
-}
-
-test_repos_helper_defaults_legacy_two_column_rows_to_worktree() {
-    _wt_ensure_config
-    echo "legacy  /tmp/legacy/agents" >> "$WT_REPOS_FILE"
-    local kind
-    kind=$(_wt_repo_kind legacy)
-    _assert_eq "worktree" "$kind" "2-col legacy row should default to worktree" || return 1
-}
-
-test_repo_root_returns_path_for_single_mode() {
-    local repo_dir
-    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
-    _wt_repo_register "tiny" "$repo_dir" >/dev/null 2>&1
-    _assert_eq "$repo_dir" "$(_wt_repo_root tiny)" || return 1
-    rm -rf "$repo_dir"
-}
-
-test_repo_root_returns_parent_of_agents_for_worktree_mode() {
-    local root
-    root=$(_mktemp_resolved wt-root-XXXXXX)
-    mkdir -p "${root}/master" "${root}/agents"
-    _wt_repo_register "multi" "$root" >/dev/null 2>&1
-    _assert_eq "$root" "$(_wt_repo_root multi)" || return 1
-    rm -rf "$root"
-}
-
-test_register_rejects_nonexistent_path() {
-    local out
-    out=$(_wt_repo_register "ghost" "/nonexistent/path/xyz" 2>&1)
-    _assert_contains "$out" "does not exist" "should warn about missing path" || return 1
-}
-
-test_register_rejects_duplicate_name() {
-    local repo_dir
-    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
-    _wt_repo_register "dup" "$repo_dir" >/dev/null 2>&1
-    local out
-    out=$(_wt_repo_register "dup" "$repo_dir" 2>&1)
+test_register_rejects_duplicate() {
+    local c; c=$(_mk_clone)
+    wt register proj "$c" >/dev/null 2>&1 || return 1
+    local out; out=$(wt register proj "$c" 2>&1)
     _assert_contains "$out" "already registered" || return 1
-    rm -rf "$repo_dir"
+    rm -rf "$c"
 }
 
-test_wt_new_rejects_single_mode_repo() {
-    local repo_dir
-    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
-    _wt_repo_register "tiny" "$repo_dir" >/dev/null 2>&1
-    local out
-    out=$(_wt_new "tiny" 1 2>&1)
-    _assert_contains "$out" "single-mode" "wt new on single repo should reject" || return 1
-    _assert_contains "$out" "wt tiny" "should hint at workspace command" || return 1
-    rm -rf "$repo_dir"
+test_register_rejects_non_git() {
+    local d; d=$(mktemp -d -t wt-nongit-XXXXXX); d="${d:A}"
+    local out; out=$(wt register bad "$d" 2>&1)
+    _assert_contains "$out" "Not a git repo" || { rm -rf "$d"; return 1; }
+    rm -rf "$d"
 }
 
-test_wt_rm_rejects_single_mode_repo_bulk() {
-    local repo_dir
-    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
-    _wt_repo_register "tiny" "$repo_dir" >/dev/null 2>&1
-    local out
-    out=$(_wt_rm "tiny" 2>&1)
-    _assert_contains "$out" "single-mode" || return 1
-    rm -rf "$repo_dir"
+test_seed_globs_default_and_custom() {
+    local c; c=$(_mk_clone)
+    wt register proj "$c" >/dev/null 2>&1 || return 1
+    _assert_eq "node_modules,.yarn" "$(_wt_repo_seeds proj)" "default seeds" || return 1
+    wt register proj2 "$c" --seed 'node_modules,vendor' >/dev/null 2>&1 || return 1
+    _assert_eq "node_modules,vendor" "$(_wt_repo_seeds proj2)" "custom seeds" || return 1
+    rm -rf "$c"
 }
 
-test_wt_rm_rejects_single_mode_repo_with_num() {
-    local repo_dir
-    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
-    _wt_repo_register "tiny" "$repo_dir" >/dev/null 2>&1
-    local out
-    out=$(_wt_rm "tiny-1" 2>&1)
-    _assert_contains "$out" "single-mode" || return 1
-    rm -rf "$repo_dir"
-}
-
-test_wt_sync_single_mode_has_no_num_concept() {
-    local repo_dir
-    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
-    git -C "$repo_dir" init -q
-    _wt_repo_register "tiny" "$repo_dir" >/dev/null 2>&1
-    local kind
-    kind=$(_wt_repo_kind "tiny")
-    _assert_eq "single" "$kind" "tiny should be single-mode" || return 1
-    rm -rf "$repo_dir"
-}
-
-test_repo_list_shows_kind_column() {
-    local repo_dir root
-    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
-    root=$(_mktemp_resolved wt-root-XXXXXX)
+test_clone_path_maps_legacy_agents_to_master() {
+    local root; root=$(mktemp -d -t wt-root-XXXXXX); root="${root:A}"
     mkdir -p "${root}/master" "${root}/agents"
-
-    _wt_repo_register "tiny" "$repo_dir" >/dev/null 2>&1
-    _wt_repo_register "multi" "$root" >/dev/null 2>&1
-
-    local out
-    out=$(_wt_repo_list 2>&1)
-    _assert_contains "$out" "KIND" "header should include KIND" || return 1
-    _assert_contains "$out" "single" "tiny should show as single" || return 1
-    _assert_contains "$out" "worktree" "multi should show as worktree" || return 1
-
-    rm -rf "$repo_dir" "$root"
-}
-
-test_wt_open_zero_resolves_to_master_dir() {
-    local root
-    root=$(_mktemp_resolved wt-root-XXXXXX)
-    mkdir -p "${root}/master" "${root}/agents"
-    git -C "${root}/master" init -q
-    _wt_repo_register "mrepo" "$root" >/dev/null 2>&1
-
-    local master_dir
-    master_dir=$(_wt_master_dir "$(_wt_agents_dir mrepo)")
-    _assert_eq "${root}/master" "$master_dir" "master_dir should be <root>/master" || return 1
-
-    local agents_dir
-    agents_dir=$(_wt_agents_dir "mrepo")
-    _assert_eq "${root}/agents" "$agents_dir" || return 1
-
+    echo "afm  ${root}/agents  worktree" >> "$WT_REPOS_FILE"
+    _assert_eq "${root}/master" "$(_wt_clone_path afm)" "legacy .../agents → .../master" || return 1
     rm -rf "$root"
 }
 
-test_window_name_no_title_returns_id_only() {
-    _assert_eq "rr"     "$(_wt_window_name rr "")"     || return 1
-    _assert_eq "afm-1"  "$(_wt_window_name afm-1 "")"  || return 1
+test_worktree_enumeration_and_resolvers() {
+    local c; c=$(_mk_clone)
+    wt register proj "$c" >/dev/null 2>&1
+    local wtp="${c:h}/proj-feat"; wtp="${wtp:A}"
+    git -C "$c" worktree add "$wtp" -b feat master >/dev/null 2>&1
+    local n; n=$(_wt_worktrees "$c" | wc -l | tr -d ' ')
+    _assert_eq "2" "$n" "clone + feature" || { rm -rf "$c" "$wtp"; return 1; }
+    _assert_eq "$wtp" "$(_wt_resolve_target proj-feat)" "resolve by bare id" || { rm -rf "$c" "$wtp"; return 1; }
+    _assert_eq "$wtp" "$(_wt_resolve_target proj/proj-feat)" "resolve by repo/id" || { rm -rf "$c" "$wtp"; return 1; }
+    _assert_eq "${c}"$'\t'"proj" "$(_wt_owner_of_path "$wtp")" "owner" || { rm -rf "$c" "$wtp"; return 1; }
+    rm -rf "$c" "$wtp"
 }
 
-test_window_name_with_title_returns_id_colon_title() {
-    _assert_eq "rr: Bug fix"     "$(_wt_window_name rr "Bug fix")"   || return 1
-    _assert_eq "afm-3: Refactor" "$(_wt_window_name afm-3 "Refactor")" || return 1
+test_seed_copies_nested_node_modules_and_yarn() {
+    local c; c=$(_mk_clone)
+    local wtp="${c:h}/proj-seed"; wtp="${wtp:A}"
+    git -C "$c" worktree add "$wtp" -b seed master >/dev/null 2>&1
+    _wt_seed_run "$c" "$wtp" node_modules .yarn
+    [[ -f "$wtp/node_modules/foo/i.js" ]] || { echo "    missing top node_modules"; rm -rf "$c" "$wtp"; return 1; }
+    [[ -f "$wtp/pkg/node_modules/bar/b.js" ]] || { echo "    missing nested node_modules"; rm -rf "$c" "$wtp"; return 1; }
+    [[ -f "$wtp/.yarn/c.txt" ]] || { echo "    missing .yarn"; rm -rf "$c" "$wtp"; return 1; }
+    rm -rf "$c" "$wtp"
+}
+
+test_rm_removes_clean_worktree() {
+    local c; c=$(_mk_clone)
+    wt register proj "$c" >/dev/null 2>&1
+    local wtp="${c:h}/proj-clean"; wtp="${wtp:A}"
+    git -C "$c" worktree add "$wtp" -b clean master >/dev/null 2>&1
+    _wt_seed_run "$c" "$wtp" node_modules .yarn
+    _wt_rm_path "$c" "$wtp" 0 >/dev/null 2>&1
+    _assert_absent "$wtp" "clean+seeded worktree removed without --force" || { rm -rf "$c" "$wtp"; return 1; }
+    rm -rf "$c"
+}
+
+test_rm_guards_unmerged_then_force() {
+    local c; c=$(_mk_clone)
+    wt register proj "$c" >/dev/null 2>&1
+    local wtp="${c:h}/proj-work"; wtp="${wtp:A}"
+    git -C "$c" worktree add "$wtp" -b work master >/dev/null 2>&1
+    ( cd "$wtp"; echo n > t.txt; git add t.txt; git commit -qm w >/dev/null 2>&1 )
+    _wt_rm_path "$c" "$wtp" 0 >/dev/null 2>&1
+    [[ -d "$wtp" ]] || { echo "    guard failed to protect unmerged"; rm -rf "$c" "$wtp"; return 1; }
+    _wt_rm_path "$c" "$wtp" 1 >/dev/null 2>&1
+    _assert_absent "$wtp" "--force removed unmerged" || { rm -rf "$c" "$wtp"; return 1; }
+    rm -rf "$c"
+}
+
+test_rm_refuses_main_clone() {
+    local c; c=$(_mk_clone)
+    wt register proj "$c" >/dev/null 2>&1
+    local out; out=$(_wt_rm_path "$c" "$c" 0 2>&1)
+    _assert_contains "$out" "main clone" || { rm -rf "$c"; return 1; }
+    rm -rf "$c"
+}
+
+test_rm_repo_id_removes_merged() {
+    local c; c=$(_mk_clone)
+    wt register proj "$c" >/dev/null 2>&1
+    local wtp="${c:h}/proj-x"; wtp="${wtp:A}"
+    git -C "$c" worktree add "$wtp" -b x master >/dev/null 2>&1
+    _wt_rm proj proj-x >/dev/null 2>&1
+    _assert_absent "$wtp" "wt rm <repo> <id> removed merged worktree" || { rm -rf "$c" "$wtp"; return 1; }
+    rm -rf "$c"
+}
+
+test_rm_repo_unknown_id_errors() {
+    local c; c=$(_mk_clone)
+    wt register proj "$c" >/dev/null 2>&1
+    local out; out=$(_wt_rm proj nope 2>&1)
+    _assert_contains "$out" "No worktree 'nope'" || { rm -rf "$c"; return 1; }
+    rm -rf "$c"
+}
+
+test_rm_all_removes_feature_worktrees() {
+    local c; c=$(_mk_clone)
+    wt register proj "$c" >/dev/null 2>&1
+    local w1="${c:h}/proj-a" w2="${c:h}/proj-b"; w1="${w1:A}"; w2="${w2:A}"
+    git -C "$c" worktree add "$w1" -b a master >/dev/null 2>&1
+    git -C "$c" worktree add "$w2" -b b master >/dev/null 2>&1
+    _wt_rm --all proj <<< "y" >/dev/null 2>&1
+    { _assert_absent "$w1" "proj-a removed" && _assert_absent "$w2" "proj-b removed"; } || { rm -rf "$c" "$w1" "$w2"; return 1; }
+    # main clone must survive --all
+    [[ -d "$c" ]] || { echo "    main clone was removed by --all!"; return 1; }
+    rm -rf "$c"
+}
+
+test_rm_no_arg_detects_cwd_worktree() {
+    local c; c=$(_mk_clone)
+    wt register proj "$c" >/dev/null 2>&1
+    local wtp="${c:h}/proj-cwd"; wtp="${wtp:A}"
+    git -C "$c" worktree add "$wtp" -b cwd master >/dev/null 2>&1
+    ( cd "$wtp" && _wt_rm >/dev/null 2>&1 )
+    _assert_absent "$wtp" "no-arg wt rm removed the cwd worktree" || { rm -rf "$c" "$wtp"; return 1; }
+    rm -rf "$c"
 }
 
 test_unregister_removes_repo() {
-    local repo_dir
-    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
-    _wt_repo_register "tiny" "$repo_dir" >/dev/null 2>&1
-    _wt_repo_unregister "tiny" >/dev/null 2>&1
-    _assert_eq "" "$(_wt_repo_kind tiny)" "kind lookup should be empty after unregister" || return 1
-    rm -rf "$repo_dir"
+    local c; c=$(_mk_clone)
+    wt register proj "$c" >/dev/null 2>&1
+    wt unregister proj >/dev/null 2>&1
+    _wt_is_repo proj && { echo "    still registered after unregister"; rm -rf "$c"; return 1; }
+    rm -rf "$c"
 }
 
-test_pad_zero_pads_to_three_digits() {
-    _assert_eq "001" "$(_wt_pad 1)"   || return 1
-    _assert_eq "042" "$(_wt_pad 42)"  || return 1
-    _assert_eq "100" "$(_wt_pad 100)" || return 1
-    _assert_eq "999" "$(_wt_pad 999)" || return 1
+test_init_uninit_aliases() {
+    local c; c=$(_mk_clone)
+    wt init proj "$c" >/dev/null 2>&1 || { echo "    init alias failed"; rm -rf "$c"; return 1; }
+    _wt_is_repo proj || { echo "    init did not register"; rm -rf "$c"; return 1; }
+    wt uninit proj >/dev/null 2>&1
+    _wt_is_repo proj && { echo "    uninit did not unregister"; rm -rf "$c"; return 1; }
+    rm -rf "$c"
 }
 
-test_pad_zero_stays_as_zero() {
-    _assert_eq "000" "$(_wt_pad 0)" || return 1
+test_removed_commands_are_stubbed() {
+    local cmd out
+    for cmd in new sync clean convert repo; do
+        out=$(wt $cmd 2>&1)
+        _assert_contains "$out" "removed" "wt $cmd stub" || return 1
+    done
 }
 
-test_primary_branch_detects_main() {
-    local repo_dir
-    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
-    git -C "$repo_dir" init -q -b main 2>/dev/null || git -C "$repo_dir" init -q
-    git -C "$repo_dir" commit -q --allow-empty -m "init" 2>/dev/null
-    _assert_eq "main" "$(_wt_primary_branch "$repo_dir")" || { rm -rf "$repo_dir"; return 1 }
-    rm -rf "$repo_dir"
-}
-
-test_primary_branch_falls_back_to_master() {
-    local repo_dir
-    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
-    git -C "$repo_dir" init -q -b master 2>/dev/null || git -C "$repo_dir" init -q
-    _assert_eq "master" "$(_wt_primary_branch "$repo_dir")" || { rm -rf "$repo_dir"; return 1 }
-    rm -rf "$repo_dir"
-}
-
-test_next_agent_num_returns_one_when_empty() {
-    local agents_dir
-    agents_dir=$(_mktemp_resolved wt-agents-XXXXXX)
-    _assert_eq "001" "$(_wt_next_agent_num "$agents_dir")" || { rm -rf "$agents_dir"; return 1 }
-    rm -rf "$agents_dir"
-}
-
-test_next_agent_num_fills_gap() {
-    local agents_dir
-    agents_dir=$(_mktemp_resolved wt-agents-XXXXXX)
-    mkdir -p "$agents_dir/agent-001" "$agents_dir/agent-003"
-    _assert_eq "002" "$(_wt_next_agent_num "$agents_dir")" || { rm -rf "$agents_dir"; return 1 }
-    rm -rf "$agents_dir"
-}
-
-test_next_agent_num_appends_after_last() {
-    local agents_dir
-    agents_dir=$(_mktemp_resolved wt-agents-XXXXXX)
-    mkdir -p "$agents_dir/agent-001" "$agents_dir/agent-002"
-    _assert_eq "003" "$(_wt_next_agent_num "$agents_dir")" || { rm -rf "$agents_dir"; return 1 }
-    rm -rf "$agents_dir"
-}
-
-test_unregister_errors_on_unknown_repo() {
-    local out
-    out=$(_wt_repo_unregister "nonexistent-xyz" 2>&1)
-    _assert_contains "$out" "not found" || return 1
-}
-
-test_dispatcher_errors_on_unknown_command() {
-    local out
-    out=$(wt _nonexistent_command_xyz_ 2>&1)
-    [[ -n "$out" ]] || return 1
-}
-
-test_dispatcher_routes_repo_register() {
-    local repo_dir
-    repo_dir=$(_mktemp_resolved wt-repo-XXXXXX)
-    wt repo register "dispatch-test" "$repo_dir" >/dev/null 2>&1 || return 1
-    _assert_eq "single" "$(_wt_repo_kind "dispatch-test")" || { rm -rf "$repo_dir"; return 1 }
-    rm -rf "$repo_dir"
-}
-
-# ── runner ───────────────────────────────────────────────────────────────────
+# ── runner ────────────────────────────────────────────────────────────────────
 
 echo "Running wt tests..."
-echo
+_run_test "slugify"                                      test_slugify
+_run_test "register + clone path"                        test_register_and_clone_path
+_run_test "register: rejects duplicate"                  test_register_rejects_duplicate
+_run_test "register: rejects non-git path"               test_register_rejects_non_git
+_run_test "seed globs default + custom"                  test_seed_globs_default_and_custom
+_run_test "clone_path maps legacy .../agents → master"   test_clone_path_maps_legacy_agents_to_master
+_run_test "worktree enumeration + resolvers (both ids)"  test_worktree_enumeration_and_resolvers
+_run_test "seed copies nested node_modules + .yarn"      test_seed_copies_nested_node_modules_and_yarn
+_run_test "rm: removes clean worktree"                   test_rm_removes_clean_worktree
+_run_test "rm: guards unmerged, --force overrides"       test_rm_guards_unmerged_then_force
+_run_test "rm: refuses main clone"                       test_rm_refuses_main_clone
+_run_test "rm <repo> <id>: removes merged worktree"      test_rm_repo_id_removes_merged
+_run_test "rm <repo> <unknown-id>: errors"               test_rm_repo_unknown_id_errors
+_run_test "rm --all: removes features, keeps main"       test_rm_all_removes_feature_worktrees
+_run_test "rm (no arg): detects cwd worktree"            test_rm_no_arg_detects_cwd_worktree
+_run_test "unregister removes repo"                      test_unregister_removes_repo
+_run_test "init/uninit aliases work"                     test_init_uninit_aliases
+_run_test "removed commands are stubbed"                 test_removed_commands_are_stubbed
 
-_run_test "register: single-mode auto-detected for plain dir"           test_register_single_mode_when_no_master_or_agents
-_run_test "register: worktree-mode auto-detected for root with master+agents" test_register_worktree_mode_when_master_and_agents_exist
-_run_test "register: worktree-mode auto-detected when path IS agents dir"     test_register_worktree_mode_when_path_is_agents_dir_directly
-_run_test "register: writes 3-column row"                                     test_repos_file_writes_three_columns
-_run_test "compat: 2-column legacy rows default to worktree"                  test_repos_helper_defaults_legacy_two_column_rows_to_worktree
-_run_test "_wt_repo_root: single-mode returns path"                           test_repo_root_returns_path_for_single_mode
-_run_test "_wt_repo_root: worktree-mode returns parent of agents"             test_repo_root_returns_parent_of_agents_for_worktree_mode
-_run_test "register: rejects nonexistent path"                                test_register_rejects_nonexistent_path
-_run_test "register: rejects duplicate name"                                  test_register_rejects_duplicate_name
-_run_test "wt new: rejects single-mode repo"                                  test_wt_new_rejects_single_mode_repo
-_run_test "wt rm <repo>: rejects single-mode repo (bulk)"                     test_wt_rm_rejects_single_mode_repo_bulk
-_run_test "wt rm <repo-num>: rejects single-mode repo"                        test_wt_rm_rejects_single_mode_repo_with_num
-_run_test "wt sync: single-mode repos have no num concept (kind=single)"      test_wt_sync_single_mode_has_no_num_concept
-_run_test "wt repo list: shows KIND column"                                   test_repo_list_shows_kind_column
-_run_test "wt afm-0: resolves to master/ directory"                             test_wt_open_zero_resolves_to_master_dir
-_run_test "_wt_window_name: no title returns just the id"                     test_window_name_no_title_returns_id_only
-_run_test "_wt_window_name: with title returns 'id: title'"                   test_window_name_with_title_returns_id_colon_title
-_run_test "_wt_pad: zero-pads to 3 digits"                                     test_pad_zero_pads_to_three_digits
-_run_test "_wt_pad: 0 pads to 000"                                            test_pad_zero_stays_as_zero
-_run_test "_wt_primary_branch: detects main branch"                           test_primary_branch_detects_main
-_run_test "_wt_primary_branch: falls back to master"                          test_primary_branch_falls_back_to_master
-_run_test "_wt_next_agent_num: returns 001 when no agents"                    test_next_agent_num_returns_one_when_empty
-_run_test "_wt_next_agent_num: fills gap in sequence"                         test_next_agent_num_fills_gap
-_run_test "_wt_next_agent_num: appends after last"                            test_next_agent_num_appends_after_last
-_run_test "_wt_repo_unregister: errors on unknown repo"                       test_unregister_errors_on_unknown_repo
-_run_test "wt dispatcher: routes repo register"                                test_dispatcher_routes_repo_register
-_run_test "wt dispatcher: errors on unknown command"                           test_dispatcher_errors_on_unknown_command
-_run_test "wt repo unregister: removes the repo"                              test_unregister_removes_repo
-
-echo
-echo "Results: ${PASS} passed, ${FAIL} failed"
+echo ""
+echo "──────────────────────────────────────"
+echo "  PASS: $PASS   FAIL: $FAIL"
 if (( FAIL > 0 )); then
-    echo "Failed tests:"
-    for t in "${FAILED_TESTS[@]}"; do
-        echo "  - $t"
-    done
+    echo "  Failed:"
+    printf '    - %s\n' "${FAILED_TESTS[@]}"
     exit 1
 fi
-exit 0
+echo "  All tests passed ✅"

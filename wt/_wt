@@ -3,137 +3,90 @@
 # Zsh completion for the wt command.
 # Install: fpath=("$HOME/.vim/wt" $fpath) in .zshrc (before compinit)
 
+# Registered repo names (zsh builtins only — no awk/grep needed).
 _wt_repo_names() {
-    local repos_file="${HOME}/.wt/repos"
-    [[ ! -f "$repos_file" ]] && return
-    grep -v '^\s*#' "$repos_file" | grep -v '^\s*$' | awk '{print $1}'
+    local repos_file="${HOME}/.wt/repos" name rest
+    [[ -f "$repos_file" ]] || return
+    while read -r name rest; do
+        [[ "$name" == \#* || -z "$name" ]] && continue
+        print -r -- "$name"
+    done < "$repos_file"
 }
 
-_wt_repo_agent_names() {
-    # Returns <repo>-<N> pairs (short form, no leading zeros) for tab completion
-    local repos_file="${HOME}/.wt/repos"
-    [[ ! -f "$repos_file" ]] && return
-    grep -v '^\s*#' "$repos_file" | grep -v '^\s*$' | while read -r name agents_dir; do
-        for d in "${agents_dir}"/agent-*(N); do
-            [[ -d "$d" ]] || continue
-            local num="${${d:t}#agent-}"
-            local short=$((10#$num))   # strip leading zeros: 001 → 1
-            echo "${name}-${short}"
-        done
-    done | sort -u
+# Feature worktree basenames for one repo (excludes the main clone).
+# Runs git; forces a sane PATH + </dev/null so it works in the completion context.
+_wt_worktree_ids_for() {
+    local repo="$1" repos_file="${HOME}/.wt/repos" name path rest clone key val
+    [[ -f "$repos_file" ]] || return
+    while read -r name path rest; do
+        [[ "$name" == "$repo" ]] || continue
+        clone="$path"
+        [[ "${path:t}" == "agents" && -d "${path:h}/master" ]] && clone="${path:h}/master"
+        PATH="/usr/bin:/bin:$PATH" command git -C "$clone" worktree list --porcelain </dev/null 2>/dev/null \
+            | while read -r key val; do
+                [[ "$key" == "worktree" && "$val" != "$clone" ]] && print -r -- "${val:t}"
+            done
+        return
+    done < "$repos_file"
 }
 
 _wt() {
-    local state line
-    typeset -A opt_args
+    local -a repos ids
+    local sub="${words[2]}" ret=1
 
-    _arguments -C \
-        '1: :->cmd' \
-        '*: :->args' \
-        '(- *)'{--help,-h}'[Show help]'
+    # Completing the subcommand / repo (first word after `wt`).
+    if (( CURRENT == 2 )); then
+        local -a cmds=(
+            'register:Register a repo'
+            'unregister:Unregister a repo'
+            'list:List worktrees + status'
+            'rm:Remove a worktree'
+            'open:fzf-select a worktree, open it in a new named tab'
+            'close:Close the current tmux window'
+            'layout:Apply triptych layout'
+            'help:Show help'
+        )
+        _describe -t commands 'command' cmds && ret=0
+        repos=(${(f)"$(_wt_repo_names)"})
+        _describe -t repos 'repo' repos && ret=0
+        return ret
+    fi
 
-    case "$state" in
-        cmd)
-            local commands=(
-                'repo:Manage repo registry (new, rm, list)'
-                'init:Clone repo into worktree structure'
-                'convert:Convert existing repo to worktree structure'
-                'new:Create agent worktree(s)'
-                'rm:Remove an agent worktree'
-                'list:List all worktrees'
-                'sync:Pull master + rebase agent worktree(s)'
-                'close:Close tmux window for a worktree'
-                '--help:Show help'
-            )
-            # Also offer registered repo names for wt <repo> "title"
-            local repo_completions=()
-            local rname
-            for rname in $(_wt_repo_names); do
-                repo_completions+=("${rname}:Open next unused ${rname} worktree")
-            done
-            # And repo-num completions for wt <repo>-<num> "title"
-            local agent_completions=()
-            local aname
-            for aname in $(_wt_repo_agent_names); do
-                agent_completions+=("${aname}:Open specific worktree")
-            done
-            _describe 'command' commands
-            _describe 'repo' repo_completions
-            _describe 'repo-agent' agent_completions
+    case "$sub" in
+        rm)
+            if (( CURRENT == 3 )); then
+                repos=(${(f)"$(_wt_repo_names)"})
+                _describe -t repos 'repo' repos && ret=0
+                _values 'option' '--force[remove unmerged too]' '-f[remove unmerged too]' && ret=0
+            elif (( CURRENT == 4 )); then
+                ids=(${(f)"$(_wt_worktree_ids_for "${words[3]}")"})
+                _describe -t worktrees 'worktree-id' ids && ret=0
+                _values 'option' '--all[remove all worktrees]' '--force[remove unmerged too]' '-f[remove unmerged too]' && ret=0
+            else
+                _values 'option' '--force[remove unmerged too]' '-f[remove unmerged too]' && ret=0
+            fi
+            return ret
             ;;
-        args)
-            case "${line[1]}" in
-                repo)
-                    case "${line[2]}" in
-                        register)
-                            case "${#line}" in
-                                3) _message 'repo name' ;;
-                                4) _directories ;;
-                            esac
-                            ;;
-                        unregister)
-                            local repos=($(_wt_repo_names))
-                            _describe 'repo' repos
-                            ;;
-                        list) ;;
-                        *)
-                            local subcommands=(
-                                'register:Register a repo'
-                                'unregister:Unregister a repo'
-                                'list:List repos'
-                            )
-                            _describe 'subcommand' subcommands
-                            ;;
-                    esac
-                    ;;
-                init)
-                    case "${#line}" in
-                        2) _message 'git URL' ;;
-                        3) _directories ;;
-                    esac
-                    ;;
-                convert)
-                    _directories
-                    ;;
-                new)
-                    case "${#line}" in
-                        2)
-                            local repos=($(_wt_repo_names))
-                            _describe 'repo' repos
-                            ;;
-                        3)
-                            _message 'count (number of worktrees to create)'
-                            ;;
-                    esac
-                    ;;
-                rm)
-                    # Complete both repo names (rm all) and repo-num (rm one)
-                    local repos=($(_wt_repo_names))
-                    local agents=($(_wt_repo_agent_names))
-                    _describe 'repo (remove all)' repos
-                    _describe 'repo-agent (remove one)' agents
-                    ;;
-                list)
-                    local repos=($(_wt_repo_names))
-                    _describe 'repo (optional filter)' repos
-                    ;;
-                sync)
-                    # Complete both repo names and repo-num pairs
-                    local repos=($(_wt_repo_names))
-                    local agents=($(_wt_repo_agent_names))
-                    _describe 'repo' repos
-                    _describe 'repo-agent' agents
-                    ;;
-                close)
-                    local agents=($(_wt_repo_agent_names))
-                    _describe 'repo-agent' agents
-                    ;;
-                *)
-                    # wt <repo> "title" or wt <repo>-<num> "title"
-                    # Second arg is a free-form title string
-                    _message 'workspace title'
-                    ;;
+        register)
+            case "$CURRENT" in
+                3) _message 'repo name' ;;
+                4) _directories && ret=0 ;;
+                *) _values 'option' '--seed[seed globs csv]' && ret=0 ;;
             esac
+            return ret
+            ;;
+        unregister|list)
+            repos=(${(f)"$(_wt_repo_names)"})
+            _describe -t repos 'repo' repos && ret=0
+            return ret
+            ;;
+        open|search|pick|close|layout)
+            return 0
+            ;;
+        *)
+            # wt <repo> "title"
+            _message 'workspace title'
+            return 0
             ;;
     esac
 }
