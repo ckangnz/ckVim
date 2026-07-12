@@ -89,8 +89,7 @@ demand and deleted when the PR merges. There is **no** long-lived
 | `wt <repo> "Feature title"` | Create a worktree for the feature (+ background warm-seed) and open its tmux window; focus it if it already exists |
 | `wt <repo>` | Open/focus the repo's main workspace (the clone itself) |
 | `wt list [repo]` | List worktrees (from `git worktree list`) + status |
-| `wt open` | fzf-select a worktree and open it in a new named tab (bind `prefix C-o` to a popup running this) |
-| `wt seed [path]` | Warm-seed an existing worktree's build state (works on any worktree, incl. Claude's) |
+| `wt open` | fzf-select a worktree and `cd` the current pane into it (`wt open --tab` opens a new named tab; `prefix C-o` popup runs `wt open --tab`) |
 | `wt rm` | Remove the worktree you're in (cwd); refuses unmerged work unless `--force` |
 | `wt rm <repo>` | fzf-select worktree(s) of `<repo>` to remove |
 | `wt rm <worktree-id>` | Remove a specific worktree (id from `wt list`, e.g. `afm/foo` or `foo`) |

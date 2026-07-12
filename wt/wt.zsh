@@ -231,9 +231,9 @@ WORKSPACES
 
 MANAGE
   wt list [repo]              List worktrees (from `git worktree list`) + status
-  wt open                     fzf-select a worktree → open it in a new named tab
-                                (focuses the existing tab if already open;
-                                 bind `prefix C-o` to a popup running this)
+  wt open                     fzf-select a worktree → cd the current pane into it
+  wt open --tab               fzf-select → open it in a new named tab instead
+                                (bind `prefix C-o` to a popup running `wt open --tab`)
   wt rm                       Remove the worktree you're in (cwd)
   wt rm <repo> <id>           Remove a worktree of <repo> (tab-completes ids)
   wt rm <repo> --all          Remove all merged worktrees of <repo>
@@ -516,6 +516,11 @@ _wt_list() {
 }
 
 _wt_open_pick() {
+    # Default: cd the current pane into the chosen worktree (works because wt is a
+    # sourced function). --tab: open it in a new named tab instead — used by the
+    # tmux popup binding, which runs wt as a subprocess that can't cd the pane.
+    local mode="cd"
+    [[ "$1" == "--tab" || "$1" == "-t" ]] && mode="tab"
     command -v fzf >/dev/null 2>&1 || { _wt_err "fzf not found"; return 1 }
     local rows=() name rp kind seeds clone p b tag st wtl
     while read -r name rp kind seeds; do
@@ -540,11 +545,12 @@ _wt_open_pick() {
               --header="$(printf '%-24s %-6s %s' 'WORKSPACE' 'STATE' 'BRANCH')")
     [[ -z "$sel" ]] && return 0
     local dir="${sel%%$'\t'*}"
-    if [[ -z "$TMUX" ]]; then
+
+    if [[ "$mode" != "tab" || -z "$TMUX" ]]; then
         cd "$dir" && _wt_ok "cd → $dir"
         return
     fi
-    # Focus the worktree's window if it already has one, else open a new named tab.
+    # --tab: focus the worktree's window if it already has one, else open a new named tab.
     local existing; existing=$(_wt_window_for_path "$dir")
     if [[ -n "$existing" ]]; then
         tmux select-window -t "$existing" 2>/dev/null
