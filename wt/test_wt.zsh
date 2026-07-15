@@ -182,6 +182,51 @@ test_rm_guards_unmerged_then_force() {
     rm -rf "$c"
 }
 
+test_rm_reports_cleanup_phases() {
+    local c; c=$(_mk_clone)
+    local wtp="${c:h}/proj-progress"; wtp="${wtp:A}"
+    git -C "$c" worktree add "$wtp" -b progress master >/dev/null 2>&1
+    local out; out=$(_wt_rm_path "$c" "$wtp" 1 2>&1)
+    _assert_contains "$out" "Stopping warm-seed for proj-progress" || { rm -rf "$c" "$wtp"; return 1; }
+    _assert_contains "$out" "Deleting worktree proj-progress" || { rm -rf "$c" "$wtp"; return 1; }
+    _assert_contains "$out" "Deleting branch progress" || { rm -rf "$c" "$wtp"; return 1; }
+    rm -rf "$c"
+}
+
+test_tmux_panes_for_path() {
+    tmux() {
+        if [[ "$1" == "list-panes" ]]; then
+            printf 's:1.0|/tmp/target\n'
+            printf 's:1.1|/tmp/other\n'
+            printf 's:2.0|/tmp/target\n'
+        fi
+    }
+    local out; out=$(_wt_panes_for_path /tmp/target)
+    unfunction tmux
+    _assert_eq $'s:1.0\ns:2.0' "$out" "only exact matching panes" || return 1
+}
+
+test_rm_closes_matching_panes_only() {
+    local c; c=$(_mk_clone)
+    local wtp="${c:h}/proj-pane-safe"; wtp="${wtp:A}"
+    git -C "$c" worktree add "$wtp" -b pane-safe master >/dev/null 2>&1
+    local log="${c}.tmux-log"
+    tmux() {
+        case "$1" in
+            list-panes)
+                printf 's:1.0|%s\n' "$wtp"
+                printf 's:1.1|%s\n' "${c}"
+                printf 's:2.0|%s\n' "$wtp"
+                ;;
+            kill-pane) printf '%s\n' "$3" >> "$log" ;;
+        esac
+    }
+    _wt_rm_path "$c" "$wtp" 1 >/dev/null 2>&1
+    unfunction tmux
+    _assert_eq $'s:1.0\ns:2.0' "$(<"$log")" "only matching panes are closed" || { rm -rf "$c" "$wtp" "$log"; return 1; }
+    rm -rf "$c" "$wtp" "$log"
+}
+
 test_rm_refuses_main_clone() {
     local c; c=$(_mk_clone)
     wt register proj "$c" >/dev/null 2>&1
@@ -269,6 +314,9 @@ _run_test "worktree enumeration + resolvers (both ids)"  test_worktree_enumerati
 _run_test "seed copies nested node_modules + .yarn"      test_seed_copies_nested_node_modules_and_yarn
 _run_test "rm: removes clean worktree"                   test_rm_removes_clean_worktree
 _run_test "rm: guards unmerged, --force overrides"       test_rm_guards_unmerged_then_force
+_run_test "rm: reports cleanup phases"                   test_rm_reports_cleanup_phases
+_run_test "tmux: finds panes for exact worktree path"    test_tmux_panes_for_path
+_run_test "rm: closes matching panes only"                test_rm_closes_matching_panes_only
 _run_test "rm: refuses main clone"                       test_rm_refuses_main_clone
 _run_test "rm <repo> <id>: removes merged worktree"      test_rm_repo_id_removes_merged
 _run_test "rm <repo> <unknown-id>: errors"               test_rm_repo_unknown_id_errors

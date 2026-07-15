@@ -185,6 +185,12 @@ _wt_window_for_path() {
         | /usr/bin/awk -F'|' -v p="$p" '$2 == p {print $1; exit}'
 }
 
+_wt_panes_for_path() {
+    local p="$1"
+    tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index}|#{pane_current_path}' 2>/dev/null \
+        | /usr/bin/awk -F'|' -v p="$p" '$2 == p {print $1}'
+}
+
 _wt_create_layout() {
     local cwd="$1"
     tmux split-window -v -p 30 -c "$cwd"
@@ -396,12 +402,26 @@ _wt_rm_path() {
         fi
     fi
 
+    _wt_info "Stopping warm-seed for ${wt:t}..."
     _wt_kill_seed "$wt"
-    local win; win=$(_wt_window_for_path "$wt")
-    [[ -n "$win" ]] && { tmux kill-window -t "$win" 2>/dev/null; _wt_info "Closed tmux window ${win}" }
+    local -a panes=()
+    local pane; while IFS= read -r pane; do
+        [[ -n "$pane" ]] && panes+=("$pane")
+    done <<< "$(_wt_panes_for_path "$wt")"
+
+    _wt_info "Deleting worktree ${wt:t}..."
     git -C "$clone" worktree remove --force "$wt" 2>/dev/null || rm -rf "$wt"
-    [[ -n "$branch" && "$branch" != "HEAD" ]] && git -C "$clone" branch -D "$branch" 2>/dev/null
+    if [[ -n "$branch" && "$branch" != "HEAD" ]]; then
+        _wt_info "Deleting branch ${branch}..."
+        git -C "$clone" branch -D "$branch" 2>/dev/null
+    fi
     _wt_ok "Removed ${wt:t} (branch: ${branch:-?})"
+    if (( ${#panes} )); then
+        _wt_info "Closing ${#panes} tmux pane(s) for ${wt:t}..."
+        for pane in "${panes[@]}"; do
+            tmux kill-pane -t "$pane" 2>/dev/null
+        done
+    fi
 }
 
 _wt_rm() {
