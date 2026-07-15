@@ -223,7 +223,7 @@ REGISTRY
 
 WORKSPACES
   wt <repo> "Feature title"   Create (or focus) a feature worktree:
-                                git worktree add + background warm-seed + tmux window
+                                git worktree add + background warm-seed + single-pane tmux window
   wt <repo>                   Open/focus the repo's main workspace (the clone itself)
 
   Single-use repos: just don't create worktrees — use branches in the main clone.
@@ -344,11 +344,10 @@ _wt_open() {
     fi
 
     tmux new-window -a -n "$window_name" -c "$target_path"
-    _wt_create_layout "$target_path"
     _wt_ok "Opened '${window_name}' [$(git -C "$target_path" rev-parse --abbrev-ref HEAD 2>/dev/null)]"
 }
 
-# Internal: runs inside the freshly-opened tab to do the checkout + seed + layout.
+# Internal: runs inside the freshly-opened tab to do the checkout + seed.
 _wt__create() {
     local repo="$1" slug="$2" title="${3:-}"
     local clone; clone=$(_wt_clone_path "$repo") || { _wt_err "Unknown repo '$repo'."; return 1 }
@@ -368,7 +367,6 @@ _wt__create() {
         _wt_ok "Worktree ready. Warm-seed (node_modules, …) running in background."
     fi
     cd "$target"
-    _wt_create_layout "$target"
 }
 
 # Remove one worktree by path (guard + kill seed + close window + prune branch).
@@ -558,7 +556,6 @@ _wt_open_pick() {
         return 0
     fi
     tmux new-window -a -n "${dir:t}" -c "$dir"
-    _wt_create_layout "$dir"
 }
 
 # ── main entrypoint ──────────────────────────────────────────────────────────────
