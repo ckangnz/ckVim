@@ -94,6 +94,11 @@ test_slugify() {
     _assert_eq "dsp-123-bar" "$(_wt_slugify '  --DSP-123 Bar-- ')" "trim/collapse" || return 1
 }
 
+test_window_name() {
+    _assert_eq "afm: new-wt-name" "$(_wt_window_name afm new-wt-name)" "repo and branch" || return 1
+    _assert_eq "afm: master" "$(_wt_window_name afm master)" "main branch" || return 1
+}
+
 test_register_and_clone_path() {
     local c; c=$(_mk_clone)
     wt register proj "$c" >/dev/null 2>&1 || return 1
@@ -305,6 +310,7 @@ test_removed_commands_are_stubbed() {
 
 echo "Running wt tests..."
 _run_test "slugify"                                      test_slugify
+_run_test "tmux window names use repo and branch"         test_window_name
 _run_test "register + clone path"                        test_register_and_clone_path
 _run_test "register: rejects duplicate"                  test_register_rejects_duplicate
 _run_test "register: rejects non-git path"               test_register_rejects_non_git

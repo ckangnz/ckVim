@@ -210,8 +210,8 @@ _wt_layout() {
 }
 
 _wt_window_name() {
-    local id="$1" title="$2"
-    [[ -z "$title" ]] && echo "$id" || echo "${id}: ${title}"
+    local repo="$1" branch="$2"
+    [[ -z "$branch" ]] && echo "$repo" || echo "${repo}: ${branch}"
 }
 
 # ── subcommands ──────────────────────────────────────────────────────────────────
@@ -320,14 +320,16 @@ _wt_open() {
         return 1
     fi
 
-    local target_path id window_name slug=""
+    local target_path id window_name slug="" branch
     if (( ! title_given )); then
-        target_path="$clone"; id="$arg"; window_name="$arg"
+        target_path="$clone"; id="$arg"
+        branch=$(git -C "$target_path" rev-parse --abbrev-ref HEAD 2>/dev/null)
+        window_name=$(_wt_window_name "$arg" "$branch")
     else
         slug=$(_wt_slugify "$title")
         [[ -z "$slug" ]] && { _wt_err "Could not derive a slug from '$title'."; return 1 }
         target_path="${clone:h}/${arg}-${slug}"; id="${arg}-${slug}"
-        window_name=$(_wt_window_name "$id" "$title")
+        window_name=$(_wt_window_name "$arg" "$slug")
 
         if [[ ! -d "$target_path" ]]; then
             # Open the tab first, then run the slow `git worktree add` + seed INSIDE it,
@@ -575,7 +577,9 @@ _wt_open_pick() {
         tmux switch-client -t "$existing" 2>/dev/null
         return 0
     fi
-    tmux new-window -a -n "${dir:t}" -c "$dir"
+    local owner; owner=$(_wt_owner_of_path "$dir")
+    local repo="${owner##*$'\t'}"
+    tmux new-window -a -n "$(_wt_window_name "$repo" "$b")" -c "$dir"
 }
 
 # ── main entrypoint ──────────────────────────────────────────────────────────────
