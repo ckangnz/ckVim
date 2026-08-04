@@ -189,12 +189,36 @@ test_rm_guards_unmerged_then_force() {
 
 test_rm_reports_cleanup_phases() {
     local c; c=$(_mk_clone)
+    wt register proj "$c" >/dev/null 2>&1
     local wtp="${c:h}/proj-progress"; wtp="${wtp:A}"
     git -C "$c" worktree add "$wtp" -b progress master >/dev/null 2>&1
     local out; out=$(_wt_rm_path "$c" "$wtp" 1 2>&1)
-    _assert_contains "$out" "Stopping warm-seed for proj-progress" || { rm -rf "$c" "$wtp"; return 1; }
-    _assert_contains "$out" "Deleting worktree proj-progress" || { rm -rf "$c" "$wtp"; return 1; }
-    _assert_contains "$out" "Deleting branch progress" || { rm -rf "$c" "$wtp"; return 1; }
+    _assert_contains "$out" "✓ Stop warm-seed" || { rm -rf "$c" "$wtp"; return 1; }
+    _assert_contains "$out" "✓ Delete worktree proj-progress" || { rm -rf "$c" "$wtp"; return 1; }
+    _assert_contains "$out" "✓ Delete branch progress" || { rm -rf "$c" "$wtp"; return 1; }
+    _assert_contains "$out" "✓ Close 0 tmux pane(s)" || { rm -rf "$c" "$wtp"; return 1; }
+    _assert_contains "$out" "Warm-seed targets: node_modules, .yarn" || { rm -rf "$c" "$wtp"; return 1; }
+    rm -rf "$c"
+}
+
+test_rm_reports_git_fallback() {
+    local c; c=$(_mk_clone)
+    wt register proj "$c" >/dev/null 2>&1
+    local wtp="${c:h}/proj-fallback"; wtp="${wtp:A}"
+    git -C "$c" worktree add "$wtp" -b fallback master >/dev/null 2>&1
+    git() {
+        if [[ "$*" == *"worktree remove"* ]]; then
+            print -u2 -- "simulated Git removal failure"
+            return 1
+        fi
+        command git "$@"
+    }
+    local out; out=$(_wt_rm_path "$c" "$wtp" 1 2>&1)
+    unfunction git
+    _assert_contains "$out" "Git removal failed; using filesystem fallback" || { rm -rf "$c" "$wtp"; return 1; }
+    _assert_contains "$out" "simulated Git removal failure" || { rm -rf "$c" "$wtp"; return 1; }
+    _assert_contains "$out" "✓ Delete worktree proj-fallback (filesystem fallback)" || { rm -rf "$c" "$wtp"; return 1; }
+    _assert_absent "$wtp" "filesystem fallback removed worktree" || { rm -rf "$c" "$wtp"; return 1; }
     rm -rf "$c"
 }
 
@@ -321,6 +345,7 @@ _run_test "seed copies nested node_modules + .yarn"      test_seed_copies_nested
 _run_test "rm: removes clean worktree"                   test_rm_removes_clean_worktree
 _run_test "rm: guards unmerged, --force overrides"       test_rm_guards_unmerged_then_force
 _run_test "rm: reports cleanup phases"                   test_rm_reports_cleanup_phases
+_run_test "rm: reports Git fallback"                     test_rm_reports_git_fallback
 _run_test "tmux: finds panes for exact worktree path"    test_tmux_panes_for_path
 _run_test "rm: closes matching panes only"                test_rm_closes_matching_panes_only
 _run_test "rm: refuses main clone"                       test_rm_refuses_main_clone

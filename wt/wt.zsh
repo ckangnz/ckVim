@@ -70,6 +70,15 @@ _wt_clone_path() {
     fi
 }
 
+_wt_seeds_for_clone() {
+    local target="$1" name rp kind seeds clone
+    while read -r name rp kind seeds; do
+        clone=$(_wt_clone_path "$name") || continue
+        [[ "$clone" == "$target" ]] && { print -r -- "$seeds"; return 0 }
+    done <<< "$(_wt_repos)"
+    return 1
+}
+
 # ── git worktree helpers ─────────────────────────────────────────────────────────
 
 _wt_primary_branch() {
@@ -131,6 +140,42 @@ _wt_slugify() {
     while [[ "$s" == *--* ]]; do s="${s//--/-}"; done
     s="${s#-}"; s="${s%-}"
     print -r -- "$s"
+}
+
+_wt_rm_phase() {
+    local state="$1" label="$2"
+    case "$state" in
+        done)    echo "✓ ${label}" ;;
+        active)  echo "→ ${label}" ;;
+        pending) echo "○ ${label}" ;;
+    esac
+}
+
+_wt_rm_render_steps() {
+    local redraw="$1" active="$2" spinner="$3"; shift 3
+    local interactive=0
+    [[ -t 1 ]] && interactive=1
+    (( interactive && redraw )) && printf '\033[%dA' "$#"
+    local i=1 label state
+    for label in "$@"; do
+        if (( i < active )); then
+            state=done
+        elif (( i == active )); then
+            state=active
+        else
+            state=pending
+        fi
+        if (( interactive )); then
+            case "$state" in
+                done)    printf '\r\033[2K✓ %s\n' "$label" ;;
+                active)  printf '\r\033[2K%s %s\n' "$spinner" "$label" ;;
+                pending) printf '\r\033[2K○ %s\n' "$label" ;;
+            esac
+        else
+            _wt_rm_phase "$state" "$label"
+        fi
+        (( i++ ))
+    done
 }
 
 # ── warm-seed (APFS cp -c, background) ───────────────────────────────────────────
@@ -379,6 +424,7 @@ _wt__create() {
 
 # Remove one worktree by path (guard + kill seed + close window + prune branch).
 _wt_rm_path() {
+    setopt localoptions nomonitor
     local clone="$1" wt="$2" force="$3"
     if [[ "$wt" == "$clone" ]]; then
         _wt_err "Refusing to remove the main clone: $wt"
@@ -404,26 +450,84 @@ _wt_rm_path() {
         fi
     fi
 
-    _wt_info "Stopping warm-seed for ${wt:t}..."
-    _wt_kill_seed "$wt"
     local -a panes=()
     local pane; while IFS= read -r pane; do
         [[ -n "$pane" ]] && panes+=("$pane")
     done <<< "$(_wt_panes_for_path "$wt")"
 
-    _wt_info "Deleting worktree ${wt:t}..."
-    git -C "$clone" worktree remove --force "$wt" 2>/dev/null || rm -rf "$wt"
+    local seed_targets; seed_targets=$(_wt_seeds_for_clone "$clone")
+    local -a phase_labels=("Confirm removal safety" "Stop warm-seed" "Delete worktree ${wt:t}")
+    local branch_step=0
     if [[ -n "$branch" && "$branch" != "HEAD" ]]; then
-        _wt_info "Deleting branch ${branch}..."
-        git -C "$clone" branch -D "$branch" 2>/dev/null
+        phase_labels+=("Delete branch ${branch}")
+        branch_step=${#phase_labels}
     fi
-    _wt_ok "Removed ${wt:t} (branch: ${branch:-?})"
+    phase_labels+=("Close ${#panes} tmux pane(s)")
+    local close_step=${#phase_labels} active_step=2 rendered=0
+    local -a spinner_frames=(⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏)
+    local spinner_index=1
+
+    echo "🗑  Removing ${wt:t}..."
+    [[ -n "$seed_targets" ]] && echo "   Warm-seed targets: ${seed_targets//,/, }"
+    _wt_rm_render_steps "$rendered" "$active_step" "${spinner_frames[$spinner_index]}" "${phase_labels[@]}"
+    rendered=1
+
+    _wt_kill_seed "$wt"
+    active_step=3
+    _wt_rm_render_steps "$rendered" "$active_step" "${spinner_frames[$spinner_index]}" "${phase_labels[@]}"
+
+    local remove_log remove_error remove_status remove_pid
+    remove_log=$(mktemp -t wt-rm.XXXXXX) || { _wt_err "Could not create removal log."; return 1 }
+    git -C "$clone" worktree remove --force "$wt" &>"$remove_log" &
+    remove_pid=$!
+    if [[ -t 1 ]]; then
+        while kill -0 "$remove_pid" 2>/dev/null; do
+            _wt_rm_render_steps "$rendered" "$active_step" "${spinner_frames[$spinner_index]}" "${phase_labels[@]}"
+            spinner_index=$(( spinner_index % ${#spinner_frames} + 1 ))
+            sleep 0.2
+        done
+    fi
+    wait "$remove_pid"; remove_status=$?
+    remove_error=$(<"$remove_log")
+    rm -f "$remove_log"
+    if (( remove_status == 0 )); then
+        active_step=$(( branch_step > 0 ? branch_step : close_step ))
+        _wt_rm_render_steps "$rendered" "$active_step" "${spinner_frames[$spinner_index]}" "${phase_labels[@]}"
+    else
+        _wt_warn "Git removal failed; using filesystem fallback"
+        [[ -n "$remove_error" ]] && print -r -- "$remove_error"
+        phase_labels[3]="Delete worktree ${wt:t} (filesystem fallback)"
+        _wt_rm_render_steps "$rendered" "$active_step" "${spinner_frames[$spinner_index]}" "${phase_labels[@]}"
+        rm -rf "$wt" &
+        remove_pid=$!
+        if [[ -t 1 ]]; then
+            while kill -0 "$remove_pid" 2>/dev/null; do
+                _wt_rm_render_steps "$rendered" "$active_step" "${spinner_frames[$spinner_index]}" "${phase_labels[@]}"
+                spinner_index=$(( spinner_index % ${#spinner_frames} + 1 ))
+                sleep 0.2
+            done
+        fi
+        wait "$remove_pid"
+        if [[ -e "$wt" ]]; then
+            _wt_err "Filesystem fallback failed; worktree remains at $wt"
+            return 1
+        fi
+        active_step=$(( branch_step > 0 ? branch_step : close_step ))
+        _wt_rm_render_steps "$rendered" "$active_step" "${spinner_frames[$spinner_index]}" "${phase_labels[@]}"
+    fi
+    if [[ -n "$branch" && "$branch" != "HEAD" ]]; then
+        git -C "$clone" branch -D "$branch" 2>/dev/null
+        active_step=$close_step
+        _wt_rm_render_steps "$rendered" "$active_step" "${spinner_frames[$spinner_index]}" "${phase_labels[@]}"
+    fi
     if (( ${#panes} )); then
-        _wt_info "Closing ${#panes} tmux pane(s) for ${wt:t}..."
         for pane in "${panes[@]}"; do
             tmux kill-pane -t "$pane" 2>/dev/null
         done
     fi
+    active_step=$(( close_step + 1 ))
+    _wt_rm_render_steps "$rendered" "$active_step" "${spinner_frames[$spinner_index]}" "${phase_labels[@]}"
+    _wt_ok "Removed ${wt:t} (branch: ${branch:-?})"
 }
 
 _wt_rm() {
