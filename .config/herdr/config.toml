@@ -1,0 +1,51 @@
+onboarding = false
+
+[keys]
+prefix = "ctrl+g"
+help = "prefix+ctrl+/"
+reload_config = "prefix+shift+z"
+goto = "prefix+enter"
+workspace_picker = "prefix+ctrl+w"
+new_workspace = "prefix+shift+n"
+rename_workspace = "prefix+shift+r"
+close_workspace = "prefix+shift+w"
+new_worktree = "prefix+shift+c"
+open_worktree = "prefix+shift+o"
+remove_worktree = "prefix+shift+d"
+previous_workspace = "prefix+shift+["
+next_workspace = "prefix+shift+]"
+previous_agent = "prefix+["
+next_agent = "prefix+]"
+navigate_workspace_up = ["up", "k"]
+navigate_workspace_down = ["down", "j"]
+new_tab = "prefix+ctrl+t"
+rename_tab = "prefix+ctrl+r"
+next_tab = "prefix+."
+previous_tab = "prefix+,"
+close_tab = ""
+copy_mode = "prefix+space"
+split_vertical = "prefix+ctrl+v"
+split_horizontal = "prefix+ctrl+s"
+focus_pane_left = "prefix+ctrl+h"
+focus_pane_down = "prefix+ctrl+j"
+focus_pane_up = "prefix+ctrl+k"
+focus_pane_right = "prefix+ctrl+l"
+
+[[keys.command]]
+key = "prefix+g"
+type = "popup"
+command = "lazygit"
+description = "open lazygit"
+width = "80%"
+height = "80%"
+
+[ui.toast]
+delivery = "herdr"
+
+[ui]
+show_agent_labels_on_pane_borders = false
+
+agent_panel_sort = "spaces"
+[theme]
+name = "catppuccin"
+auto_switch = false

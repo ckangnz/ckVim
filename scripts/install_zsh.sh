@@ -31,6 +31,7 @@ packages=(
 
 	"lazygit"
 	"lazydocker"
+	"herdr"
 
 	"jannis-baum/tap/vivify"
 )

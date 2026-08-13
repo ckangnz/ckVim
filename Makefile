@@ -33,12 +33,14 @@ vim_symlink: ## Symlink Vim/Neovim config only
 		create_symlink ~/.vim/.config/nvim ~/.config/nvim && \
 		create_symlink ~/.vim/.config/mcphub ~/.config/mcphub
 
-zsh_symlink: ## Symlink Zsh/tmux/kitty/lazygit config only
+zsh_symlink: ## Symlink Zsh/tmux/Herdr/kitty/lazygit config only
+	@mkdir -p ~/.config/herdr
 	@source $(SCRIPTS_DIR)/install_methods.sh && \
 		create_symlink ~/.vim/.zshrc ~/.zshrc && \
 		create_symlink ~/.vim/.config/kitty ~/.config/kitty && \
 		create_symlink ~/.vim/.config/lazygit ~/.config/lazygit && \
-		create_symlink ~/.vim/.config/tmux ~/.config/tmux
+		create_symlink ~/.vim/.config/tmux ~/.config/tmux && \
+		create_symlink ~/.vim/.config/herdr/config.toml ~/.config/herdr/config.toml
 
 others: ## Install additional tools (macOS)
 	@bash $(SCRIPTS_DIR)/install_others.sh
@@ -47,6 +49,7 @@ reset: ## Remove all symlinks
 	@echo "Cleaning symlinks..."
 	@rm -f ~/.zshrc ~/.vimrc
 	@rm -rf ~/.config/nvim ~/.config/tmux ~/.config/mcphub ~/.config/kitty ~/.config/lazygit
+	@if [ -L ~/.config/herdr/config.toml ]; then rm ~/.config/herdr/config.toml; fi
 
 check_brew:
 	@if ! command -v brew &> /dev/null; then \

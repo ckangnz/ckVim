@@ -21,7 +21,7 @@ This will show an interactive menu where you can select which components to inst
 
 - **brew** - Homebrew package manager
 - **vim** - Vim/Neovim configuration
-- **zsh** - Zsh shell with plugins (also installs tmux agent hooks + AGENTS.md symlinks)
+- **zsh** - Zsh shell with plugins, terminal tools including Herdr, tmux agent hooks, and AGENTS.md symlinks
 - **fonts** - FiraCode Nerd Font
 - **others** - Additional tools (optional, macOS)
 - **gitignore** - Add `ck_*` to global gitignore + set `core.excludesfile`
@@ -60,7 +60,7 @@ make vim
 > [!WARNING]
 > This will override your existing `.zshrc` file
 
-**Includes:** Zsh, Tmux, Zap plugin manager, Powerlevel10k theme, and essential CLI tools
+**Includes:** Zsh, Tmux, Herdr, Zap plugin manager, Powerlevel10k theme, and essential CLI tools. Herdr's user configuration is symlinked from this repository; Herdr session state and logs remain local to `~/.config/herdr`.
 
 ```bash
 make zsh
@@ -85,12 +85,12 @@ make others
 ```bash
 make symlink        # All symlinks
 make vim_symlink    # Vim/Neovim symlinks only
-make zsh_symlink    # Zsh/Tmux/Kitty symlinks only
+make zsh_symlink    # Zsh/Tmux/Herdr/Kitty symlinks only
 ```
 
 ### Reset environment
 
-Remove all symlinks:
+Remove all managed symlinks. This removes the Herdr config-file link but preserves Herdr runtime state:
 
 ```bash
 make reset
@@ -157,6 +157,7 @@ Install Nerd Font:
 ├── .config/
 │   ├── nvim/             # Neovim configuration (init.lua + lua/core, lua/plugins)
 │   ├── tmux/             # Tmux configuration + agent-status scripts
+│   ├── herdr/            # Herdr user configuration
 │   ├── kitty/            # Kitty terminal configuration
 │   └── lazygit/          # LazyGit configuration
 └── notes/                # Documentation and notes
