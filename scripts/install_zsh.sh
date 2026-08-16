@@ -39,6 +39,11 @@ brew_install "${packages[@]}"
 echo ""
 echo ""
 
+if ! herdr plugin list --plugin ray.plugin-manager --json | grep -q '"plugin_id":"ray.plugin-manager"'; then
+	echo "Installing Herdr Plugin Manager..."
+	herdr plugin install speardragon/herdr-plugin-manager --yes
+fi
+
 echo "Installing ZAP"
 zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k
 echo ""

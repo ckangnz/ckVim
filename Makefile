@@ -32,6 +32,10 @@ vim_symlink: ## Symlink Vim/Neovim config only
 
 zsh_symlink: ## Symlink Zsh/Herdr/kitty/lazygit config only
 	@mkdir -p ~/.config/herdr
+	@if [ -e ~/.config/herdr/plugins ] && [ ! -L ~/.config/herdr/plugins ]; then \
+		echo "Refusing to replace existing Herdr plugins directory: ~/.config/herdr/plugins"; \
+		exit 1; \
+	fi
 	@source $(SCRIPTS_DIR)/install_methods.sh && \
 		create_symlink ~/.vim/.zshrc ~/.zshrc && \
 		create_symlink ~/.vim/.config/kitty ~/.config/kitty && \
