@@ -137,8 +137,8 @@ map(
 )
 map('n', '<leader>ez', '<cmd>vsp $HOME/.zshrc<cr>', { desc = 'Edit .zshrc' })
 map('n', '<leader>ea', '<cmd>vsp $HOME/.extraAlias.zsh<cr>', { desc = 'Edit .extraAlias.zsh' })
-map('n', '<leader>eK', '<cmd>vsp $HOME/.config/kitty/kitty.conf<cr>', { desc = 'Edit tmux.conf' })
-map('n', '<leader>et', '<cmd>vsp $HOME/.config/tmux/tmux.conf<cr>', { desc = 'Edit tmux.conf' })
+map('n', '<leader>eK', '<cmd>vsp $HOME/.config/kitty/kitty.conf<cr>', { desc = 'Edit kitty.conf' })
+map('n', '<leader>eH', '<cmd>vsp $HOME/.config/herdr/config.toml<cr>', { desc = 'Edit herdr config' })
 
 map('n', '<leader>eP', '<cmd>vsp $HOME/.vim/plugins.zsh<cr>', { desc = 'Edit plugins.zsh' })
 map('n', '<leader>em', '<cmd>vsp $HOME/.vim/Makefile<cr>', { desc = 'Edit Makefile' })

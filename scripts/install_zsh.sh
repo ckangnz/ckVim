@@ -13,7 +13,6 @@ echo ""
 # Install Homebrew packages
 packages=(
 	"zsh"
-	"tmux"
 
 	"python3"
 	"node"

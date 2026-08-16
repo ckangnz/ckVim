@@ -1,6 +1,3 @@
-# wt completions — must be before compinit
-[[ -d "$HOME/.vim/wt" ]] && fpath=("$HOME/.vim/wt" $fpath)
-
 # Load zsh + bash completions
 autoload -U +X bashcompinit && bashcompinit
 autoload -U +X compinit
@@ -77,7 +74,6 @@ if command -v brew >/dev/null 2>&1; then
 fi
 
 # XDG Configs
-export TMUX_CONF_DIR="$HOME/.config/tmux"
 export LAZYGIT_CONFIG_DIR="$HOME/.config/lazygit"
 
 # Aliases & functions

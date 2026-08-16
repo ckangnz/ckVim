@@ -21,7 +21,7 @@ This will show an interactive menu where you can select which components to inst
 
 - **brew** - Homebrew package manager
 - **vim** - Vim/Neovim configuration
-- **zsh** - Zsh shell with plugins, terminal tools including Herdr, tmux agent hooks, and AGENTS.md symlinks
+- **zsh** - Zsh shell with plugins, terminal tools including Herdr, and AGENTS.md symlinks
 - **fonts** - FiraCode Nerd Font
 - **others** - Additional tools (optional, macOS)
 - **gitignore** - Add `ck_*` to global gitignore + set `core.excludesfile`
@@ -60,7 +60,7 @@ make vim
 > [!WARNING]
 > This will override your existing `.zshrc` file
 
-**Includes:** Zsh, Tmux, Herdr, Zap plugin manager, Powerlevel10k theme, and essential CLI tools. Herdr's user configuration is symlinked from this repository; Herdr session state and logs remain local to `~/.config/herdr`.
+**Includes:** Zsh, Herdr, Zap plugin manager, Powerlevel10k theme, and essential CLI tools. Herdr's user configuration is symlinked from this repository; Herdr session state and logs remain local to `~/.config/herdr`.
 
 ```bash
 make zsh
@@ -85,7 +85,7 @@ make others
 ```bash
 make symlink        # All symlinks
 make vim_symlink    # Vim/Neovim symlinks only
-make zsh_symlink    # Zsh/Tmux/Herdr/Kitty symlinks only
+make zsh_symlink    # Zsh/Herdr/Kitty symlinks only
 ```
 
 ### Reset environment
@@ -151,12 +151,10 @@ Install Nerd Font:
 ├── plugins.zsh           # Zap plugin list
 ├── completions.zsh       # Completion setup (gh, terraform, dotnet, make)
 ├── AGENTS.md             # AI-agent conventions (symlinked to Claude/Codex)
-├── wt/                   # `wt` git-worktree workspace manager + tests
-├── settings/             # App configs (iTerm2, Rectangle, IdeaVim)
+├── settings/             # App configs (Rectangle, IdeaVim)
 ├── WSL_Settings/         # Windows Terminal settings
 ├── .config/
 │   ├── nvim/             # Neovim configuration (init.lua + lua/core, lua/plugins)
-│   ├── tmux/             # Tmux configuration + agent-status scripts
 │   ├── herdr/            # Herdr user configuration
 │   ├── kitty/            # Kitty terminal configuration
 │   └── lazygit/          # LazyGit configuration
@@ -184,7 +182,6 @@ Install Nerd Font:
 
 ### Additional Tools
 
-- **tmux** - Terminal multiplexer
 - **kitty** - GPU-accelerated terminal
 - **lazygit** - Terminal UI for git
 - **lazydocker** - Terminal UI for docker
@@ -202,21 +199,6 @@ Install Nerd Font:
   ```bash
   compaudit | xargs chmod g-w
   ```
-
-- Tmux not starting zsh in linux
-
-```bash
-# Add this snippet at the top of .bashrc
-if [ -t 1 ]; then
-  if [ -x "/home/linuxbrew/.linuxbrew/bin/zsh" ]; then
-    export SHELL="/home/linuxbrew/.linuxbrew/bin/zsh"
-    exec /home/linuxbrew/.linuxbrew/bin/zsh -l
-  elif command -v zsh >/dev/null 2>&1; then
-    export SHELL=$(command -v zsh)
-    exec $(command -v zsh) -l
-  fi
-fi
-```
 
 - **Node.js issues**
 

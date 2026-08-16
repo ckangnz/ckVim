@@ -55,7 +55,7 @@ These are my personal conventions for working with AI coding agents. They apply 
 - Apply those formatting rules manually. Do not assume defaults.
 - Prefer the config closest to the file being edited.
 
-## 8. Git Worktrees (`wt`)
+## 8. Git Worktrees
 
 I use **ephemeral git worktrees** for parallel work — one per feature, created on
 demand and deleted when the PR merges. There is **no** long-lived
@@ -67,39 +67,13 @@ demand and deleted when the PR merges. There is **no** long-lived
   worktrees (git-default layout), created per-feature and thrown away after merge.
   There is no single-vs-worktree distinction: "single-use" repos just use branches
   and never create worktrees, but any repo *can* via vanilla `git worktree`.
-- `wt` is a thin layer over `git worktree` + tmux + an APFS `cp -c` warm-seed of
-  build state (node_modules, etc.). It uses `git worktree list` as its source of
-  truth, so it also sees worktrees created by other tools (e.g. Claude Code's
-  `.claude/worktrees/`).
+- Use standard `git worktree` commands to inspect and manage worktrees. It sees
+  worktrees created by other tools (e.g. Claude Code's `.claude/worktrees/`).
 
 ### Rules when working inside a worktree
 
 - You're on a normal feature branch — treat it like any branch.
-- Rebase onto the latest primary branch with **plain git** (`gfom && grbom`, i.e.
-  `git fetch origin master` + `git rebase origin/master`). There is no `wt sync`.
+- Rebase onto the latest primary branch with `git fetch origin master` followed by
+  `git rebase origin/master`.
 - Never work directly on the primary branch; keep a feature branch.
 - Standard commit/push rules (§3) still apply — never commit/push without approval.
-
-### `wt` CLI reference
-
-| Command | What it does |
-|---|---|
-| `wt register <name> <path> [--seed a,b]` | Register a repo (a plain git clone) |
-| `wt unregister <name>` | Unregister a repo |
-| `wt <repo> "Feature title"` | Create a worktree for the feature (+ background warm-seed) and open its tmux window; focus it if it already exists |
-| `wt <repo>` | Open/focus the repo's main workspace (the clone itself) |
-| `wt list [repo]` | List worktrees (from `git worktree list`) + status |
-| `wt open` | fzf-select a worktree and `cd` the current pane into it (`wt open --tab` opens a new named tab; `prefix C-o` popup runs `wt open --tab`) |
-| `wt rm` | Remove the worktree you're in (cwd); refuses unmerged work unless `--force` |
-| `wt rm <repo>` | fzf-select worktree(s) of `<repo>` to remove |
-| `wt rm <worktree-id>` | Remove a specific worktree (id from `wt list`, e.g. `afm/foo` or `foo`) |
-| `wt rm --all <repo>` | Remove all feature worktrees for a repo |
-| `wt close` | Close the current tmux window |
-| `wt layout` | Apply the triptych layout to the current tmux window |
-
-### Notes
-
-- `wt` is a real executable at `~/.vim/wt/wt` — you CAN run it directly. Do not tell
-  the user to run it themselves unless there's an interactive prompt required.
-- A new worktree is warm-seeded in the background: editable immediately, but it may
-  take a few minutes before it can build — wait for the "warm-seed ready" notice.
