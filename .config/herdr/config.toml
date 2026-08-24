@@ -43,11 +43,9 @@ description = "open Herdr Reviewer"
 
 [[keys.command]]
 key = "prefix+G"
-type = "popup"
-command = "lazygit"
-description = "open LazyGit"
-width = "80%"
-height = "80%"
+type = "plugin_action"
+command = "ck.lazygit.open"
+description = "open LazyGit tab"
 
 [[keys.command]]
 key = "prefix+P"
