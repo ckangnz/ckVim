@@ -19,6 +19,11 @@ gui:
       - "#cdd6f4"
     searchingActiveBorderColor:
       - "#f9e2af"
-
   authorColors:
     "*": "#b4befe"
+customCommands:
+  - key: "V"
+    context: "files"
+    description: "View visual image diff via Kitty"
+    command: "git difftool {{.SelectedFile.Name}}"
+    output: terminal

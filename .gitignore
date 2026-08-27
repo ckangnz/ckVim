@@ -3,3 +3,4 @@
 .DS_Store
 .netrwhist
 lazy-lock.json
+.config/lazygit/state.yml
