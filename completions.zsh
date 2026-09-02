@@ -2,6 +2,60 @@ if (( $+commands[herdr] )); then
   source <(herdr completion zsh)
 fi
 
+_wt_removal_targets() {
+  local worktrees
+  local target_lines
+  local -a targets
+
+  if ! worktrees=$(herdr worktree list 2>/dev/null); then
+    return
+  fi
+
+  target_lines=$(print -r -- "$worktrees" | jq -r '
+      .result.worktrees[]
+      | select((.open_workspace_id // "") != "" or (.branch // "-") != "-")
+      | [
+          (if (.open_workspace_id // "") != "" then "\(.open_workspace_id):workspace \(.path)" else empty end),
+          (if (.branch // "-") != "-" then "\(.branch):branch \(.path)" else empty end),
+          "\(.path):path"
+        ]
+      | .[]
+    ') || return
+
+  targets=(
+    '.'\:'current worktree'
+    "${(@f)target_lines}"
+  )
+  _describe -t worktrees 'worktree' targets
+}
+
+_wt() {
+  local state
+  typeset -A opt_args
+
+  _arguments -C \
+    '1:command:->command' \
+    '2:target:->target' \
+    '*::option:->option'
+
+  case "$state" in
+    command)
+      _values 'wt command' current list rm
+      ;;
+    target)
+      if [[ "${words[2]}" == "rm" ]]; then
+        _wt_removal_targets
+      fi
+      ;;
+    option)
+      if [[ "${words[2]}" == "rm" ]]; then
+        _arguments '-f[force removal]' '--force[force removal]'
+      fi
+      ;;
+  esac
+}
+compdef _wt wt
+
 # Github CLI
 if [[ -x "${HOMEBREW_PREFIX}/bin/gh" ]]; then
   eval "$(gh completion -s zsh)"
