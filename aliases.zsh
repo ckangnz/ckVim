@@ -111,13 +111,16 @@ wt() {
     local workspace_id
     local worktree_path
     local git_common_dir
+    local branch_name
     local original_directory
     local result_file
     local started_at
     local removal_status
+    local worktree_removal_status
     local process_id
     local spinner_index=1
     local force_requested=false
+    local branch_delete_option=-d
     local confirmation
     local -a spinner=("⠋" "⠙" "⠹" "⠸" "⠼" "⠴" "⠦" "⠧" "⠇" "⠏")
     local -a remove_command
@@ -132,6 +135,7 @@ wt() {
     for option in "$@"; do
       if [[ "$option" == "-f" || "$option" == "--force" ]]; then
         force_requested=true
+        branch_delete_option=-D
         remove_options+=(--force)
       else
         remove_options+=("$option")
@@ -155,9 +159,12 @@ wt() {
 
     if [[ "$target" == "." ]]; then
       workspace_id=$(_wt_current_workspace_id) || return 1
+      worktree_path=$(git rev-parse --show-toplevel) || return 1
+      git_common_dir=$(git rev-parse --path-format=absolute --git-common-dir) || return 1
+      branch_name=$(git branch --show-current)
       original_directory="$PWD"
 
-      if ! cd "$(git rev-parse --show-toplevel)/.."; then
+      if ! cd "$worktree_path/.."; then
         print -u2 -- "Could not leave the current worktree before removing it."
         return 1
       fi
@@ -167,19 +174,21 @@ wt() {
       workspace_id=$(print -r -- "$worktree" | jq -r '.open_workspace_id // empty')
       worktree_path=$(print -r -- "$worktree" | jq -r '.path')
 
+      if [[ $(git -C "$worktree_path" rev-parse --is-bare-repository 2>/dev/null) == "true" ]]; then
+        print -u2 -- "Refusing to remove the bare repository at '$worktree_path'."
+        return 1
+      fi
+
+      if ! git_common_dir=$(git -C "$worktree_path" rev-parse --path-format=absolute --git-common-dir); then
+        print -u2 -- "Could not locate the Git repository for '$worktree_path'."
+        return 1
+      fi
+
+      branch_name=$(git -C "$worktree_path" branch --show-current)
+
       if [[ -n "$workspace_id" ]]; then
         remove_command=(herdr worktree remove --workspace "$workspace_id")
       else
-        if [[ $(git -C "$worktree_path" rev-parse --is-bare-repository 2>/dev/null) == "true" ]]; then
-          print -u2 -- "Refusing to remove the bare repository at '$worktree_path'."
-          return 1
-        fi
-
-        if ! git_common_dir=$(git -C "$worktree_path" rev-parse --path-format=absolute --git-common-dir); then
-          print -u2 -- "Could not locate the Git repository for '$worktree_path'."
-          return 1
-        fi
-
         remove_command=(git -C "$git_common_dir" worktree remove "$worktree_path")
       fi
     fi
@@ -197,10 +206,21 @@ wt() {
 
     wait "$process_id"
     removal_status=$?
+    worktree_removal_status=$removal_status
     printf '\r\033[2K'
 
     if (( removal_status == 0 )); then
-      print -- "Removed $target in $((SECONDS - started_at))s."
+      if [[ -n "$branch_name" ]]; then
+        if git -C "$git_common_dir" branch "$branch_delete_option" -- "$branch_name" >"$result_file" 2>&1; then
+          print -- "Removed $target and deleted local branch '$branch_name' in $((SECONDS - started_at))s."
+        else
+          print -u2 -- "Removed $target, but could not delete local branch '$branch_name'."
+          cat "$result_file" >&2
+          removal_status=1
+        fi
+      else
+        print -- "Removed $target in $((SECONDS - started_at))s."
+      fi
     elif [[ -s "$result_file" ]]; then
       cat "$result_file" >&2
     else
@@ -209,7 +229,7 @@ wt() {
 
     rm -f "$result_file"
 
-    if (( removal_status != 0 )) && [[ -n "$original_directory" ]]; then
+    if (( worktree_removal_status != 0 )) && [[ -n "$original_directory" ]]; then
       cd "$original_directory" || return 1
     fi
 
