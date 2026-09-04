@@ -27,7 +27,6 @@ end, { expr = true, silent = true, desc = 'Clear Codeium suggestions' })
 -- Refer to keymaps.lua for codeium#accept <M-a>
 
 vim.g.codeium_filetypes = {
-  ['codecompanion'] = false,
   ['fugitive'] = false,
   ['markdown'] = false,
   ['help'] = false,

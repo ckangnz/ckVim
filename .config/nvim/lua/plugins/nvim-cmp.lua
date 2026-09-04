@@ -75,11 +75,6 @@ cmp.setup({
         nvim_lua = '[Lua]',
         copilot = '[AI]',
         codeium = '[AI]',
-        codecompanion = '[AI Assistant]',
-        codecompanion_models = '[AI Models]',
-        codecompanion_slash_commands = '[AI Commands]',
-        codecompanion_tools = '[AI Tools]',
-        codecompanion_variables = '[AI Variables]',
         emoji = '[Emoji]',
         calc = '[Calc]',
         treesitter = '[TS]',
@@ -132,7 +127,6 @@ cmp.setup({
 
   -- Sources configuration (ordered by priority)
   sources = cmp.config.sources({
-    { name = 'codecompanion', priority = 1000 },
     { name = 'copilot', priority = 1000 },
     { name = 'nvim_lsp', priority = 900 },
     { name = 'luasnip', priority = 800 },
@@ -232,14 +226,6 @@ cmp.setup.filetype('sql', {
   sources = cmp.config.sources({
     { name = 'vim-dadbod-completion' },
     { name = 'buffer' },
-  }),
-})
-
--- codecompanion completion
-cmp.setup.filetype('codecompanion', {
-  sources = cmp.config.sources({
-    { name = 'codecompanion', priority = 1000 },
-    { name = 'buffer', priority = 500, max_item_count = 3 },
   }),
 })
 

@@ -16,7 +16,6 @@ local winbar_excluded = {
   'hgcommit',
   'undotree',
   'docker-tools-container',
-  'codecompanion',
   'help',
 }
 
@@ -83,24 +82,12 @@ require('lualine').setup({
       },
       { 'branch', icons_enabled = true },
     },
-    lualine_b = {
-      {
-        'filename',
-        file_status = false,
-        path = 1,
-        cond = function()
-          return exclude_filetypes({ 'codecompanion' })
-        end,
-      },
-    },
+    lualine_b = {},
     lualine_c = {
       {
         'diff',
         symbols = { added = Icons.added, modified = Icons.modified, removed = Icons.removed },
         separator = Icons.separator.empty,
-        cond = function()
-          return exclude_filetypes({ 'codecompanion' })
-        end,
       },
     },
     lualine_x = {
@@ -153,7 +140,7 @@ require('lualine').setup({
           return Icons.magnify_extend .. table.concat(linters, ', ')
         end,
         cond = function()
-          return exclude_filetypes({ 'codecompanion', 'help' })
+          return exclude_filetypes({ 'help' })
         end,
         separator = Icons.separator.empty,
       },
@@ -209,9 +196,6 @@ require('lualine').setup({
             line,
             col
           )
-        end,
-        cond = function()
-          return exclude_filetypes({ 'codecompanion' })
         end,
       },
     },
@@ -277,7 +261,7 @@ require('lualine').setup({
       {
         'copilot',
         cond = function()
-          return exclude_filetypes({ 'codecompanion', 'help', 'fugitive' })
+          return exclude_filetypes({ 'help', 'fugitive' })
         end,
         symbols = {
           status = {
@@ -348,38 +332,10 @@ require('lualine').setup({
           end
         end,
         cond = function()
-          return exclude_filetypes({ 'codecompanion', 'help', 'fugitive' })
+          return exclude_filetypes({ 'help', 'fugitive' })
         end,
       },
     },
-    lualine_z = {
-      {
-        'codecompanion',
-        fmt = function(value)
-          local bufnr = vim.api.nvim_get_current_buf()
-          local root = rawget(_G, 'codecompanion_chat_metadata')
-          local meta = root and root[bufnr]
-          local icon = value:match('%d+ (.+)')
-
-          if meta and meta.adapter then
-            local adapter_name = meta.adapter.name or ''
-            local model_name = meta.adapter.model or ''
-            return string.format('%s(%s) ', adapter_name, model_name) .. icon
-          end
-          return icon
-        end,
-        color = { fg = Colors.white, bg = Colors.black },
-        icon = Icons.speechBubble,
-        spinner_symbols = Icons.spinner.dots,
-        done_symbol = Icons.check_default,
-      },
-      {
-        'mcphub',
-        icon = Icons.hub,
-        spinner_symbols = Icons.spinner.dots,
-        stopped_symbol = Icons.check_default,
-        color = { fg = Colors.white, bg = Colors.black },
-      },
-    },
+    lualine_z = {},
   },
 })

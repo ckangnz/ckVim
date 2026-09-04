@@ -144,13 +144,11 @@ local function toggle_whitespace_match(mode)
     '',
     'fzf',
     'alpha',
-    'codecompanion',
     'ctrlsf',
     'fugitive',
     'help',
     'lazy',
     'mason',
-    'mcphub',
   }
   local current_filetype = vim.bo.filetype
 

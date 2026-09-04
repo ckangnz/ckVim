@@ -27,8 +27,7 @@ agents: ## Symlink AGENTS.md into Claude Code + Codex
 vim_symlink: ## Symlink Vim/Neovim config only
 	@source $(SCRIPTS_DIR)/install_methods.sh && \
 		create_symlink ~/.vim/.vimrc ~/.vimrc && \
-		create_symlink ~/.vim/.config/nvim ~/.config/nvim && \
-		create_symlink ~/.vim/.config/mcphub ~/.config/mcphub
+		create_symlink ~/.vim/.config/nvim ~/.config/nvim
 
 zsh_symlink: ## Symlink Zsh/Herdr/kitty/lazygit config only
 	@mkdir -p ~/.config/herdr
@@ -49,7 +48,7 @@ others: ## Install additional tools (macOS)
 reset: ## Remove all symlinks
 	@echo "Cleaning symlinks..."
 	@rm -f ~/.zshrc ~/.vimrc
-	@rm -rf ~/.config/nvim ~/.config/mcphub ~/.config/kitty ~/.config/lazygit
+	@rm -rf ~/.config/kitty ~/.config/lazygit
 	@if [ -L ~/.config/herdr/config.toml ]; then rm ~/.config/herdr/config.toml; fi
 	@if [ -L ~/.config/herdr/plugins ]; then rm ~/.config/herdr/plugins; fi
 

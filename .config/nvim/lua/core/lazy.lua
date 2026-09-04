@@ -55,55 +55,6 @@ local plugins = {
       require('plugins.copilot')
     end,
   },
-  {
-    'olimorris/codecompanion.nvim',
-    cmd = { 'CodeCompanion', 'CodeCompanionChat', 'CodeCompanionAction' },
-    keys = {
-      { '<BS>', desc = 'Toggle CodeCompanion chat', mode = { 'n', 'v' } },
-      { '<M-n>', desc = 'Start new CodeCompanion chat' },
-      { '<M-p>', desc = 'Open CodeCompanion prompt', mode = { 'n', 'v' } },
-      { '<M-o>', desc = 'CodeCompanion actions', mode = { 'n', 'v' } },
-    },
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-tree/nvim-web-devicons',
-      'nvim-treesitter/nvim-treesitter',
-      'hrsh7th/nvim-cmp',
-
-      'ravitemer/codecompanion-history.nvim',
-      'stevearc/dressing.nvim',
-    },
-    config = function()
-      require('plugins.codecompanion')
-    end,
-  },
-  {
-    'bahaaza/mcphub.nvim',
-    keys = { { '<leader>ph', ':MCPHub<cr>', desc = 'Open MCPHub', silent = true } },
-    cmd = { 'MCPHub' },
-    build = 'npm install -g mcp-hub@latest',
-    config = function()
-      require('mcphub').setup({
-        auto_toggle_mcp_servers = true,
-        builtin_tools = {
-          edit_file = {
-            ui = {
-              go_to_origin_on_complete = true,
-              keybindings = {
-                accept = '.',
-                reject = ',',
-                next = 'n',
-                prev = 'N',
-                accept_all = '>',
-                reject_all = '<',
-              },
-            },
-          },
-        },
-      })
-    end,
-  },
-
   -- GUI
   {
     'sainnhe/gruvbox-material',
@@ -128,8 +79,6 @@ local plugins = {
       'nvim-tree/nvim-web-devicons',
       'Exafunction/windsurf.vim',
       'AndreM222/copilot-lualine',
-      'franco-ruggeri/codecompanion-lualine.nvim',
-      'franco-ruggeri/mcphub-lualine.nvim',
     },
     config = function()
       require('plugins.lualine')
@@ -283,7 +232,7 @@ local plugins = {
   },
   {
     'MeanderingProgrammer/render-markdown.nvim',
-    ft = { 'markdown', 'md', 'codecompanion' },
+    ft = { 'markdown', 'md' },
     config = function()
       require('plugins.render-markdown')
     end,

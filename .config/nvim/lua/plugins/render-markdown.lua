@@ -1,6 +1,6 @@
 require('render-markdown').setup({
   enabled = true,
-  file_types = { 'markdown', 'codecompanion' },
+  file_types = { 'markdown' },
   render_modes = { 'n', 'i', 'v', 'V', 'c', 't' },
   latex = { enabled = false },
   heading = {
@@ -53,45 +53,10 @@ require('render-markdown').setup({
     highlight_inline = 'RenderMarkdownCodeInline',
   },
   overrides = {
-    filetype = {
-      codecompanion = {
-        heading = {
-          signs = true,
-          border = false,
-          position = 'overlay',
-          width = 'full',
-          custom = {
-            codecompanion_llm = {
-              pattern = 'CodeCompanion %b()',
-              icon = '🤖 ',
-              foreground = 'CodeCompanionChatHeaderRobot',
-              background = 'CodeCompanionChatHeaderRobot',
-            },
-            codecompanion_user = {
-              pattern = 'You %(User%)',
-              icon = '👤 ',
-              foreground = 'CodeCompanionChatHeaderMe',
-              background = 'CodeCompanionChatHeaderMe',
-            },
-          },
-        },
-      },
-    },
+    filetype = {},
   },
   html = {
     enabled = true,
-    tag = {
-      buf = { icon = Icons.file_text, highlight = 'CodeCompanionChatVariable' },
-      file = { icon = Icons.file_text, highlight = 'CodeCompanionChatVariable' },
-      help = { icon = Icons.question_circle, highlight = 'CodeCompanionChatVariable' },
-      image = { icon = Icons.image, highlight = 'CodeCompanionChatVariable' },
-      symbols = { icon = Icons.cube, highlight = 'CodeCompanionChatVariable' },
-      url = { icon = Icons.globe, highlight = 'CodeCompanionChatVariable' },
-      var = { icon = Icons.variable, highlight = 'CodeCompanionChatVariable' },
-      tool = { icon = Icons.tool, highlight = 'CodeCompanionChatTool' },
-      user_prompt = { icon = Icons.user, highlight = 'CodeCompanionChatTool' },
-      group = { icon = Icons.tools, highlight = 'CodeCompanionChatToolGroup' },
-    },
   },
 })
 
@@ -101,5 +66,3 @@ vim.api.nvim_set_hl(0, 'RenderMarkdownH3Bg', { fg = Colors.light_yellow })
 vim.api.nvim_set_hl(0, 'RenderMarkdownH4Bg', { fg = Colors.light_green })
 vim.api.nvim_set_hl(0, 'RenderMarkdownH5Bg', { fg = Colors.light_cyan })
 vim.api.nvim_set_hl(0, 'RenderMarkdownH6Bg', { fg = Colors.light_blue })
-vim.api.nvim_set_hl(0, 'CodeCompanionChatHeaderMe', { fg = Colors.white, bg = Colors.dark_red })
-vim.api.nvim_set_hl(0, 'CodeCompanionChatHeaderRobot', { fg = Colors.white, bg = Colors.dark_blue })

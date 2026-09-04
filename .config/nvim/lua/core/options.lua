@@ -7,13 +7,6 @@ if vim.fn.has('termguicolors') == 1 then
   vim.env.COLORTERM = 'truecolor'
 end
 
--- Set CodeCompanion default agent/model
--- export CODE_COMPANION_AGENT="copilot", "claude", "openai_responses", "codex", or "rovodev-acp"
--- export CODE_COMPANION_MODEL="gpt-5"
--- codex requires `codex login` and `npm install -g @zed-industries/codex-acp`
-g.CODE_COMPANION_AGENT = os.getenv('CODE_COMPANION_AGENT') or 'copilot'
-g.CODE_COMPANION_MODEL = os.getenv('CODE_COMPANION_MODEL')
-
 -- ANSI colors for terminal
 g.terminal_ansi_colors = {
   Colors.dark_blue,

@@ -39,7 +39,6 @@ require('copilot').setup({
     },
   },
   filetypes = {
-    codecompanion = false,
     markdown = false,
     help = false,
     hgcommit = false,
