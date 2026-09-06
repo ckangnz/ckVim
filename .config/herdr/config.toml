@@ -23,7 +23,7 @@ rename_tab = "prefix+ctrl+r"
 next_tab = "prefix+]"
 previous_tab = "prefix+["
 focus_agent = "prefix+1..9"
-close_tab = "prefix+w"
+close_tab = "prefix+shift+x"
 copy_mode = "prefix+space"
 split_vertical = "prefix+ctrl+v"
 split_horizontal = "prefix+ctrl+s"
@@ -58,8 +58,8 @@ delivery = "herdr"
 
 [ui]
 show_agent_labels_on_pane_borders = true
-
 agent_panel_sort = "spaces"
+
 [theme]
 name = "catppuccin"
 auto_switch = false
