@@ -1,5 +1,4 @@
 onboarding = false
-
 [keys]
 prefix = "ctrl+g"
 help = "prefix+ctrl+/"
@@ -34,35 +33,29 @@ focus_pane_right = "prefix+ctrl+l"
 cycle_pane_next = ""
 cycle_pane_previous = ""
 last_pane = "prefix+tab"
-
 [[keys.command]]
 key = "prefix+g"
 type = "plugin_action"
 command = "persiyanov.reviewr.open"
 description = "open Herdr Reviewer"
-
 [[keys.command]]
 key = "prefix+G"
 type = "plugin_action"
 command = "ck.lazygit.open"
 description = "open LazyGit tab"
-
 [[keys.command]]
 key = "prefix+P"
 type = "plugin_action"
 command = "ray.plugin-manager.open"
 description = "open plugin manager"
-
 [ui.toast]
 delivery = "herdr"
-
 [ui]
 show_agent_labels_on_pane_borders = true
 agent_panel_sort = "spaces"
-
+status_indicators = "dots"
 [theme]
 name = "catppuccin"
 auto_switch = false
-
 [experimental]
 kitty_graphics = true
