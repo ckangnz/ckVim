@@ -14,3 +14,4 @@ open_result=$("$herdr_bin" plugin pane open \
 tab_id=$(printf '%s\n' "$open_result" | jq -er '.result.plugin_pane.pane.tab_id')
 
 "$herdr_bin" tab rename "$tab_id" lazygit
+"$herdr_bin" tab focus "$tab_id"

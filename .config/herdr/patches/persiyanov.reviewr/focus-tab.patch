@@ -1,0 +1,14 @@
+diff --git a/herdr/pane.sh b/herdr/pane.sh
+--- a/herdr/pane.sh
++++ b/herdr/pane.sh
+@@ -282,7 +282,10 @@
+ # after the plugin so the tab bar reads "reviewr". Cosmetic: a
+ # failed rename never fails an open that already succeeded.
+ if [ "$placement" = tab ]; then
+   tab=$(printf '%s' "$open_json" | jq -r '.result.plugin_pane.pane.tab_id // empty' 2>/dev/null)
+   [ -z "$tab" ] || "$H" tab rename "$tab" reviewr >/dev/null 2>&1
++  if [ "$mode" != auto-open ] && [ -n "$tab" ]; then
++    "$H" tab focus "$tab" >/dev/null 2>&1
++  fi
+ fi
+ [ "$mode" = auto-open ] || printf 'opened %s (%s) in %s\n' "$new" "$placement" "$ws"

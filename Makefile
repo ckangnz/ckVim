@@ -30,13 +30,18 @@ vim_symlink: ## Symlink Vim/Neovim config only
 		create_symlink ~/.vim/.config/nvim ~/.config/nvim
 
 zsh_symlink: ## Symlink Zsh/Herdr/kitty/lazygit config only
-	@mkdir -p ~/.config/herdr
+	@mkdir -p ~/.config
+	@if [ -L ~/.config/herdr ]; then \
+		echo "Removing legacy Herdr directory symlink..."; \
+		rm ~/.config/herdr; \
+	fi
+	@mkdir -p ~/.config/herdr/plugins/config
 	@source $(SCRIPTS_DIR)/install_methods.sh && \
 		create_symlink ~/.vim/.zshrc ~/.zshrc && \
 		create_symlink ~/.vim/.config/kitty ~/.config/kitty && \
 		create_symlink ~/.vim/.config/lazygit ~/.config/lazygit && \
 		create_symlink ~/.vim/.config/herdr/config.toml ~/.config/herdr/config.toml && \
-		create_symlink ~/.vim/.config/herdr/plugins ~/.config/herdr/plugins
+		create_symlink ~/.vim/.config/herdr/plugins/config/persiyanov.reviewr ~/.config/herdr/plugins/config/persiyanov.reviewr
 
 others: ## Install additional tools (macOS)
 	@bash $(SCRIPTS_DIR)/install_others.sh
@@ -46,7 +51,7 @@ reset: ## Remove all symlinks
 	@rm -f ~/.zshrc ~/.vimrc
 	@rm -rf ~/.config/kitty ~/.config/lazygit
 	@if [ -L ~/.config/herdr/config.toml ]; then rm ~/.config/herdr/config.toml; fi
-	@if [ -L ~/.config/herdr/plugins ]; then rm ~/.config/herdr/plugins; fi
+	@if [ -L ~/.config/herdr/plugins/config/persiyanov.reviewr ]; then rm ~/.config/herdr/plugins/config/persiyanov.reviewr; fi
 
 check_brew:
 	@if ! command -v brew &> /dev/null; then \
